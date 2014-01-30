@@ -67,6 +67,17 @@ The pricing server could stay up and running but have some internal fault or one
 
 This requirement will help to show techniques like heartbeating (resilience).
 
+6. Client to handle gracefully burst of events without adding excessive layency
+-------------
+
+When a client is subscribed to a set of streams it may happen that the server sends an important number of updates per seconds (tens to hundreads of updates per second per stream). The UI should implement some algorithm to prevent:
+ - the application to consume more than 50% of the PC CPU
+ - to limit the latency to process a price tick (time displayed in UI - time received from socket)
+
+The application will for instance apply a conflation algorithm: if several prices of a same stream (ie. same currency pair) are received within a fraction of a second the application can drop (ie. not render) some prices, as long as it meets the previous SLA.
+
+
+
 TODO (other requirements to document):
  - client to handle burst of events without inducing excessive latency (to highlight responsiveness)
  - client to be able to subscribe quickly to tens to hundreads of simultaneous subscriptions (during startup for instance) - to highligh batching, which helps with responsivness (apps starts faster) and scallability (does not hamer the server)
