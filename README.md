@@ -72,6 +72,7 @@ TODO (other requirements to document):
  - client to be able to subscribe quickly to tens to hundreads of simultaneous subscriptions (during startup for instance) - to highligh batching, which helps with responsivness (apps starts faster) and scallability (does not hamer the server)
  - client to execute a trade (trade execution command + active query on trades - CQRS style / state machines)
  - client to subscribe to its blotter (state of the world, updates, no polling => reduce server load)
+ - client to retrieve reference data (currency pairs) from server and allow adding new currency pairs at runtime without restarting the client
 
 
 
