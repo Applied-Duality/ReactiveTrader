@@ -73,14 +73,5 @@ TODO (other requirements to document):
  - client to execute a trade (trade execution command + active query on trades - CQRS style / state machines)
  - client to subscribe to its blotter (state of the world, updates, no polling => reduce server load)
  - client to retrieve reference data (currency pairs) from server and allow adding new currency pairs at runtime without restarting the client
-
-
-
-
-
-
-
-
-
-
-
+ - client to share streams for a currency pair (if same currency pair displayed in multiple tiles)
+ - client to delay unsubscription to price stream to allow the client to reconnect quickly to a stream (switching between tabs, etc)
