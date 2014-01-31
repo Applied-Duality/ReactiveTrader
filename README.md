@@ -160,6 +160,12 @@ When a currency pair is removed it should be removed from the currency pair sele
 
 In reality it is very rare to have to add or remove currency pairs. Reactive trader uses a simplified model and updating currency pairs is used to illustrate reference data changes at runtime: in a real application the same principles could be used to for instance propagate entitlements changes at runtime, roll maturity dates at end of day, etc.
 
+Currency pair reference data:
+ - currency pair (6 chars)
+ - spot precision: number of digits to display after the dot for a spot rate (EURUSD is 5 for instance: rate 1.234 would be displayed 1.23400 with 2 trailing zeros to accomodate the precison)
+ - big number start index: when representing a spot price 2 digits are traditionally displayed bigger than the others. For instance a EURUSD spot rate 1.23456 would be displayed with 45 as bigger number (this is the number traders look at the most to make a trade decision). `Big number start index` indicates the position of the first digit to display in big, from the dot. For instance with a rate of 1.23456 and a `Big number start index` of 0 you would highlight `1.2`, with a `Big number start index` of 3 you would highlight `45`. `Big number start index` can be negative (123.456 with a big number start index of -2 would highligh `12`).
+
+
 14. Client to minimize subscriptions when displaying multiple time the same currency pair stream
 ------------------------------------------------------------------------------------------------
 
