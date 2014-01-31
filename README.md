@@ -174,3 +174,16 @@ It may happen that the user will switch to a tab and come back to the initial ta
 
 Also a tab can contain lots of SPOT tiles so it is important to minimize the number of requests send to the server for this type of operation.
 
+16. Server dashboard requirements
+---------------------------------
+Display the list of active streams:
+ - currency pair
+ - number of active subscriptions
+ - frequency of update / sec (average over last minute)
+ - command to simulate stale price / resume (ie. stops all activity for that stream)
+ 
+Display other general information:
+ - total updates per second published
+ - slider to increase/decrease update frequency for all streams (ie. to simulate burst or volatile market conditions)
+ - display count of users subscribed to blotter
+ - display counter for number of trades (done and rejected)
