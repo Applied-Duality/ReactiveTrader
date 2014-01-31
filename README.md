@@ -67,7 +67,7 @@ The pricing server could stay up and running but have some internal fault or one
 
 This requirement will help to show techniques like heartbeating (resilience).
 
-6. Client to handle gracefully burst of events without adding excessive layency
+6. Client to handle burst of events without adding excessive layency
 -------------
 
 When a client is subscribed to a set of streams it may happen that the server sends an important number of updates per seconds (tens to hundreads of updates per second per stream). The UI should implement some algorithm to prevent:
@@ -76,11 +76,38 @@ When a client is subscribed to a set of streams it may happen that the server se
 
 The application will for instance apply a conflation algorithm: if several prices of a same stream (ie. same currency pair) are received within a fraction of a second the application can drop (ie. not render) some prices, as long as it meets the previous SLA.
 
+The application should also display a visual indicator of the internal UI latency for price distribution so we can see the effects of bursts. A chart would be ideal.
+
+7. client to be able to subscribe quickly to tens to hundreads of price streams
+-------------
+
+Whne the UI starts up or when the user switxh from one tab of tiles to another, the client should be able to subscribe and receive a price in a timely maner, even when the client has poor connectivity with the server (high latency link client/server).
+
+This requirement will help showing the importance of batching, and the impacts of head of line blocking.
+
+8. Client to view its blotter
+----------
+
+The client should be able to see all trades he made during the day. The blotter will also display trades performed by other users (normally it would be limited to a desk but we won't model that here).
+
+Once opened the blotter should receive all trades performed during the day (aka. State of the world).
+When a trade is performed (done or rejected), a new line should appear in the blotter with the trade details.
+
+Columns:
+ - tradeId
+ - trader name or sessionid of user who did the trade
+ - currency pair
+ - notional
+ - direction (buy/sell)
+ - spot price
+ - trade date
+ - value date
+
+9. Blotter resilience
+----------
 
 
 TODO (other requirements to document):
- - client to handle burst of events without inducing excessive latency (to highlight responsiveness)
- - client to be able to subscribe quickly to tens to hundreads of simultaneous subscriptions (during startup for instance) - to highligh batching, which helps with responsivness (apps starts faster) and scallability (does not hamer the server)
  - client to execute a trade (trade execution command + active query on trades - CQRS style / state machines)
  - client to subscribe to its blotter (state of the world, updates, no polling => reduce server load)
  - client to retrieve reference data (currency pairs) from server and allow adding new currency pairs at runtime without restarting the client
