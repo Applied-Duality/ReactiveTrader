@@ -68,29 +68,27 @@ The pricing server could stay up and running but have some internal fault or one
 This requirement will help to show techniques like heartbeating (resilience).
 
 6. Client to handle burst of events without adding excessive layency
--------------
+--------------------------------------------------------------------
 
-When a client is subscribed to a set of streams it may happen that the server sends an important number of updates per seconds (tens to hundreads of updates per second per stream). The UI should implement some algorithm to prevent:
- - the application to consume more than 50% of the PC CPU
- - to limit the latency to process a price tick (time displayed in UI - time received from socket)
+When a client is subscribed to a set of streams it may happen that the server sends an important number of updates per seconds (tens to hundreads of updates per second per stream). The UI should implement some algorithm to prevent price tick processing time to exceed 200ms (time displayed in UI - time received from socket < 200ms)
 
 The application will for instance apply a conflation algorithm: if several prices of a same stream (ie. same currency pair) are received within a fraction of a second the application can drop (ie. not render) some prices, as long as it meets the previous SLA.
 
 The application should also display a visual indicator of the internal UI latency for price distribution so we can see the effects of bursts. A chart would be ideal.
 
 7. client to be able to subscribe quickly to tens to hundreads of price streams
--------------
+-------------------------------------------------------------------------------
 
-Whne the UI starts up or when the user switxh from one tab of tiles to another, the client should be able to subscribe and receive a price in a timely maner, even when the client has poor connectivity with the server (high latency link client/server).
+When the UI starts up or when the user switch from one tab of tiles to another, the client should be able to subscribe and receive prices in a timely maner, even when the client has poor connectivity with the server (high latency link client/server).
 
-This requirement will help showing the importance of batching, and the impacts of head of line blocking.
+This requirement will help showing the importance of batching, and the impacts of head of line blocking. A general rule of thumb should be that one user action should never trigger O(N) messages but a constant O(1) number of messages (ideally 1).  
 
 8. Client to view its blotter
-----------
+-----------------------------
 
 The client should be able to see all trades he made during the day. The blotter will also display trades performed by other users (normally it would be limited to a desk but we won't model that here).
 
-Once opened the blotter should receive all trades performed during the day (aka. State of the world).
+Once opened the blotter should receive all trades performed during the day (aka. state of the world).
 When a trade is performed (done or rejected), a new line should appear in the blotter with the trade details.
 
 Columns:
@@ -102,9 +100,50 @@ Columns:
  - spot price
  - trade date
  - value date
+ - status (done/rejected)
 
-9. Blotter resilience
-----------
+9. Blotter to detect server failure
+-----------------------------------
+
+In the event of server failure (crash) or loss of connectivity between the client and its server, the blotter should detect the issue and notify the user. The blotter should then attempt to reconnect to the same node for 30sec, after which it will failover to another server.
+
+Upon reconnection, the blotter should be able to sync it state with the server and display the correct list of trades (ie. some new trades might have been executed during the disconnection).
+
+10. Blotter service to dispose client subscription on disconnection
+-------------------------------------------------------------------
+
+The blotter service should be able to detect a client disconnection (client close the app or network failure or client crash) and release all resources used for this user (subscription, cached trades, etc).
+
+11. Client to execute a trade
+-----------------------------
+
+Double clicking on a side of a SPOT tile should send a trade request to the server. Upon reception of the request the server will accept or reject the trade (since we are simulating the server we can randomly reject 20% of the trades).
+
+Once the server has decided if the trade was done or rejected it will send an affirmation back to the client who requested the trade.
+
+The trade execution service will notify the blotter service with this new trade (done or rejected) and the blotter service will in turn notify all subscribed clients (broadcast).
+
+Trade execution request:
+ - currency pair
+ - notional
+ - quote id
+ - streamID (if we decide to identiy streams per an identifier, otherwise currency pair should be fine)
+ - direction (buy/sell)
+ - dealt currency (for simplicity dealt currency will always be base currency, ie. for EURUSD the dealt currency is EUR)
+ - user name / session ID (this should ideally be known of the server and not send by the client: we should not trust the client)
+
+Affirmation:
+ - tradeId
+ - trader name or sessionid of user who did the trade
+ - currency pair
+ - notional
+ - direction (buy/sell)
+ - spot price
+ - trade date
+ - value date
+ - status (done/rejected)
+
+
 
 
 TODO (other requirements to document):
