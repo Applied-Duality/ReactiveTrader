@@ -143,12 +143,34 @@ Affirmation:
  - value date
  - status (done/rejected)
 
+12. Client to detect trade execution failure
+--------------------------------------------
 
+Trade execution roundtrip should take less than 2 seconds. If the client does not receive a trade affirmation within this period it should notify the user of a technical error and inform him to contact his sales representative: the position of the client is unknown.
 
+13. Client should retrieve reference data from server and reference data changes should not require client restart
+------------------------------------------------------------------------------------------------------------------
 
-TODO (other requirements to document):
- - client to execute a trade (trade execution command + active query on trades - CQRS style / state machines)
- - client to subscribe to its blotter (state of the world, updates, no polling => reduce server load)
- - client to retrieve reference data (currency pairs) from server and allow adding new currency pairs at runtime without restarting the client
- - client to share streams for a currency pair (if same currency pair displayed in multiple tiles)
- - client to delay unsubscription to price stream to allow the client to reconnect quickly to a stream (switching between tabs, etc)
+Currency pair details will be exposed by a reference data service.
+All clients will receive the same set of currency pairs.
+It should be possible to add or remove a currency pair in the system at runtime and get clients automatically updated, without requiring a restart.
+
+When a currency pair is added it should become available in the currency pair selector of SPOT tiles.
+When a currency pair is removed it should be removed from the currency pair selector and if a tile was streaming this currency pair it should be defaulted to no currency pair and stop streaming.
+
+In reality it is very rare to have to add or remove currency pairs. Reactive trader uses a simplified model and updating currency pairs is used to illustrate reference data changes at runetime: in a real application the same principles could be used to for instance propagate entitlements changes at runtime, roll maturity dates at end of day, etc.
+
+14. Client to minimize subscriptions when displaying multiple time the same currency pair stream
+------------------------------------------------------------------------------------------------
+
+The client could configure the application with multiple tiles using the same currency pair. To minimize network utilisation and improve efficiency the client should be able to detect that a stream is already subscribed and reuse this same stream for multiple tiles.
+
+15. Client should be able to switch back and force between tabs of tiles without incurring a long resubscription delay
+----------------------------------------------------------------------------------------------------------------------
+
+Tiles can be organized in tabs. When a tab is not active the tiles it contains should become inactive and unsubscribe from the server to minimize resource utilisation (both client side and server side). 
+
+It may happen that the user will switch to a tab and come back to the initial tab a few seconds later, it is therefore better to delay the unsubscription (15 seconds), to not force all unsubscription and then resubscription just after.
+
+Also a tab can contain lots of SPOT tiles so it is important to minimize the number of requests send to the server for this type of operation.
+
