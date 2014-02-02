@@ -1,0 +1,753 @@
+<?xml version="1.0" encoding="utf-16"?>
+<LogWatcher.LogConfig>
+  <DoubleClickAction>DetailView</DoubleClickAction>
+  <DicoHighlighting>
+    <LogWatcher.Common.Highlighting>
+      <Order>0</Order>
+      <Text>FATAL</Text>
+      <ForeColorArgb>-1</ForeColorArgb>
+      <BackColorArgb>-16777216</BackColorArgb>
+      <Bold>False</Bold>
+      <HightPriority>True</HightPriority>
+      <CaseSensitive>True</CaseSensitive>
+      <IsRegex>False</IsRegex>
+    </LogWatcher.Common.Highlighting>
+    <LogWatcher.Common.Highlighting>
+      <Order>2</Order>
+      <Text>[ERROR]</Text>
+      <ForeColorArgb>-1</ForeColorArgb>
+      <BackColorArgb>-65536</BackColorArgb>
+      <Bold>False</Bold>
+      <HightPriority>True</HightPriority>
+      <CaseSensitive>True</CaseSensitive>
+      <IsRegex>False</IsRegex>
+    </LogWatcher.Common.Highlighting>
+    <LogWatcher.Common.Highlighting>
+      <Order>4</Order>
+      <Text>WARN</Text>
+      <ForeColorArgb>-16777216</ForeColorArgb>
+      <BackColorArgb>-256</BackColorArgb>
+      <Bold>False</Bold>
+      <HightPriority>True</HightPriority>
+      <CaseSensitive>True</CaseSensitive>
+      <IsRegex>False</IsRegex>
+    </LogWatcher.Common.Highlighting>
+    <LogWatcher.Common.Highlighting>
+      <Order>5</Order>
+      <Text>INFO</Text>
+      <ForeColorArgb>-16777216</ForeColorArgb>
+      <BackColorArgb>-1</BackColorArgb>
+      <Bold>False</Bold>
+      <HightPriority>False</HightPriority>
+      <CaseSensitive>True</CaseSensitive>
+      <IsRegex>False</IsRegex>
+    </LogWatcher.Common.Highlighting>
+    <LogWatcher.Common.Highlighting>
+      <Order>6</Order>
+      <Text>DEBUG</Text>
+      <ForeColorArgb>-8355712</ForeColorArgb>
+      <BackColorArgb>-1</BackColorArgb>
+      <Bold>False</Bold>
+      <HightPriority>False</HightPriority>
+      <CaseSensitive>True</CaseSensitive>
+      <IsRegex>False</IsRegex>
+    </LogWatcher.Common.Highlighting>
+  </DicoHighlighting>
+  <DicoAlert>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>: Trade fields :</SearchText>
+      <Message>new Deal on TFM</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>\[ERROR\]</SearchText>
+      <Message>An error ocurred</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>52/.*new rfq xml</SearchText>
+      <Message>Rfq CTY</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>ADAM PRIMACK</SearchText>
+      <Message>ADAM PRIMACK</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>BLOOMBERG CREDIT: Trade fields :</SearchText>
+      <Message>Deal on BBGC</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>Change Rfq Trading Mode to</SearchText>
+      <Message>bug RMDS</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>Connection status change for Bloomberg RFP (83) : Connected </SearchText>
+      <Message>BBG RFP Connected</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>dealNotification.*asianSwap</SearchText>
+      <Message>Deal CTY</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>EBOX Product is IRS/Butterfly</SearchText>
+      <Message>Butterfly on Tradeweb</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>EBOX Product is IRS/CompSwitch</SearchText>
+      <Message>Curve on Tradeweb</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>EBOX Product is IRS/Switch</SearchText>
+      <Message>Curve on Tradeweb</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>Exception</SearchText>
+      <Message>exception</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>Impossible to found sales in Hermes Cache for ClientBdrId</SearchText>
+      <Message>Sales issue on TFM</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>instrument from DicoInstrument is null</SearchText>
+      <Message>Unknown Instrument</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>IrdStrategy</SearchText>
+      <Message>strategy on FirstAccess</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>Manual : Firm Off in MMM</SearchText>
+      <Message>Manual : Firm Off in MMM </Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>Market response Status=Nack</SearchText>
+      <Message>Deals Nack on TRS</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>Message from market received</SearchText>
+      <Message>Deal from TWD</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>Message from market received :</SearchText>
+      <Message>Tradeweb Depo new message</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>needs to be synchronized</SearchText>
+      <Message>Deal blocked</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>New rfq : id.*rfq={</SearchText>
+      <Message>New rfq</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>New Rfq from Tibco</SearchText>
+      <Message>new Rfq from firstaccess</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>new rfq.*(gbp|jpy)</SearchText>
+      <Message>GBP ou JPY</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>ProcessDepthUpdate : Invalid RMDS update</SearchText>
+      <Message>bug RMDS 2</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>Receive Deal Event Batch Message</SearchText>
+      <Message>TRS Deal</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>Receive Deal Event Batch Message :</SearchText>
+      <Message>New deals on TRS</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>Receive price from Invalid MMM source</SearchText>
+      <Message>bug RMDS 1</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>Receive Rmds Content :</SearchText>
+      <Message>EPP Rmds message</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>Receive Rmds Content.*State=Stale</SearchText>
+      <Message>Rmds Stale message</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>RfqType=MarketOrder</SearchText>
+      <Message>new SDP</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>Send to AutoNeg Type=End.*EndStatus=Accept</SearchText>
+      <Message>Deal on D2C</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>Starting Orchestrator </SearchText>
+      <Message>D2C start</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>STRIP</SearchText>
+      <Message>We received a strip</Message>
+      <IsActif>True</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>There was an error processing an action on a Rfq : Market Specific Error. Market Error: Rfcq Request not found</SearchText>
+      <Message>Market Error</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>TRADEWEB IRS New rfq.*marketorder</SearchText>
+      <Message>TWI Market order</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>UKTB</SearchText>
+      <Message>UK T-Bill Rfq</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>Validate Batch - .*DELETE</SearchText>
+      <Message>Delete on TRS</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>Validate Batch - deal event : header =.*MarketType\&gt;P</SearchText>
+      <Message>Deals on TRS on Primary market</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+    <LogWatcher.Common.AlertInfo>
+      <SearchText>we receive Rfq of a TradeAtClose list trading</SearchText>
+      <Message>TAC list on TWG</Message>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertInfo>
+  </DicoAlert>
+  <DicoAlertFile>
+    <LogWatcher.Common.AlertFile>
+      <FilePath>\\srvparems4\homeware$\NewD2C\logs\D2C_SF.log-file.txt</FilePath>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertFile>
+    <LogWatcher.Common.AlertFile>
+      <FilePath>\\srvparemsp01\homeware$\TFM5\logs\TFM_BBGB-logs-%DATE(yyyy-MM-dd).txt</FilePath>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertFile>
+    <LogWatcher.Common.AlertFile>
+      <FilePath>\\srvparemsp01\homeware$\TFM5\TFMTWIRS\logs\TFM_TWIRS-logs-%DATE(yyyy-MM-dd).txt</FilePath>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertFile>
+    <LogWatcher.Common.AlertFile>
+      <FilePath>\\srvparemsp02\homeware$\TFM5\TFM_BBG_US\logs\TFM_BBG_US-logs-%DATE(yyyy-MM-dd).txt</FilePath>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertFile>
+    <LogWatcher.Common.AlertFile>
+      <FilePath>\\srvparemsp02\homeware$\TFM5\TFM_BBGI\logs\TFM_BBGI-logs-%DATE(yyyy-MM-dd).txt</FilePath>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertFile>
+    <LogWatcher.Common.AlertFile>
+      <FilePath>\\srvparemsp02\homeware$\TFM5\TFM_TWI_US\Logs\TFM_TWI_US-logs-%DATE(yyyy-MM-dd).txt</FilePath>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertFile>
+    <LogWatcher.Common.AlertFile>
+      <FilePath>\\srvparemsp04\homeware$\D2C\logs\D2C_BBGB.log-file-%DATE(yyyy-MM-dd).txt</FilePath>
+      <IsActif>True</IsActif>
+    </LogWatcher.Common.AlertFile>
+    <LogWatcher.Common.AlertFile>
+      <FilePath>\\srvparemsp04\homeware$\D2C\logs\D2C_MAXS.log-file-%DATE(yyyy-MM-dd).txt</FilePath>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertFile>
+    <LogWatcher.Common.AlertFile>
+      <FilePath>\\srvparemsp04\homeware$\D2C\logs\D2C_TWSUP.log-file.txt</FilePath>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertFile>
+    <LogWatcher.Common.AlertFile>
+      <FilePath>\\srvparemsp04\homeware$\D2C\logs\D2CBD.log-file.txt</FilePath>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertFile>
+    <LogWatcher.Common.AlertFile>
+      <FilePath>\\srvparemsp04\homeware$\D2C_NEW\logs\D2C_TWG\D2C_TWG.log-file-%DATE(yyyy-MM-dd).txt</FilePath>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertFile>
+    <LogWatcher.Common.AlertFile>
+      <FilePath>\\srvparemsp05\homeware$\D2C\logs\D2C_BBG_US.log-file-%DATE(yyyy-MM-dd).txt</FilePath>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertFile>
+    <LogWatcher.Common.AlertFile>
+      <FilePath>\\srvparemsp05\homeware$\D2C\logs\D2C_BBGC.log-file-%DATE(yyyy-MM-dd).txt</FilePath>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertFile>
+    <LogWatcher.Common.AlertFile>
+      <FilePath>\\srvparemsp05\homeware$\D2C\logs\D2C_SGF_P.log-file.txt</FilePath>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertFile>
+    <LogWatcher.Common.AlertFile>
+      <FilePath>\\srvparemsp05\homeware$\D2C\logs\D2C_TWEUC.log-file-%DATE(yyyy-MM-dd).txt</FilePath>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertFile>
+    <LogWatcher.Common.AlertFile>
+      <FilePath>\\srvparemsp05\homeware$\D2C\logs\D2C_TWIRS.log-file-%DATE(yyyy-MM-dd).txt</FilePath>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertFile>
+    <LogWatcher.Common.AlertFile>
+      <FilePath>\\srvparemsp05\homeware$\D2C\logs\D2C_TWIUS.log-file-%DATE(yyyy-MM-dd).txt</FilePath>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertFile>
+    <LogWatcher.Common.AlertFile>
+      <FilePath>\\srvparemsp05\homeware$\D2C_NEW\logs\D2C_BBGIRS\D2C_BBGIRS.log-file-%DATE(yyyy-MM-dd).txt</FilePath>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertFile>
+    <LogWatcher.Common.AlertFile>
+      <FilePath>\\srvparemsp14\homeware$\TFM5\TFM_BBG_RFP\logs\TFM_BBG_RFP-logs-%DATE(yyyy-MM-dd).txt</FilePath>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertFile>
+    <LogWatcher.Common.AlertFile>
+      <FilePath>\\srvparemsp14\homeware$\TFM5\TFM_BBO\logs\TFM_BBO-logs-%DATE(yyyy-MM-dd).txt</FilePath>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertFile>
+    <LogWatcher.Common.AlertFile>
+      <FilePath>\\srvparemsp14\homeware$\TFM5\TFM_TRS\logs\TRS.log-file-%DATE(yyyy-MM-dd).txt</FilePath>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertFile>
+    <LogWatcher.Common.AlertFile>
+      <FilePath>\\srvparemsp14\homeware$\TFM5\TRS_BBG_RFP\logs\TRS_BBG_RFP.log-file-%DATE(yyyy-MM-dd).txt</FilePath>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertFile>
+    <LogWatcher.Common.AlertFile>
+      <FilePath>\\srvparemsp14\homeware$\TRS\TRS_LSE\logs\TFM_AGY-%DATE(yyyy-MM-dd).log</FilePath>
+      <IsActif>True</IsActif>
+    </LogWatcher.Common.AlertFile>
+    <LogWatcher.Common.AlertFile>
+      <FilePath>\\srvparemsp14\homeware$\TRS\TRS_LSE\logs\TRS_LSE.log-file-%DATE(yyyy-MM-dd).txt</FilePath>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertFile>
+    <LogWatcher.Common.AlertFile>
+      <FilePath>\\srvparemsp15\homeware$\TFM5\logs\TFM_BBGA-logs-%DATE(yyyy-MM-dd).txt</FilePath>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertFile>
+    <LogWatcher.Common.AlertFile>
+      <FilePath>\\srvparemsp15\homeware$\TFM5\logs\TFM_PRT-logs-%DATE(yyyy-MM-dd).txt</FilePath>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertFile>
+    <LogWatcher.Common.AlertFile>
+      <FilePath>\\Srvpartsnp20\EPP Package\logs\EPP-2011-05-26.log</FilePath>
+      <IsActif>False</IsActif>
+    </LogWatcher.Common.AlertFile>
+  </DicoAlertFile>
+  <DicoLoadedLog />
+  <LogBrowser>
+    <VirtualDirectories>
+      <Item Key="CTY">
+        <List>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>\\srvpard2cd01\homeware$\ISO_CTY\D2C\logs\D2C_SGF_I.log-file-%DATE(yyyy-MM-dd).txt</Path>
+            <Name>D2C CTY ISO</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>\\srvparems4\homeware$\NewD2C\CTY\logs\D2C_FACTY_D.log-file.txt</Path>
+            <Name>D2C Dev</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>\\srvparion3\homeware$\NEWD2C\logs\D2C_SGF_H.log-file-%DATE(yyyy-MM-dd).txt</Path>
+            <Name>D2C Hom</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>\\srvparems4\homeware$\Gateway\Logs\EventAggregator.log</Path>
+            <Name>EventAggregator Dev</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>\\srvparecnsg1h02\homeware$\Gateway\Logs\EventAggregator.log</Path>
+            <Name>EventAggregator Hom</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>\\srvpard2cd01\homeware$\EvenAgregator\Logs\EventAggregator.log</Path>
+            <Name>EventAggregator ISO</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>\\srvpard2cd01\homeware$\RFM\RFM_ISO_CTY\RFM-5.7.0\logs\RFM_CTY-logs.txt</Path>
+            <Name>RFM ISO</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>\\srvpard2cd02\homeware$\ISO_CTY\TFM\logs\TFM_IRS-logs-%DATE(yyyy-MM-dd).txt</Path>
+            <Name>TFM CTY ISO</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>\\srvparemsh01\homeware$\TFM5\TFMSGF\logs\TFM-logs.txt</Path>
+            <Name>TFM Homolo</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+        </List>
+      </Item>
+      <Item Key="Dev">
+        <List>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>C:\SG\Dev\svn\D2C\Orchestrator\WFTestApp\bin\logs\NewD2C_SJUGE*.txt</Path>
+            <Name>D2C Loc</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>C:\Data\EBOX\TestProject\bin\log\LogsEboxTest.txt</Path>
+            <Name>EboxTest</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>C:\SG\Dev\Svn\EPP\EPPTest\bin\logs\EPP-*.log</Path>
+            <Name>EPP</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>C:\SG\Dev\svn\D2C\QRM_Link\QRM\QRM.Core\bin\logs\NewD2C_SJUGE*.txt</Path>
+            <Name>QRM Loc</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>C:\SG\Dev\Svn\TFM-5.8.28-FixEbox\Core\bin\logs\TFM.log</Path>
+            <Name>TFM_Loc</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+        </List>
+      </Item>
+      <Item Key="EPP">
+        <List>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>\\srvpard2cd01\homeware$\EPP\logs\EPP_CDS_BBG-*.log</Path>
+            <Name>EPP Dev</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>\\srvpard2cd01\homeware$\EPP\logs\EPP-*.log</Path>
+            <Name>EPP ISO</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>C:\SG\Dev\Svn\EPP\EPPTest\bin\logs\EPP-%DATE(yyyy-MM-dd).log</Path>
+            <Name>EPP Loc</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>\\Srvpartsnp20\EPP Package\logs\EPP-*.log</Path>
+            <Name>EPP Prod</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+        </List>
+      </Item>
+      <Item Key="Gateway SGFirst">
+        <List>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>C:\Projects\sjuge_EventAggregator_CTY\EMP\Projects\Gateway\Gateway\Logs\EventAggregator.log</Path>
+            <Name>EventAggregator CTY</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>\\srvparems4\homeware$\Gateway\Logs\EventAggregator.log</Path>
+            <Name>EventAggregator Dev</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>\\srvparecnsg1h02\homeware$\Gateway\Logs\EventAggregator.log</Path>
+            <Name>EventAggregator Hom</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>C:\Projects\sjuge_EventAggregator\EMP\Projects\Gateway\Gateway\Logs\EventAggregator.log</Path>
+            <Name>EventAggregator local</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>\\SrvParEcnSg1P03\homeware$\gateway\Logs\EventAggregator.log</Path>
+            <Name>EventAggregator prod</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>\\srvparneoh02\homeware$\NeoLogs\NeoGui\SGFirst.log</Path>
+            <Name>SGFirst Hom</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>\\srvparngtd01\homeware$\SGFirstLogs\SGFirst.log</Path>
+            <Name>SGFirst.log</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+        </List>
+      </Item>
+      <Item Key="MMM Dev">
+        <List>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>\\srvpard2cd01\homeware$\MMM\Logs\MMM\DDR\DDR_SCR\Ddr.Server.log</Path>
+            <Name>DDR SCR</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>\\srvpard2cd02\homeware$\MMM\Logs\MMM\MMM\MMM_D2C_CDT_SCR\Mmm.Server.log</Path>
+            <Name>MMM CDT SCR</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>\\srvpard2cd01\homeware$\MMM\Logs\MMM\MMM\MMM_D2C_GOV_SCR\Mmm.Server.log</Path>
+            <Name>MMM GOV SCR</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>\\srvpard2cd01\homeware$\MMM\Logs\MMM\MMM\MMM_D2C_GOV_US_SCR\Mmm.Server.log</Path>
+            <Name>MMM US SCR</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+        </List>
+      </Item>
+      <Item Key="RFM Prod">
+        <List>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>\\srvparemsp01\homeware$\RFM5\RFM_CTY\Logs\RFM_CTY-logs.txt</Path>
+            <Name>RFM CTY</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+        </List>
+      </Item>
+      <Item Key="TRS Dev">
+        <List>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>\\srvpard2cd02\homeware$\TRS\TRS_BBG_RFP\logs\TRS_BBG_RFP.log-file-%DATE(yyyy-MM-dd).txt</Path>
+            <Name>TRS BBG RFP</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>\\srvpard2cd02\homeware$\TRS\TRS_LSE\logs\TRS_LSE.log-file-%DATE(yyyy-MM-dd).txt</Path>
+            <Name>TRS LSE</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>\\srvpard2cd02\homeware$\TRS\TRS_MSW\logs\TRS_MSW.log-file-%DATE(yyyy-MM-dd).txt</Path>
+            <Name>TRS Swapswire</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+        </List>
+      </Item>
+      <Item Key="TW Deposit">
+        <List>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>\\srvparems4\homeware$\Tradeweb Deposit Connector\logs\TWD_Connector.log-%DATE(yyyy-MM-dd).txt</Path>
+            <Name>TWD_Connector Dev</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>C:\SVN_Project\TradewebDepo_trunk\Connector_Test\bin\logs\TWD_Connector.log-%DATE(yyyy-MM-dd).txt</Path>
+            <Name>TWD_Connector Loc</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+          <LogWatcher.Common.LogBrowserVirtualFile>
+            <Path>\\srvpar5bap02\homeware$\TradewebDeposit\Logs\TWD_Connector.log-%DATE(yyyy-MM-dd).txt</Path>
+            <Name>TWD_Connector Prod</Name>
+          </LogWatcher.Common.LogBrowserVirtualFile>
+        </List>
+      </Item>
+    </VirtualDirectories>
+    <RealDirectories>
+      <LogWatcher.Common.LogBrowserItem>
+        <Name>Dev D2C</Name>
+        <Path>\\srvpard2cd01\homeware$\D2C\logs</Path>
+        <Filter>.log-file.*.txt$</Filter>
+      </LogWatcher.Common.LogBrowserItem>
+      <LogWatcher.Common.LogBrowserItem>
+        <Name>Dev IDS</Name>
+        <Path>\\srvpard2cd03\homeware$\IDS\logs;\\srvparidsd01\homeware$\IDS\logs</Path>
+        <Filter>.txt$</Filter>
+      </LogWatcher.Common.LogBrowserItem>
+      <LogWatcher.Common.LogBrowserItem>
+        <Name>Dev QRM</Name>
+        <Path>\\srvparmmmd01\homeware$\Logs\MMM\QRM</Path>
+        <Filter>.*.log$</Filter>
+      </LogWatcher.Common.LogBrowserItem>
+      <LogWatcher.Common.LogBrowserItem>
+        <Name>Dev TFM</Name>
+        <Path>\\srvpard2cd02\homeware$\TFM5\Logs;\\srvpard2cd02\homeware$\TFM\Logs</Path>
+        <Filter>TFM.*txt$|TFM.*log$</Filter>
+      </LogWatcher.Common.LogBrowserItem>
+      <LogWatcher.Common.LogBrowserItem>
+        <Name>Dev TRS</Name>
+        <Path>\\srvpard2cd02\homeware$\TRS</Path>
+        <Filter>.log-file.*.txt$</Filter>
+      </LogWatcher.Common.LogBrowserItem>
+      <LogWatcher.Common.LogBrowserItem>
+        <Name>EPP Prod</Name>
+        <Path>\\Srvpartsnp20\EPP Package\logs</Path>
+        <Filter>.*.log$</Filter>
+      </LogWatcher.Common.LogBrowserItem>
+      <LogWatcher.Common.LogBrowserItem>
+        <Name>Hom D2C</Name>
+        <Path>\\srvparion3\homeware$\D2C_NEW\logs; \\srvparion3\homeware$\NEWD2C\logs; \\srvpard2ch01\homeware$\D2C\logs; \\srvpard2ch01\homeware$\D2C_NEW\logs; \\srvpard2ch02\homeware$\D2C_NEW\logs; \\srvpard2ch02\homeware$\NEWD2C\logs</Path>
+        <Filter>.log-file.*.txt$</Filter>
+      </LogWatcher.Common.LogBrowserItem>
+      <LogWatcher.Common.LogBrowserItem>
+        <Name>Hom IDS</Name>
+        <Path>\\srvparemsh01\Homeware$\IDS_New\Logs;\\srvparidsh03\homeware$\IDS_NEW\logs</Path>
+        <Filter>.txt$</Filter>
+      </LogWatcher.Common.LogBrowserItem>
+      <LogWatcher.Common.LogBrowserItem>
+        <Name>Hom QRM</Name>
+        <Path>\\srvparmmmh02\homeware$\Logs\MMM\QRM</Path>
+        <Filter>.*.log$</Filter>
+      </LogWatcher.Common.LogBrowserItem>
+      <LogWatcher.Common.LogBrowserItem>
+        <Name>Hom TFM</Name>
+        <Path>\\srvparemsh01\homeware$\TFM5\logs;\\srvparemsh02\homeware$\TFM5\logs;\\srvparemsh03\homeware$\TFM5\logs;\\srvparemsh01\homeware$\TFM\logs;\\srvparemsh02\homeware$\TFM\logs;\\srvparemsh03\homeware$\TFM\logs;\\srvparidsh03\homeware$\TFM\logs;</Path>
+        <Filter>TFM.*txt$|TFM.*log$</Filter>
+      </LogWatcher.Common.LogBrowserItem>
+      <LogWatcher.Common.LogBrowserItem>
+        <Name>Hom TRS</Name>
+        <Path>\\srvparemsh01\homeware$\TRS\logs</Path>
+        <Filter>.log-file.*.txt$</Filter>
+      </LogWatcher.Common.LogBrowserItem>
+      <LogWatcher.Common.LogBrowserItem>
+        <Name>Prod D2C</Name>
+        <Path>\\srvparemsp04\homeware$\D2C\logs; \\srvparemsp05\homeware$\D2C\logs; \\srvparemsp04\homeware$\D2C_NEW\logs; \\srvparemsp05\homeware$\D2C_NEW\logs</Path>
+        <Filter>.log-file.*.txt$</Filter>
+      </LogWatcher.Common.LogBrowserItem>
+      <LogWatcher.Common.LogBrowserItem>
+        <Name>Prod IDS</Name>
+        <Path>\\srvparidsp01\homeware$\IDS\Logs;\\srvparidsp02\homeware$\IDS\logs;\\srvparidsp01\homeware$\IDS2\logs;\\srvparidsp02\homeware$\IDS2\logs;\\srvparidsp03\homeware$\IDS\logs;\\srvparidsp04\homeware$\IDS\logs;\\srvparidsp03\homeware$\IDS2\logs;\\srvparidsp04\homeware$\IDS2\logs;\\srvparidsp05\homeware$\IDS\logs;\\srvparidsp06\homeware$\IDS\logs;\\srvparidsp05\homeware$\IDS2\logs;\\srvparidsp06\homeware$\IDS2\logs;\\srvparemsp10\homeware$\IDS\logs;\\srvparemsp11\homeware$\IDS\logs;\\srvparemsp10\homeware$\IDS_NEW\logs;\\srvparemsp11\homeware$\IDS_NEW\logs;\\srvparidsp07\homeware$\IDS2\Logs;\\srvparidsp08\homeware$\IDS2\Logs;</Path>
+        <Filter>.txt$</Filter>
+      </LogWatcher.Common.LogBrowserItem>
+      <LogWatcher.Common.LogBrowserItem>
+        <Name>Prod TFM</Name>
+        <Path>\\srvparemsp01\homeware$\TFM5\logs; \\srvparemsp02\homeware$\TFM5\logs; \\srvparemsp14\homeware$\TFM5\logs; \\srvparemsp15\homeware$\TFM5\logs;\\srvparemsp01\homeware$\TFM\logs; \\srvparemsp02\homeware$\TFM\logs; \\srvparemsp14\homeware$\TFM\logs; \\srvparemsp15\homeware$\TFM\logs; \\srvparemsp16\homeware$\TFM\logs; \\srvparemsp17\homeware$\TFM\logs</Path>
+        <Filter>TFM.*txt$|TFM.*log$</Filter>
+      </LogWatcher.Common.LogBrowserItem>
+      <LogWatcher.Common.LogBrowserItem>
+        <Name>Prod TRS</Name>
+        <Path>\\srvparemsp14\homeware$\TRS\logs</Path>
+        <Filter>.log-file.*.txt$</Filter>
+      </LogWatcher.Common.LogBrowserItem>
+    </RealDirectories>
+  </LogBrowser>
+  <DicoProfile />
+  <DicoPlugin />
+  <DicoSearchedKeyword>
+    <System.String>000208</System.String>
+    <System.String>000208|208_58_20121017</System.String>
+    <System.String>000208|208_58_20121017|===</System.String>
+    <System.String>000208|39_208|===</System.String>
+    <System.String>000208|208_58_20121017_0</System.String>
+    <System.String>00058|208_58_20121017_0</System.String>
+    <System.String>method</System.String>
+    <System.String>legacy</System.String>
+    <System.String>fabrice</System.String>
+    <System.String>0001</System.String>
+    <System.String>0001|39_1_20121017</System.String>
+    <System.String>39_1_20121017</System.String>
+    <System.String>00012|39_12_20121017</System.String>
+    <System.String>322_20121009_08</System.String>
+    <System.String>322</System.String>
+    <System.String>000322</System.String>
+    <System.String>STRIP</System.String>
+    <System.String>970_20121009</System.String>
+    <System.String>strip</System.String>
+    <System.String>: Quoting \[| New rfq : id=|Ion update of Rfq, modified fields|The Depth is |LogRmdsCont|Rfq Trading Mode is|\[ERROR\]|===|: Connected|: Disconnected.*\[|The user name.*is not valid|===|login.*\[Ecn.Ebox.Order.Ion.|Application Registered on ION platform</System.String>
+    <System.String>categor</System.String>
+    <System.String>InstCatName</System.String>
+    <System.String>ids</System.String>
+    <System.String>bil</System.String>
+    <System.String>InstCatName|BLOOMBERG BONDS New rfq</System.String>
+    <System.String>000026</System.String>
+    <System.String>0030</System.String>
+    <System.String>0030_</System.String>
+    <System.String>BAM</System.String>
+    <System.String>18_1283_20121018_1</System.String>
+    <System.String>18_1283</System.String>
+    <System.String>1283</System.String>
+    <System.String>18_1283_20121018</System.String>
+    <System.String>18_</System.String>
+    <System.String>BLOOMBERG CREDIT: Trade fields </System.String>
+    <System.String>1283_20121018</System.String>
+    <System.String>283_20121018</System.String>
+    <System.String>creder</System.String>
+    <System.String>cred</System.String>
+    <System.String>tfmadmingfi</System.String>
+    <System.String>srvparemsp01</System.String>
+    <System.String>6814</System.String>
+    <System.String>Tibco component sent Deal|] Build xml  deal  :|===|Real time TradeSplit|: Trade fields :|: Connected.*Ecn.Ebox|: Disconnected.*Ecn.Ebox|\[ERROR\]|Build xml  deal|Build xml deal|Filtered deal|Duplicate deal.*filtered out|Rawdeals dump :|: Execution:|Receive message from TFM GUI|Impossible to found sales in Hermes|Counterpart is not known|TradeSplit fields|Send tibco</System.String>
+    <System.String>IONBRIDGE</System.String>
+    <System.String>ConnectToMarket</System.String>
+    <System.String>ConnectToMarket|Market Connection</System.String>
+    <System.String>ConnectToMarket|Market Connection 10</System.String>
+    <System.String>ConnectToMarket|Market Connection 10|\[EUR.CM_TRADE.</System.String>
+    <System.String>new rfq</System.String>
+    <System.String>New rfq : id.*rfq={|===|: Connected|: Disconnected.*\[|The user name.*is not valid|login.*\[Ecn.Ebox.Order.Ion.|\[ERROR\]|Ion update of Rfq, modified fields|: Quoting \[|instrument with tradecode.*was not found</System.String>
+    <System.String>New rfq :</System.String>
+    <System.String>prepar</System.String>
+    <System.String>switch</System.String>
+    <System.String>cross</System.String>
+    <System.String>000231</System.String>
+    <System.String>prepa</System.String>
+    <System.String>prepa.*000231</System.String>
+    <System.String>Send to AutoNeg Type=|Action from AutoNeg</System.String>
+    <System.String>5360818</System.String>
+    <System.String>5360818|===</System.String>
+    <System.String>Validate Batch - deal|Market response Status|: Trade report order created with ionId|exception|: Connected|: Disconnected.*\[|: login.*was successful.|: login.*failed:|Trade report create with following parameters|===</System.String>
+    <System.String>206_20121022</System.String>
+    <System.String>206_20121022_0</System.String>
+    <System.String>206_20121022_1</System.String>
+    <System.String>hermes</System.String>
+    <System.String>===|: Connected|: Disconnected.*\[|The user name.*is not valid|===|login.*\[Ecn.Ebox.Order.Ion.|Application Registered on ION platform</System.String>
+    <System.String>===|\[ERROR\]|Dictionary Validated|Step to|DB Products|Retrieved Dictionary|Scheduled time :|Creating market retriever for market|Initialize complete|Connection successfull|\[Publisher :|New instrument received from the GUI|Stopping </System.String>
+    <System.String>000045</System.String>
+    <System.String>Receive Tibco Message CreditCheck response</System.String>
+    <System.String>oparec.*(Tibco component sent Deal|] Build xml  deal  :|===|Real time TradeSplit|: Trade fields :|: Connected.*Ecn.Ebox|: Disconnected.*Ecn.Ebox|\[ERROR\]|Build xml  deal|Build xml deal|Filtered deal|Duplicate deal.*filtered out|Rawdeals dump :|: Execution:|Receive message from TFM GUI|Impossible to found sales in Hermes|Counterpart is not known|TradeSplit fields|Send tibco)|(Tibco component sent Deal|] Build xml  deal  :|===|Real time TradeSplit|: Trade fields :|: Connected.*Ecn.Ebox|: Disconnected.*Ecn.Ebox|\[ERROR\]|Build xml  deal|Build xml deal|Filtered deal|Duplicate deal.*filtered out|Rawdeals dump :|: Execution:|Receive message from TFM GUI|Impossible to found sales in Hermes|Counterpart is not known|TradeSplit fields|Send tibco).*oparec</System.String>
+    <System.String>0000007</System.String>
+    <System.String>419_20121025</System.String>
+    <System.String>searchm</System.String>
+    <System.String>searchmet</System.String>
+    <System.String>idfmrk</System.String>
+    <System.String>104175877</System.String>
+    <System.String>error</System.String>
+    <System.String>9127956U0</System.String>
+    <System.String>9127956U0.*(Validate Batch - deal|Market response Status|: Trade report order created with ionId|exception|: Connected|: Disconnected.*\[|: login.*was successful.|: login.*failed:|Trade report create with following parameters|===)|(Validate Batch - deal|Market response Status|: Trade report order created with ionId|exception|: Connected|: Disconnected.*\[|: login.*was successful.|: login.*failed:|Trade report create with following parameters|===).*9127956U0</System.String>
+    <System.String>9127956U0.*(Tibco component sent Deal|] Build xml  deal  :|===|Real time TradeSplit|: Trade fields :|: Connected.*Ecn.Ebox|: Disconnected.*Ecn.Ebox|\[ERROR\]|Build xml  deal|Build xml deal|Filtered deal|Duplicate deal.*filtered out|Rawdeals dump :|: Execution:|Receive message from TFM GUI|Impossible to found sales in Hermes|Counterpart is not known|TradeSplit fields|Send tibco)|(Tibco component sent Deal|] Build xml  deal  :|===|Real time TradeSplit|: Trade fields :|: Connected.*Ecn.Ebox|: Disconnected.*Ecn.Ebox|\[ERROR\]|Build xml  deal|Build xml deal|Filtered deal|Duplicate deal.*filtered out|Rawdeals dump :|: Execution:|Receive message from TFM GUI|Impossible to found sales in Hermes|Counterpart is not known|TradeSplit fields|Send tibco).*9127956U0</System.String>
+    <System.String>tradebook</System.String>
+    <System.String>201210300003323200011</System.String>
+    <System.String>7008250</System.String>
+    <System.String>creditcheck*</System.String>
+    <System.String>AUTONEG.MULTIPASS.Limit.CheckAndReserve</System.String>
+    <System.String>CPTrader</System.String>
+    <System.String>CPTrader|error</System.String>
+    <System.String>Tibco component sent Deal| Action\&gt;Ack.*(Tibco component sent Deal|] Build xml  deal  :|===|Real time TradeSplit|: Trade fields :|: Connected.*Ecn.Ebox|: Disconnected.*Ecn.Ebox|\[ERROR\]|Build xml  deal|Build xml deal|Filtered deal|Duplicate deal.*filtered out|Rawdeals dump :|: Execution:|Receive message from TFM GUI|Impossible to found sales in Hermes|Counterpart is not known|TradeSplit fields|Send tibco)|(Tibco component sent Deal|] Build xml  deal  :|===|Real time TradeSplit|: Trade fields :|: Connected.*Ecn.Ebox|: Disconnected.*Ecn.Ebox|\[ERROR\]|Build xml  deal|Build xml deal|Filtered deal|Duplicate deal.*filtered out|Rawdeals dump :|: Execution:|Receive message from TFM GUI|Impossible to found sales in Hermes|Counterpart is not known|TradeSplit fields|Send tibco).*Tibco component sent Deal| Action\&gt;Ack</System.String>
+    <System.String>Tibco component sent Deal|Action\&gt;Ack</System.String>
+    <System.String>reload</System.String>
+    <System.String>TWE_BROKER</System.String>
+    <System.String>reloadf</System.String>
+    <System.String>B_20121105F00_001495321</System.String>
+    <System.String>CME_LONDON</System.String>
+    <System.String>qrm</System.String>
+    <System.String>D2C.heart</System.String>
+    <System.String>SG Customer</System.String>
+    <System.String>sgcust1</System.String>
+    <System.String>curve</System.String>
+    <System.String>fly</System.String>
+  </DicoSearchedKeyword>
+  <IsSingleInstance>False</IsSingleInstance>
+  <AlwaysOnTop>False</AlwaysOnTop>
+  <WrapLine>False</WrapLine>
+  <SaveLogsOnClose>False</SaveLogsOnClose>
+  <ShowLogBrowser>True</ShowLogBrowser>
+  <ShowFilterHistoric>True</ShowFilterHistoric>
+  <ShowSelectedView>True</ShowSelectedView>
+  <LogBrowserState>DockLeftAutoHide</LogBrowserState>
+  <SelectedViewState>DockBottom</SelectedViewState>
+  <FilterHistoricState>DockBottom</FilterHistoricState>
+  <LoadOnlyEof>False</LoadOnlyEof>
+  <ShowWarnBanner>True</ShowWarnBanner>
+  <ShowOnlyLogBrowserFileNumDays>3</ShowOnlyLogBrowserFileNumDays>
+  <EofSizeToLoad>10</EofSizeToLoad>
+  <MaxSizeToPrompt>150</MaxSizeToPrompt>
+  <ContextRowNbr>200</ContextRowNbr>
+  <LocationX>-8</LocationX>
+  <LocationY>-8</LocationY>
+  <Width>160</Width>
+  <Height>24</Height>
+  <FullScreen>True</FullScreen>
+  <Version>1</Version>
+  <DefaultFont>
+    <Name>Courier New</Name>
+    <Size>8.25</Size>
+    <Style>Regular</Style>
+  </DefaultFont>
+  <DefaultEncoding>Default</DefaultEncoding>
+</LogWatcher.LogConfig>
