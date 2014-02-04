@@ -16,6 +16,8 @@ We build reactive trader to demonstrate what we think a reactive UI application 
 Requirements
 ============
 
+This section contains functional and non-functional requirements for the app. For a discussion are UI / UX requirements, have a look on the [wiki](https://github.com/AdaptiveConsulting/ReactiveTrader/wiki/UX)
+
 1. Display real-time streaming prices
 ------------------------------------
 
