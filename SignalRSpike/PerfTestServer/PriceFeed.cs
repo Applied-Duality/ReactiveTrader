@@ -10,7 +10,7 @@ namespace PerfTestServer
         public static readonly PriceFeed Instance = new PriceFeed();
         private Timer _timer;
         private SpotPrice _quote;
-        private const int UpdatesPerTick = 50;
+        private const int UpdatesPerTick = 2;
         private const int UpdatePeriodMs = 5;
 
         private PriceFeed()
