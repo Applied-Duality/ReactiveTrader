@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Reactive.Linq;
-using System.Threading.Tasks;
 using Dto;
 using log4net;
 
 namespace Client
 {
-    class SampleClient : ISampleClient
+    internal class SampleClient : ISampleClient
     {
-        private readonly ITransport _transport;
-        private readonly ISpotStreamRepository _spotStreamRepository;
-        private readonly IExecutionServiceClient _executionServiceClient;
-        private readonly ITradeRepository _tradeRepository;
+        private static readonly ILog Log = LogManager.GetLogger(typeof (SampleClient));
         private readonly ICurrencyPairRepository _currencyPairRepository;
-
-        private static readonly ILog Log = LogManager.GetLogger(typeof(SampleClient));
+        private readonly IExecutionServiceClient _executionServiceClient;
+        private readonly ISpotStreamRepository _spotStreamRepository;
+        private readonly ITradeRepository _tradeRepository;
+        private readonly ITransport _transport;
 
         public SampleClient(
             ITransport transport,
@@ -30,18 +28,49 @@ namespace Client
             _currencyPairRepository = currencyPairRepository;
         }
 
-        public async Task Start()
+        public void Start()
         {
-            try
-            {
-                await _transport.Initialize("http://localhost:8080", "Olivier");
-            }
-            catch (Exception e)
-            {
-                Log.Fatal("An error occured while initializing Transport", e);
-                throw;
-            }
+            _transport.TransportStatuses.Subscribe(
+                status =>
+                {
+                    switch (status)
+                    {
+                        case TransportStatus.Connecting:
+                            // dispay some visual clue that the app is loading
+                            break;
+                        case TransportStatus.Connected:
+                            // OK we are connected
+                            break;
+                        case TransportStatus.ConnectionSlow:
+                            // network issue, we are likely disconnected at this stage. Notify user that the connection has an issue
+                            // this happens when we have missed some keep alive but SignalR has not yet decided that the trasnport was disconnected
+                            break;
+                        case TransportStatus.Reconnecting:
+                            // we've lost the connection and SignalR is trying to reconnect automatically
+                            break;
+                        case TransportStatus.Reconnected:
+                            // SignalR managed to reconnect to the server
+                            break;
+                        case TransportStatus.Closed:
+                            // SignalR stopped reconnecting. It is now our responsibility to restart the transport, potentially with another server.
+                            break;
+                    }
+                });
 
+            // dispose transportSubscription to stop the transport
+            IDisposable transportSubscription = _transport.Initialize("http://localhost:8080", "Olivier")
+                .Subscribe(_ =>
+                {
+                    Log.Info("Transport initialized");
+
+                    Run();
+                },
+                    ex => Log.Error("An error occured within SignalR transport.", ex),
+                    () => Log.Info("Transport status stream completed, it was closed."));
+        }
+
+        private async void Run()
+        {
             await _currencyPairRepository.Initialize();
 
             _tradeRepository.GetAllTrades()
@@ -50,14 +79,14 @@ namespace Client
                     ex => Log.Error("An error occured within the blotter stream", ex),
                     () => Log.InfoFormat("Blotter stream completed"));
 
-            foreach (var currencyPair in _currencyPairRepository.GetAllCurrencyPairs())
+            foreach (CurrencyPair currencyPair in _currencyPairRepository.GetAllCurrencyPairs())
             {
-                var symbol = currencyPair.Symbol;
+                string symbol = currencyPair.Symbol;
 
                 if (symbol == "EURGBP")
                 {
                     _spotStreamRepository.GetSpotStream("EURGBP")
-                        .Do(p => Log.InfoFormat((string) "New price received: {0}", (object) p))
+                        .Do(p => Log.InfoFormat("New price received: {0}", p))
                         .Skip(3)
                         .Take(1)
                         .Subscribe(async p =>
@@ -72,7 +101,7 @@ namespace Client
                             try
                             {
                                 Log.InfoFormat("Executing on price {0}", p);
-                                var trade = await _executionServiceClient.Execute(spotTradeRequest);
+                                SpotTrade trade = await _executionServiceClient.Execute(spotTradeRequest);
                                 Log.InfoFormat("Execution complexted: {0}", trade);
                             }
                             catch (Exception e)

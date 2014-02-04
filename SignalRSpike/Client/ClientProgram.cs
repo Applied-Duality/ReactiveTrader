@@ -14,13 +14,13 @@ namespace Client
             Console.ReadKey();
         }
 
-        private static async void Start()
+        private static void Start()
         {
             var bootstrapper = new Bootstrapper();
             var container = bootstrapper.Build();
 
             var sampleClient = container.Resolve<ISampleClient>();
-            await sampleClient.Start();
+            sampleClient.Start();
         }
     }
 }

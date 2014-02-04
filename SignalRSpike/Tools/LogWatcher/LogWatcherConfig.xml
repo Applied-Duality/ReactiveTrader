@@ -725,7 +725,7 @@
   <IsSingleInstance>False</IsSingleInstance>
   <AlwaysOnTop>False</AlwaysOnTop>
   <WrapLine>False</WrapLine>
-  <SaveLogsOnClose>False</SaveLogsOnClose>
+  <SaveLogsOnClose>True</SaveLogsOnClose>
   <ShowLogBrowser>True</ShowLogBrowser>
   <ShowFilterHistoric>True</ShowFilterHistoric>
   <ShowSelectedView>True</ShowSelectedView>

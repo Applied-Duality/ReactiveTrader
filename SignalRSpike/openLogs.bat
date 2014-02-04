@@ -1,0 +1,1 @@
+.\Tools\LogWatcher\LogWatcher.exe

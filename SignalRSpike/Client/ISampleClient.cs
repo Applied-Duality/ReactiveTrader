@@ -1,9 +1,7 @@
-﻿using System.Threading.Tasks;
-
-namespace Client
+﻿namespace Client
 {
     internal interface ISampleClient
     {
-        Task Start();
+        void Start();
     }
 }
