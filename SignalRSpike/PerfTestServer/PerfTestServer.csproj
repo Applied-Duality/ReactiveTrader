@@ -81,9 +81,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Dto\Dto.csproj">
-      <Project>{4252375A-45F7-4365-AAF2-4012109F2DAE}</Project>
-      <Name>Dto</Name>
+    <ProjectReference Include="..\PerfTestDto\PerfTestDto.csproj">
+      <Project>{98E21A2C-4DCE-457C-9A9E-D22252B6EE51}</Project>
+      <Name>PerfTestDto</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

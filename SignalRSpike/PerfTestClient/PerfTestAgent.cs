@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
-using Dto.Pricing;
 using Microsoft.AspNet.SignalR.Client;
+using PerfTestDto;
 
 namespace PerfTestClient
 {
@@ -10,6 +11,7 @@ namespace PerfTestClient
         private readonly int _agentId;
         private volatile int _priceCount;
         private Timer _timer;
+        private long _cumulativeLatencyTicks;
 
         public PerfTestAgent(int agentId)
         {
@@ -21,7 +23,7 @@ namespace PerfTestClient
             var hubConnection = new HubConnection("http://localhost:8080");
 
             var hub = hubConnection.CreateHubProxy("PerfTestHub");
-            hub.On<SpotPrice>("OnNewPrice", OnNewPrice);
+            hub.On<PerfTestSpotPrice>("OnNewPrice", OnNewPrice);
 
             await hubConnection.Start();
             await hub.Invoke("RegisterClient");
@@ -31,13 +33,17 @@ namespace PerfTestClient
 
         private void OnTimerTick(object state)
         {
-            Console.WriteLine("Agent[{0}]: Received {1} updates per second", _agentId, _priceCount / 10);
+            var latencyMs = ((double) _cumulativeLatencyTicks/Stopwatch.Frequency)*1000.0/_priceCount;
+
+            Console.WriteLine("Agent[{0}]: Received {1} updates per second, average latency {2:0.0}ms", _agentId, _priceCount / 10, latencyMs);
             _priceCount = 0;
+            _cumulativeLatencyTicks = 0;
         }
 
-        private void OnNewPrice(SpotPrice obj)
+        private void OnNewPrice(PerfTestSpotPrice priceUpdate)
         {
             _priceCount++;
+            _cumulativeLatencyTicks += Stopwatch.GetTimestamp() - priceUpdate.Timestamp;
         }
     }
 }

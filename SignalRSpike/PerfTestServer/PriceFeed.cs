@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
-using Dto.Pricing;
 using Microsoft.AspNet.SignalR.Hubs;
+using PerfTestDto;
 
 namespace PerfTestServer
 {
@@ -9,7 +10,7 @@ namespace PerfTestServer
     {
         public static readonly PriceFeed Instance = new PriceFeed();
         private Timer _timer;
-        private SpotPrice _quote;
+        private PerfTestSpotPrice _quote;
         private const int UpdatesPerTick = 2;
         private const int UpdatePeriodMs = 5;
 
@@ -19,7 +20,7 @@ namespace PerfTestServer
 
         public void Start()
         {
-            _quote = new SpotPrice
+            _quote = new PerfTestSpotPrice
             {
                 QuoteId = 0,
                 Ask = 1.2345m,
@@ -36,6 +37,8 @@ namespace PerfTestServer
         private void OnTimerTick(object state)
         {
             if (Context == null) return;
+
+            _quote.Timestamp = Stopwatch.GetTimestamp();
 
             for (int i = 0; i < UpdatesPerTick; i++)
             {
