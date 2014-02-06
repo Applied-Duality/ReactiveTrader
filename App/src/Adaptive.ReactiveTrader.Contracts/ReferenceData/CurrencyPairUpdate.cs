@@ -2,7 +2,7 @@
 {
     public class CurrencyPairUpdate
     {
-        UpdateType UpdateType { get; set; }
-        CurrencyPair CurrencyPair { get; set; }
+        public UpdateType UpdateType { get; set; }
+        public CurrencyPair CurrencyPair { get; set; }
     }
 }

@@ -1,9 +1,9 @@
 ﻿using System;
 using Adaptive.ReactiveTrader.Contracts.Pricing;
 
-namespace Adaptive.ReactiveTrader.Client.Transport
+namespace Adaptive.ReactiveTrader.Client.ServiceClients.Pricing
 {
-    public interface ISpotStreamRepository
+    public interface IPricingServiceClient
     {
         IObservable<SpotPrice> GetSpotStream(string currencyPair);
     }

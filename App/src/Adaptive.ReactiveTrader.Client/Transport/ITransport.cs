@@ -9,9 +9,6 @@ namespace Adaptive.ReactiveTrader.Client.Transport
         IObservable<Unit> Initialize(string address, string userName);
         IObservable<TransportStatus> TransportStatuses { get; }
 
-        IHubProxy PricingHubProxy { get; }
-        IHubProxy BlotterHubProxy { get; }
-        IHubProxy ExecutionHubProxy { get; }
-        IHubProxy ReferenceDataHubProxy { get; }
+        IHubProxy GetProxy(string hubName);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -14,6 +15,8 @@ namespace Adaptive.ReactiveTrader.Client.Transport
         private static readonly ILog Log = LogManager.GetLogger(typeof(Transport));
 
         private readonly ISubject<TransportStatus> _transportStatuses = new ReplaySubject<TransportStatus>(1);
+        private HubConnection _hubConnection;
+        private readonly ConcurrentDictionary<string, IHubProxy> _proxies = new ConcurrentDictionary<string, IHubProxy>(); 
 
         public IObservable<Unit> Initialize(string address, string userName)
         {
@@ -21,36 +24,31 @@ namespace Adaptive.ReactiveTrader.Client.Transport
             {
                 _transportStatuses.OnNext(TransportStatus.Connecting);
 
-                var hubConnection = new HubConnection(address);
-                hubConnection.Headers.Add(ServiceConstants.Server.UsernameHeader, userName);
-
-                PricingHubProxy = hubConnection.CreateHubProxy(ServiceConstants.Server.PricingHub);
-                BlotterHubProxy = hubConnection.CreateHubProxy(ServiceConstants.Server.BlotterHub);
-                ReferenceDataHubProxy = hubConnection.CreateHubProxy(ServiceConstants.Server.ReferenceDataHub);
-                ExecutionHubProxy = hubConnection.CreateHubProxy(ServiceConstants.Server.ExecutionHub);
+                _hubConnection = new HubConnection(address);
+                _hubConnection.Headers.Add(ServiceConstants.Server.UsernameHeader, userName);
 
                 Log.InfoFormat("Connecting to server {0} with user {1}...", address, userName);
 
                 // http://www.asp.net/signalr/overview/signalr-20/hubs-api/handling-connection-lifetime-events#timeoutkeepalive
                 // TODO unsubscribe events 
-                hubConnection.Closed += () =>
+                _hubConnection.Closed += () =>
                 {
                     Log.WarnFormat("SignalR connection closed.");
                     _transportStatuses.OnNext(TransportStatus.Closed);
                     _transportStatuses.OnCompleted();
                 };
-                hubConnection.ConnectionSlow += () =>
+                _hubConnection.ConnectionSlow += () =>
                 {
                     Log.WarnFormat("SignalR has detected a slow connection");
                     _transportStatuses.OnNext(TransportStatus.ConnectionSlow);
                 };
-                hubConnection.Error += exception => Log.Error("An error occured in the transport.", exception);
-                hubConnection.Reconnected += () =>
+                _hubConnection.Error += exception => Log.Error("An error occured in the transport.", exception);
+                _hubConnection.Reconnected += () =>
                 {
                     Log.InfoFormat("SignalR transport reconnected.");
                     _transportStatuses.OnNext(TransportStatus.Reconnected);
                 };
-                hubConnection.Reconnecting += () =>
+                _hubConnection.Reconnecting += () =>
                 {
                     Log.InfoFormat("SignalR transport is reconnecting...");
                     _transportStatuses.OnNext(TransportStatus.Reconnecting);
@@ -58,7 +56,7 @@ namespace Adaptive.ReactiveTrader.Client.Transport
 
                 try
                 {
-                    await hubConnection.Start();
+                    await _hubConnection.Start();
                      _transportStatuses.OnNext(TransportStatus.Connected);
                     observer.OnNext(new Unit());
                 }
@@ -73,7 +71,7 @@ namespace Adaptive.ReactiveTrader.Client.Transport
                     try
                     {
                         Log.Info("Stoping transport...");
-                        hubConnection.Stop();
+                        _hubConnection.Stop();
                         Log.Info("Transport stopped");
                     }
                     catch (Exception e)
@@ -89,10 +87,10 @@ namespace Adaptive.ReactiveTrader.Client.Transport
         {
             get { return _transportStatuses; }
         }
-
-        public IHubProxy PricingHubProxy { get; private set; }
-        public IHubProxy BlotterHubProxy { get; private set; }
-        public IHubProxy ExecutionHubProxy { get; private set; }
-        public IHubProxy ReferenceDataHubProxy { get; private set; }
+ 
+        public IHubProxy GetProxy(string hubName)
+        {
+            return _proxies.GetOrAdd(hubName, s => _hubConnection.CreateHubProxy(s));
+        }
     }
 }

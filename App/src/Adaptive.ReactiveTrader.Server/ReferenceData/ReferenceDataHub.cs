@@ -21,14 +21,18 @@ namespace Adaptive.ReactiveTrader.Server.ReferenceData
         }
 
         [HubMethodName(ServiceConstants.Server.GetCurrencyPairs)]
-        public IEnumerable<CurrencyPair> GetCurrencyPairs()
+        public IEnumerable<CurrencyPairUpdate> GetCurrencyPairs()
         {
             Log.InfoFormat("Received request for currency pairs from connection {0}", Context.ConnectionId);
 
             var currencyPairs = _currencyPairRepository.GetAllCurrencyPairs().ToList();
             Log.InfoFormat("Sending {0} currency pairs to {1}'", currencyPairs.Count, Context.ConnectionId);
 
-            return currencyPairs;
+            return currencyPairs.Select(cp => new CurrencyPairUpdate
+            {
+                CurrencyPair = cp,
+                UpdateType = UpdateType.Added
+            });
         }
     }
 }
