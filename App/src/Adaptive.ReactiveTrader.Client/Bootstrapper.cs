@@ -1,4 +1,5 @@
-﻿using Adaptive.ReactiveTrader.Client.ServiceClients.Blotter;
+﻿using Adaptive.ReactiveTrader.Client.Repositories;
+using Adaptive.ReactiveTrader.Client.ServiceClients.Blotter;
 using Adaptive.ReactiveTrader.Client.ServiceClients.Execution;
 using Adaptive.ReactiveTrader.Client.ServiceClients.Pricing;
 using Adaptive.ReactiveTrader.Client.ServiceClients.ReferenceData;
@@ -23,6 +24,12 @@ namespace Adaptive.ReactiveTrader.Client
             builder.RegisterType<ExecutionServiceClient>().As<IExecutionServiceClient>().SingleInstance();
             builder.RegisterType<BlotterServiceClient>().As<IBlotterServiceClient>().SingleInstance();
             builder.RegisterType<PricingServiceClient>().As<IPricingServiceClient>().SingleInstance();
+
+            // repositories
+            builder.RegisterType<TradeRepository>().As<ITradeRepository>().SingleInstance();
+            builder.RegisterType<ExecutionRepository>().As<IExecutionRepository>().SingleInstance();
+            builder.RegisterType<PriceRepository>().As<IPriceRepository>().SingleInstance();
+            builder.RegisterType<ReferenceDataRepository>().As<IReferenceDataRepository>().SingleInstance();
 
             builder.RegisterType<ShellView>();
             builder.RegisterType<ShellViewModel>().As<IShellViewModel>();

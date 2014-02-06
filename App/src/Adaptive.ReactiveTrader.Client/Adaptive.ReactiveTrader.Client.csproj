@@ -85,6 +85,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\ICurrencyPairFactory.cs" />
+    <Compile Include="Models\IPriceFactory.cs" />
+    <Compile Include="Repositories\ExecutionRepository.cs" />
+    <Compile Include="Repositories\IExecutionRepository.cs" />
+    <Compile Include="Repositories\IPriceRepository.cs" />
+    <Compile Include="Models\ITradeFactory.cs" />
+    <Compile Include="Repositories\ITradeRepository.cs" />
+    <Compile Include="Repositories\PriceRepository.cs" />
+    <Compile Include="Repositories\TradeRepository.cs" />
     <Compile Include="ServiceClients\Blotter\BlotterServiceClient.cs" />
     <Compile Include="Models\Direction.cs" />
     <Compile Include="Models\ICurrencyPair.cs" />

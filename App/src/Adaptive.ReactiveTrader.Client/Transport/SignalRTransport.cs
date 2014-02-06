@@ -48,7 +48,7 @@ namespace Adaptive.ReactiveTrader.Client.Transport
                 catch (Exception e)
                 {
                     Log.Error("An error occured when starting transport", e);
-                    observer.OnError(e); 
+                    observer.OnError(e);
                 }
 
                 return Disposable.Create(() =>
@@ -65,8 +65,7 @@ namespace Adaptive.ReactiveTrader.Client.Transport
                         Log.Error("An error occured while stoping transport", e);
                     }
                 });
-            })
-            .CacheFirstResult();
+            });
         }
 
         private IObservable<TransportStatus> CreateStatus()

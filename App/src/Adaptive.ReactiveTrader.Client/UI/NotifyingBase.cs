@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Adaptive.ReactiveTrader.Client.Annotations;
+using Adaptive.ReactiveTrader.Client.Properties;
 
 namespace Adaptive.ReactiveTrader.Client.UI
 {

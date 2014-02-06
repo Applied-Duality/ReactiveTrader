@@ -2,6 +2,6 @@
 {
     public interface ITrade
     {
-        ICurrencyPair CurrencyPair { get; }
+        string Symbol { get; }
     }
 }
