@@ -7,6 +7,7 @@
         ConnectionSlow,
         Reconnecting,
         Reconnected,
-        Closed
+        Closed,
+        Uninitialized
     }
 }

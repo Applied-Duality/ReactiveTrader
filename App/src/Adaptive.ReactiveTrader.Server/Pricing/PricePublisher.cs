@@ -16,7 +16,7 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
             _contextHolder = contextHolder;
         }
 
-        public async Task Publish(SpotPrice price)
+        public async Task Publish(Price price)
         {
             var context = _contextHolder.Context;
             if (context == null) return;

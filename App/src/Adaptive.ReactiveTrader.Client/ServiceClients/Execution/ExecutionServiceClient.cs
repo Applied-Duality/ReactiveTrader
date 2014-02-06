@@ -12,16 +12,16 @@ namespace Adaptive.ReactiveTrader.Client.ServiceClients.Execution
     {
         private readonly IHubProxy _executionHubProxy;
 
-        public ExecutionServiceClient(ITransport transport)
+        public ExecutionServiceClient(ISignalRTransport transport)
         {
             _executionHubProxy = transport.GetProxy(ServiceConstants.Server.ExecutionHub);
         }
 
-        public IObservable<SpotTrade> Execute(SpotTradeRequest spotTradeRequest)
+        public IObservable<Trade> Execute(TradeRequest tradeRequest)
         {
             return
                 Observable.FromAsync(
-                    () => _executionHubProxy.Invoke<SpotTrade>(ServiceConstants.Server.ExecutionHub, spotTradeRequest))
+                    () => _executionHubProxy.Invoke<Trade>(ServiceConstants.Server.ExecutionHub, tradeRequest))
                     .CacheFirstResult();
         }
     }

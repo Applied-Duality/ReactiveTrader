@@ -55,7 +55,7 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
                     
                 decimal mid = SamplePrices[currencyPair.Symbol];
                 
-                var initialQuote = new SpotPrice
+                var initialQuote = new Price
                 {
                     Symbol = currencyPair.Symbol,
                     QuoteId = 0,
@@ -66,14 +66,14 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
             }
         }
 
-        private SpotPrice GenerateNextQuote(SpotPrice previousPrice)
+        private Price GenerateNextQuote(Price previousPrice)
         {
             var currencyPair = _currencyPairRepository.GetCurrencyPair(previousPrice.Symbol);
 
             var pow = (decimal)Math.Pow(10, currencyPair.RatePrecision);
             var newMid = previousPrice.Mid + _random.Next(-5, 5) / pow;
 
-            return new SpotPrice
+            return new Price
             {
                 Symbol = previousPrice.Symbol,
                 QuoteId = previousPrice.QuoteId + 1,

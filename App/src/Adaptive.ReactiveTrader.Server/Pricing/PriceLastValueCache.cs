@@ -6,21 +6,21 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
 {
     class PriceLastValueCache : IPriceLastValueCache
     {
-        private readonly ConcurrentDictionary<string, SpotPrice> _lastValueCache = new ConcurrentDictionary<string, SpotPrice>();
+        private readonly ConcurrentDictionary<string, Price> _lastValueCache = new ConcurrentDictionary<string, Price>();
 
-        public SpotPrice GetLastValue(string currencyPair)
+        public Price GetLastValue(string currencyPair)
         {
-            SpotPrice spotPrice;
-            if (_lastValueCache.TryGetValue(currencyPair, out spotPrice))
+            Price price;
+            if (_lastValueCache.TryGetValue(currencyPair, out price))
             {
-                return spotPrice;
+                return price;
             }
             throw new InvalidOperationException(string.Format("Currency pair {0} has not been initilialized in last value cache", currencyPair));
         }
 
-        public void StoreLastValue(SpotPrice spotPrice)
+        public void StoreLastValue(Price price)
         {
-            _lastValueCache.AddOrUpdate(spotPrice.Symbol, _ => spotPrice, (s, price) => spotPrice);
+            _lastValueCache.AddOrUpdate(price.Symbol, _ => price, (s, p) => p);
         }
     }
 }

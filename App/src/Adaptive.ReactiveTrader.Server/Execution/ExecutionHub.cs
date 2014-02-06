@@ -18,7 +18,7 @@ namespace Adaptive.ReactiveTrader.Server.Execution
         }
 
         [HubMethodName(ServiceConstants.Server.Execute)]
-        public SpotTrade Execute(SpotTradeRequest tradeRequest)
+        public Trade Execute(TradeRequest tradeRequest)
         {
             var user = UserName;
             Log.InfoFormat("Received trade request {0} from user {1}", tradeRequest, user);

@@ -16,7 +16,7 @@ namespace Adaptive.ReactiveTrader.Server.Blotter
             _contextHolder = contextHolder;
         }
 
-        public Task Publish(SpotTrade trade)
+        public Task Publish(Trade trade)
         {
             Log.InfoFormat("Broadcast new trade to blotters: {0}", trade);
             return _contextHolder.Context.Group(BlotterHub.BlotterGroupName).OnNewTrade(trade);

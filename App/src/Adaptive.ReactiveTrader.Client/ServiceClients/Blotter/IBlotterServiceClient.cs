@@ -6,6 +6,6 @@ namespace Adaptive.ReactiveTrader.Client.ServiceClients.Blotter
 {
     public interface IBlotterServiceClient
     {
-        IObservable<IEnumerable<SpotTrade>> GetTrades();
+        IObservable<IEnumerable<Trade>> GetTrades();
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Adaptive.ReactiveTrader.Contracts.Pricing
 {
-    public class SpotPrice
+    public class Price
     {
         public string Symbol { get; set; }
         public long QuoteId { get; set; }

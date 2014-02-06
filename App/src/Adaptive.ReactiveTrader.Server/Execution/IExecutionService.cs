@@ -5,6 +5,6 @@ namespace Adaptive.ReactiveTrader.Server.Execution
 {
     public interface IExecutionService
     {
-        SpotTrade Execute(SpotTradeRequest tradeRequest, string username);
+        Trade Execute(TradeRequest tradeRequest, string username);
     }
 }

@@ -13,7 +13,7 @@ namespace Adaptive.ReactiveTrader.Client.ServiceClients.ReferenceData
     {
         private readonly IHubProxy _referenceDataProxy;
 
-        public ReferenceDataServiceClient(ITransport transport)
+        public ReferenceDataServiceClient(ISignalRTransport transport)
         {
             _referenceDataProxy = transport.GetProxy(ServiceConstants.Server.ReferenceDataHub);
         }

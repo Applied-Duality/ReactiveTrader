@@ -4,7 +4,7 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
 {
     public interface IPriceLastValueCache
     {
-        SpotPrice GetLastValue(string currencyPair);
-        void StoreLastValue(SpotPrice spotPrice);
+        Price GetLastValue(string currencyPair);
+        void StoreLastValue(Price price);
     }
 }

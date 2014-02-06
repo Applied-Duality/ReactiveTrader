@@ -16,17 +16,17 @@ namespace Adaptive.ReactiveTrader.Client.ServiceClients.Blotter
 
         private static readonly ILog Log = LogManager.GetLogger(typeof(BlotterServiceClient));
 
-        public BlotterServiceClient(ITransport transport)
+        public BlotterServiceClient(ISignalRTransport transport)
         {
             _blotterHubProxy = transport.GetProxy(ServiceConstants.Server.BlotterHub);
         }
 
-        public IObservable<IEnumerable<SpotTrade>> GetTrades()
+        public IObservable<IEnumerable<Trade>> GetTrades()
         {
-            return Observable.Create<IEnumerable<SpotTrade>>(async observer =>
+            return Observable.Create<IEnumerable<Trade>>(async observer =>
             {
                 // subscribe to trade feed first, otherwise there is a race condition 
-                var spotTradeSubscription = _blotterHubProxy.On<IEnumerable<SpotTrade>>(ServiceConstants.Client.OnNewTrade, observer.OnNext);
+                var spotTradeSubscription = _blotterHubProxy.On<IEnumerable<Trade>>(ServiceConstants.Client.OnNewTrade, observer.OnNext);
 
                 // send a subscription request
                 try

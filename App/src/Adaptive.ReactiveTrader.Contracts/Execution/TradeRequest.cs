@@ -2,9 +2,9 @@
 
 namespace Adaptive.ReactiveTrader.Contracts.Execution
 {
-    public class SpotTradeRequest
+    public class TradeRequest
     {
-        public SpotPrice Price { get; set; }
+        public Price Price { get; set; }
         public Direction Direction { get; set; }
         public long Notional { get; set; }
 

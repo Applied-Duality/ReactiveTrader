@@ -12,26 +12,26 @@ namespace Adaptive.ReactiveTrader.Client.ServiceClients.Pricing
     class PricingServiceClient : IPricingServiceClient
     {
         private readonly IHubProxy _pricingHubProxy;
-        private readonly Lazy<IObservable<SpotPrice>> _allPricesLazy;
+        private readonly Lazy<IObservable<Price>> _allPricesLazy;
 
         private static readonly ILog Log = LogManager.GetLogger(typeof(PricingServiceClient));
 
-        public PricingServiceClient(ITransport transport)
+        public PricingServiceClient(ISignalRTransport transport)
         {
             _pricingHubProxy = transport.GetProxy(ServiceConstants.Server.PricingHub);
 
-            _allPricesLazy = new Lazy<IObservable<SpotPrice>>(CreateAllPrices);
+            _allPricesLazy = new Lazy<IObservable<Price>>(CreateAllPrices);
         }
 
-        private IObservable<SpotPrice> CreateAllPrices()
+        private IObservable<Price> CreateAllPrices()
         {
-            return Observable.Create<SpotPrice>(observer => _pricingHubProxy.On<SpotPrice>(ServiceConstants.Client.OnNewPrice, observer.OnNext))
+            return Observable.Create<Price>(observer => _pricingHubProxy.On<Price>(ServiceConstants.Client.OnNewPrice, observer.OnNext))
                 .Publish()
                 .RefCount();
         }
 
 
-        private IObservable<SpotPrice> AllPrices
+        private IObservable<Price> AllPrices
         {
             get
             {
@@ -39,11 +39,11 @@ namespace Adaptive.ReactiveTrader.Client.ServiceClients.Pricing
             }
         } 
 
-        public IObservable<SpotPrice> GetSpotStream(string currencyPair)
+        public IObservable<Price> GetSpotStream(string currencyPair)
         {
             if (string.IsNullOrEmpty(currencyPair)) throw new ArgumentException("currencyPair");
 
-            return Observable.Create<SpotPrice>(async observer =>
+            return Observable.Create<Price>(async observer =>
             {
                 var disposables = new CompositeDisposable();
 

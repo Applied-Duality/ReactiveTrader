@@ -7,9 +7,9 @@ namespace Adaptive.ReactiveTrader.Server.Blotter
 {
     public class TradeRepository : ITradeRepository
     {
-        private readonly List<SpotTrade> _allTrades = new List<SpotTrade>();
+        private readonly List<Trade> _allTrades = new List<Trade>();
 
-        public void StoreTrade(SpotTrade trade)
+        public void StoreTrade(Trade trade)
         {
             lock (_allTrades)
             {
@@ -17,9 +17,9 @@ namespace Adaptive.ReactiveTrader.Server.Blotter
             }
         }
 
-        public IList<SpotTrade> GetAllTrades()
+        public IList<Trade> GetAllTrades()
         {
-            IList<SpotTrade> trades;
+            IList<Trade> trades;
 
             lock (_allTrades)
             {

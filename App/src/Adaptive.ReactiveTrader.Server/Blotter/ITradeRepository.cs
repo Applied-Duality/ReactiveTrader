@@ -6,7 +6,7 @@ namespace Adaptive.ReactiveTrader.Server.Blotter
 {
     public interface ITradeRepository
     {
-        void StoreTrade(SpotTrade trade);
-        IList<SpotTrade> GetAllTrades();
+        void StoreTrade(Trade trade);
+        IList<Trade> GetAllTrades();
     }
 }

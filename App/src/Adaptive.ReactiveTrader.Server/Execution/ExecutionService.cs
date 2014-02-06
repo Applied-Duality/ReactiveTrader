@@ -21,9 +21,9 @@ namespace Adaptive.ReactiveTrader.Server.Execution
             _tradeId = 0;
         }
 
-        public SpotTrade Execute(SpotTradeRequest tradeRequest, string user)
+        public Trade Execute(TradeRequest tradeRequest, string user)
         {
-            var trade =  new SpotTrade
+            var trade =  new Trade
             {
                 CurrencyPair = tradeRequest.Price.Symbol,
                 Direction = tradeRequest.Direction,

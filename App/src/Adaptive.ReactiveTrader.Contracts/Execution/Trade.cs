@@ -2,7 +2,7 @@
 
 namespace Adaptive.ReactiveTrader.Contracts.Execution
 {
-    public class SpotTrade
+    public class Trade
     {
          public long TradeId { get; set; }
          public string TraderName { get; set; }
@@ -16,7 +16,7 @@ namespace Adaptive.ReactiveTrader.Contracts.Execution
 
         public override string ToString()
         {
-            return string.Format("TradeId: {0}, TraderName: {1}, CurrencyPair: {2}, Notional: {3}, Direction: {4}, SpotPrice: {5}, TradeDate: {6}, ValueDate: {7}, Status: {8}", TradeId, TraderName, CurrencyPair, Notional, Direction, SpotPrice, TradeDate, ValueDate, Status);
+            return string.Format("TradeId: {0}, TraderName: {1}, CurrencyPair: {2}, Notional: {3}, Direction: {4}, Price: {5}, TradeDate: {6}, ValueDate: {7}, Status: {8}", TradeId, TraderName, CurrencyPair, Notional, Direction, SpotPrice, TradeDate, ValueDate, Status);
         }
     }
 }

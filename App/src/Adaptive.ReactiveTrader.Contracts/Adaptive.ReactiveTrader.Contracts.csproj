@@ -59,11 +59,11 @@
     <Compile Include="Execution\Direction.cs" />
     <Compile Include="Extensions\ObservableExtensions.cs" />
     <Compile Include="Pricing\PriceSubscriptionRequest.cs" />
-    <Compile Include="Pricing\SpotPrice.cs" />
+    <Compile Include="Pricing\Price.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceConstants.cs" />
-    <Compile Include="Execution\SpotTrade.cs" />
-    <Compile Include="Execution\SpotTradeRequest.cs" />
+    <Compile Include="Execution\Trade.cs" />
+    <Compile Include="Execution\TradeRequest.cs" />
     <Compile Include="Execution\TradeStatus.cs" />
   </ItemGroup>
   <ItemGroup>

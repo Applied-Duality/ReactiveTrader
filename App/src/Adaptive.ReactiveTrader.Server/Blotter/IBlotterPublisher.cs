@@ -6,6 +6,6 @@ namespace Adaptive.ReactiveTrader.Server.Blotter
 {
     internal interface IBlotterPublisher
     {
-        Task Publish(SpotTrade trade);
+        Task Publish(Trade trade);
     }
 }

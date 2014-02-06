@@ -5,6 +5,6 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
 {
     internal interface IPricePublisher
     {
-        Task Publish(SpotPrice price);
+        Task Publish(Price price);
     }
 }
