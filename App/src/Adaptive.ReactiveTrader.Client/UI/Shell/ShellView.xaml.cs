@@ -6,5 +6,11 @@
         {
             InitializeComponent();
         }
+
+        public ShellView(IShellViewModel viewModel)
+            : this()
+        {
+            DataContext = viewModel;
+        }
     }
 }

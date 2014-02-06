@@ -1,4 +1,5 @@
 ﻿using Adaptive.ReactiveTrader.Client.Transport;
+using Adaptive.ReactiveTrader.Client.UI.Shell;
 using Autofac;
 
 namespace Adaptive.ReactiveTrader.Client
@@ -15,6 +16,9 @@ namespace Adaptive.ReactiveTrader.Client
             builder.RegisterType<TradeRepository>().As<ITradeRepository>().SingleInstance();
             builder.RegisterType<CurrencyPairRepository>().As<ICurrencyPairRepository>().SingleInstance();
             builder.RegisterType<SampleClient>().As<ISampleClient>().SingleInstance();
+
+            builder.RegisterType<ShellView>();
+            builder.RegisterType<ShellViewModel>().As<IShellViewModel>();
 
             return builder.Build();
         } 

@@ -49,6 +49,10 @@
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PropertyChanged">
+      <HintPath>..\packages\PropertyChanged.Fody.1.45.0.0\Lib\NET35\PropertyChanged.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Reactive.Core">
@@ -80,14 +84,37 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Transport\SampleClient.cs" />
     <Compile Include="Transport\SpotStreamRepository.cs" />
     <Compile Include="Transport\TradeRepository.cs" />
     <Compile Include="Transport\Transport.cs" />
     <Compile Include="Transport\TransportStatus.cs" />
+    <Compile Include="UI\Blotter\BlotterView.xaml.cs">
+      <DependentUpon>BlotterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Blotter\BlotterViewModel.cs" />
+    <Compile Include="UI\Blotter\IBlotterViewModel.cs" />
+    <Compile Include="UI\Blotter\ITradeViewModel.cs" />
+    <Compile Include="UI\Blotter\TradeViewModel.cs" />
+    <Compile Include="UI\IViewModel.cs" />
+    <Compile Include="UI\NotifyingBase.cs" />
+    <Compile Include="UI\Shell\IShellViewModel.cs" />
     <Compile Include="UI\Shell\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Shell\ShellViewModel.cs" />
+    <Compile Include="UI\SpotTiles\ISpotTilesViewModel.cs" />
+    <Compile Include="UI\SpotTiles\ISpotTileViewModel.cs" />
+    <Compile Include="UI\SpotTiles\SpotTilesView.xaml.cs">
+      <DependentUpon>SpotTilesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SpotTiles\SpotTilesViewModel.cs" />
+    <Compile Include="UI\SpotTiles\SpotTileView.xaml.cs">
+      <DependentUpon>SpotTileView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SpotTiles\SpotTileViewModel.cs" />
+    <Compile Include="UI\ViewModelBase.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -109,7 +136,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UI\Blotter\BlotterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Shell\ShellView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\SpotTiles\SpotTilesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\SpotTiles\SpotTileView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
