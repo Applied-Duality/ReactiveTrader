@@ -1,6 +1,6 @@
 ﻿using Adaptive.ReactiveTrader.Contracts.Pricing;
 
-namespace Adaptive.ReactiveTrader.Contracts
+namespace Adaptive.ReactiveTrader.Contracts.Execution
 {
     public class SpotTradeRequest
     {

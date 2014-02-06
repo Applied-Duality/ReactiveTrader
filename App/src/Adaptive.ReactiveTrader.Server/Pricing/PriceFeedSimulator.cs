@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using Adaptive.ReactiveTrader.Contracts;
 using Adaptive.ReactiveTrader.Contracts.Pricing;
+using Adaptive.ReactiveTrader.Contracts.ReferenceData;
 using Adaptive.ReactiveTrader.Server.ReferenceData;
 
 namespace Adaptive.ReactiveTrader.Server.Pricing

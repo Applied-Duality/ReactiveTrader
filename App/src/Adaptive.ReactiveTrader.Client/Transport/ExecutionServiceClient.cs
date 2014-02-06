@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Adaptive.ReactiveTrader.Contracts;
+using Adaptive.ReactiveTrader.Contracts.Execution;
 using log4net;
 
 namespace Adaptive.ReactiveTrader.Client.Transport

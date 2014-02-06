@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Contracts;
+using Adaptive.ReactiveTrader.Contracts.Execution;
+using Adaptive.ReactiveTrader.Contracts.ReferenceData;
 using log4net;
 
 namespace Adaptive.ReactiveTrader.Client.Transport

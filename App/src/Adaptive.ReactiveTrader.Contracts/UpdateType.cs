@@ -1,8 +1,8 @@
 ﻿namespace Adaptive.ReactiveTrader.Contracts
 {
-    public enum TradeStatus
+    public enum UpdateType
     {
-        Done,
-        Rejected
+        Added,
+        Removed
     }
 }
