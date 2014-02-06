@@ -55,6 +55,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Interactive">
+      <HintPath>..\packages\Ix-Main.1.2.2\lib\net45\System.Interactive.dll</HintPath>
+    </Reference>
     <Reference Include="System.Reactive.Core">
       <HintPath>..\packages\Rx-Core.2.2.2\lib\net45\System.Reactive.Core.dll</HintPath>
     </Reference>
@@ -66,6 +69,9 @@
     </Reference>
     <Reference Include="System.Reactive.PlatformServices">
       <HintPath>..\packages\Rx-PlatformServices.2.2.3\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Windows.Threading">
+      <HintPath>..\packages\Rx-XAML.2.2.2\lib\net45\System.Reactive.Windows.Threading.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -84,7 +90,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\Direction.cs" />
+    <Compile Include="Models\ICurrencyPair.cs" />
+    <Compile Include="Models\IExecutablePrice.cs" />
+    <Compile Include="Models\IPrice.cs" />
+    <Compile Include="Models\ITrade.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Repositories\IReferenceDataRepository.cs" />
+    <Compile Include="Repositories\ReferenceDataRepository.cs" />
     <Compile Include="Transport\SampleClient.cs" />
     <Compile Include="Transport\SpotStreamRepository.cs" />
     <Compile Include="Transport\TradeRepository.cs" />
@@ -104,6 +117,7 @@
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Shell\ShellViewModel.cs" />
+    <Compile Include="UI\SpotTiles\IOneWayPriceViewModel.cs" />
     <Compile Include="UI\SpotTiles\ISpotTilesViewModel.cs" />
     <Compile Include="UI\SpotTiles\ISpotTileViewModel.cs" />
     <Compile Include="UI\SpotTiles\SpotTilesView.xaml.cs">

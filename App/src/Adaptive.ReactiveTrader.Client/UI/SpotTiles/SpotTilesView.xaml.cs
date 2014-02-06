@@ -6,11 +6,5 @@
         {
             InitializeComponent();
         }
-
-        public SpotTilesView(ISpotTilesViewModel viewModel)
-            : this()
-        {
-            DataContext = viewModel;
-        }
     }
 }

@@ -6,11 +6,5 @@
         {
             InitializeComponent();
         }
-
-        public BlotterView(IBlotterViewModel viewModel)
-            : this()
-        {
-            DataContext = viewModel;
-        }
     }
 }
