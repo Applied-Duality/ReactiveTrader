@@ -360,7 +360,10 @@
       <IsActif>False</IsActif>
     </LogWatcher.Common.AlertFile>
   </DicoAlertFile>
-  <DicoLoadedLog />
+  <DicoLoadedLog>
+    <System.String>C:\Users\olivier\Documents\git\ReactiveTrader\SignalRSpike\Output\client.log</System.String>
+    <System.String>C:\Users\olivier\Documents\git\ReactiveTrader\SignalRSpike\Output\server.log</System.String>
+  </DicoLoadedLog>
   <LogBrowser>
     <VirtualDirectories>
       <Item Key="CTY">

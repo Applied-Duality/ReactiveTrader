@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using Dto;
+using Adaptive.ReactiveTrader.Contracts;
 using log4net;
 using Microsoft.AspNet.SignalR.Client;
 
-namespace Client
+namespace Adaptive.ReactiveTrader.Client
 {
     class TradeRepository : ITradeRepository
     {

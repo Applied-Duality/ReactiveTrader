@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerfTestServer", "PerfTestS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerfTestDto", "PerfTestDto\PerfTestDto.csproj", "{98E21A2C-4DCE-457C-9A9E-D22252B6EE51}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SignalRPerfTests", "SignalRPerfTests", "{F0AD91E7-D8BB-4E44-9BA2-82BC2EBA9BDB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,5 +57,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{96FCBE75-89F0-473E-97A1-C70BD5BA36C8} = {F0AD91E7-D8BB-4E44-9BA2-82BC2EBA9BDB}
+		{98E21A2C-4DCE-457C-9A9E-D22252B6EE51} = {F0AD91E7-D8BB-4E44-9BA2-82BC2EBA9BDB}
+		{22EBA90C-6F02-42DC-8F37-AFAC6A252CB4} = {F0AD91E7-D8BB-4E44-9BA2-82BC2EBA9BDB}
 	EndGlobalSection
 EndGlobal
