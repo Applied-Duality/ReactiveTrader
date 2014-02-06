@@ -93,6 +93,7 @@
     <Compile Include="Models\Direction.cs" />
     <Compile Include="Models\ICurrencyPair.cs" />
     <Compile Include="Models\IExecutablePrice.cs" />
+    <Compile Include="Models\IOneWayPrice.cs" />
     <Compile Include="Models\IPrice.cs" />
     <Compile Include="Models\ITrade.cs" />
     <Compile Include="Properties\Annotations.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="UI\Blotter\IBlotterViewModel.cs" />
     <Compile Include="UI\Blotter\ITradeViewModel.cs" />
     <Compile Include="UI\Blotter\TradeViewModel.cs" />
+    <Compile Include="UI\DelegateCommand.cs" />
     <Compile Include="UI\IViewModel.cs" />
     <Compile Include="UI\NotifyingBase.cs" />
     <Compile Include="UI\Shell\IShellViewModel.cs" />
@@ -120,6 +122,7 @@
     <Compile Include="UI\SpotTiles\IOneWayPriceViewModel.cs" />
     <Compile Include="UI\SpotTiles\ISpotTilesViewModel.cs" />
     <Compile Include="UI\SpotTiles\ISpotTileViewModel.cs" />
+    <Compile Include="UI\SpotTiles\OneWayPriceViewModel.cs" />
     <Compile Include="UI\SpotTiles\SpotTilesView.xaml.cs">
       <DependentUpon>SpotTilesView.xaml</DependentUpon>
     </Compile>

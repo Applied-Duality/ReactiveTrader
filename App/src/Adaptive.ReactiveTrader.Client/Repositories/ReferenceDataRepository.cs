@@ -8,7 +8,7 @@ namespace Adaptive.ReactiveTrader.Client.Repositories
     {
         public IObservable<IEnumerable<ICurrencyPair>> GetCurrencyPairs()
         {
-            
+            throw new NotImplementedException();
         }
     }
 }
