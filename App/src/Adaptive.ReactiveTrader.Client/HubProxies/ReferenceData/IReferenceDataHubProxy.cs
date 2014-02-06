@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Adaptive.ReactiveTrader.Contracts;
+using Adaptive.ReactiveTrader.Contracts.ReferenceData;
 
 namespace Adaptive.ReactiveTrader.Client.HubProxies.ReferenceData
 {
@@ -9,11 +9,13 @@ namespace Adaptive.ReactiveTrader.Client.HubProxies.ReferenceData
         IObservable<IEnumerable<CurrencyPairUpdate>> GetCurrencyPairUpdates();
     }
 
-    class ReferenceDataHubProxy : IReferenceDataHubProxy
-    {
-        public IObservable<IEnumerable<CurrencyPairUpdate>> GetCurrencyPairUpdates()
-        {
+    //class ReferenceDataHubProxy : IReferenceDataHubProxy
+    //{
+
+
+    //    public IObservable<IEnumerable<CurrencyPairUpdate>> GetCurrencyPairUpdates()
+    //    {
             
-        }
-    }
+    //    }
+    //}
 }

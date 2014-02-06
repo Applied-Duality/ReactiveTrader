@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Adaptive.ReactiveTrader.Contracts
+namespace Adaptive.ReactiveTrader.Contracts.Execution
 {
     public class SpotTrade
     {

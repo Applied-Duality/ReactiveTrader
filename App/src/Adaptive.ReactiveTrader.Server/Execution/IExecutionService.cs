@@ -1,4 +1,5 @@
 ﻿using Adaptive.ReactiveTrader.Contracts;
+using Adaptive.ReactiveTrader.Contracts.Execution;
 
 namespace Adaptive.ReactiveTrader.Server.Execution
 {

@@ -1,4 +1,4 @@
-﻿namespace Adaptive.ReactiveTrader.Contracts
+﻿namespace Adaptive.ReactiveTrader.Contracts.Execution
 {
     public enum Direction
     {

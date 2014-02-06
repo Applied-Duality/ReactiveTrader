@@ -1,4 +1,5 @@
 ﻿using Adaptive.ReactiveTrader.Contracts;
+using Adaptive.ReactiveTrader.Contracts.Execution;
 using log4net;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;

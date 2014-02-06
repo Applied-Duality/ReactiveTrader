@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Adaptive.ReactiveTrader.Contracts;
+using Adaptive.ReactiveTrader.Contracts.ReferenceData;
 using log4net;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;

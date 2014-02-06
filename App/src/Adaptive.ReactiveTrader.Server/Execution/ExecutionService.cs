@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Adaptive.ReactiveTrader.Contracts;
+using Adaptive.ReactiveTrader.Contracts.Execution;
 using Adaptive.ReactiveTrader.Server.Blotter;
 
 namespace Adaptive.ReactiveTrader.Server.Execution
