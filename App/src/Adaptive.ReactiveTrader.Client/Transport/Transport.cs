@@ -11,8 +11,6 @@ namespace Adaptive.ReactiveTrader.Client.Transport
 {
     public class Transport : ITransport
     {
-        private IHubProxy _tradingServiceHub;
-
         private static readonly ILog Log = LogManager.GetLogger(typeof(Transport));
 
         private readonly ISubject<TransportStatus> _transportStatuses = new ReplaySubject<TransportStatus>(1);
@@ -22,11 +20,14 @@ namespace Adaptive.ReactiveTrader.Client.Transport
             return Observable.Create<Unit>(async observer =>
             {
                 _transportStatuses.OnNext(TransportStatus.Connecting);
-                SetupTimeouts();
 
                 var hubConnection = new HubConnection(address);
                 hubConnection.Headers.Add(ServiceConstants.Server.UsernameHeader, userName);
-                _tradingServiceHub = hubConnection.CreateHubProxy(ServiceConstants.Server.TradingServiceHub);
+
+                PricingHubProxy = hubConnection.CreateHubProxy(ServiceConstants.Server.PricingHub);
+                BlotterHubProxy = hubConnection.CreateHubProxy(ServiceConstants.Server.BlotterHub);
+                ReferenceDataHubProxy = hubConnection.CreateHubProxy(ServiceConstants.Server.ReferenceDataHub);
+                ExecutionHubProxy = hubConnection.CreateHubProxy(ServiceConstants.Server.ExecutionHub);
 
                 Log.InfoFormat("Connecting to server {0} with user {1}...", address, userName);
 
@@ -89,26 +90,9 @@ namespace Adaptive.ReactiveTrader.Client.Transport
             get { return _transportStatuses; }
         }
 
-        private static void SetupTimeouts()
-        {
-            // Make long polling connections wait a maximum of 110 seconds for a
-            // response. When that time expires, trigger a timeout command and
-            // make the client reconnect.
-            //GlobalHost.Configuration.ConnectionTimeout = TimeSpan.FromSeconds(110);
-
-            // Wait a maximum of 10 seconds after a transport connection is lost
-            // before raising the Disconnected event to terminate the SignalR connection.
-            //GlobalHost.Configuration.DisconnectTimeout = TimeSpan.FromSeconds(10);
-
-            // For transports other than long polling, send a keepalive packet every
-            // 3 seconds. 
-            // This value must be no more than 1/3 of the DisconnectTimeout value.
-            //GlobalHost.Configuration.KeepAlive = TimeSpan.FromSeconds(3);
-        }
-
-        public IHubProxy HubProxy
-        {
-            get { return _tradingServiceHub; }
-        }
+        public IHubProxy PricingHubProxy { get; private set; }
+        public IHubProxy BlotterHubProxy { get; private set; }
+        public IHubProxy ExecutionHubProxy { get; private set; }
+        public IHubProxy ReferenceDataHubProxy { get; private set; }
     }
 }

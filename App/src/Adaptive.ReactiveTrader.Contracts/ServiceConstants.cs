@@ -4,13 +4,24 @@
     {
         public static class Server
         {
-            public const string TradingServiceHub = "TradingServiceHub";
+            public const string UsernameHeader = "User";
+
+            // pricing
+            public const string PricingHub = "PricingHub";
             public const string SubscribePriceStream = "SubscribePriceStream";
             public const string UnsubscribePriceStream = "UnsubscribePriceStream";
+
+            // blotter
+            public const string BlotterHub = "BlotterHub";
             public const string SubscribeTrades = "SubscribeTrades";
             public const string UnsubscribeTrades = "UnsubscribeTrades";
+            
+            // reference data
+            public const string ReferenceDataHub = "ReferenceDataHub";
             public const string GetCurrencyPairs = "GetCurrencyPairs";
-            public const string UsernameHeader = "User";
+
+            // executution
+            public const string ExecutionHub = "ExecutionHub";
             public const string Execute = "Execute";
         }
 

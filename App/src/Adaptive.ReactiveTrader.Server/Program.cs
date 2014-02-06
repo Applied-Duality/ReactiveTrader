@@ -1,5 +1,5 @@
 ﻿using System;
-using Adaptive.ReactiveTrader.Server;
+using Adaptive.ReactiveTrader.Server.Transport;
 using log4net;
 using Microsoft.Owin;
 using Microsoft.Owin.Hosting;
@@ -8,9 +8,9 @@ using Microsoft.Owin.Hosting;
 
 namespace Adaptive.ReactiveTrader.Server
 {
-    class ServerProgram
+    class Program
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(ServerProgram));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(Program));
 
         static void Main()
         {

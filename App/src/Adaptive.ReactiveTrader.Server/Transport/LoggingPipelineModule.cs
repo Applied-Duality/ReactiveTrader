@@ -1,7 +1,7 @@
 ﻿using log4net;
 using Microsoft.AspNet.SignalR.Hubs;
 
-namespace Adaptive.ReactiveTrader.Server.SignalR
+namespace Adaptive.ReactiveTrader.Server.Transport
 {
     public class LoggingPipelineModule : HubPipelineModule
     {

@@ -1,6 +1,6 @@
 ﻿using Adaptive.ReactiveTrader.Contracts;
 
-namespace Adaptive.ReactiveTrader.Server
+namespace Adaptive.ReactiveTrader.Server.Execution
 {
     public interface IExecutionService
     {

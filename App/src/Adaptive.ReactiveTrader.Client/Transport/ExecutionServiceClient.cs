@@ -17,7 +17,7 @@ namespace Adaptive.ReactiveTrader.Client.Transport
         public async Task<SpotTrade> Execute(SpotTradeRequest spotTradeRequest)
         {
             Log.InfoFormat("Sending trade request: {0}", spotTradeRequest);
-            var trade = await _transport.HubProxy.Invoke<SpotTrade>(ServiceConstants.Server.Execute, spotTradeRequest);
+            var trade = await _transport.ExecutionHubProxy.Invoke<SpotTrade>(ServiceConstants.Server.Execute, spotTradeRequest);
 
             Log.InfoFormat("Trade response received: {0}", trade);
             return trade;

@@ -2,7 +2,7 @@
 using Autofac;
 using Microsoft.AspNet.SignalR;
 
-namespace Adaptive.ReactiveTrader.Server.SignalR
+namespace Adaptive.ReactiveTrader.Server.Transport
 {
     public class AutofacSignalRDependencyResolver : DefaultDependencyResolver
     {

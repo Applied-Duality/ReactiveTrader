@@ -22,7 +22,7 @@ namespace Adaptive.ReactiveTrader.Client.Transport
 
             _allPrices = Observable.Create<SpotPrice>(observer =>
             {
-                _transport.HubProxy.On<SpotPrice>(ServiceConstants.Client.OnNewPrice, observer.OnNext);
+                _transport.PricingHubProxy.On<SpotPrice>(ServiceConstants.Client.OnNewPrice, observer.OnNext);
 
                 return Disposable.Create(() => { });
             })
@@ -46,7 +46,7 @@ namespace Adaptive.ReactiveTrader.Client.Transport
                 try
                 {
                     Log.InfoFormat("Sending price subscription for currency pair {0}", currencyPair);
-                    await _transport.HubProxy.Invoke(ServiceConstants.Server.SubscribePriceStream, new PriceSubscriptionRequest {CurrencyPair = currencyPair});
+                    await _transport.PricingHubProxy.Invoke(ServiceConstants.Server.SubscribePriceStream, new PriceSubscriptionRequest {CurrencyPair = currencyPair});
                 }
                 catch (Exception e)
                 {
@@ -60,7 +60,7 @@ namespace Adaptive.ReactiveTrader.Client.Transport
                     try
                     {
                         await
-                            _transport.HubProxy.Invoke(ServiceConstants.Server.UnsubscribePriceStream,
+                            _transport.PricingHubProxy.Invoke(ServiceConstants.Server.UnsubscribePriceStream,
                                 new PriceSubscriptionRequest {CurrencyPair = currencyPair});
                     }
                     catch (Exception e)
