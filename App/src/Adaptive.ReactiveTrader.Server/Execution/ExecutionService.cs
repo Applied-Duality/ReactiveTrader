@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading;
 using Adaptive.ReactiveTrader.Contracts;
+using Adaptive.ReactiveTrader.Server.Blotter;
 
-namespace Adaptive.ReactiveTrader.Server
+namespace Adaptive.ReactiveTrader.Server.Execution
 {
     class ExecutionService : IExecutionService
     {

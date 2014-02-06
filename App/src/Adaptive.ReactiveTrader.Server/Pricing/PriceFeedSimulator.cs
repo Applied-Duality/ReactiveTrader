@@ -4,8 +4,9 @@ using System.Linq;
 using System.Threading;
 using Adaptive.ReactiveTrader.Contracts;
 using Adaptive.ReactiveTrader.Contracts.Pricing;
+using Adaptive.ReactiveTrader.Server.ReferenceData;
 
-namespace Adaptive.ReactiveTrader.Server
+namespace Adaptive.ReactiveTrader.Server.Pricing
 {
     class PriceFeedSimulator : IPriceFeed
     {

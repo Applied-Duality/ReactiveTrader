@@ -17,7 +17,7 @@ namespace Adaptive.ReactiveTrader.Client.Transport
         {
             _transport = transport;
 
-            _allTrades = Observable.Create<SpotTrade>(observer => _transport.HubProxy.On<SpotTrade>(ServiceConstants.Client.OnNewTrade, observer.OnNext))
+            _allTrades = Observable.Create<SpotTrade>(observer => _transport.BlotterHubProxy.On<SpotTrade>(ServiceConstants.Client.OnNewTrade, observer.OnNext))
                 .Publish()
                 .RefCount();
         }
@@ -36,7 +36,7 @@ namespace Adaptive.ReactiveTrader.Client.Transport
                 try
                 {
                     Log.Info("Sending trade subscription...");
-                    await _transport.HubProxy.Invoke(ServiceConstants.Server.SubscribeTrades);
+                    await _transport.BlotterHubProxy.Invoke(ServiceConstants.Server.SubscribeTrades);
                 }
                 catch (Exception e)
                 {
@@ -50,7 +50,7 @@ namespace Adaptive.ReactiveTrader.Client.Transport
                     try
                     {
                         await
-                            _transport.HubProxy.Invoke(ServiceConstants.Server.UnsubscribeTrades);
+                            _transport.BlotterHubProxy.Invoke(ServiceConstants.Server.UnsubscribeTrades);
                     }
                     catch (Exception e)
                     {

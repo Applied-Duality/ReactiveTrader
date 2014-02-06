@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Adaptive.ReactiveTrader.Contracts;
 
-namespace Adaptive.ReactiveTrader.Server
+namespace Adaptive.ReactiveTrader.Server.Blotter
 {
     public interface ITradeRepository
     {

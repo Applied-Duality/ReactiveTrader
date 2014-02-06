@@ -2,7 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using Adaptive.ReactiveTrader.Contracts.Pricing;
 
-namespace Adaptive.ReactiveTrader.Server
+namespace Adaptive.ReactiveTrader.Server.Pricing
 {
     class PriceLastValueCache : IPriceLastValueCache
     {

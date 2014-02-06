@@ -2,7 +2,7 @@
 using System.Linq;
 using Adaptive.ReactiveTrader.Contracts;
 
-namespace Adaptive.ReactiveTrader.Server
+namespace Adaptive.ReactiveTrader.Server.Blotter
 {
     public class TradeRepository : ITradeRepository
     {

@@ -21,7 +21,7 @@ namespace Adaptive.ReactiveTrader.Client.Transport
         public async Task Initialize()
         {
             Log.InfoFormat("Loading list of currency pairs...");
-            var currencyPairs = await _transport.HubProxy.Invoke<IEnumerable<CurrencyPair>>(ServiceConstants.Server.GetCurrencyPairs);
+            var currencyPairs = await _transport.ReferenceDataHubProxy.Invoke<IEnumerable<CurrencyPair>>(ServiceConstants.Server.GetCurrencyPairs);
             _currencyPairs = currencyPairs.ToDictionary(cp => cp.Symbol);
             Log.InfoFormat("Retreived {0} currency pairs.", _currencyPairs.Count);
         }
