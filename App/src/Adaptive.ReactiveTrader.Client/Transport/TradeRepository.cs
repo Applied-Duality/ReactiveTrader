@@ -5,7 +5,7 @@ using Adaptive.ReactiveTrader.Contracts;
 using log4net;
 using Microsoft.AspNet.SignalR.Client;
 
-namespace Adaptive.ReactiveTrader.Client
+namespace Adaptive.ReactiveTrader.Client.Transport
 {
     class TradeRepository : ITradeRepository
     {

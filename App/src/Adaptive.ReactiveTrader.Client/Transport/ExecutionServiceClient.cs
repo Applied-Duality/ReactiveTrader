@@ -2,7 +2,7 @@
 using Adaptive.ReactiveTrader.Contracts;
 using log4net;
 
-namespace Adaptive.ReactiveTrader.Client
+namespace Adaptive.ReactiveTrader.Client.Transport
 {
     public class ExecutionServiceClient : IExecutionServiceClient
     {

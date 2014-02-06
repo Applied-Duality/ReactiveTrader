@@ -2,7 +2,7 @@
 using System.Reactive;
 using Microsoft.AspNet.SignalR.Client;
 
-namespace Adaptive.ReactiveTrader.Client
+namespace Adaptive.ReactiveTrader.Client.Transport
 {
     public interface ITransport
     {

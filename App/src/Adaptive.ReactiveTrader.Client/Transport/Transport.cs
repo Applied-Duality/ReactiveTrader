@@ -5,10 +5,9 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Adaptive.ReactiveTrader.Contracts;
 using log4net;
-using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Client;
 
-namespace Adaptive.ReactiveTrader.Client
+namespace Adaptive.ReactiveTrader.Client.Transport
 {
     public class Transport : ITransport
     {
@@ -95,16 +94,16 @@ namespace Adaptive.ReactiveTrader.Client
             // Make long polling connections wait a maximum of 110 seconds for a
             // response. When that time expires, trigger a timeout command and
             // make the client reconnect.
-            GlobalHost.Configuration.ConnectionTimeout = TimeSpan.FromSeconds(110);
+            //GlobalHost.Configuration.ConnectionTimeout = TimeSpan.FromSeconds(110);
 
             // Wait a maximum of 10 seconds after a transport connection is lost
             // before raising the Disconnected event to terminate the SignalR connection.
-            GlobalHost.Configuration.DisconnectTimeout = TimeSpan.FromSeconds(10);
+            //GlobalHost.Configuration.DisconnectTimeout = TimeSpan.FromSeconds(10);
 
             // For transports other than long polling, send a keepalive packet every
             // 3 seconds. 
             // This value must be no more than 1/3 of the DisconnectTimeout value.
-            GlobalHost.Configuration.KeepAlive = TimeSpan.FromSeconds(3);
+            //GlobalHost.Configuration.KeepAlive = TimeSpan.FromSeconds(3);
         }
 
         public IHubProxy HubProxy

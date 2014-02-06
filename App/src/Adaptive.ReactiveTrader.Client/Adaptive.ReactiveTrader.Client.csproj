@@ -45,20 +45,8 @@
     <Reference Include="Microsoft.AspNet.SignalR.Client">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Client.2.0.2\lib\net45\Microsoft.AspNet.SignalR.Client.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNet.SignalR.Core">
-      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.0.2\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin">
-      <HintPath>..\packages\Microsoft.Owin.2.0.2\lib\net45\Microsoft.Owin.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security">
-      <HintPath>..\packages\Microsoft.Owin.Security.2.0.2\lib\net45\Microsoft.Owin.Security.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Owin">
-      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -91,11 +79,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="SampleClient.cs" />
-    <Compile Include="SpotStreamRepository.cs" />
-    <Compile Include="TradeRepository.cs" />
-    <Compile Include="Transport.cs" />
-    <Compile Include="TransportStatus.cs" />
+    <Compile Include="Transport\SampleClient.cs" />
+    <Compile Include="Transport\SpotStreamRepository.cs" />
+    <Compile Include="Transport\TradeRepository.cs" />
+    <Compile Include="Transport\Transport.cs" />
+    <Compile Include="Transport\TransportStatus.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -105,15 +93,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="ClientProgram.cs" />
-    <Compile Include="CurrencyPairRepository.cs" />
-    <Compile Include="ExecutionServiceClient.cs" />
-    <Compile Include="ICurrencyPairRepository.cs" />
-    <Compile Include="IExecutionServiceClient.cs" />
-    <Compile Include="ISampleClient.cs" />
-    <Compile Include="ISpotStreamRepository.cs" />
-    <Compile Include="ITradeRepository.cs" />
-    <Compile Include="ITransport.cs" />
+    <Compile Include="Transport\CurrencyPairRepository.cs" />
+    <Compile Include="Transport\ExecutionServiceClient.cs" />
+    <Compile Include="Transport\ICurrencyPairRepository.cs" />
+    <Compile Include="Transport\IExecutionServiceClient.cs" />
+    <Compile Include="Transport\ISampleClient.cs" />
+    <Compile Include="Transport\ISpotStreamRepository.cs" />
+    <Compile Include="Transport\ITradeRepository.cs" />
+    <Compile Include="Transport\ITransport.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

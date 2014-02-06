@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Adaptive.ReactiveTrader.Contracts;
 using log4net;
 
-namespace Adaptive.ReactiveTrader.Client
+namespace Adaptive.ReactiveTrader.Client.Transport
 {
     class CurrencyPairRepository : ICurrencyPairRepository
     {

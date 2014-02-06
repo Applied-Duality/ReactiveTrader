@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using Adaptive.ReactiveTrader.Client.Transport;
+using Autofac;
 
 namespace Adaptive.ReactiveTrader.Client
 {
@@ -8,7 +9,7 @@ namespace Adaptive.ReactiveTrader.Client
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<Transport>().As<ITransport>().SingleInstance();
+            builder.RegisterType<Transport.Transport>().As<ITransport>().SingleInstance();
             builder.RegisterType<SpotStreamRepository>().As<ISpotStreamRepository>().SingleInstance();
             builder.RegisterType<ExecutionServiceClient>().As<IExecutionServiceClient>().SingleInstance();
             builder.RegisterType<TradeRepository>().As<ITradeRepository>().SingleInstance();

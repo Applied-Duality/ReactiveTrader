@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Adaptive.ReactiveTrader.Contracts;
 
-namespace Adaptive.ReactiveTrader.Client
+namespace Adaptive.ReactiveTrader.Client.Transport
 {
     interface ICurrencyPairRepository
     {

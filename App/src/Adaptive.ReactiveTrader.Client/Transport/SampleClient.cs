@@ -3,7 +3,7 @@ using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Contracts;
 using log4net;
 
-namespace Adaptive.ReactiveTrader.Client
+namespace Adaptive.ReactiveTrader.Client.Transport
 {
     internal class SampleClient : ISampleClient
     {

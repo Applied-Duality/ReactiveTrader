@@ -1,4 +1,4 @@
-﻿namespace Adaptive.ReactiveTrader.Client
+﻿namespace Adaptive.ReactiveTrader.Client.Transport
 {
     public enum TransportStatus
     {

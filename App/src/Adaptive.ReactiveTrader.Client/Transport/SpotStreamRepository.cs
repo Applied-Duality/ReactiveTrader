@@ -7,7 +7,7 @@ using Adaptive.ReactiveTrader.Contracts.Pricing;
 using log4net;
 using Microsoft.AspNet.SignalR.Client;
 
-namespace Adaptive.ReactiveTrader.Client
+namespace Adaptive.ReactiveTrader.Client.Transport
 {
     public class SpotStreamRepository : ISpotStreamRepository
     {

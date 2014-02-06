@@ -1,4 +1,4 @@
-﻿namespace Adaptive.ReactiveTrader.Client
+﻿namespace Adaptive.ReactiveTrader.Client.Transport
 {
     internal interface ISampleClient
     {
