@@ -1,5 +1,7 @@
 ﻿using Adaptive.ReactiveTrader.Client.Transport;
+using Adaptive.ReactiveTrader.Client.UI.Blotter;
 using Adaptive.ReactiveTrader.Client.UI.Shell;
+using Adaptive.ReactiveTrader.Client.UI.SpotTiles;
 using Autofac;
 
 namespace Adaptive.ReactiveTrader.Client
@@ -19,6 +21,12 @@ namespace Adaptive.ReactiveTrader.Client
 
             builder.RegisterType<ShellView>();
             builder.RegisterType<ShellViewModel>().As<IShellViewModel>();
+            builder.RegisterType<SpotTilesView>();
+            builder.RegisterType<SpotTilesViewModel>().As<ISpotTilesViewModel>();
+            builder.RegisterType<SpotTileView>();
+            builder.RegisterType<SpotTileViewModel>().As<ISpotTileViewModel>();
+            builder.RegisterType<BlotterView>();
+            builder.RegisterType<BlotterViewModel>().As<IBlotterViewModel>();
 
             return builder.Build();
         } 
