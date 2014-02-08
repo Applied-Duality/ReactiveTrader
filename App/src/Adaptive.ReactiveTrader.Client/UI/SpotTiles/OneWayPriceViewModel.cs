@@ -9,13 +9,15 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
     public class OneWayPriceViewModel : ViewModelBase, IOneWayPriceViewModel
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(OneWayPriceViewModel));
+
+        private readonly DelegateCommand _executeCommand;
+        private IExecutablePrice _executablePrice;
+
         public Direction Direction { get; private set; }
         public string Prefix { get; private set; }
         public string Big { get; private set; }
         public string Suffix { get; private set; }
-        private readonly DelegateCommand _executeCommand;
-        private IExecutablePrice _executablePrice;
-
+        
         public OneWayPriceViewModel(Direction direction)
         {
             Direction = direction;
@@ -28,11 +30,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
 
         private bool CanExecute()
         {
-            if (_executablePrice != null)
-            {
-                return true;
-            }
-            return false;
+            return _executablePrice != null;
         }
 
         private void OnExecute()
@@ -47,6 +45,10 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         public void OnPrice(IExecutablePrice executablePrice)
         {
             _executablePrice = executablePrice;
+
+            Prefix = _executablePrice.Rate.ToString();
+            OnPropertyChangedManual("Prefix");
+
             _executeCommand.RaiseCanExecuteChanged();
         }
 

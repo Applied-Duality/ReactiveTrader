@@ -11,6 +11,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
     public class SpotTilesViewModel : ViewModelBase, ISpotTilesViewModel
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof (SpotTilesViewModel));
+
         public ObservableCollection<ISpotTileViewModel> SpotTiles { get; private set; }
         private readonly IReferenceDataRepository _referenceDataRepository;
         private readonly Func<ICurrencyPair, ISpotTileViewModel> _spotTileFactory;

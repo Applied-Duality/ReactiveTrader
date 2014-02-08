@@ -17,5 +17,15 @@ namespace Adaptive.ReactiveTrader.Client.UI
                 handler(this, new PropertyChangedEventArgs(propertyName));
             } 
         }
+
+        // to remove
+        protected void OnPropertyChangedManual(string name)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(name));
+            }
+        }
     }
 }

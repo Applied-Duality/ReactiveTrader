@@ -9,5 +9,6 @@ namespace Adaptive.ReactiveTrader.Client.Models
         ICurrencyPair CurrencyPair { get; }
         long QuoteId { get; }
         DateTime ValueDate { get; }
+        decimal Spread { get; }
     }
 }

@@ -8,5 +8,6 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         IOneWayPriceViewModel Bid { get; }
         IOneWayPriceViewModel Ask { get; }
         string Notional { get; set; }
+        string Spread { get; }
     }
 }

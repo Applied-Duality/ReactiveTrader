@@ -14,6 +14,8 @@ namespace Adaptive.ReactiveTrader.Client.Models
 
             bid.Parent = this;
             ask.Parent = this;
+
+            Spread = (ask.Rate - bid.Rate)* (long)Math.Pow(10, currencyPair.BigNumberStartIndex + 1);
         }
 
         public IExecutablePrice Bid { get; private set; }
@@ -21,5 +23,6 @@ namespace Adaptive.ReactiveTrader.Client.Models
         public ICurrencyPair CurrencyPair { get; private set; }
         public long QuoteId { get; private set; }
         public DateTime ValueDate { get; private set; }
+        public decimal Spread { get; private set; }
     }
 }

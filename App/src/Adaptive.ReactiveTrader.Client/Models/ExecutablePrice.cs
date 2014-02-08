@@ -8,12 +8,9 @@ namespace Adaptive.ReactiveTrader.Client.Models
     {
         private readonly IExecutionRepository _executionRepository;
 
-        public ExecutablePrice(string bigNumbers, string pips, string pipDecimals, Direction direction, decimal rate, IExecutionRepository executionRepository)
+        public ExecutablePrice(Direction direction, decimal rate, IExecutionRepository executionRepository)
         {
             _executionRepository = executionRepository;
-            BigNumbers = bigNumbers;
-            Pips = pips;
-            PipDecimals = pipDecimals;
             Direction = direction;
             Rate = rate;
         }
@@ -24,9 +21,6 @@ namespace Adaptive.ReactiveTrader.Client.Models
                 .CacheFirstResult();
         }
 
-        public string BigNumbers { get; private set; }
-        public string Pips { get; private set; }
-        public string PipDecimals { get; private set; }
         public Direction Direction { get; private set; }
         public decimal Rate { get; private set; }
         public IPrice Parent { get; internal set; }

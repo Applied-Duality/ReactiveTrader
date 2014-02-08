@@ -52,6 +52,7 @@ namespace Adaptive.ReactiveTrader.Client.Transport
 
                 try
                 {
+                    Log.InfoFormat("Connecting to {0}", _address);
                     await _hubConnection.Start();
                     _status.OnNext(ConnectionStatus.Connected);
                     observer.OnNext(Unit.Default);
