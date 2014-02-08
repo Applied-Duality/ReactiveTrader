@@ -10,19 +10,26 @@ namespace Adaptive.ReactiveTrader.Client.ServiceClients.Execution
 {
     class ExecutionServiceClient : IExecutionServiceClient
     {
-        private readonly IHubProxy _executionHubProxy;
+        private readonly IConnectionProvider _connectionProvider;
 
-        public ExecutionServiceClient(ISignalRTransport transport)
+        public ExecutionServiceClient(IConnectionProvider connectionProvider)
         {
-            _executionHubProxy = transport.GetProxy(ServiceConstants.Server.ExecutionHub);
+            _connectionProvider = connectionProvider;
         }
 
         public IObservable<TradeDto> Execute(TradeRequestDto tradeRequest)
         {
+            return (from connection in _connectionProvider.GetActiveConnection().Take(1) 
+                from trade in ExecuteForConnection(connection.GetProxy(ServiceConstants.Server.ExecutionHub), tradeRequest)
+                select trade)
+                .CacheFirstResult();
+        }
+
+        private IObservable<TradeDto> ExecuteForConnection(IHubProxy executionHubProxy, TradeRequestDto tradeRequestDto)
+        {
             return
                 Observable.FromAsync(
-                    () => _executionHubProxy.Invoke<TradeDto>(ServiceConstants.Server.ExecutionHub, tradeRequest))
-                    .CacheFirstResult();
-        }
+                    () => executionHubProxy.Invoke<TradeDto>(ServiceConstants.Server.ExecutionHub, tradeRequestDto));
+        } 
     }
 }

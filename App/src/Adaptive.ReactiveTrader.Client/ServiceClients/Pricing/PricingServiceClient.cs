@@ -6,83 +6,76 @@ using Adaptive.ReactiveTrader.Shared;
 using Adaptive.ReactiveTrader.Shared.Pricing;
 using log4net;
 using Microsoft.AspNet.SignalR.Client;
+using IConnection = Adaptive.ReactiveTrader.Client.Transport.IConnection;
 
 namespace Adaptive.ReactiveTrader.Client.ServiceClients.Pricing
 {
     class PricingServiceClient : IPricingServiceClient
     {
-        private readonly IHubProxy _pricingHubProxy;
-        private readonly Lazy<IObservable<PriceDto>> _allPricesLazy;
+        private readonly IConnectionProvider _connectionProvider;
 
         private static readonly ILog Log = LogManager.GetLogger(typeof(PricingServiceClient));
 
-        public PricingServiceClient(ISignalRTransport transport)
+        public PricingServiceClient(IConnectionProvider connectionProvider)
         {
-            _pricingHubProxy = transport.GetProxy(ServiceConstants.Server.PricingHub);
-
-            _allPricesLazy = new Lazy<IObservable<PriceDto>>(CreateAllPrices);
+            _connectionProvider = connectionProvider;
         }
-
-        private IObservable<PriceDto> CreateAllPrices()
-        {
-            return Observable.Create<PriceDto>(observer => _pricingHubProxy.On<PriceDto>(ServiceConstants.Client.OnNewPrice, observer.OnNext))
-                .Publish()
-                .RefCount();
-        }
-
-
-        private IObservable<PriceDto> AllPrices
-        {
-            get
-            {
-                return _allPricesLazy.Value;
-            }
-        } 
 
         public IObservable<PriceDto> GetSpotStream(string currencyPair)
         {
             if (string.IsNullOrEmpty(currencyPair)) throw new ArgumentException("currencyPair");
 
+            return from connection in _connectionProvider.GetActiveConnection().Take(1) // TODO handle new connection
+                from price in GetSpotStreamForConnection(currencyPair, connection)
+                select price;
+        }
+
+        public IObservable<PriceDto> GetSpotStreamForConnection(string currencyPair, IConnection connection)
+        {
             return Observable.Create<PriceDto>(async observer =>
             {
-                var disposables = new CompositeDisposable();
+                var pricingHubProxy = connection.GetProxy(ServiceConstants.Server.PricingHub);
 
                 // subscribe to price feed first, otherwise there is a race condition 
-                disposables.Add(AllPrices.Where(p => p.Symbol == currencyPair).Subscribe(observer));
+                var priceSubscription = pricingHubProxy.On<PriceDto>(ServiceConstants.Client.OnNewPrice, p =>
+                {
+                    if (p.Symbol == currencyPair)
+                    {
+                        observer.OnNext(p);
+                    } 
+                });
 
                 // send a subscription request
                 try
                 {
                     Log.InfoFormat("Sending price subscription for currency pair {0}", currencyPair);
-                    await _pricingHubProxy.Invoke(ServiceConstants.Server.SubscribePriceStream, new PriceSubscriptionRequestDto { CurrencyPair = currencyPair });
+                    await pricingHubProxy.Invoke(ServiceConstants.Server.SubscribePriceStream, new PriceSubscriptionRequestDto { CurrencyPair = currencyPair });
                 }
                 catch (Exception e)
                 {
                     observer.OnError(e);
                 }
 
-                disposables.Add(Disposable.Create(async () =>
+                var unsubscriptionDisposable = Disposable.Create(async () =>
                 {
                     // send unsubscription when the observable gets disposed
                     Log.InfoFormat("Sending price unsubscription for currency pair {0}", currencyPair);
                     try
                     {
                         await
-                            _pricingHubProxy.Invoke(ServiceConstants.Server.UnsubscribePriceStream,
+                            pricingHubProxy.Invoke(ServiceConstants.Server.UnsubscribePriceStream,
                                 new PriceSubscriptionRequestDto { CurrencyPair = currencyPair });
                     }
                     catch (Exception e)
                     {
-                        Log.Error(
-                            string.Format("An error occured while sending unsubscription request for {0}", currencyPair),
-                            e);
+                        Log.Error(string.Format("An error occured while sending unsubscription request for {0}", currencyPair), e);
                     }
-                }));
+                });
 
-                return disposables;
+                return new CompositeDisposable {priceSubscription, unsubscriptionDisposable};
             })
             .Publish()
             .RefCount();
-        }
+        } 
     }
 }

@@ -18,7 +18,7 @@ namespace Adaptive.ReactiveTrader.Client
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<SignalRTransport>().As<ISignalRTransport>().As<ITransport>().SingleInstance();
+            builder.RegisterType<ConnectionProvider>().As<IConnectionProvider>().SingleInstance();
 
             // service clients
             builder.RegisterType<ReferenceDataServiceClient>().As<IReferenceDataServiceClient>().SingleInstance();

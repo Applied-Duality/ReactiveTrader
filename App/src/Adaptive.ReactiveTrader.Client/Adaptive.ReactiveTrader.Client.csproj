@@ -49,6 +49,7 @@
       <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Interactive">
       <HintPath>..\packages\Ix-Main.1.2.2\lib\net45\System.Interactive.dll</HintPath>
@@ -117,9 +118,15 @@
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Repositories\IReferenceDataRepository.cs" />
     <Compile Include="Repositories\ReferenceDataRepository.cs" />
-    <Compile Include="Transport\ISignalRTransport.cs" />
-    <Compile Include="Transport\SignalRTransport.cs" />
-    <Compile Include="Transport\TransportStatus.cs" />
+    <Compile Include="Configuration\ConfigurationProvider.cs" />
+    <Compile Include="Transport\Connection.cs" />
+    <Compile Include="Configuration\IConfigurationProvider.cs" />
+    <Compile Include="Transport\IConnection.cs" />
+    <Compile Include="Transport\IConnectionProvider.cs" />
+    <Compile Include="Configuration\IUserProvider.cs" />
+    <Compile Include="Transport\ConnectionProvider.cs" />
+    <Compile Include="Transport\ConnectionStatus.cs" />
+    <Compile Include="Configuration\UserProvider.cs" />
     <Compile Include="UI\Blotter\BlotterView.xaml.cs">
       <DependentUpon>BlotterView.xaml</DependentUpon>
     </Compile>
@@ -157,7 +164,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Transport\ITransport.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

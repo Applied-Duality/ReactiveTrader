@@ -1,6 +1,6 @@
 ﻿namespace Adaptive.ReactiveTrader.Client.Transport
 {
-    public enum TransportStatus
+    public enum ConnectionStatus
     {
         Connecting,
         Connected,

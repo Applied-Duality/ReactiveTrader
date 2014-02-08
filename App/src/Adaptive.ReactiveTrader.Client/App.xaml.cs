@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows;
-using Adaptive.ReactiveTrader.Client.Transport;
 using Adaptive.ReactiveTrader.Client.UI.Shell;
 using Autofac;
 using log4net;
@@ -31,12 +30,6 @@ namespace Adaptive.ReactiveTrader.Client
 
             var shellView = container.Resolve<ShellView>();
             MainWindow.Content = shellView;
-
-            var transport = container.Resolve<ISignalRTransport>();
-            _transportSubscription = transport.Initialize("http://localhost:8080", "bob")
-                .Subscribe(
-                    _ => Log.Info("Transport initialized."),
-                    ex => Log.Error("Failed to initialize transport.", ex));
         }
 
         protected override void OnExit(ExitEventArgs e)

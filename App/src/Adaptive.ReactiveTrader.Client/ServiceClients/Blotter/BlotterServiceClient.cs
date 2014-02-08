@@ -12,27 +12,33 @@ namespace Adaptive.ReactiveTrader.Client.ServiceClients.Blotter
 {
     class BlotterServiceClient : IBlotterServiceClient
     {
-        private readonly IHubProxy _blotterHubProxy;
-
+        private readonly IConnectionProvider _connectionProvider;
         private static readonly ILog Log = LogManager.GetLogger(typeof(BlotterServiceClient));
 
-        public BlotterServiceClient(ISignalRTransport transport)
+        public BlotterServiceClient(IConnectionProvider connectionProvider)
         {
-            _blotterHubProxy = transport.GetProxy(ServiceConstants.Server.BlotterHub);
+            _connectionProvider = connectionProvider;
         }
 
         public IObservable<IEnumerable<TradeDto>> GetTrades()
         {
+            return from connection in _connectionProvider.GetActiveConnection().Take(1) // TODO implement recovery when new connection is created.
+                from trades in GetTradesForConnection(connection.GetProxy(ServiceConstants.Server.BlotterHub))
+                select trades;
+        }
+
+        private IObservable<IEnumerable<TradeDto>> GetTradesForConnection(IHubProxy blotterHubProxy)
+        {
             return Observable.Create<IEnumerable<TradeDto>>(async observer =>
             {
                 // subscribe to trade feed first, otherwise there is a race condition 
-                var spotTradeSubscription = _blotterHubProxy.On<IEnumerable<TradeDto>>(ServiceConstants.Client.OnNewTrade, observer.OnNext);
+                var spotTradeSubscription = blotterHubProxy.On<IEnumerable<TradeDto>>(ServiceConstants.Client.OnNewTrade, observer.OnNext);
 
                 // send a subscription request
                 try
                 {
                     Log.Info("Sending trade subscription...");
-                    await _blotterHubProxy.Invoke(ServiceConstants.Server.SubscribeTrades);
+                    await blotterHubProxy.Invoke(ServiceConstants.Server.SubscribeTrades);
                 }
                 catch (Exception e)
                 {
@@ -45,17 +51,18 @@ namespace Adaptive.ReactiveTrader.Client.ServiceClients.Blotter
                     Log.Info("Sending trades unsubscription...");
                     try
                     {
-                        await _blotterHubProxy.Invoke(ServiceConstants.Server.UnsubscribeTrades);
+                        await blotterHubProxy.Invoke(ServiceConstants.Server.UnsubscribeTrades);
                     }
                     catch (Exception e)
                     {
                         Log.Error("An error occured while sending trade unsubscription request", e);
                     }
                 });
-                return new CompositeDisposable {spotTradeSubscription, unsubscriptionDisposable};
+                return new CompositeDisposable { spotTradeSubscription, unsubscriptionDisposable };
             })
                 .Publish()
                 .RefCount();
-        }
+        } 
+
     }
 }
