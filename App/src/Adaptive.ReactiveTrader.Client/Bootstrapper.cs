@@ -1,4 +1,5 @@
-﻿using Adaptive.ReactiveTrader.Client.Repositories;
+﻿using Adaptive.ReactiveTrader.Client.Models;
+using Adaptive.ReactiveTrader.Client.Repositories;
 using Adaptive.ReactiveTrader.Client.ServiceClients.Blotter;
 using Adaptive.ReactiveTrader.Client.ServiceClients.Execution;
 using Adaptive.ReactiveTrader.Client.ServiceClients.Pricing;
@@ -31,13 +32,21 @@ namespace Adaptive.ReactiveTrader.Client
             builder.RegisterType<PriceRepository>().As<IPriceRepository>().SingleInstance();
             builder.RegisterType<ReferenceDataRepository>().As<IReferenceDataRepository>().SingleInstance();
 
+            // model factories
+            builder.RegisterType<CurrencyPairFactory>().As<ICurrencyPairFactory>().SingleInstance();
+            builder.RegisterType<TradeFactory>().As<ITradeFactory>().SingleInstance();
+            builder.RegisterType<PriceFactory>().As<IPriceFactory>().SingleInstance();
+
+            // views
             builder.RegisterType<ShellView>();
-            builder.RegisterType<ShellViewModel>().As<IShellViewModel>();
             builder.RegisterType<SpotTilesView>();
-            builder.RegisterType<SpotTilesViewModel>().As<ISpotTilesViewModel>();
             builder.RegisterType<SpotTileView>();
-            builder.RegisterType<SpotTileViewModel>().As<ISpotTileViewModel>();
             builder.RegisterType<BlotterView>();
+            
+            // view models
+            builder.RegisterType<ShellViewModel>().As<IShellViewModel>();
+            builder.RegisterType<SpotTilesViewModel>().As<ISpotTilesViewModel>();
+            builder.RegisterType<SpotTileViewModel>().As<ISpotTileViewModel>();
             builder.RegisterType<BlotterViewModel>().As<IBlotterViewModel>();
 
             return builder.Build();

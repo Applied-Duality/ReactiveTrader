@@ -92,6 +92,8 @@
     <Compile Include="Models\IPriceFactory.cs" />
     <Compile Include="Models\Price.cs" />
     <Compile Include="Models\PriceFactory.cs" />
+    <Compile Include="Models\Trade.cs" />
+    <Compile Include="Models\TradeStatus.cs" />
     <Compile Include="Repositories\ExecutionRepository.cs" />
     <Compile Include="Repositories\IExecutionRepository.cs" />
     <Compile Include="Repositories\IPriceRepository.cs" />
