@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Transport;
-using Adaptive.ReactiveTrader.Contracts;
-using Adaptive.ReactiveTrader.Contracts.Execution;
-using Adaptive.ReactiveTrader.Contracts.Extensions;
+using Adaptive.ReactiveTrader.Shared;
+using Adaptive.ReactiveTrader.Shared.Execution;
+using Adaptive.ReactiveTrader.Shared.Extensions;
 using Microsoft.AspNet.SignalR.Client;
 
 namespace Adaptive.ReactiveTrader.Client.ServiceClients.Execution
@@ -17,11 +17,11 @@ namespace Adaptive.ReactiveTrader.Client.ServiceClients.Execution
             _executionHubProxy = transport.GetProxy(ServiceConstants.Server.ExecutionHub);
         }
 
-        public IObservable<Trade> Execute(TradeRequest tradeRequest)
+        public IObservable<TradeDto> Execute(TradeRequestDto tradeRequest)
         {
             return
                 Observable.FromAsync(
-                    () => _executionHubProxy.Invoke<Trade>(ServiceConstants.Server.ExecutionHub, tradeRequest))
+                    () => _executionHubProxy.Invoke<TradeDto>(ServiceConstants.Server.ExecutionHub, tradeRequest))
                     .CacheFirstResult();
         }
     }

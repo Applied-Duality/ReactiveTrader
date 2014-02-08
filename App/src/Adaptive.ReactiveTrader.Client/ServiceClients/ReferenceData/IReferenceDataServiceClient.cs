@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Adaptive.ReactiveTrader.Contracts.ReferenceData;
+using Adaptive.ReactiveTrader.Shared.ReferenceData;
 
 namespace Adaptive.ReactiveTrader.Client.ServiceClients.ReferenceData
 {
     public interface IReferenceDataServiceClient
     {
-        IObservable<IEnumerable<CurrencyPairUpdate>> GetCurrencyPairUpdates();
+        IObservable<IEnumerable<CurrencyPairUpdateDto>> GetCurrencyPairUpdates();
     }
 }

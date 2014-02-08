@@ -1,10 +1,9 @@
-﻿using Adaptive.ReactiveTrader.Contracts;
-using Adaptive.ReactiveTrader.Contracts.Execution;
+﻿using Adaptive.ReactiveTrader.Shared.Execution;
 
 namespace Adaptive.ReactiveTrader.Server.Execution
 {
     public interface IExecutionService
     {
-        Trade Execute(TradeRequest tradeRequest, string username);
+        TradeDto Execute(TradeRequestDto tradeRequest, string username);
     }
 }

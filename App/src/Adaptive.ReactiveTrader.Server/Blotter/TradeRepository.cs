@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Adaptive.ReactiveTrader.Contracts;
-using Adaptive.ReactiveTrader.Contracts.Execution;
+using Adaptive.ReactiveTrader.Shared.Execution;
 
 namespace Adaptive.ReactiveTrader.Server.Blotter
 {
     public class TradeRepository : ITradeRepository
     {
-        private readonly List<Trade> _allTrades = new List<Trade>();
+        private readonly List<TradeDto> _allTrades = new List<TradeDto>();
 
-        public void StoreTrade(Trade trade)
+        public void StoreTrade(TradeDto trade)
         {
             lock (_allTrades)
             {
@@ -17,9 +16,9 @@ namespace Adaptive.ReactiveTrader.Server.Blotter
             }
         }
 
-        public IList<Trade> GetAllTrades()
+        public IList<TradeDto> GetAllTrades()
         {
-            IList<Trade> trades;
+            IList<TradeDto> trades;
 
             lock (_allTrades)
             {

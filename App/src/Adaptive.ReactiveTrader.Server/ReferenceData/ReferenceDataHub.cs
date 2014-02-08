@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Adaptive.ReactiveTrader.Contracts;
-using Adaptive.ReactiveTrader.Contracts.ReferenceData;
+using Adaptive.ReactiveTrader.Shared;
+using Adaptive.ReactiveTrader.Shared.ReferenceData;
 using log4net;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
@@ -21,17 +21,17 @@ namespace Adaptive.ReactiveTrader.Server.ReferenceData
         }
 
         [HubMethodName(ServiceConstants.Server.GetCurrencyPairs)]
-        public IEnumerable<CurrencyPairUpdate> GetCurrencyPairs()
+        public IEnumerable<CurrencyPairUpdateDto> GetCurrencyPairs()
         {
             Log.InfoFormat("Received request for currency pairs from connection {0}", Context.ConnectionId);
 
             var currencyPairs = _currencyPairRepository.GetAllCurrencyPairs().ToList();
             Log.InfoFormat("Sending {0} currency pairs to {1}'", currencyPairs.Count, Context.ConnectionId);
 
-            return currencyPairs.Select(cp => new CurrencyPairUpdate
+            return currencyPairs.Select(cp => new CurrencyPairUpdateDto
             {
                 CurrencyPair = cp,
-                UpdateType = UpdateType.Added
+                UpdateType = UpdateTypeDto.Added
             });
         }
     }

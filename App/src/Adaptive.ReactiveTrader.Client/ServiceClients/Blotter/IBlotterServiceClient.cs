@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Adaptive.ReactiveTrader.Contracts.Execution;
+using Adaptive.ReactiveTrader.Shared.Execution;
 
 namespace Adaptive.ReactiveTrader.Client.ServiceClients.Blotter
 {
     public interface IBlotterServiceClient
     {
-        IObservable<IEnumerable<Trade>> GetTrades();
+        IObservable<IEnumerable<TradeDto>> GetTrades();
     }
 }

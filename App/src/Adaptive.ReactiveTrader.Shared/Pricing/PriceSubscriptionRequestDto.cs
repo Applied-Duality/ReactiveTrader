@@ -1,6 +1,6 @@
-﻿namespace Adaptive.ReactiveTrader.Contracts.Pricing
+﻿namespace Adaptive.ReactiveTrader.Shared.Pricing
 {
-    public class PriceSubscriptionRequest
+    public class PriceSubscriptionRequestDto
     {
         public string CurrencyPair { get; set; }
 

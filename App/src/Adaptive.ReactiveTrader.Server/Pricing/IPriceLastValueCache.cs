@@ -1,10 +1,10 @@
-using Adaptive.ReactiveTrader.Contracts.Pricing;
+using Adaptive.ReactiveTrader.Shared.Pricing;
 
 namespace Adaptive.ReactiveTrader.Server.Pricing
 {
     public interface IPriceLastValueCache
     {
-        Price GetLastValue(string currencyPair);
-        void StoreLastValue(Price price);
+        PriceDto GetLastValue(string currencyPair);
+        void StoreLastValue(PriceDto price);
     }
 }

@@ -2,9 +2,8 @@
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Models;
 using Adaptive.ReactiveTrader.Client.ServiceClients.Execution;
-using Adaptive.ReactiveTrader.Contracts.Execution;
-using Adaptive.ReactiveTrader.Contracts.Extensions;
-using Direction = Adaptive.ReactiveTrader.Contracts.Execution.Direction;
+using Adaptive.ReactiveTrader.Shared.Execution;
+using Adaptive.ReactiveTrader.Shared.Extensions;
 
 namespace Adaptive.ReactiveTrader.Client.Repositories
 {
@@ -19,13 +18,18 @@ namespace Adaptive.ReactiveTrader.Client.Repositories
             _tradeFactory = tradeFactory;
         }
 
-        public IObservable<ITrade> Execute(IOneWayPrice oneWayPrice, long notional)
+        public IObservable<ITrade> Execute(IExecutablePrice executablePrice, long notional)
         {
-            var request = new TradeRequest
+            var price = executablePrice.Parent;
+
+            var request = new TradeRequestDto
             {
-                Direction = Direction.Buy, // TODO
+                Direction = executablePrice.Direction == Direction.Buy ? DirectionDto.Buy : DirectionDto.Sell,
                 Notional = notional,
-                Price = null, // oneWayPrice.Parent.SpotPrice
+                QuoteId = price.QuoteId,
+                SpotRate = executablePrice.Rate,
+                Symbol = price.CurrencyPair.Symbol,
+                ValueDate = price.ValueDate
             };
 
             return _executionServiceClient.Execute(request)

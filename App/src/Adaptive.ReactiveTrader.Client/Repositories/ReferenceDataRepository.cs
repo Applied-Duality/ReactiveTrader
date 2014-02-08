@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Models;
 using Adaptive.ReactiveTrader.Client.ServiceClients.ReferenceData;
-using Adaptive.ReactiveTrader.Contracts;
+using Adaptive.ReactiveTrader.Shared;
 
 namespace Adaptive.ReactiveTrader.Client.Repositories
 {
@@ -22,7 +22,7 @@ namespace Adaptive.ReactiveTrader.Client.Repositories
         public IObservable<IEnumerable<ICurrencyPair>> GetCurrencyPairs()
         {
             return _referenceDataServiceClient.GetCurrencyPairUpdates()
-                .Select(updates => updates.Where(update => update.UpdateType == UpdateType.Added))
+                .Select(updates => updates.Where(update => update.UpdateType == UpdateTypeDto.Added))
                 .Where(updates => updates.Any())
                 .Select(updates => updates.Select(update => _currencyPairFactory.Create(update.CurrencyPair)))
                 .Publish()

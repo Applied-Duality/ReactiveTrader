@@ -19,7 +19,7 @@ namespace Adaptive.ReactiveTrader.Client.Repositories
         public IObservable<IPrice> GetPrices(ICurrencyPair currencyPair)
         {
             return _pricingServiceClient.GetSpotStream(currencyPair.Symbol)
-                .Select(p => _priceFactory.Create(p))
+                .Select(p => _priceFactory.Create(p, currencyPair))
                 .Publish()
                 .RefCount();
         }

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BE1A2C99-47B7-4013-AB90-550CE2F9C7D2}</ProjectGuid>
+    <ProjectGuid>{918ED78D-1E46-4305-B9FC-FAD07B582AFF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Adaptive.ReactiveTrader.Contracts</RootNamespace>
-    <AssemblyName>Adaptive.ReactiveTrader.Contracts</AssemblyName>
+    <RootNamespace>Adaptive.ReactiveTrader.Shared</RootNamespace>
+    <AssemblyName>Adaptive.ReactiveTrader.Shared</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -44,7 +44,7 @@
       <HintPath>..\packages\Rx-Linq.2.2.2\lib\net45\System.Reactive.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.PlatformServices">
-      <HintPath>..\packages\Rx-PlatformServices.2.2.2\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
+      <HintPath>..\packages\Rx-PlatformServices.2.2.3\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -53,31 +53,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ReferenceData\CurrencyPair.cs" />
-    <Compile Include="ReferenceData\CurrencyPairUpdate.cs" />
-    <Compile Include="UpdateType.cs" />
-    <Compile Include="Execution\Direction.cs" />
+    <Compile Include="Execution\DirectionDto.cs" />
+    <Compile Include="Execution\TradeDto.cs" />
+    <Compile Include="Execution\TradeRequestDto.cs" />
+    <Compile Include="Execution\TradeStatusDto.cs" />
     <Compile Include="Extensions\ObservableExtensions.cs" />
-    <Compile Include="Pricing\PriceSubscriptionRequest.cs" />
-    <Compile Include="Pricing\Price.cs" />
+    <Compile Include="Pricing\PriceDto.cs" />
+    <Compile Include="Pricing\PriceSubscriptionRequestDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReferenceData\CurrencyPairDto.cs" />
+    <Compile Include="ReferenceData\CurrencyPairUpdateDto.cs" />
     <Compile Include="ServiceConstants.cs" />
-    <Compile Include="Execution\Trade.cs" />
-    <Compile Include="Execution\TradeRequest.cs" />
-    <Compile Include="Execution\TradeStatus.cs" />
+    <Compile Include="UpdateTypeDto.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

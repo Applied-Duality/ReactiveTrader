@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Transport;
-using Adaptive.ReactiveTrader.Contracts;
-using Adaptive.ReactiveTrader.Contracts.Execution;
+using Adaptive.ReactiveTrader.Shared;
+using Adaptive.ReactiveTrader.Shared.Execution;
 using log4net;
 using Microsoft.AspNet.SignalR.Client;
 
@@ -21,12 +21,12 @@ namespace Adaptive.ReactiveTrader.Client.ServiceClients.Blotter
             _blotterHubProxy = transport.GetProxy(ServiceConstants.Server.BlotterHub);
         }
 
-        public IObservable<IEnumerable<Trade>> GetTrades()
+        public IObservable<IEnumerable<TradeDto>> GetTrades()
         {
-            return Observable.Create<IEnumerable<Trade>>(async observer =>
+            return Observable.Create<IEnumerable<TradeDto>>(async observer =>
             {
                 // subscribe to trade feed first, otherwise there is a race condition 
-                var spotTradeSubscription = _blotterHubProxy.On<IEnumerable<Trade>>(ServiceConstants.Client.OnNewTrade, observer.OnNext);
+                var spotTradeSubscription = _blotterHubProxy.On<IEnumerable<TradeDto>>(ServiceConstants.Client.OnNewTrade, observer.OnNext);
 
                 // send a subscription request
                 try

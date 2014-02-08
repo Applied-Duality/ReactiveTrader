@@ -37,7 +37,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
 
         private void OnExecute()
         {
-            _executablePrice.Execute()
+            _executablePrice.Execute(1000000) // TODO bind notional
                 .ObserveOnDispatcher()
                 .Subscribe(OnExecuted,
                     error => Log.Error("Failed to execute trade", error));

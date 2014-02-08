@@ -1,10 +1,10 @@
 ﻿using System;
-using Adaptive.ReactiveTrader.Contracts.Pricing;
+using Adaptive.ReactiveTrader.Shared.Pricing;
 
 namespace Adaptive.ReactiveTrader.Client.ServiceClients.Pricing
 {
     public interface IPricingServiceClient
     {
-        IObservable<Price> GetSpotStream(string currencyPair);
+        IObservable<PriceDto> GetSpotStream(string currencyPair);
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Adaptive.ReactiveTrader.Contracts;
-using Adaptive.ReactiveTrader.Contracts.Execution;
 using Adaptive.ReactiveTrader.Server.Transport;
+using Adaptive.ReactiveTrader.Shared.Execution;
 using log4net;
 
 namespace Adaptive.ReactiveTrader.Server.Blotter
@@ -16,7 +15,7 @@ namespace Adaptive.ReactiveTrader.Server.Blotter
             _contextHolder = contextHolder;
         }
 
-        public Task Publish(Trade trade)
+        public Task Publish(TradeDto trade)
         {
             Log.InfoFormat("Broadcast new trade to blotters: {0}", trade);
             return _contextHolder.Context.Group(BlotterHub.BlotterGroupName).OnNewTrade(trade);

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Models;
 using Adaptive.ReactiveTrader.Client.ServiceClients.Blotter;
-using Adaptive.ReactiveTrader.Contracts.Execution;
+using Adaptive.ReactiveTrader.Shared.Execution;
 
 namespace Adaptive.ReactiveTrader.Client.Repositories
 {
@@ -22,7 +22,7 @@ namespace Adaptive.ReactiveTrader.Client.Repositories
         public IObservable<IEnumerable<ITrade>> GetTrades()
         {
             return _blotterServiceClient.GetTrades()
-                .Select(trades => Enumerable.Select<Trade, ITrade>(trades, _tradeFactory.Create))
+                .Select(trades => Enumerable.Select<TradeDto, ITrade>(trades, _tradeFactory.Create))
                 .Publish()
                 .RefCount();
         }

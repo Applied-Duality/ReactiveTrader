@@ -1,9 +1,9 @@
-﻿using Adaptive.ReactiveTrader.Contracts.Pricing;
+﻿using Adaptive.ReactiveTrader.Shared.Pricing;
 
 namespace Adaptive.ReactiveTrader.Client.Models
 {
     internal interface IPriceFactory
     {
-        IPrice Create(Price price);
+        IPrice Create(PriceDto price, ICurrencyPair currencyPair);
     }
 }

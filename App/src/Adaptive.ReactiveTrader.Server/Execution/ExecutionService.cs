@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Threading;
-using Adaptive.ReactiveTrader.Contracts;
-using Adaptive.ReactiveTrader.Contracts.Execution;
 using Adaptive.ReactiveTrader.Server.Blotter;
+using Adaptive.ReactiveTrader.Shared.Execution;
 
 namespace Adaptive.ReactiveTrader.Server.Execution
 {
@@ -21,17 +20,17 @@ namespace Adaptive.ReactiveTrader.Server.Execution
             _tradeId = 0;
         }
 
-        public Trade Execute(TradeRequest tradeRequest, string user)
+        public TradeDto Execute(TradeRequestDto tradeRequest, string user)
         {
-            var trade =  new Trade
+            var trade =  new TradeDto
             {
-                CurrencyPair = tradeRequest.Price.Symbol,
+                CurrencyPair = tradeRequest.Symbol,
                 Direction = tradeRequest.Direction,
                 Notional = tradeRequest.Notional,
-                SpotPrice = tradeRequest.Direction == Direction.Buy ? tradeRequest.Price.Ask : tradeRequest.Price.Bid,
-                Status = _random.Next(0, 5) > 3 ? TradeStatus.Rejected : TradeStatus.Done,
+                SpotRate = tradeRequest.SpotRate,
+                Status = _random.Next(0, 5) > 3 ? TradeStatusDto.Rejected : TradeStatusDto.Done,
                 TradeDate = DateTime.UtcNow.Date,
-                ValueDate = tradeRequest.Price.ValueDate,
+                ValueDate = tradeRequest.ValueDate,
                 TradeId = Interlocked.Increment(ref _tradeId),
                 TraderName = user
             };

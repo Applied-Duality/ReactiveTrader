@@ -5,8 +5,6 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adaptive.ReactiveTrader.Client", "Adaptive.ReactiveTrader.Client\Adaptive.ReactiveTrader.Client.csproj", "{CA35010F-7F38-4DCF-828E-A825F1E8D525}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adaptive.ReactiveTrader.Contracts", "Adaptive.ReactiveTrader.Contracts\Adaptive.ReactiveTrader.Contracts.csproj", "{BE1A2C99-47B7-4013-AB90-550CE2F9C7D2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adaptive.ReactiveTrader.Server", "Adaptive.ReactiveTrader.Server\Adaptive.ReactiveTrader.Server.csproj", "{1348ACC4-D5B2-4328-9C80-7EC813E82CE4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B3E5C36D-61DB-4710-A43C-71E97D6D32E4}"
@@ -15,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B3E5C3
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adaptive.ReactiveTrader.Shared", "Adaptive.ReactiveTrader.Shared\Adaptive.ReactiveTrader.Shared.csproj", "{918ED78D-1E46-4305-B9FC-FAD07B582AFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,14 +26,14 @@ Global
 		{CA35010F-7F38-4DCF-828E-A825F1E8D525}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA35010F-7F38-4DCF-828E-A825F1E8D525}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA35010F-7F38-4DCF-828E-A825F1E8D525}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BE1A2C99-47B7-4013-AB90-550CE2F9C7D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE1A2C99-47B7-4013-AB90-550CE2F9C7D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE1A2C99-47B7-4013-AB90-550CE2F9C7D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE1A2C99-47B7-4013-AB90-550CE2F9C7D2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1348ACC4-D5B2-4328-9C80-7EC813E82CE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1348ACC4-D5B2-4328-9C80-7EC813E82CE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1348ACC4-D5B2-4328-9C80-7EC813E82CE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1348ACC4-D5B2-4328-9C80-7EC813E82CE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{918ED78D-1E46-4305-B9FC-FAD07B582AFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{918ED78D-1E46-4305-B9FC-FAD07B582AFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{918ED78D-1E46-4305-B9FC-FAD07B582AFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{918ED78D-1E46-4305-B9FC-FAD07B582AFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

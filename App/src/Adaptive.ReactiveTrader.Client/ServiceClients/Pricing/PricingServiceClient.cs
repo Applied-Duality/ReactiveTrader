@@ -2,8 +2,8 @@
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Transport;
-using Adaptive.ReactiveTrader.Contracts;
-using Adaptive.ReactiveTrader.Contracts.Pricing;
+using Adaptive.ReactiveTrader.Shared;
+using Adaptive.ReactiveTrader.Shared.Pricing;
 using log4net;
 using Microsoft.AspNet.SignalR.Client;
 
@@ -12,7 +12,7 @@ namespace Adaptive.ReactiveTrader.Client.ServiceClients.Pricing
     class PricingServiceClient : IPricingServiceClient
     {
         private readonly IHubProxy _pricingHubProxy;
-        private readonly Lazy<IObservable<Price>> _allPricesLazy;
+        private readonly Lazy<IObservable<PriceDto>> _allPricesLazy;
 
         private static readonly ILog Log = LogManager.GetLogger(typeof(PricingServiceClient));
 
@@ -20,18 +20,18 @@ namespace Adaptive.ReactiveTrader.Client.ServiceClients.Pricing
         {
             _pricingHubProxy = transport.GetProxy(ServiceConstants.Server.PricingHub);
 
-            _allPricesLazy = new Lazy<IObservable<Price>>(CreateAllPrices);
+            _allPricesLazy = new Lazy<IObservable<PriceDto>>(CreateAllPrices);
         }
 
-        private IObservable<Price> CreateAllPrices()
+        private IObservable<PriceDto> CreateAllPrices()
         {
-            return Observable.Create<Price>(observer => _pricingHubProxy.On<Price>(ServiceConstants.Client.OnNewPrice, observer.OnNext))
+            return Observable.Create<PriceDto>(observer => _pricingHubProxy.On<PriceDto>(ServiceConstants.Client.OnNewPrice, observer.OnNext))
                 .Publish()
                 .RefCount();
         }
 
 
-        private IObservable<Price> AllPrices
+        private IObservable<PriceDto> AllPrices
         {
             get
             {
@@ -39,11 +39,11 @@ namespace Adaptive.ReactiveTrader.Client.ServiceClients.Pricing
             }
         } 
 
-        public IObservable<Price> GetSpotStream(string currencyPair)
+        public IObservable<PriceDto> GetSpotStream(string currencyPair)
         {
             if (string.IsNullOrEmpty(currencyPair)) throw new ArgumentException("currencyPair");
 
-            return Observable.Create<Price>(async observer =>
+            return Observable.Create<PriceDto>(async observer =>
             {
                 var disposables = new CompositeDisposable();
 
@@ -54,7 +54,7 @@ namespace Adaptive.ReactiveTrader.Client.ServiceClients.Pricing
                 try
                 {
                     Log.InfoFormat("Sending price subscription for currency pair {0}", currencyPair);
-                    await _pricingHubProxy.Invoke(ServiceConstants.Server.SubscribePriceStream, new PriceSubscriptionRequest { CurrencyPair = currencyPair });
+                    await _pricingHubProxy.Invoke(ServiceConstants.Server.SubscribePriceStream, new PriceSubscriptionRequestDto { CurrencyPair = currencyPair });
                 }
                 catch (Exception e)
                 {
@@ -69,7 +69,7 @@ namespace Adaptive.ReactiveTrader.Client.ServiceClients.Pricing
                     {
                         await
                             _pricingHubProxy.Invoke(ServiceConstants.Server.UnsubscribePriceStream,
-                                new PriceSubscriptionRequest { CurrencyPair = currencyPair });
+                                new PriceSubscriptionRequestDto { CurrencyPair = currencyPair });
                     }
                     catch (Exception e)
                     {

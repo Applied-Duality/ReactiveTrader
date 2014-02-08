@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Adaptive.ReactiveTrader.Contracts;
-using Adaptive.ReactiveTrader.Contracts.Pricing;
-using Adaptive.ReactiveTrader.Contracts.ReferenceData;
 using Adaptive.ReactiveTrader.Server.ReferenceData;
+using Adaptive.ReactiveTrader.Shared.Pricing;
+using Adaptive.ReactiveTrader.Shared.ReferenceData;
 
 namespace Adaptive.ReactiveTrader.Server.Pricing
 {
@@ -16,7 +15,7 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
         private readonly IPriceLastValueCache _priceLastValueCache;
         private Timer _timer;
         private readonly Random _random;
-        private readonly List<CurrencyPair> _allCurrencyPairs;
+        private readonly List<CurrencyPairDto> _allCurrencyPairs;
         private const int UpdatePeriodMs = 2000;
 
         private static readonly Dictionary<string, decimal> SamplePrices = new Dictionary<string, decimal>
@@ -55,7 +54,7 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
                     
                 decimal mid = SamplePrices[currencyPair.Symbol];
                 
-                var initialQuote = new Price
+                var initialQuote = new PriceDto
                 {
                     Symbol = currencyPair.Symbol,
                     QuoteId = 0,
@@ -66,14 +65,14 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
             }
         }
 
-        private Price GenerateNextQuote(Price previousPrice)
+        private PriceDto GenerateNextQuote(PriceDto previousPrice)
         {
             var currencyPair = _currencyPairRepository.GetCurrencyPair(previousPrice.Symbol);
 
             var pow = (decimal)Math.Pow(10, currencyPair.RatePrecision);
             var newMid = previousPrice.Mid + _random.Next(-5, 5) / pow;
 
-            return new Price
+            return new PriceDto
             {
                 Symbol = previousPrice.Symbol,
                 QuoteId = previousPrice.QuoteId + 1,

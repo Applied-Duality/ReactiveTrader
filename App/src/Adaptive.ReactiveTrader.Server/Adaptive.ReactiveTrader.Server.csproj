@@ -117,12 +117,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Adaptive.ReactiveTrader.Contracts\Adaptive.ReactiveTrader.Contracts.csproj">
-      <Project>{BE1A2C99-47B7-4013-AB90-550CE2F9C7D2}</Project>
-      <Name>Adaptive.ReactiveTrader.Contracts</Name>
+    <ProjectReference Include="..\Adaptive.ReactiveTrader.Shared\Adaptive.ReactiveTrader.Shared.csproj">
+      <Project>{918ED78D-1E46-4305-B9FC-FAD07B582AFF}</Project>
+      <Name>Adaptive.ReactiveTrader.Shared</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

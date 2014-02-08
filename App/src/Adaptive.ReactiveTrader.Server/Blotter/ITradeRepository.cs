@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using Adaptive.ReactiveTrader.Contracts;
-using Adaptive.ReactiveTrader.Contracts.Execution;
+using Adaptive.ReactiveTrader.Shared.Execution;
 
 namespace Adaptive.ReactiveTrader.Server.Blotter
 {
     public interface ITradeRepository
     {
-        void StoreTrade(Trade trade);
-        IList<Trade> GetAllTrades();
+        void StoreTrade(TradeDto trade);
+        IList<TradeDto> GetAllTrades();
     }
 }

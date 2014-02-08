@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Adaptive.ReactiveTrader.Contracts")]
+[assembly: AssemblyTitle("Adaptive.ReactiveTrader.Shared")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Adaptive.ReactiveTrader.Contracts")]
+[assembly: AssemblyProduct("Adaptive.ReactiveTrader.Shared")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("92d0c9b1-8077-4672-980e-903b4880608d")]
+[assembly: Guid("088d50d7-0f5a-4bbe-a3f7-4ef6d2f52ca7")]
 
 // Version information for an assembly consists of the following four values:
 //

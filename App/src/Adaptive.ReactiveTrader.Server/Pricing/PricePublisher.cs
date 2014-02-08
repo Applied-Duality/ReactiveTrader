@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Adaptive.ReactiveTrader.Contracts.Pricing;
 using Adaptive.ReactiveTrader.Server.Transport;
+using Adaptive.ReactiveTrader.Shared.Pricing;
 using log4net;
 
 namespace Adaptive.ReactiveTrader.Server.Pricing
@@ -16,7 +16,7 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
             _contextHolder = contextHolder;
         }
 
-        public async Task Publish(Price price)
+        public async Task Publish(PriceDto price)
         {
             var context = _contextHolder.Context;
             if (context == null) return;

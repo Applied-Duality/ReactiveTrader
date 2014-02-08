@@ -1,22 +1,22 @@
 ﻿using System.Collections.Generic;
-using Adaptive.ReactiveTrader.Contracts.ReferenceData;
+using Adaptive.ReactiveTrader.Shared.ReferenceData;
 
 namespace Adaptive.ReactiveTrader.Server.ReferenceData
 {
     class CurrencyPairRepository : ICurrencyPairRepository
     {
-        private readonly Dictionary<string, CurrencyPair> _currencyPairs = new Dictionary<string, CurrencyPair>
+        private readonly Dictionary<string, CurrencyPairDto> _currencyPairs = new Dictionary<string, CurrencyPairDto>
         {
-            {"EURUSD", new CurrencyPair("EURUSD", 5, 3)},
-            {"EURGBP", new CurrencyPair("EURGBP", 5, 3)},
+            {"EURUSD", new CurrencyPairDto("EURUSD", 5, 3)},
+            {"EURGBP", new CurrencyPairDto("EURGBP", 5, 3)},
         }; 
 
-        public IEnumerable<CurrencyPair> GetAllCurrencyPairs()
+        public IEnumerable<CurrencyPairDto> GetAllCurrencyPairs()
         {
             return _currencyPairs.Values;
         }
 
-        public CurrencyPair GetCurrencyPair(string symbol)
+        public CurrencyPairDto GetCurrencyPair(string symbol)
         {
             return _currencyPairs[symbol];
         }

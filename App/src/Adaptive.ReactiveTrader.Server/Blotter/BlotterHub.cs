@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Adaptive.ReactiveTrader.Contracts;
+using Adaptive.ReactiveTrader.Shared;
 using log4net;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;

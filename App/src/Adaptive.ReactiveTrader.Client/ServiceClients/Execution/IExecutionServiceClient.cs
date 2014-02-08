@@ -1,10 +1,10 @@
 ﻿using System;
-using Adaptive.ReactiveTrader.Contracts.Execution;
+using Adaptive.ReactiveTrader.Shared.Execution;
 
 namespace Adaptive.ReactiveTrader.Client.ServiceClients.Execution
 {
     public interface IExecutionServiceClient
     {
-        IObservable<Trade> Execute(TradeRequest tradeRequest);
+        IObservable<TradeDto> Execute(TradeRequestDto tradeRequest);
     }
 }

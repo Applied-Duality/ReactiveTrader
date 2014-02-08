@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Adaptive.ReactiveTrader.Contracts;
-using Adaptive.ReactiveTrader.Contracts.Pricing;
 using Adaptive.ReactiveTrader.Server.ReferenceData;
 using Adaptive.ReactiveTrader.Server.Transport;
+using Adaptive.ReactiveTrader.Shared;
+using Adaptive.ReactiveTrader.Shared.Pricing;
 using log4net;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
@@ -30,7 +30,7 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
         }
 
         [HubMethodName(ServiceConstants.Server.SubscribePriceStream)]
-        public async Task SubscribePriceStream(PriceSubscriptionRequest request)
+        public async Task SubscribePriceStream(PriceSubscriptionRequestDto request)
         {
             _contextHolder.Context = Clients;
 
@@ -54,7 +54,7 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
         }
 
         [HubMethodName(ServiceConstants.Server.UnsubscribePriceStream)]
-        public async Task UnsubscribePriceStream(PriceSubscriptionRequest request)
+        public async Task UnsubscribePriceStream(PriceSubscriptionRequestDto request)
         {
             Log.InfoFormat("Received unsubscription request {0} from connection {1}", request, Context.ConnectionId);
 

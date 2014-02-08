@@ -3,7 +3,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
 
-namespace Adaptive.ReactiveTrader.Contracts.Extensions
+namespace Adaptive.ReactiveTrader.Shared.Extensions
 {
     public static class ObservableExtensions
     {

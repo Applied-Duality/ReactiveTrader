@@ -4,8 +4,7 @@ using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using Adaptive.ReactiveTrader.Contracts;
-using Adaptive.ReactiveTrader.Contracts.Extensions;
+using Adaptive.ReactiveTrader.Shared;
 using log4net;
 using Microsoft.AspNet.SignalR.Client;
 

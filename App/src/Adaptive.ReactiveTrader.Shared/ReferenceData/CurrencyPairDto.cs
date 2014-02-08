@@ -1,8 +1,8 @@
-﻿namespace Adaptive.ReactiveTrader.Contracts.ReferenceData
+﻿namespace Adaptive.ReactiveTrader.Shared.ReferenceData
 {
-    public class CurrencyPair
+    public class CurrencyPairDto
     {
-        public CurrencyPair(string symbol, int ratePrecision, int bigNumberStartIndex)
+        public CurrencyPairDto(string symbol, int ratePrecision, int bigNumberStartIndex)
         {
             Symbol = symbol;
             RatePrecision = ratePrecision;

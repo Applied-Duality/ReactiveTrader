@@ -1,5 +1,5 @@
-﻿using Adaptive.ReactiveTrader.Contracts;
-using Adaptive.ReactiveTrader.Contracts.Execution;
+﻿using Adaptive.ReactiveTrader.Shared;
+using Adaptive.ReactiveTrader.Shared.Execution;
 using log4net;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
@@ -18,7 +18,7 @@ namespace Adaptive.ReactiveTrader.Server.Execution
         }
 
         [HubMethodName(ServiceConstants.Server.Execute)]
-        public Trade Execute(TradeRequest tradeRequest)
+        public TradeDto Execute(TradeRequestDto tradeRequest)
         {
             var user = UserName;
             Log.InfoFormat("Received trade request {0} from user {1}", tradeRequest, user);

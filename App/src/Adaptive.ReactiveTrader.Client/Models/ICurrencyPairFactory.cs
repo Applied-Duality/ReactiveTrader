@@ -1,9 +1,9 @@
-﻿using Adaptive.ReactiveTrader.Contracts.ReferenceData;
+﻿using Adaptive.ReactiveTrader.Shared.ReferenceData;
 
 namespace Adaptive.ReactiveTrader.Client.Models
 {
     public interface ICurrencyPairFactory
     {
-        ICurrencyPair Create(CurrencyPair currencyPair);
+        ICurrencyPair Create(CurrencyPairDto currencyPair);
     }
 }

@@ -85,8 +85,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\CurrencyPair.cs" />
+    <Compile Include="Models\CurrencyPairFactory.cs" />
+    <Compile Include="Models\ExecutablePrice.cs" />
     <Compile Include="Models\ICurrencyPairFactory.cs" />
     <Compile Include="Models\IPriceFactory.cs" />
+    <Compile Include="Models\Price.cs" />
+    <Compile Include="Models\PriceFactory.cs" />
     <Compile Include="Repositories\ExecutionRepository.cs" />
     <Compile Include="Repositories\IExecutionRepository.cs" />
     <Compile Include="Repositories\IPriceRepository.cs" />
@@ -98,7 +103,6 @@
     <Compile Include="Models\Direction.cs" />
     <Compile Include="Models\ICurrencyPair.cs" />
     <Compile Include="Models\IExecutablePrice.cs" />
-    <Compile Include="Models\IOneWayPrice.cs" />
     <Compile Include="Models\IPrice.cs" />
     <Compile Include="Models\ITrade.cs" />
     <Compile Include="ServiceClients\Blotter\IBlotterServiceClient.cs" />
@@ -203,15 +207,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Adaptive.ReactiveTrader.Contracts\Adaptive.ReactiveTrader.Contracts.csproj">
-      <Project>{BE1A2C99-47B7-4013-AB90-550CE2F9C7D2}</Project>
-      <Name>Adaptive.ReactiveTrader.Contracts</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="FodyWeavers.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Adaptive.ReactiveTrader.Shared\Adaptive.ReactiveTrader.Shared.csproj">
+      <Project>{918ED78D-1E46-4305-B9FC-FAD07B582AFF}</Project>
+      <Name>Adaptive.ReactiveTrader.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
