@@ -1,4 +1,5 @@
-﻿using Adaptive.ReactiveTrader.Client.Models;
+﻿using Adaptive.ReactiveTrader.Client.Configuration;
+using Adaptive.ReactiveTrader.Client.Models;
 using Adaptive.ReactiveTrader.Client.Repositories;
 using Adaptive.ReactiveTrader.Client.ServiceClients.Blotter;
 using Adaptive.ReactiveTrader.Client.ServiceClients.Execution;
@@ -19,6 +20,8 @@ namespace Adaptive.ReactiveTrader.Client
             var builder = new ContainerBuilder();
 
             builder.RegisterType<ConnectionProvider>().As<IConnectionProvider>().SingleInstance();
+            builder.RegisterType<ConfigurationProvider>().As<IConfigurationProvider>();
+            builder.RegisterType<UserProvider>().As<IUserProvider>();
 
             // service clients
             builder.RegisterType<ReferenceDataServiceClient>().As<IReferenceDataServiceClient>().SingleInstance();
@@ -48,6 +51,7 @@ namespace Adaptive.ReactiveTrader.Client
             builder.RegisterType<SpotTilesViewModel>().As<ISpotTilesViewModel>();
             builder.RegisterType<SpotTileViewModel>().As<ISpotTileViewModel>();
             builder.RegisterType<BlotterViewModel>().As<IBlotterViewModel>();
+            builder.RegisterType<OneWayPriceViewModel>().As<IOneWayPriceViewModel>();
 
             return builder.Build();
         } 

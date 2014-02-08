@@ -20,7 +20,7 @@ namespace Adaptive.ReactiveTrader.Client.ServiceClients.Execution
         public IObservable<TradeDto> Execute(TradeRequestDto tradeRequest)
         {
             return (from connection in _connectionProvider.GetActiveConnection().Take(1) 
-                from trade in ExecuteForConnection(connection.GetProxy(ServiceConstants.Server.ExecutionHub), tradeRequest)
+                from trade in ExecuteForConnection(connection.ExecutionHubProxy, tradeRequest)
                 select trade)
                 .CacheFirstResult();
         }

@@ -6,7 +6,6 @@ using Adaptive.ReactiveTrader.Shared;
 using Adaptive.ReactiveTrader.Shared.Pricing;
 using log4net;
 using Microsoft.AspNet.SignalR.Client;
-using IConnection = Adaptive.ReactiveTrader.Client.Transport.IConnection;
 
 namespace Adaptive.ReactiveTrader.Client.ServiceClients.Pricing
 {
@@ -26,16 +25,14 @@ namespace Adaptive.ReactiveTrader.Client.ServiceClients.Pricing
             if (string.IsNullOrEmpty(currencyPair)) throw new ArgumentException("currencyPair");
 
             return from connection in _connectionProvider.GetActiveConnection().Take(1) // TODO handle new connection
-                from price in GetSpotStreamForConnection(currencyPair, connection)
+                from price in GetSpotStreamForConnection(currencyPair, connection.PricingHubProxy)
                 select price;
         }
 
-        public IObservable<PriceDto> GetSpotStreamForConnection(string currencyPair, IConnection connection)
+        public IObservable<PriceDto> GetSpotStreamForConnection(string currencyPair, IHubProxy pricingHubProxy)
         {
             return Observable.Create<PriceDto>(async observer =>
             {
-                var pricingHubProxy = connection.GetProxy(ServiceConstants.Server.PricingHub);
-
                 // subscribe to price feed first, otherwise there is a race condition 
                 var priceSubscription = pricingHubProxy.On<PriceDto>(ServiceConstants.Client.OnNewPrice, p =>
                 {

@@ -23,7 +23,7 @@ namespace Adaptive.ReactiveTrader.Client.ServiceClients.Blotter
         public IObservable<IEnumerable<TradeDto>> GetTrades()
         {
             return from connection in _connectionProvider.GetActiveConnection().Take(1) // TODO implement recovery when new connection is created.
-                from trades in GetTradesForConnection(connection.GetProxy(ServiceConstants.Server.BlotterHub))
+                from trades in GetTradesForConnection(connection.BlotterHubProxy)
                 select trades;
         }
 

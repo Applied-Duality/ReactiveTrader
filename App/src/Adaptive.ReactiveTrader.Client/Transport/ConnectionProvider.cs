@@ -46,11 +46,9 @@ namespace Adaptive.ReactiveTrader.Client.Transport
 
                 var connectionSubscription =
                     connection.Initialize().Subscribe(
-                        _ => { },
+                        _ => o.OnNext(connection),
                         ex => o.OnCompleted(),
                         o.OnCompleted);
-
-                o.OnNext(connection);
 
                 return new CompositeDisposable { statusSubscription, connectionSubscription };
             })

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -17,20 +16,26 @@ namespace Adaptive.ReactiveTrader.Client.Transport
     /// </summary>
     public class Connection : IConnection
     {
+        private readonly string _address;
         private static readonly ILog Log = LogManager.GetLogger(typeof(Connection));
 
         private readonly ISubject<ConnectionStatus> _status = new BehaviorSubject<ConnectionStatus>(ConnectionStatus.Uninitialized);
         private readonly HubConnection _hubConnection;
-        private readonly ConcurrentDictionary<string, IHubProxy> _proxies = new ConcurrentDictionary<string, IHubProxy>();
 
         private bool _initialized;
 
         public Connection(string address, string username)
         {
+            _address = address;
             _hubConnection = new HubConnection(address);
             _hubConnection.Headers.Add(ServiceConstants.Server.UsernameHeader, username);
             CreateStatus().Subscribe(_status.OnNext);
             _hubConnection.Error += exception => Log.Error("There was a connection error with " + address, exception);
+
+            BlotterHubProxy = _hubConnection.CreateHubProxy(ServiceConstants.Server.BlotterHub);
+            ExecutionHubProxy = _hubConnection.CreateHubProxy(ServiceConstants.Server.ExecutionHub);
+            PricingHubProxy = _hubConnection.CreateHubProxy(ServiceConstants.Server.PricingHub);
+            ReferenceDataHubProxy = _hubConnection.CreateHubProxy(ServiceConstants.Server.ReferenceDataHub);
         }
 
         public IObservable<Unit> Initialize()
@@ -53,7 +58,7 @@ namespace Adaptive.ReactiveTrader.Client.Transport
                 }
                 catch (Exception e)
                 {
-                    Log.Error("An error occured when starting transport", e);
+                    Log.Error("An error occured when starting SignalR connection", e);
                     observer.OnError(e);
                 }
 
@@ -61,14 +66,14 @@ namespace Adaptive.ReactiveTrader.Client.Transport
                 {
                     try
                     {
-                        Log.Info("Stoping transport...");
+                        Log.Info("Stoping connection...");
                         _hubConnection.Stop();
-                        Log.Info("SignalRTransport stopped");
+                        Log.Info("Connection stopped");
                     }
                     catch (Exception e)
                     {
                         // we must never throw in a disposable
-                        Log.Error("An error occured while stoping transport", e);
+                        Log.Error("An error occured while stoping connection", e);
                     }
                 });
             })
@@ -91,9 +96,14 @@ namespace Adaptive.ReactiveTrader.Client.Transport
             get { return _status; }
         }
 
-        public IHubProxy GetProxy(string name)
+        public IHubProxy ReferenceDataHubProxy { get; private set; }
+        public IHubProxy PricingHubProxy { get; private set; }
+        public IHubProxy ExecutionHubProxy { get; private set; }
+        public IHubProxy BlotterHubProxy { get; private set; }
+
+        public override string ToString()
         {
-            return _proxies.GetOrAdd(name, s => _hubConnection.CreateHubProxy(s));
-        } 
+            return string.Format("Address: {0}", _address);
+        }
     }
 }

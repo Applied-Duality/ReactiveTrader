@@ -5,6 +5,7 @@ using Adaptive.ReactiveTrader.Client.Transport;
 using Adaptive.ReactiveTrader.Shared;
 using Adaptive.ReactiveTrader.Shared.Extensions;
 using Adaptive.ReactiveTrader.Shared.ReferenceData;
+using Microsoft.AspNet.SignalR.Client;
 
 namespace Adaptive.ReactiveTrader.Client.ServiceClients.ReferenceData
 {
@@ -20,14 +21,14 @@ namespace Adaptive.ReactiveTrader.Client.ServiceClients.ReferenceData
         public IObservable<IEnumerable<CurrencyPairUpdateDto>> GetCurrencyPairUpdates()
         {
             return from connection in _connectionProvider.GetActiveConnection().Take(1) // TODO handle new connection properly
-                from currencyPairs in GetCurrencyPairUpdatesForConnection(connection)
+                from currencyPairs in GetCurrencyPairUpdatesForConnection(connection.ReferenceDataHubProxy)
                 select currencyPairs;
         }
 
-        public IObservable<IEnumerable<CurrencyPairUpdateDto>> GetCurrencyPairUpdatesForConnection(IConnection connection)
+        public IObservable<IEnumerable<CurrencyPairUpdateDto>> GetCurrencyPairUpdatesForConnection(IHubProxy referenceDataHubProxy)
         {
             return
-                Observable.FromAsync(() => connection.GetProxy(ServiceConstants.Server.ReferenceDataHub).Invoke<IEnumerable<CurrencyPairUpdateDto>>(ServiceConstants.Server.GetCurrencyPairs))
+                Observable.FromAsync(() => referenceDataHubProxy.Invoke<IEnumerable<CurrencyPairUpdateDto>>(ServiceConstants.Server.GetCurrencyPairs))
                     .CacheFirstResult();
         }
     }

@@ -32,7 +32,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
                 .ObserveOnDispatcher()
                 .Subscribe(
                     currencyPairs => currencyPairs.ForEach(CreateSpotTile),
-                    error => Log.Error("Failed to get currencies"));
+                    error => Log.Error("Failed to get currencies", error));
         }
 
         private void CreateSpotTile(ICurrencyPair currencyPair)
