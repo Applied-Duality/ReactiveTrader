@@ -17,8 +17,10 @@ namespace Adaptive.ReactiveTrader.Server.Blotter
 
         public Task Publish(TradeDto trade)
         {
+            if (_contextHolder.BlotterHubClients == null) return Task.FromResult(false);
+
             Log.InfoFormat("Broadcast new trade to blotters: {0}", trade);
-            return _contextHolder.Context.Group(BlotterHub.BlotterGroupName).OnNewTrade(trade);
+            return _contextHolder.BlotterHubClients.Group(BlotterHub.BlotterGroupName).OnNewTrade(new []{trade});
         }
     }
 }

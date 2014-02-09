@@ -32,7 +32,12 @@ namespace Adaptive.ReactiveTrader.Client.ServiceClients.Blotter
             return Observable.Create<IEnumerable<TradeDto>>(async observer =>
             {
                 // subscribe to trade feed first, otherwise there is a race condition 
-                var spotTradeSubscription = blotterHubProxy.On<IEnumerable<TradeDto>>(ServiceConstants.Client.OnNewTrade, observer.OnNext);
+                var spotTradeSubscription = blotterHubProxy.On<IEnumerable<TradeDto>>(ServiceConstants.Client.OnNewTrade,
+                    t =>
+                    {
+                        Log.InfoFormat("Trade received from blotter service: {0}", t);
+                        observer.OnNext(t);
+                    });
 
                 // send a subscription request
                 try

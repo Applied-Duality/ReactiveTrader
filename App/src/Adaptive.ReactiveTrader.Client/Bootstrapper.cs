@@ -51,6 +51,7 @@ namespace Adaptive.ReactiveTrader.Client
             builder.RegisterType<SpotTilesViewModel>().As<ISpotTilesViewModel>();
             builder.RegisterType<SpotTileViewModel>().As<ISpotTileViewModel>();
             builder.RegisterType<BlotterViewModel>().As<IBlotterViewModel>();
+            builder.RegisterType<TradeViewModel>().As<ITradeViewModel>();
             builder.RegisterType<OneWayPriceViewModel>().As<IOneWayPriceViewModel>();
 
             return builder.Build();

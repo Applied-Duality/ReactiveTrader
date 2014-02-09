@@ -21,7 +21,7 @@
                 <ColumnDefinition Width="120" />
             </Grid.ColumnDefinitions>
             
-            <Button Grid.Column="0">
+            <Button Grid.Column="0" Command="{Binding Bid.ExecuteCommand}">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{Binding Bid.BigFigures, Mode=OneWay}" />
                     <TextBlock Text="{Binding Bid.Pips, Mode=OneWay}" FontSize="32" />
@@ -31,11 +31,11 @@
 
             <TextBlock Text="{Binding Spread, Mode=OneWay}" Grid.Column="1" />
 
-            <Button Grid.Column="2">
+            <Button Grid.Column="2"  Command="{Binding Ask.ExecuteCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding Bid.BigFigures, Mode=OneWay}" />
-                    <TextBlock Text="{Binding Bid.Pips, Mode=OneWay}" FontSize="32" />
-                    <TextBlock Text="{Binding Bid.TenthOfPip, Mode=OneWay}" />
+                    <TextBlock Text="{Binding Ask.BigFigures, Mode=OneWay}" />
+                    <TextBlock Text="{Binding Ask.Pips, Mode=OneWay}" FontSize="32" />
+                    <TextBlock Text="{Binding Ask.TenthOfPip, Mode=OneWay}" />
                 </StackPanel>
             </Button>
         </Grid>

@@ -29,7 +29,7 @@ namespace Adaptive.ReactiveTrader.Server.Execution
                 Notional = tradeRequest.Notional,
                 SpotRate = tradeRequest.SpotRate,
                 Status = _random.Next(0, 5) > 3 ? TradeStatusDto.Rejected : TradeStatusDto.Done,
-                TradeDate = DateTime.UtcNow.Date,
+                TradeDate = DateTime.UtcNow,
                 ValueDate = tradeRequest.ValueDate,
                 TradeId = Interlocked.Increment(ref _tradeId),
                 TraderName = user

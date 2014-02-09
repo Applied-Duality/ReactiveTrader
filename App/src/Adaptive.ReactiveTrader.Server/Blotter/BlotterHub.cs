@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Adaptive.ReactiveTrader.Server.Transport;
 using Adaptive.ReactiveTrader.Shared;
 using log4net;
 using Microsoft.AspNet.SignalR;
@@ -10,17 +11,21 @@ namespace Adaptive.ReactiveTrader.Server.Blotter
     public class BlotterHub : Hub
     {
         private readonly ITradeRepository _tradeRepository;
+        private readonly IContextHolder _contextHolder;
         private static readonly ILog Log = LogManager.GetLogger(typeof(BlotterHub));
         public const string BlotterGroupName = "AllTrades";
 
-        public BlotterHub(ITradeRepository tradeRepository)
+        public BlotterHub(ITradeRepository tradeRepository, IContextHolder contextHolder)
         {
             _tradeRepository = tradeRepository;
+            _contextHolder = contextHolder;
         }
 
         [HubMethodName(ServiceConstants.Server.SubscribeTrades)]
         public async Task SubscribeTrades()
         {
+            _contextHolder.BlotterHubClients = Clients;
+
             var user = UserName;
             Log.InfoFormat("Received trade subscription from user {0}", user);
 
@@ -29,12 +34,9 @@ namespace Adaptive.ReactiveTrader.Server.Blotter
             Log.InfoFormat("Connection {0} of user {1} added to group '{2}'", Context.ConnectionId, user, BlotterGroupName);
 
             var trades = _tradeRepository.GetAllTrades();
-            foreach (var spotTrade in trades)
-            {
-                // TODO implement blotter snapshot properly
-                await Clients.Caller.OnNewTrade(spotTrade);
-                Log.InfoFormat("Snapshot published to {0}: {1}", Context.ConnectionId, spotTrade);
-            }
+            // TODO implement blotter snapshot properly
+            await Clients.Caller.OnNewTrade(trades);
+            Log.InfoFormat("Snapshot published to {0}", Context.ConnectionId);
         }
 
         [HubMethodName(ServiceConstants.Server.UnsubscribeTrades)]

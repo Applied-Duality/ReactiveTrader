@@ -29,7 +29,7 @@ namespace Adaptive.ReactiveTrader.Client.ServiceClients.Execution
         {
             return
                 Observable.FromAsync(
-                    () => executionHubProxy.Invoke<TradeDto>(ServiceConstants.Server.ExecutionHub, tradeRequestDto));
+                    () => executionHubProxy.Invoke<TradeDto>(ServiceConstants.Server.Execute, tradeRequestDto));
         } 
     }
 }
