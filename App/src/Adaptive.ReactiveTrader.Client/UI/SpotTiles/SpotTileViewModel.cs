@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Models;
 using log4net;
@@ -19,12 +18,12 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         private bool _disposed;
         IDisposable _priceSubscription;
 
-        public SpotTileViewModel(ICurrencyPair currencyPair, Func<Direction, IOneWayPriceViewModel> oneWayPriceFactory)
+        public SpotTileViewModel(ICurrencyPair currencyPair, Func<Direction, ISpotTileViewModel, IOneWayPriceViewModel> oneWayPriceFactory)
         {
             _currencyPair = currencyPair;
 
-            Bid = oneWayPriceFactory(Direction.Buy);
-            Ask = oneWayPriceFactory(Direction.Sell);
+            Bid = oneWayPriceFactory(Direction.Sell, this);
+            Ask = oneWayPriceFactory(Direction.Buy, this);
             Notional = "1000000";
 
             SubscribeForPrices();
@@ -51,7 +50,8 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         {
             Bid.OnPrice(price.Bid);
             Ask.OnPrice(price.Ask);
-            Spread = price.Spread.ToString("0.0");
+
+            Spread = PriceFormatter.GetFormattedSpread(price.Spread, _currencyPair.RatePrecision, _currencyPair.PipsPosition);
 
             // Olivier: looks like fody is not working, not sure why... remove this hack when it's fixed
             OnPropertyChangedManual("Spread");

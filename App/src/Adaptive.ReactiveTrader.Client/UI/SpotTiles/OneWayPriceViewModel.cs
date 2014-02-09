@@ -8,6 +8,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
 {
     public class OneWayPriceViewModel : ViewModelBase, IOneWayPriceViewModel
     {
+        private readonly ISpotTileViewModel _spotTileViewModel;
         private static readonly ILog Log = LogManager.GetLogger(typeof(OneWayPriceViewModel));
 
         private readonly DelegateCommand _executeCommand;
@@ -18,8 +19,9 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         public string Pips { get; private set; }
         public string TenthOfPip { get; private set; }
         
-        public OneWayPriceViewModel(Direction direction)
+        public OneWayPriceViewModel(Direction direction, ISpotTileViewModel spotTileViewModel)
         {
+            _spotTileViewModel = spotTileViewModel;
             Direction = direction;
 
             _executeCommand = new DelegateCommand(OnExecute, CanExecute);
@@ -35,7 +37,14 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
 
         private void OnExecute()
         {
-            _executablePrice.Execute(1000000) // TODO bind notional
+            long notional;
+            if (!long.TryParse(_spotTileViewModel.Notional, out notional))
+            {
+                // TODO handle notional validation properly
+                return;
+            }
+
+            _executablePrice.Execute(notional)
                 .ObserveOnDispatcher()
                 .Subscribe(OnExecuted,
                     error => Log.Error("Failed to execute trade", error));

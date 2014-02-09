@@ -14,8 +14,8 @@ namespace Adaptive.ReactiveTrader.Client.Models
 
         public IPrice Create(PriceDto priceDto, ICurrencyPair currencyPair)
         {
-            var bid = new ExecutablePrice(Direction.Buy, priceDto.Bid, _executionRepository);
-            var ask = new ExecutablePrice(Direction.Sell, priceDto.Ask, _executionRepository);
+            var bid = new ExecutablePrice(Direction.Sell, priceDto.Bid, _executionRepository);
+            var ask = new ExecutablePrice(Direction.Buy, priceDto.Ask, _executionRepository);
             var price = new Price(bid, ask, priceDto.QuoteId, priceDto.ValueDate, currencyPair);
 
             return price;
