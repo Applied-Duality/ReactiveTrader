@@ -7,6 +7,6 @@ namespace Adaptive.ReactiveTrader.Client.Models
         string Symbol { get; }
         IObservable<IPrice> Prices { get; }
         int RatePrecision { get; }
-        int BigNumberStartIndex { get; set; }
+        int PipsPosition { get; set; }
     }
 }

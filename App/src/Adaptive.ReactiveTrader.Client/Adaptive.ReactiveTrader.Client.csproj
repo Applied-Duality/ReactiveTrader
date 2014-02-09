@@ -142,10 +142,12 @@
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Shell\ShellViewModel.cs" />
+    <Compile Include="UI\SpotTiles\FormattedPrice.cs" />
     <Compile Include="UI\SpotTiles\IOneWayPriceViewModel.cs" />
     <Compile Include="UI\SpotTiles\ISpotTilesViewModel.cs" />
     <Compile Include="UI\SpotTiles\ISpotTileViewModel.cs" />
     <Compile Include="UI\SpotTiles\OneWayPriceViewModel.cs" />
+    <Compile Include="UI\SpotTiles\PriceFormatter.cs" />
     <Compile Include="UI\SpotTiles\SpotTilesView.xaml.cs">
       <DependentUpon>SpotTilesView.xaml</DependentUpon>
     </Compile>

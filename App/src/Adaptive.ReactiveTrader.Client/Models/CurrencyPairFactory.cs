@@ -17,7 +17,7 @@ namespace Adaptive.ReactiveTrader.Client.Models
             return new CurrencyPair(
                 currencyPair.Symbol, 
                 currencyPair.RatePrecision,
-                currencyPair.BigNumberStartIndex,
+                currencyPair.PipsPosition,
                 _priceRepository);
         }
     }

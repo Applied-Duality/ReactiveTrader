@@ -22,13 +22,21 @@
             </Grid.ColumnDefinitions>
             
             <Button Grid.Column="0">
-                <TextBlock Text="{Binding Bid.Prefix, Mode=OneWay}" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Bid.BigFigures, Mode=OneWay}" />
+                    <TextBlock Text="{Binding Bid.Pips, Mode=OneWay}" FontSize="32" />
+                    <TextBlock Text="{Binding Bid.TenthOfPip, Mode=OneWay}" />
+                </StackPanel>
             </Button>
 
             <TextBlock Text="{Binding Spread, Mode=OneWay}" Grid.Column="1" />
 
             <Button Grid.Column="2">
-                <TextBlock Text="{Binding Path=Ask.Prefix, Mode=OneWay}" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Bid.BigFigures, Mode=OneWay}" />
+                    <TextBlock Text="{Binding Bid.Pips, Mode=OneWay}" FontSize="32" />
+                    <TextBlock Text="{Binding Bid.TenthOfPip, Mode=OneWay}" />
+                </StackPanel>
             </Button>
         </Grid>
         

@@ -6,9 +6,9 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
     public interface IOneWayPriceViewModel : IViewModel
     {
         Direction Direction { get; }
-        string Prefix { get; }
-        string Big { get; }
-        string Suffix { get; }
+        string BigFigures { get; }
+        string Pips { get; }
+        string TenthOfPip { get; }
         ICommand ExecuteCommand { get; }
         void OnPrice(IExecutablePrice executablePrice);
     }

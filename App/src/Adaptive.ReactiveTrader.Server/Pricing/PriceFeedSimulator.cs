@@ -22,6 +22,7 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
         {
             {"EURUSD", 1.34860m},
             {"EURGBP", 0.82040m},
+            {"EURJPY", 139.431m},
         };
 
         public PriceFeedSimulator(

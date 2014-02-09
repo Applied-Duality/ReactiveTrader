@@ -8,11 +8,11 @@ namespace Adaptive.ReactiveTrader.Client.Models
     {
         private readonly Lazy<IObservable<IPrice>> _lazyPrices;
 
-        public CurrencyPair(string symbol, int ratePrecision, int bigNumberStartIndex, IPriceRepository priceRepository)
+        public CurrencyPair(string symbol, int ratePrecision, int pipsPosition, IPriceRepository priceRepository)
         {
             Symbol = symbol;
             RatePrecision = ratePrecision;
-            BigNumberStartIndex = bigNumberStartIndex;
+            PipsPosition = pipsPosition;
 
             _lazyPrices = new Lazy<IObservable<IPrice>>(() => CreatePrices(priceRepository));
         }
@@ -27,7 +27,7 @@ namespace Adaptive.ReactiveTrader.Client.Models
 
         public string Symbol { get; private set; }
         public int RatePrecision { get; private set; }
-        public int BigNumberStartIndex { get; set; }
+        public int PipsPosition { get; set; }
         public IObservable<IPrice> Prices { get { return _lazyPrices.Value; } }
     }
 }

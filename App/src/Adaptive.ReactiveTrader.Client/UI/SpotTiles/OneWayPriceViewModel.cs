@@ -14,9 +14,9 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         private IExecutablePrice _executablePrice;
 
         public Direction Direction { get; private set; }
-        public string Prefix { get; private set; }
-        public string Big { get; private set; }
-        public string Suffix { get; private set; }
+        public string BigFigures { get; private set; }
+        public string Pips { get; private set; }
+        public string TenthOfPip { get; private set; }
         
         public OneWayPriceViewModel(Direction direction)
         {
@@ -46,8 +46,16 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         {
             _executablePrice = executablePrice;
 
-            Prefix = _executablePrice.Rate.ToString();
-            OnPropertyChangedManual("Prefix");
+            var formattedPrice = PriceFormatter.GetFormattedPrice(_executablePrice.Rate,
+                executablePrice.Parent.CurrencyPair.RatePrecision, executablePrice.Parent.CurrencyPair.PipsPosition);
+
+            BigFigures = formattedPrice.BigFigures;
+            Pips = formattedPrice.Pips;
+            TenthOfPip = formattedPrice.TenthOfPip;
+
+            OnPropertyChangedManual("BigFigures");
+            OnPropertyChangedManual("Pips");
+            OnPropertyChangedManual("TenthOfPip");
 
             _executeCommand.RaiseCanExecuteChanged();
         }

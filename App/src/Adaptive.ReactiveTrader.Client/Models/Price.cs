@@ -15,7 +15,7 @@ namespace Adaptive.ReactiveTrader.Client.Models
             bid.Parent = this;
             ask.Parent = this;
 
-            Spread = (ask.Rate - bid.Rate)* (long)Math.Pow(10, currencyPair.BigNumberStartIndex + 1);
+            Spread = (ask.Rate - bid.Rate)* (long)Math.Pow(10, currencyPair.PipsPosition + 1);
         }
 
         public IExecutablePrice Bid { get; private set; }

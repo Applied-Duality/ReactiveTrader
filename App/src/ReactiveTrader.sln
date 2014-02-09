@@ -16,6 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B3E5C3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adaptive.ReactiveTrader.Shared", "Adaptive.ReactiveTrader.Shared\Adaptive.ReactiveTrader.Shared.csproj", "{918ED78D-1E46-4305-B9FC-FAD07B582AFF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adaptive.ReactiveTrader.Client.Tests", "Adaptive.ReactiveTrader.Client.Tests\Adaptive.ReactiveTrader.Client.Tests.csproj", "{05CC1E86-FBB3-4A5D-912D-1276EBDC46FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +36,10 @@ Global
 		{918ED78D-1E46-4305-B9FC-FAD07B582AFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{918ED78D-1E46-4305-B9FC-FAD07B582AFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{918ED78D-1E46-4305-B9FC-FAD07B582AFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05CC1E86-FBB3-4A5D-912D-1276EBDC46FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05CC1E86-FBB3-4A5D-912D-1276EBDC46FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05CC1E86-FBB3-4A5D-912D-1276EBDC46FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05CC1E86-FBB3-4A5D-912D-1276EBDC46FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
