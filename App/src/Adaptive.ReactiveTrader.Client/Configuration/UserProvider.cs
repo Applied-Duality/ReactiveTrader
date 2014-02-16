@@ -1,12 +1,11 @@
-﻿using System;
-
-namespace Adaptive.ReactiveTrader.Client.Configuration
+﻿namespace Adaptive.ReactiveTrader.Client.Configuration
 {
     class UserProvider : IUserProvider
     {
         public string Username
         {
-            get { return Environment.UserName; }
+            //get { return System.Environment.UserName; }
+            get { return System.DirectoryServices.AccountManagement.UserPrincipal.Current.DisplayName; }
         }
     }
 }
