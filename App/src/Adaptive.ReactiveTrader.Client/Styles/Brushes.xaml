@@ -6,10 +6,12 @@
     <Color x:Key="ColorRamp1" A="255" R="16" G="72" B="112"/>
     <Color x:Key="ColorRamp2" A="255" R="19" G="85" B="133"/>
     <Color x:Key="ColorRamp3" A="255" R="24" G="106" B="166"/>
+    <Color x:Key="StalePriceForegroundColor" A="255" R="80" G="80" B="80"/>
 
     <SolidColorBrush x:Key="PrimaryForeground" Color="{StaticResource PrimaryForegroundColor}"/>
     <SolidColorBrush x:Key="SecondaryForeground" Color="{StaticResource SecondaryForegroundColor}"/>
-    
+    <SolidColorBrush x:Key="StalePriceForeground" Color="{StaticResource StalePriceForegroundColor}"/>
+
     <SolidColorBrush x:Key="TitleBackground" Color="{StaticResource ColorRamp1}"/>
     <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{StaticResource ColorRamp1}"/>
     <SolidColorBrush x:Key="PrimaryContentBackgroudBrush" Color="{StaticResource ColorRamp2}"/>

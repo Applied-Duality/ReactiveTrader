@@ -93,20 +93,30 @@
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="Foreground" Value="{StaticResource SecondaryForeground}"/>
     </Style>
-    <Style x:Key="PipsTextStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+    <Style x:Key="ColoredPriceTextStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="Foreground" Value="{StaticResource StalePriceForeground}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="LineStackingStrategy" Value="BlockLineHeight"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="Binding.TargetUpdated">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ColorAnimation To="{StaticResource StalePriceForegroundColor}" 
+                                        Duration="0:0:3" AccelerationRatio="0.9"
+                                        Storyboard.TargetProperty="Foreground.Color" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="PipsTextStyle" TargetType="TextBlock" BasedOn="{StaticResource ColoredPriceTextStyle}">
         <Setter Property="FontSize" Value="42"/>
         <Setter Property="LineHeight" Value="42"/>
-        <Setter Property="Foreground" Value="{StaticResource PrimaryForeground}"/>
-        <Setter Property="FontWeight" Value="SemiBold"/>
-        <Setter Property="LineStackingStrategy" Value="BlockLineHeight"/>
-        
     </Style>
-    <Style x:Key="TenthOfPipTextStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+    <Style x:Key="TenthOfPipTextStyle" TargetType="TextBlock" BasedOn="{StaticResource ColoredPriceTextStyle}">
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="LineHeight" Value="20"/>
-        <Setter Property="Foreground" Value="{StaticResource PrimaryForeground}"/>
-        <Setter Property="FontWeight" Value="SemiBold"/>
-        <Setter Property="LineStackingStrategy" Value="BlockLineHeight"/>
     </Style>
     
 </ResourceDictionary>
