@@ -1,12 +1,14 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <Color x:Key="PrimaryForegroundColor" A="255" R="0" G="0" B="0"/>
+    <Color x:Key="SecondaryForegroundColor" A="255" R="167" G="167" B="167"/>
     <Color x:Key="ColorRamp1" A="255" R="16" G="72" B="112"/>
     <Color x:Key="ColorRamp2" A="255" R="19" G="85" B="133"/>
     <Color x:Key="ColorRamp3" A="255" R="24" G="106" B="166"/>
 
-    <SolidColorBrush x:Key="PrimaryForeground" Color="#000000"/>
-    <SolidColorBrush x:Key="SecondaryForeground" Color="#A7A7A7"/>
+    <SolidColorBrush x:Key="PrimaryForeground" Color="{StaticResource PrimaryForegroundColor}"/>
+    <SolidColorBrush x:Key="SecondaryForeground" Color="{StaticResource SecondaryForegroundColor}"/>
     
     <SolidColorBrush x:Key="TitleBackground" Color="{StaticResource ColorRamp1}"/>
     <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{StaticResource ColorRamp1}"/>
