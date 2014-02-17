@@ -15,11 +15,25 @@
                 <StackPanel>
                     <TextBlock Text="{Binding BigFigures, Mode=OneWay}" Style="{StaticResource BigFiguresTextStyleStyle}"/>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Pips, Mode=OneWay}" VerticalAlignment="Top" Style="{StaticResource PipsTextStyle}" />
-                        <TextBlock Text="{Binding TenthOfPip, Mode=OneWay}" VerticalAlignment="Top" Style="{StaticResource TenthOfPipTextStyle}" />
+                        <TextBlock x:Name="PipsText" Text="{Binding Pips, Mode=OneWay}" VerticalAlignment="Top" Style="{StaticResource PipsTextStyle}" />
+                        <TextBlock x:Name="TenthOfPipText" Text="{Binding TenthOfPip, Mode=OneWay}" VerticalAlignment="Top" Style="{StaticResource TenthOfPipTextStyle}" />
                     </StackPanel>
                 </StackPanel>
             </Button>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding Movement}" Value="{x:Static spotTiles:PriceMovement.None}">
+                    <Setter TargetName="PipsText" Property="Foreground" Value="Black"/>
+                    <Setter TargetName="TenthOfPipText" Property="Foreground" Value="Black"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Movement}" Value="{x:Static spotTiles:PriceMovement.Down}">
+                    <Setter TargetName="PipsText" Property="Foreground" Value="Red"/>
+                    <Setter TargetName="TenthOfPipText" Property="Foreground" Value="Red"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Movement}" Value="{x:Static spotTiles:PriceMovement.Up}">
+                    <Setter TargetName="PipsText" Property="Foreground" Value="Green"/>
+                    <Setter TargetName="TenthOfPipText" Property="Foreground" Value="Green"/>
+                </DataTrigger>
+            </DataTemplate.Triggers>
         </DataTemplate>
     </Control.Resources>
     <Grid Margin="5">
