@@ -69,6 +69,8 @@
     </Style>
     <Style x:Key="ErrorTextStyle" TargetType="TextBlock" BasedOn="{StaticResource SubTextStyle}"/>
 
+    
+    
     <Style x:Key="TagStyle" TargetType="TextBlock" BasedOn="{StaticResource ContentHeading2Style}">
         <Setter Property="Margin" Value="5"/>
         <Setter Property="Padding" Value="5"/>
@@ -87,5 +89,23 @@
     </Style>
 
 
+    <Style x:Key="BigFiguresTextStyleStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="Foreground" Value="{StaticResource SecondaryForeground}"/>
+    </Style>
+    <Style x:Key="PipsTextStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="FontSize" Value="42"/>
+        <Setter Property="LineHeight" Value="42"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryForeground}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="LineStackingStrategy" Value="BlockLineHeight"/>
+    </Style>
+    <Style x:Key="TenthOfPipTextStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="LineHeight" Value="20"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryForeground}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="LineStackingStrategy" Value="BlockLineHeight"/>
+    </Style>
     
 </ResourceDictionary>
