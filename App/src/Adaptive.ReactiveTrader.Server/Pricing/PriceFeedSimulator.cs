@@ -8,15 +8,15 @@ using Adaptive.ReactiveTrader.Shared.ReferenceData;
 
 namespace Adaptive.ReactiveTrader.Server.Pricing
 {
-    class PriceFeedSimulator : IPriceFeed
+    class PriceFeedSimulator : IPriceFeed, IDisposable
     {
+        private const int UpdatePeriodMs = 700;
         private readonly ICurrencyPairRepository _currencyPairRepository;
         private readonly IPricePublisher _pricePublisher;
         private readonly IPriceLastValueCache _priceLastValueCache;
-        private Timer _timer;
         private readonly Random _random;
         private readonly List<CurrencyPairDto> _allCurrencyPairs;
-        private const int UpdatePeriodMs = 2000;
+        private Timer _timer;
 
         private static readonly Dictionary<string, decimal> SamplePrices = new Dictionary<string, decimal>
         {
@@ -92,6 +92,12 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
             var newPrice = GenerateNextQuote(lastPrice);
             _priceLastValueCache.StoreLastValue(newPrice);
             _pricePublisher.Publish(newPrice);
+        }
+
+        public void Dispose()
+        {
+            using (_timer)
+            {}
         }
     }
 }

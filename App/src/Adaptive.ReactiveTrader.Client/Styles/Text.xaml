@@ -1,0 +1,122 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <!--TODO: Use correct Metro font ramp
+    PageHeader 42pt FFFFFF light
+    PageSubHeaderStyle 20pt FFFFFF light
+    ContentH1 20pt A7A7A7 light
+    ContentH1 11pt FFFFFF semi bold
+    ContentH1 11pt A7A7A7 semi bold
+    
+    Font Weights :
+    100	Thin
+    200	ExtraLight, UltraLight      Metro Light
+    300	Light                       Metro Semi light
+    400 Normal, Regular             Metro Regular
+    500 Medium
+    600	DemiBold, SemiBold          Metro SemiBold
+    700	Bold
+    800	ExtraBold, UltraBold
+    900	Black, Heavy
+    950	ExtraBlack, UltraBlack
+    
+    -->
+
+    <Style TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontWeight" Value="Light"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="TextAlignment" Value="Left"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+    </Style>
+    <Style TargetType="Label">
+        <Setter Property="Foreground" Value="{StaticResource PrimaryForeground}"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+    </Style>
+    <Style x:Key="PageHeaderStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="FontSize" Value="42"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryForeground}"/>
+        <Setter Property="FontWeight" Value="ExtraLight"/>
+    </Style>
+    <Style x:Key="PageSubHeaderStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="FontSize" Value="28"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryForeground}"/>
+        <Setter Property="FontWeight" Value="ExtraLight"/>
+    </Style>
+    <Style x:Key="ContentHeading1Style" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="FontSize" Value="28"/>
+        <Setter Property="Foreground" Value="{StaticResource SecondaryForeground}"/>
+        <Setter Property="FontWeight" Value="ExtraLight"/>
+    </Style>
+    <Style x:Key="ContentHeading2Style" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="Foreground" Value="{StaticResource PrimaryForeground}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+    </Style>
+    <Style x:Key="ContentHeading3Style" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="Foreground" Value="{StaticResource SecondaryForeground}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+    </Style>
+    <Style x:Key="SubTextStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Foreground" Value="{StaticResource SecondaryForeground}"/>
+    </Style>
+    <Style x:Key="ErrorTextStyle" TargetType="TextBlock" BasedOn="{StaticResource SubTextStyle}"/>
+
+    
+    
+    <Style x:Key="TagStyle" TargetType="TextBlock" BasedOn="{StaticResource ContentHeading2Style}">
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="Background" Value="{StaticResource HighlightBackground}"/>
+        <Setter Property="Foreground" Value="{StaticResource HighlightForeground}"/>
+    </Style>
+    
+    <!--<Style TargetType="Hyperlink">
+        <Setter Property="Foreground" Value="#26A0DA"/>
+    </Style>-->
+    
+    <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="VerticalContentAlignment" Value="Bottom"/>
+        <Setter Property="Padding" Value="4"/>
+    </Style>
+
+
+    <Style x:Key="BigFiguresTextStyleStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="Foreground" Value="{StaticResource SecondaryForeground}"/>
+    </Style>
+    <Style x:Key="ColoredPriceTextStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="Foreground" Value="{StaticResource StalePriceForeground}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="LineStackingStrategy" Value="BlockLineHeight"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="Binding.TargetUpdated">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ColorAnimation To="{StaticResource StalePriceForegroundColor}" 
+                                        Duration="0:0:3" AccelerationRatio="0.9"
+                                        Storyboard.TargetProperty="Foreground.Color" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="PipsTextStyle" TargetType="TextBlock" BasedOn="{StaticResource ColoredPriceTextStyle}">
+        <Setter Property="FontSize" Value="42"/>
+        <Setter Property="LineHeight" Value="42"/>
+    </Style>
+    <Style x:Key="TenthOfPipTextStyle" TargetType="TextBlock" BasedOn="{StaticResource ColoredPriceTextStyle}">
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="LineHeight" Value="20"/>
+    </Style>
+    
+</ResourceDictionary>
