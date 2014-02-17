@@ -99,6 +99,7 @@
         <Setter Property="Foreground" Value="{StaticResource PrimaryForeground}"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
         <Setter Property="LineStackingStrategy" Value="BlockLineHeight"/>
+        
     </Style>
     <Style x:Key="TenthOfPipTextStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
         <Setter Property="FontSize" Value="20"/>

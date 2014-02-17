@@ -12,67 +12,62 @@
         <DataTemplate x:Key="PriceDataTemplate" DataType="spotTiles:IOneWayPriceViewModel">
             <DataTemplate.Resources>
                 <Color x:Key="StalePriceForegroundColor" A="255" R="80" G="80" B="80"/>
+                <SolidColorBrush x:Key="StalePriceForeground" Color="{StaticResource StalePriceForegroundColor}"/>
             </DataTemplate.Resources>
             <Button Width="100" Height="100" 
                     Command="{Binding ExecuteCommand}">
                 <StackPanel>
                     <TextBlock Text="{Binding BigFigures, Mode=OneWay}" Style="{StaticResource BigFiguresTextStyleStyle}"/>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock x:Name="PipsText" Text="{Binding Pips, Mode=OneWay}" VerticalAlignment="Top" Style="{StaticResource PipsTextStyle}" >
-                            <TextBlock.Foreground>
-                                <SolidColorBrush x:Name="PipsTextForeground" Color="{StaticResource StalePriceForegroundColor}"/>
-                            </TextBlock.Foreground>
+                        <TextBlock x:Name="PipsText" 
+                                   Text="{Binding Pips, Mode=OneWay, NotifyOnTargetUpdated=True}" 
+                                   VerticalAlignment="Top" 
+                                   Foreground="{StaticResource StalePriceForeground}"
+                                   Style="{StaticResource PipsTextStyle}" >
+                            <TextBlock.Triggers>
+                                <EventTrigger RoutedEvent="Binding.TargetUpdated">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation To="{StaticResource StalePriceForegroundColor}" 
+                                                Duration="0:0:3" AccelerationRatio="0.9"
+                                                Storyboard.TargetProperty="Foreground.Color" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </TextBlock.Triggers>
                         </TextBlock>
-                        <TextBlock x:Name="TenthOfPipText" Text="{Binding TenthOfPip, Mode=OneWay}" VerticalAlignment="Top" Style="{StaticResource TenthOfPipTextStyle}" >
-                            <TextBlock.Foreground>
-                                <SolidColorBrush x:Name="TenthOfPipTextForeground" Color="{StaticResource StalePriceForegroundColor}"/>
-                            </TextBlock.Foreground>
+                        <TextBlock x:Name="TenthOfPipText" 
+                                   Text="{Binding TenthOfPip, Mode=OneWay}" 
+                                   VerticalAlignment="Top" 
+                                   Foreground="{StaticResource StalePriceForeground}"
+                                   Style="{StaticResource TenthOfPipTextStyle}" >
+                            <TextBlock.Triggers>
+                                <EventTrigger RoutedEvent="Binding.TargetUpdated">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation To="{StaticResource StalePriceForegroundColor}" 
+                                                Duration="0:0:3" AccelerationRatio="0.9"
+                                                Storyboard.TargetProperty="Foreground.Color" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </TextBlock.Triggers>
                         </TextBlock>
                     </StackPanel>
                 </StackPanel>
             </Button>
             <DataTemplate.Triggers>
                 <DataTrigger Binding="{Binding Movement}" Value="{x:Static spotTiles:PriceMovement.None}">
-                    <DataTrigger.EnterActions>
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <ColorAnimation From="Black" To="{StaticResource StalePriceForegroundColor}" 
-                                                Duration="0:0:3" AccelerationRatio="0.9"
-                                                Storyboard.TargetName="PipsTextForeground" Storyboard.TargetProperty="Color" />
-                                <ColorAnimation From="Black" To="{StaticResource StalePriceForegroundColor}" 
-                                                Duration="0:0:3" AccelerationRatio="0.9"
-                                                Storyboard.TargetName="TenthOfPipTextForeground" Storyboard.TargetProperty="Color" />
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </DataTrigger.EnterActions>
+                    <Setter TargetName="PipsText" Property="Foreground" Value="Black"/>
+                    <Setter TargetName="TenthOfPipText" Property="Foreground" Value="Black"/>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Movement}" Value="{x:Static spotTiles:PriceMovement.Down}">
-                    <DataTrigger.EnterActions>
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <ColorAnimation From="DarkRed" To="{StaticResource StalePriceForegroundColor}" 
-                                                Duration="0:0:3" AccelerationRatio="0.9"
-                                                Storyboard.TargetName="PipsTextForeground" Storyboard.TargetProperty="Color" />
-                                <ColorAnimation From="DarkRed" To="{StaticResource StalePriceForegroundColor}" 
-                                                Duration="0:0:3" AccelerationRatio="0.9"
-                                                Storyboard.TargetName="TenthOfPipTextForeground" Storyboard.TargetProperty="Color" />
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </DataTrigger.EnterActions>
+                    <Setter TargetName="PipsText" Property="Foreground" Value="DarkRed"/>
+                    <Setter TargetName="TenthOfPipText" Property="Foreground" Value="DarkRed"/>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Movement}" Value="{x:Static spotTiles:PriceMovement.Up}">
-                    <DataTrigger.EnterActions>
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <ColorAnimation From="DarkGreen" To="{StaticResource StalePriceForegroundColor}" 
-                                                Duration="0:0:3" AccelerationRatio="0.9"
-                                                Storyboard.TargetName="PipsTextForeground" Storyboard.TargetProperty="Color" />
-                                <ColorAnimation From="DarkGreen" To="{StaticResource StalePriceForegroundColor}" 
-                                                Duration="0:0:3" AccelerationRatio="0.9"
-                                                Storyboard.TargetName="TenthOfPipTextForeground" Storyboard.TargetProperty="Color" />
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </DataTrigger.EnterActions>
+                    <Setter TargetName="PipsText" Property="Foreground" Value="DarkGreen"/>
+                    <Setter TargetName="TenthOfPipText" Property="Foreground" Value="DarkGreen"/>
                 </DataTrigger>
             </DataTemplate.Triggers>
         </DataTemplate>
