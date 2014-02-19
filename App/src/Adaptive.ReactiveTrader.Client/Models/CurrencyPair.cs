@@ -27,7 +27,7 @@ namespace Adaptive.ReactiveTrader.Client.Models
 
         public string Symbol { get; private set; }
         public int RatePrecision { get; private set; }
-        public int PipsPosition { get; set; }
+        public int PipsPosition { get; private set; }
         public IObservable<IPrice> Prices { get { return _lazyPrices.Value; } }
     }
 }

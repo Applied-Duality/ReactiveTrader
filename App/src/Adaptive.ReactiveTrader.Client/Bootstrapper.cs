@@ -1,10 +1,7 @@
 ﻿using Adaptive.ReactiveTrader.Client.Configuration;
 using Adaptive.ReactiveTrader.Client.Models;
 using Adaptive.ReactiveTrader.Client.Repositories;
-using Adaptive.ReactiveTrader.Client.ServiceClients.Blotter;
-using Adaptive.ReactiveTrader.Client.ServiceClients.Execution;
-using Adaptive.ReactiveTrader.Client.ServiceClients.Pricing;
-using Adaptive.ReactiveTrader.Client.ServiceClients.ReferenceData;
+using Adaptive.ReactiveTrader.Client.ServiceClients;
 using Adaptive.ReactiveTrader.Client.Transport;
 using Adaptive.ReactiveTrader.Client.UI.Blotter;
 using Adaptive.ReactiveTrader.Client.UI.Shell;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Models;
-using Adaptive.ReactiveTrader.Client.ServiceClients.Blotter;
+using Adaptive.ReactiveTrader.Client.ServiceClients;
 
 namespace Adaptive.ReactiveTrader.Client.Repositories
 {

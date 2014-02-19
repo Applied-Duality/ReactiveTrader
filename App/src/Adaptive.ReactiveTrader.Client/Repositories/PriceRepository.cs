@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Models;
-using Adaptive.ReactiveTrader.Client.ServiceClients.Pricing;
+using Adaptive.ReactiveTrader.Client.ServiceClients;
 
 namespace Adaptive.ReactiveTrader.Client.Repositories
 {
