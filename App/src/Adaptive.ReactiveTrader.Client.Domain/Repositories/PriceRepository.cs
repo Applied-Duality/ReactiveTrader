@@ -18,7 +18,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Repositories
 
         public IObservable<IPrice> GetPrices(ICurrencyPair currencyPair)
         {
-            return _pricingServiceClient.GetSpotStream(currencyPair.Symbol)
+            return Observable.Defer(() => _pricingServiceClient.GetSpotStream(currencyPair.Symbol))
                 .Select(p => _priceFactory.Create(p, currencyPair))
                 .Catch(Observable.Return(new StalePrice(currencyPair)))
                 .Repeat()

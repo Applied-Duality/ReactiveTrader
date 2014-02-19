@@ -20,7 +20,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Repositories
 
         public IObservable<IEnumerable<ITrade>> GetTrades()
         {
-            return _blotterServiceClient.GetTrades()
+            return Observable.Defer(() => _blotterServiceClient.GetTrades())
                 .Select(trades => trades.Select(_tradeFactory.Create))
                 .Catch(Observable.Return(new ITrade[0]))
                 .Repeat()

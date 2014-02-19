@@ -41,5 +41,14 @@ namespace Adaptive.ReactiveTrader.Shared.Extensions
                 )
               );
         }
+
+        public static IObservable<T> OnSubscribe<T>(this IObservable<T> source, Action onSubscribe)
+        {
+            return Observable.Create<T>(observer =>
+            {
+                onSubscribe();
+                return source.Subscribe(observer);
+            });
+        }
     }
 }

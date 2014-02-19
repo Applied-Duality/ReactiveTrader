@@ -3,13 +3,15 @@ using System.Reactive;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Domain.Transport;
 using Adaptive.ReactiveTrader.Shared.Extensions;
+using log4net;
 
 namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
 {
     abstract class ServiceClient
     {
         private readonly IConnectionProvider _connectionProvider;
-
+        private static readonly ILog Log = LogManager.GetLogger(typeof(ServiceClient));
+        
         protected ServiceClient(IConnectionProvider connectionProvider)
         {
             _connectionProvider = connectionProvider;
@@ -17,10 +19,16 @@ namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
 
         protected IObservable<T> GetResilientStream<T>(Func<IConnection, IObservable<T>> streamFactory, TimeSpan connectionTimeout)
         {
-            var activeConnection = _connectionProvider.GetActiveConnection().Publish().RefCount();
+            var activeConnections = (from connection in _connectionProvider.GetActiveConnection()
+                                     from status in connection.Status
+                                     where status == ConnectionStatus.Connected || status == ConnectionStatus.Reconnected
+                                     select connection)
+                .Do(_ => Log.Info("New connection"))
+                .Publish()
+                .RefCount();
 
             // get the first connection
-            var firstConnection = activeConnection.Take(1).Timeout(connectionTimeout);
+            var firstConnection = activeConnections.Take(1).Timeout(connectionTimeout);
 
             // 1 - notifies when the first connection gets disconnected
             var firstDisconnection = from connection in firstConnection
@@ -29,18 +37,20 @@ namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
                                      select Unit.Default;
 
             // 2- connection provider created a new connection it means the active one has droped
-            var subsequentConnection = activeConnection.Skip(1).Select(_ => Unit.Default).Take(1);
+            var subsequentConnection = activeConnections.Skip(1).Select(_ => Unit.Default).Take(1);
 
             // OnError when we get 1 or 2
             var disconnected = firstDisconnection.Merge(subsequentConnection)
                 .Select(_ => Notification.CreateOnError<T>(new Exception("Connection was disconnected.")))
-                .Dematerialize();
+                .Dematerialize()
+                .Do(_ => Log.Info("Stream disconnected"));
 
             // create a stream which will OnError as soon as the connection drops
             return (from connection in firstConnection
                     from t in streamFactory(connection)
                     select t)
                 .Merge(disconnected)
+                .OnSubscribe(() => Log.Info("Subscribing to Stream"))
                 .Publish()
                 .RefCount();
         }

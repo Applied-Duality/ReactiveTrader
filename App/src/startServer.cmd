@@ -1,0 +1,1 @@
+Adaptive.ReactiveTrader.Server.CLI\bin\Debug\Adaptive.ReactiveTrader.Server.CLI.exe

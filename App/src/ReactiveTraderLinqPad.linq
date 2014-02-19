@@ -23,6 +23,7 @@ api.ConnectionStatus.Dump();
 var prices = from currencyPairs in api.ReferenceData.GetCurrencyPairs()
              let eurusd = currencyPairs.First(cp=>cp.Symbol == "EURUSD")
              from price in eurusd.Prices
+			 where !price.IsStale
 			 select new { Bid = price.Bid.Rate, Ask = price.Ask.Rate}; 
 			 
 prices.Dump();

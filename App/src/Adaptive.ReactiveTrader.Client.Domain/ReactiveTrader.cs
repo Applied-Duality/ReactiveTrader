@@ -4,12 +4,14 @@ using Adaptive.ReactiveTrader.Client.Domain.Models;
 using Adaptive.ReactiveTrader.Client.Domain.Repositories;
 using Adaptive.ReactiveTrader.Client.Domain.ServiceClients;
 using Adaptive.ReactiveTrader.Client.Domain.Transport;
+using log4net;
 
 namespace Adaptive.ReactiveTrader.Client.Domain
 {
     public class ReactiveTrader : IReactiveTrader
     {
         private ConnectionProvider _connectionProvider;
+        private static readonly ILog Log = LogManager.GetLogger(typeof(ReactiveTrader));
 
         public void Initialize(string username, string[] servers)
         {
@@ -37,6 +39,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain
             get
             {
                 return _connectionProvider.GetActiveConnection()
+                    .Do(_ => Log.Info("New connection created by connection provider"))
                     .Select(c => c.Status)
                     .Switch()
                     .Publish()
