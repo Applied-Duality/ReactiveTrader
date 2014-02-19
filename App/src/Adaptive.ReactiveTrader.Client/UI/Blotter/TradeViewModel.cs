@@ -1,5 +1,5 @@
 ﻿using System.Globalization;
-using Adaptive.ReactiveTrader.Client.Models;
+using Adaptive.ReactiveTrader.Client.Domain.Models;
 using Adaptive.ReactiveTrader.Shared.UI;
 using PropertyChanged;
 
@@ -12,7 +12,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.Blotter
         {
             TradeId = trade.TradeId.ToString(CultureInfo.InvariantCulture);
             CurrencyPair = trade.CurrencyPair;
-            Direction = trade.Direction == Models.Direction.Buy ? "Buy" : "Sell";
+            Direction = trade.Direction == Domain.Models.Direction.Buy ? "Buy" : "Sell";
             Notional = string.Format("{0} {1}", trade.Notional.ToString("N", CultureInfo.InvariantCulture), CurrencyPair.Substring(0, 3));
             SpotRate = trade.SpotRate.ToString(CultureInfo.InvariantCulture);
             TradeDate = trade.TradeDate.ToString("g");

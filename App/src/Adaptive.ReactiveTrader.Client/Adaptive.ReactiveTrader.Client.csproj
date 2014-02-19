@@ -43,12 +43,6 @@
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNet.SignalR.Client">
-      <HintPath>..\packages\Microsoft.AspNet.SignalR.Client.2.0.2\lib\net45\Microsoft.AspNet.SignalR.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="PropertyChanged">
       <HintPath>..\packages\PropertyChanged.Fody.1.46.0.0\Lib\NET35\PropertyChanged.dll</HintPath>
       <Private>False</Private>
@@ -92,49 +86,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Models\CurrencyPair.cs" />
-    <Compile Include="Models\CurrencyPairFactory.cs" />
-    <Compile Include="Models\ExecutablePrice.cs" />
-    <Compile Include="Models\ICurrencyPairFactory.cs" />
-    <Compile Include="Models\IPriceFactory.cs" />
-    <Compile Include="Models\Price.cs" />
-    <Compile Include="Models\PriceFactory.cs" />
-    <Compile Include="Models\StalePrice.cs" />
-    <Compile Include="Models\Trade.cs" />
-    <Compile Include="Models\TradeFactory.cs" />
-    <Compile Include="Models\TradeStatus.cs" />
-    <Compile Include="Repositories\ExecutionRepository.cs" />
-    <Compile Include="Repositories\IExecutionRepository.cs" />
-    <Compile Include="Repositories\IPriceRepository.cs" />
-    <Compile Include="Models\ITradeFactory.cs" />
-    <Compile Include="Repositories\ITradeRepository.cs" />
-    <Compile Include="Repositories\PriceRepository.cs" />
-    <Compile Include="Repositories\TradeRepository.cs" />
-    <Compile Include="ServiceClients\BlotterServiceClient.cs" />
-    <Compile Include="Models\Direction.cs" />
-    <Compile Include="Models\ICurrencyPair.cs" />
-    <Compile Include="Models\IExecutablePrice.cs" />
-    <Compile Include="Models\IPrice.cs" />
-    <Compile Include="Models\ITrade.cs" />
-    <Compile Include="ServiceClients\IBlotterServiceClient.cs" />
-    <Compile Include="ServiceClients\ExecutionServiceClient.cs" />
-    <Compile Include="ServiceClients\IExecutionServiceClient.cs" />
-    <Compile Include="ServiceClients\IPricingServiceClient.cs" />
-    <Compile Include="ServiceClients\PricingServiceClient.cs" />
-    <Compile Include="ServiceClients\IReferenceDataServiceClient.cs" />
-    <Compile Include="ServiceClients\ReferenceDataServiceClient.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="Repositories\IReferenceDataRepository.cs" />
-    <Compile Include="Repositories\ReferenceDataRepository.cs" />
     <Compile Include="Configuration\ConfigurationProvider.cs" />
-    <Compile Include="ServiceClients\ServiceClient.cs" />
-    <Compile Include="Transport\Connection.cs" />
     <Compile Include="Configuration\IConfigurationProvider.cs" />
-    <Compile Include="Transport\IConnection.cs" />
-    <Compile Include="Transport\IConnectionProvider.cs" />
     <Compile Include="Configuration\IUserProvider.cs" />
-    <Compile Include="Transport\ConnectionProvider.cs" />
-    <Compile Include="Transport\ConnectionStatus.cs" />
     <Compile Include="Configuration\UserProvider.cs" />
     <Compile Include="UI\Blotter\BlotterView.xaml.cs">
       <DependentUpon>BlotterView.xaml</DependentUpon>
@@ -264,6 +219,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Adaptive.ReactiveTrader.Client.Domain\Adaptive.ReactiveTrader.Client.Domain.csproj">
+      <Project>{8E9D2733-A4EF-4BDA-A89A-6F9EA87C91E7}</Project>
+      <Name>Adaptive.ReactiveTrader.Client.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Adaptive.ReactiveTrader.Shared\Adaptive.ReactiveTrader.Shared.csproj">
       <Project>{918ED78D-1E46-4305-B9FC-FAD07B582AFF}</Project>
       <Name>Adaptive.ReactiveTrader.Shared</Name>

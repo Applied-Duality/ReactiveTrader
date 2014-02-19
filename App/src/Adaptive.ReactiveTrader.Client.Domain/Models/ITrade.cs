@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Windows.Input;
-using Adaptive.ReactiveTrader.Client.Domain.Models;
-using Adaptive.ReactiveTrader.Shared.UI;
 
-namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
+namespace Adaptive.ReactiveTrader.Client.Domain.Models
 {
-    public interface ISpotTileAffirmationViewModel : IViewModel
+    public interface ITrade
     {
         string CurrencyPair { get; }
         Direction Direction { get; }
@@ -16,7 +13,5 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         long TradeId { get; }
         string TraderName { get; }
         DateTime ValueDate { get; }
-
-        ICommand DismissCommand { get; }
     }
 }

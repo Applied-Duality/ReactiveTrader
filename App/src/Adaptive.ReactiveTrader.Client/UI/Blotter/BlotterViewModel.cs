@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
-using Adaptive.ReactiveTrader.Client.Models;
-using Adaptive.ReactiveTrader.Client.Repositories;
+using Adaptive.ReactiveTrader.Client.Domain;
+using Adaptive.ReactiveTrader.Client.Domain.Models;
+using Adaptive.ReactiveTrader.Client.Domain.Repositories;
 using Adaptive.ReactiveTrader.Shared.UI;
 using log4net;
 using PropertyChanged;
@@ -21,9 +22,9 @@ namespace Adaptive.ReactiveTrader.Client.UI.Blotter
         private static readonly ILog Log = LogManager.GetLogger(typeof(BlotterViewModel));
         private IDisposable _tradesSubscription;
 
-        public BlotterViewModel(ITradeRepository tradeRepository, Func<ITrade, ITradeViewModel> tradeViewModelFactory)
+        public BlotterViewModel(IReactiveTrader reactiveTrader, Func<ITrade, ITradeViewModel> tradeViewModelFactory)
         {
-            _tradeRepository = tradeRepository;
+            _tradeRepository = reactiveTrader.TradeRepository;
             _tradeViewModelFactory = tradeViewModelFactory;
             Trades = new ObservableCollection<ITradeViewModel>();
 

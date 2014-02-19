@@ -1,8 +1,5 @@
 ﻿using Adaptive.ReactiveTrader.Client.Configuration;
-using Adaptive.ReactiveTrader.Client.Models;
-using Adaptive.ReactiveTrader.Client.Repositories;
-using Adaptive.ReactiveTrader.Client.ServiceClients;
-using Adaptive.ReactiveTrader.Client.Transport;
+using Adaptive.ReactiveTrader.Client.Domain;
 using Adaptive.ReactiveTrader.Client.UI.Blotter;
 using Adaptive.ReactiveTrader.Client.UI.Shell;
 using Adaptive.ReactiveTrader.Client.UI.SpotTiles;
@@ -16,26 +13,9 @@ namespace Adaptive.ReactiveTrader.Client
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<ConnectionProvider>().As<IConnectionProvider>().SingleInstance();
+            builder.RegisterType<Domain.ReactiveTrader>().As<IReactiveTrader>().SingleInstance();
             builder.RegisterType<ConfigurationProvider>().As<IConfigurationProvider>();
             builder.RegisterType<UserProvider>().As<IUserProvider>();
-
-            // service clients
-            builder.RegisterType<ReferenceDataServiceClient>().As<IReferenceDataServiceClient>().SingleInstance();
-            builder.RegisterType<ExecutionServiceClient>().As<IExecutionServiceClient>().SingleInstance();
-            builder.RegisterType<BlotterServiceClient>().As<IBlotterServiceClient>().SingleInstance();
-            builder.RegisterType<PricingServiceClient>().As<IPricingServiceClient>().SingleInstance();
-
-            // repositories
-            builder.RegisterType<TradeRepository>().As<ITradeRepository>().SingleInstance();
-            builder.RegisterType<ExecutionRepository>().As<IExecutionRepository>().SingleInstance();
-            builder.RegisterType<PriceRepository>().As<IPriceRepository>().SingleInstance();
-            builder.RegisterType<ReferenceDataRepository>().As<IReferenceDataRepository>().SingleInstance();
-
-            // model factories
-            builder.RegisterType<CurrencyPairFactory>().As<ICurrencyPairFactory>().SingleInstance();
-            builder.RegisterType<TradeFactory>().As<ITradeFactory>().SingleInstance();
-            builder.RegisterType<PriceFactory>().As<IPriceFactory>().SingleInstance();
 
             // views
             builder.RegisterType<ShellView>();

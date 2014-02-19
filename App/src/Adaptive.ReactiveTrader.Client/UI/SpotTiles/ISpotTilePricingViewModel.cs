@@ -1,5 +1,5 @@
 ﻿using System;
-using Adaptive.ReactiveTrader.Client.Models;
+using Adaptive.ReactiveTrader.Client.Domain.Models;
 using Adaptive.ReactiveTrader.Shared.UI;
 
 namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles

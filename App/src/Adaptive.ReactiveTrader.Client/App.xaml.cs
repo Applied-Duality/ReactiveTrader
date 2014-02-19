@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Reactive.Linq;
 using System.Windows;
-using Adaptive.ReactiveTrader.Client.Transport;
+using Adaptive.ReactiveTrader.Client.Configuration;
+using Adaptive.ReactiveTrader.Client.Domain;
+using Adaptive.ReactiveTrader.Client.Domain.Transport;
 using Adaptive.ReactiveTrader.Client.UI.Shell;
 using Autofac;
 using log4net;
@@ -11,7 +13,7 @@ namespace Adaptive.ReactiveTrader.Client
     public partial class App
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(App));
-        private IDisposable _connectionProviderSubscription;
+        private IDisposable _statusSubscription;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -27,12 +29,11 @@ namespace Adaptive.ReactiveTrader.Client
             var bootstrapper = new Bootstrapper();
             var container = bootstrapper.Build();
 
-            var connectionProvider = container.Resolve<IConnectionProvider>();
-            _connectionProviderSubscription = 
-                connectionProvider.GetActiveConnection()
-                                  .Do( c => Log.Info("New connecion was created"))
-                                  .Select(c => c.Status)
-                                  .Switch()
+            var reactiveTraderApi = container.Resolve<IReactiveTrader>();
+            reactiveTraderApi.Initialize(container.Resolve<IUserProvider>().Username, container.Resolve<IConfigurationProvider>().Servers);
+
+            _statusSubscription =
+                reactiveTraderApi.ConnectionStatus
                 .Subscribe(
                     status => Log.InfoFormat("Connection status changed: {0}", status),
                 ex => Log.Error("An error occured in connection status stream.", ex),
@@ -47,9 +48,9 @@ namespace Adaptive.ReactiveTrader.Client
 
         protected override void OnExit(ExitEventArgs e)
         {
-            if (_connectionProviderSubscription != null)
+            if (_statusSubscription != null)
             {
-                _connectionProviderSubscription.Dispose();                
+                _statusSubscription.Dispose();                
             }
             base.OnExit(e);
         }

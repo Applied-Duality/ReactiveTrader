@@ -2,9 +2,10 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
-using Adaptive.ReactiveTrader.Client.Models;
-using Adaptive.ReactiveTrader.Client.Repositories;
+using Adaptive.ReactiveTrader.Client.Domain;
+using Adaptive.ReactiveTrader.Client.Domain.Models;
 using Adaptive.ReactiveTrader.Shared.UI;
+using Adaptive.ReactiveTrader.Client.Domain.Repositories;
 using log4net;
 using PropertyChanged;
 
@@ -19,10 +20,10 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         private readonly IReferenceDataRepository _referenceDataRepository;
         private readonly Func<ICurrencyPair, ISpotTileViewModel> _spotTileFactory;
 
-        public SpotTilesViewModel(IReferenceDataRepository referenceDataRepository,
+        public SpotTilesViewModel(IReactiveTrader reactiveTrader,
             Func<ICurrencyPair, ISpotTileViewModel> spotTileFactory)
         {
-            _referenceDataRepository = referenceDataRepository;
+            _referenceDataRepository = reactiveTrader.ReferenceData;
             _spotTileFactory = spotTileFactory;
 
             SpotTiles = new ObservableCollection<ISpotTileViewModel>();
