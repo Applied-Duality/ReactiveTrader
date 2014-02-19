@@ -108,8 +108,6 @@ namespace Adaptive.ReactiveTrader.Client.UI.Controls
 
         void OnRotationCompleted(object sender, EventArgs e)
         {
-            this.IsFrontInView = !this.IsFrontInView;
-
             _isRotating = false;
 
             if (_rotationRequests > 0)
@@ -189,7 +187,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.Controls
         static void OnIsFrontInViewChanged(DependencyObject depObj, DependencyPropertyChangedEventArgs e)
         {
             var that = (ContentControl3D)depObj;
-            if (!that._isRotating && e.NewValue != e.OldValue)
+            if (e.NewValue != e.OldValue)
             {
                 that.Rotate();
             }

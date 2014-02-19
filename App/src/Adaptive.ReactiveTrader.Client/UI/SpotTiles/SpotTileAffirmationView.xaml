@@ -6,6 +6,50 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Button Content="Dismiss" Command="{Binding DismissCommand, Mode=OneWay}" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Column="0" Grid.Row="0" Text="Currency Pair: " />
+        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding CurrencyPair, Mode=OneWay}" />
+
+        <TextBlock Grid.Column="0" Grid.Row="1" Text="Direction: " />
+        <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Direction, Mode=OneWay}" />
+
+        <TextBlock Grid.Column="0" Grid.Row="2" Text="Notional: " />
+        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Notional, Mode=OneWay}" />
+
+        <TextBlock Grid.Column="0" Grid.Row="3" Text="Spot Rate: " />
+        <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding SpotRate, Mode=OneWay}" />
+
+        <TextBlock Grid.Column="0" Grid.Row="4" Text="Trade Status: " />
+        <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding TradeStatus, Mode=OneWay}" />
+
+        <TextBlock Grid.Column="0" Grid.Row="5" Text="Trade Date: " />
+        <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding TradeDate, Mode=OneWay}" />
+
+        <TextBlock Grid.Column="0" Grid.Row="6" Text="Trade ID: " />
+        <TextBlock Grid.Column="1" Grid.Row="6" Text="{Binding TradeId, Mode=OneWay}" />
+
+        <TextBlock Grid.Column="0" Grid.Row="7" Text="Trader Name: " />
+        <TextBlock Grid.Column="1" Grid.Row="7" Text="{Binding TraderName, Mode=OneWay}" />
+
+        <TextBlock Grid.Column="0" Grid.Row="8" Text="Value Date: " />
+        <TextBlock Grid.Column="1" Grid.Row="8" Text="{Binding ValueDate, Mode=OneWay}" />
+
+        <Button Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2" Content="Dismiss" Command="{Binding DismissCommand, Mode=OneWay}" />
     </Grid>
 </UserControl>
