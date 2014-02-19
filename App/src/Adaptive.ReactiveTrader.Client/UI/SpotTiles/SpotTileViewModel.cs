@@ -1,69 +1,50 @@
 ﻿using System;
-using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Models;
 using log4net;
+using PropertyChanged;
 
 namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
 {
+    [ImplementPropertyChanged]
     public class SpotTileViewModel : ViewModelBase, ISpotTileViewModel
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(SpotTileViewModel));
+        
+        public ISpotTilePricingViewModel Pricing { get; private set; }
+        public ISpotTileAffirmationViewModel Affirmation { get; private set; }
+        public bool ShowingAffirmation { get; private set; }
 
-        public IOneWayPriceViewModel Bid { get; private set; }
-        public IOneWayPriceViewModel Ask { get; private set; }
-        public string Notional { get; set; }
-        public string Spread { get; private set; }
-
-        private readonly ICurrencyPair _currencyPair;
+        private readonly Func<ITrade, ISpotTileViewModel, ISpotTileAffirmationViewModel> _affirmationFactory;
         private bool _disposed;
-        IDisposable _priceSubscription;
 
-        public SpotTileViewModel(ICurrencyPair currencyPair, Func<Direction, ISpotTileViewModel, IOneWayPriceViewModel> oneWayPriceFactory)
+        public SpotTileViewModel(ICurrencyPair currencyPair,
+            Func<ICurrencyPair, ISpotTileViewModel, ISpotTilePricingViewModel> pricingFactory,
+            Func<ITrade, ISpotTileViewModel, ISpotTileAffirmationViewModel> affirmationFactory)
         {
-            _currencyPair = currencyPair;
+            _affirmationFactory = affirmationFactory;
 
-            Bid = oneWayPriceFactory(Direction.Sell, this);
-            Ask = oneWayPriceFactory(Direction.Buy, this);
-            Notional = "1000000";
-
-            SubscribeForPrices();
+            Pricing = pricingFactory(currencyPair, this);
         }
 
         public void Dispose()
         {
             if (!_disposed)
             {
+                Pricing.Dispose();
                 _disposed = true;
             }
         }
 
-        public string Symbol { get { return _currencyPair.Symbol; } }
-        
-        private void SubscribeForPrices()
+        public void OnTrade(ITrade trade)
         {
-            _priceSubscription = _currencyPair.Prices
-                .ObserveOnDispatcher()
-                .Subscribe(OnPrice, error => Log.Error("Failed to get prices"));
+            Affirmation = _affirmationFactory(trade, this);
+            ShowingAffirmation = true;
         }
 
-        private void OnPrice(IPrice price)
+        public void DismissAffirmation()
         {
-            if (price.IsStale)
-            {
-                Bid.OnStalePrice();
-                Ask.OnStalePrice();
-                Spread = string.Empty;
-            }
-            else
-            {
-                Bid.OnPrice(price.Bid);
-                Ask.OnPrice(price.Ask);
-                Spread = PriceFormatter.GetFormattedSpread(price.Spread, _currencyPair.RatePrecision, _currencyPair.PipsPosition);
-            }
-
-            // Olivier: looks like fody is not working, not sure why... remove this hack when it's fixed
-            OnPropertyChangedManual("Spread");
+            ShowingAffirmation = false;
+            Affirmation = null;
         }
-
     }
 }

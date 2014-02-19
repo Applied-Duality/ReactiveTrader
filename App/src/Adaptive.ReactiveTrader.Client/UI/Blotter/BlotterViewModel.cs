@@ -5,9 +5,11 @@ using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Models;
 using Adaptive.ReactiveTrader.Client.Repositories;
 using log4net;
+using PropertyChanged;
 
 namespace Adaptive.ReactiveTrader.Client.UI.Blotter
 {
+    [ImplementPropertyChanged]
     public class BlotterViewModel : ViewModelBase, IBlotterViewModel
     {
         private readonly ITradeRepository _tradeRepository;

@@ -1,8 +1,10 @@
 ﻿using System.Globalization;
 using Adaptive.ReactiveTrader.Client.Models;
+using PropertyChanged;
 
 namespace Adaptive.ReactiveTrader.Client.UI.Blotter
 {
+    [ImplementPropertyChanged]
     public class TradeViewModel : ViewModelBase, ITradeViewModel
     {
         public TradeViewModel(ITrade trade)

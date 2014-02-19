@@ -1,0 +1,80 @@
+﻿<UserControl x:Class="Adaptive.ReactiveTrader.Client.UI.SpotTiles.SpotTilePricingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:spotTiles="clr-namespace:Adaptive.ReactiveTrader.Client.UI.SpotTiles"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Control.Resources>
+        <DataTemplate x:Key="PriceDataTemplate" DataType="spotTiles:IOneWayPriceViewModel">
+            <Button Width="100" Height="100" 
+                    Command="{Binding ExecuteCommand}">
+                <StackPanel>
+                    <TextBlock Text="{Binding BigFigures, Mode=OneWay}" Style="{StaticResource BigFiguresTextStyleStyle}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock x:Name="PipsText" 
+                                   Text="{Binding Pips, Mode=OneWay, NotifyOnTargetUpdated=True}" 
+                                   Style="{StaticResource PipsTextStyle}" />
+                        <TextBlock x:Name="TenthOfPipText" 
+                                   Text="{Binding TenthOfPip, Mode=OneWay, NotifyOnTargetUpdated=True}" 
+                                   Style="{StaticResource TenthOfPipTextStyle}" />
+                    </StackPanel>
+                </StackPanel>
+            </Button>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding Movement}" Value="{x:Static spotTiles:PriceMovement.None}">
+                    <Setter TargetName="PipsText" Property="Foreground" Value="Black"/>
+                    <Setter TargetName="TenthOfPipText" Property="Foreground" Value="Black"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Movement}" Value="{x:Static spotTiles:PriceMovement.Down}">
+                    <Setter TargetName="PipsText" Property="Foreground" Value="DarkRed"/>
+                    <Setter TargetName="TenthOfPipText" Property="Foreground" Value="DarkRed"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Movement}" Value="{x:Static spotTiles:PriceMovement.Up}">
+                    <Setter TargetName="PipsText" Property="Foreground" Value="DarkGreen"/>
+                    <Setter TargetName="TenthOfPipText" Property="Foreground" Value="DarkGreen"/>
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+    </Control.Resources>
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" 
+                   Text="{Binding Symbol, Mode=OneWay}"
+                   TextAlignment="Center"
+                   HorizontalAlignment="Stretch"
+                   Style="{StaticResource ContentHeading1Style}"/>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <ContentControl Grid.Column="0" 
+                            Margin="0,0,5,0"
+                            Content="{Binding Bid}" ContentTemplate="{StaticResource PriceDataTemplate}"/>
+
+            <TextBlock Grid.Column="1" 
+                       HorizontalAlignment="Stretch" VerticalAlignment="Bottom" 
+                       TextAlignment="Center" 
+                       Text="{Binding Spread, Mode=OneWay}"  />
+
+            <ContentControl Grid.Column="2" 
+                            Margin="5,0,0,0"
+                            Content="{Binding Ask}" ContentTemplate="{StaticResource PriceDataTemplate}"/>
+        </Grid>
+
+        <TextBox Grid.Row="2"
+                 Margin="0,5,0,0"
+                 TextAlignment="Right"
+                 Text="{Binding Notional}"  />
+    </Grid>
+</UserControl>

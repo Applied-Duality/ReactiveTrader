@@ -3,12 +3,14 @@ using System.Reactive.Linq;
 using System.Windows.Input;
 using Adaptive.ReactiveTrader.Client.Models;
 using log4net;
+using PropertyChanged;
 
 namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
 {
+    [ImplementPropertyChanged]
     public class OneWayPriceViewModel : ViewModelBase, IOneWayPriceViewModel
     {
-        private readonly ISpotTileViewModel _spotTileViewModel;
+        private readonly ISpotTilePricingViewModel _parent;
         private static readonly ILog Log = LogManager.GetLogger(typeof(OneWayPriceViewModel));
 
         private readonly DelegateCommand _executeCommand;
@@ -21,9 +23,9 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         public string TenthOfPip { get; private set; }
         public PriceMovement Movement { get; private set; }
         
-        public OneWayPriceViewModel(Direction direction, ISpotTileViewModel spotTileViewModel)
+        public OneWayPriceViewModel(Direction direction, ISpotTilePricingViewModel parent)
         {
-            _spotTileViewModel = spotTileViewModel;
+            _parent = parent;
             Direction = direction;
 
             _executeCommand = new DelegateCommand(OnExecute, CanExecute);
@@ -40,7 +42,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         private void OnExecute()
         {
             long notional;
-            if (!long.TryParse(_spotTileViewModel.Notional, out notional))
+            if (!long.TryParse(_parent.Notional, out notional))
             {
                 // TODO handle notional validation properly
                 return;
@@ -71,11 +73,6 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             Pips = formattedPrice.Pips;
             TenthOfPip = formattedPrice.TenthOfPip;
 
-            OnPropertyChangedManual("BigFigures");
-            OnPropertyChangedManual("Pips");
-            OnPropertyChangedManual("TenthOfPip");
-            OnPropertyChangedManual("Movement");
-
             _executeCommand.RaiseCanExecuteChanged();
         }
 
@@ -89,17 +86,13 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             TenthOfPip = string.Empty;
             Movement = PriceMovement.None;
 
-            OnPropertyChangedManual("BigFigures");
-            OnPropertyChangedManual("Pips");
-            OnPropertyChangedManual("TenthOfPip");
-            OnPropertyChangedManual("Movement");
-
             _executeCommand.RaiseCanExecuteChanged();
         }
 
-        private static void OnExecuted(ITrade trade)
+        private void OnExecuted(ITrade trade)
         {
             Log.Info("Trade executed");
+            _parent.OnTrade(trade);
         }
     }
 

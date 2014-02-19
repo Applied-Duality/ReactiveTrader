@@ -50,9 +50,11 @@ namespace Adaptive.ReactiveTrader.Client
             builder.RegisterType<ShellViewModel>().As<IShellViewModel>();
             builder.RegisterType<SpotTilesViewModel>().As<ISpotTilesViewModel>();
             builder.RegisterType<SpotTileViewModel>().As<ISpotTileViewModel>();
+            builder.RegisterType<SpotTilePricingViewModel>().As<ISpotTilePricingViewModel>();
+            builder.RegisterType<OneWayPriceViewModel>().As<IOneWayPriceViewModel>();
+            builder.RegisterType<SpotTileAffirmationViewModel>().As<ISpotTileAffirmationViewModel>();
             builder.RegisterType<BlotterViewModel>().As<IBlotterViewModel>();
             builder.RegisterType<TradeViewModel>().As<ITradeViewModel>();
-            builder.RegisterType<OneWayPriceViewModel>().As<IOneWayPriceViewModel>();
 
             return builder.Build();
         } 

@@ -5,9 +5,11 @@ using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Models;
 using Adaptive.ReactiveTrader.Client.Repositories;
 using log4net;
+using PropertyChanged;
 
 namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
 {
+    [ImplementPropertyChanged]
     public class SpotTilesViewModel : ViewModelBase, ISpotTilesViewModel
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof (SpotTilesViewModel));
