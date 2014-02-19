@@ -1,7 +1,7 @@
 ﻿using System;
 using Adaptive.ReactiveTrader.Shared.Execution;
 
-namespace Adaptive.ReactiveTrader.Client.ServiceClients.Execution
+namespace Adaptive.ReactiveTrader.Client.ServiceClients
 {
     public interface IExecutionServiceClient
     {

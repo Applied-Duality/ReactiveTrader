@@ -14,4 +14,4 @@ namespace Adaptive.ReactiveTrader.Client.Transport
         IHubProxy ExecutionHubProxy { get; }
         IHubProxy BlotterHubProxy { get; }
     }
-}
+ }

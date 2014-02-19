@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Adaptive.ReactiveTrader.Shared.ReferenceData;
 
-namespace Adaptive.ReactiveTrader.Client.ServiceClients.ReferenceData
+namespace Adaptive.ReactiveTrader.Client.ServiceClients
 {
     public interface IReferenceDataServiceClient
     {

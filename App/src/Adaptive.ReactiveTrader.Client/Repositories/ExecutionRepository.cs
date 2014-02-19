@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Models;
-using Adaptive.ReactiveTrader.Client.ServiceClients.Execution;
+using Adaptive.ReactiveTrader.Client.ServiceClients;
 using Adaptive.ReactiveTrader.Shared.Execution;
 using Adaptive.ReactiveTrader.Shared.Extensions;
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Adaptive.ReactiveTrader.Shared.Execution;
 
-namespace Adaptive.ReactiveTrader.Client.ServiceClients.Blotter
+namespace Adaptive.ReactiveTrader.Client.ServiceClients
 {
     public interface IBlotterServiceClient
     {

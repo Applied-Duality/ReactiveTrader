@@ -1,7 +1,7 @@
 ﻿using System;
 using Adaptive.ReactiveTrader.Shared.Pricing;
 
-namespace Adaptive.ReactiveTrader.Client.ServiceClients.Pricing
+namespace Adaptive.ReactiveTrader.Client.ServiceClients
 {
     public interface IPricingServiceClient
     {

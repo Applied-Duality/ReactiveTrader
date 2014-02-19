@@ -105,23 +105,24 @@
     <Compile Include="Repositories\ITradeRepository.cs" />
     <Compile Include="Repositories\PriceRepository.cs" />
     <Compile Include="Repositories\TradeRepository.cs" />
-    <Compile Include="ServiceClients\Blotter\BlotterServiceClient.cs" />
+    <Compile Include="ServiceClients\BlotterServiceClient.cs" />
     <Compile Include="Models\Direction.cs" />
     <Compile Include="Models\ICurrencyPair.cs" />
     <Compile Include="Models\IExecutablePrice.cs" />
     <Compile Include="Models\IPrice.cs" />
     <Compile Include="Models\ITrade.cs" />
-    <Compile Include="ServiceClients\Blotter\IBlotterServiceClient.cs" />
-    <Compile Include="ServiceClients\Execution\ExecutionServiceClient.cs" />
-    <Compile Include="ServiceClients\Execution\IExecutionServiceClient.cs" />
-    <Compile Include="ServiceClients\Pricing\IPricingServiceCLient.cs" />
-    <Compile Include="ServiceClients\Pricing\PricingServiceClient.cs" />
-    <Compile Include="ServiceClients\ReferenceData\IReferenceDataServiceClient.cs" />
-    <Compile Include="ServiceClients\ReferenceData\ReferenceDataServiceClient.cs" />
+    <Compile Include="ServiceClients\IBlotterServiceClient.cs" />
+    <Compile Include="ServiceClients\ExecutionServiceClient.cs" />
+    <Compile Include="ServiceClients\IExecutionServiceClient.cs" />
+    <Compile Include="ServiceClients\IPricingServiceClient.cs" />
+    <Compile Include="ServiceClients\PricingServiceClient.cs" />
+    <Compile Include="ServiceClients\IReferenceDataServiceClient.cs" />
+    <Compile Include="ServiceClients\ReferenceDataServiceClient.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Repositories\IReferenceDataRepository.cs" />
     <Compile Include="Repositories\ReferenceDataRepository.cs" />
     <Compile Include="Configuration\ConfigurationProvider.cs" />
+    <Compile Include="ServiceClients\ServiceClient.cs" />
     <Compile Include="Transport\Connection.cs" />
     <Compile Include="Configuration\IConfigurationProvider.cs" />
     <Compile Include="Transport\IConnection.cs" />
@@ -247,6 +248,7 @@
   <ItemGroup>
     <Resource Include="Styles\adaptive-logo.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
