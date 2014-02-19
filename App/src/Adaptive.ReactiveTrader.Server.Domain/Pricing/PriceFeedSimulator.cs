@@ -8,7 +8,7 @@ using Adaptive.ReactiveTrader.Shared.ReferenceData;
 
 namespace Adaptive.ReactiveTrader.Server.Pricing
 {
-    class PriceFeedSimulator : IPriceFeed, IDisposable
+    public class PriceFeedSimulator : IPriceFeed, IDisposable
     {
         private const int UpdatePeriodMs = 700;
         private readonly ICurrencyPairRepository _currencyPairRepository;

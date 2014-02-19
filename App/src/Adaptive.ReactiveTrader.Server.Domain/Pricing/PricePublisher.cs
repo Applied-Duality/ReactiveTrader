@@ -6,7 +6,7 @@ using log4net;
 
 namespace Adaptive.ReactiveTrader.Server.Pricing
 {
-    class PricePublisher : IPricePublisher
+    public class PricePublisher : IPricePublisher
     {
         private readonly IContextHolder _contextHolder;
         private static readonly ILog Log = LogManager.GetLogger(typeof(PricePublisher));

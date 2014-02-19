@@ -3,7 +3,7 @@ using Adaptive.ReactiveTrader.Shared.Pricing;
 
 namespace Adaptive.ReactiveTrader.Server.Pricing
 {
-    internal interface IPricePublisher
+    public interface IPricePublisher
     {
         Task Publish(PriceDto price);
     }

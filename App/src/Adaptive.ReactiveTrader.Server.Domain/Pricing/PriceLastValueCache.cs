@@ -4,7 +4,7 @@ using Adaptive.ReactiveTrader.Shared.Pricing;
 
 namespace Adaptive.ReactiveTrader.Server.Pricing
 {
-    class PriceLastValueCache : IPriceLastValueCache
+    public class PriceLastValueCache : IPriceLastValueCache
     {
         private readonly ConcurrentDictionary<string, PriceDto> _lastValueCache = new ConcurrentDictionary<string, PriceDto>();
 

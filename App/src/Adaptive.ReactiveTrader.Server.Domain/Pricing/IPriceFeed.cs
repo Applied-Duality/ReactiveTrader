@@ -1,6 +1,6 @@
 ﻿namespace Adaptive.ReactiveTrader.Server.Pricing
 {
-    internal interface IPriceFeed
+    public interface IPriceFeed
     {
         void Start();
     }

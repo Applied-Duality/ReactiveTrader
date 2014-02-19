@@ -5,7 +5,7 @@ using log4net;
 
 namespace Adaptive.ReactiveTrader.Server.Blotter
 {
-    class BlotterPublisher : IBlotterPublisher
+    public class BlotterPublisher : IBlotterPublisher
     {
         private readonly IContextHolder _contextHolder;
         private static readonly ILog Log = LogManager.GetLogger(typeof(BlotterPublisher));

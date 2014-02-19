@@ -3,7 +3,7 @@ using Adaptive.ReactiveTrader.Shared.Execution;
 
 namespace Adaptive.ReactiveTrader.Server.Blotter
 {
-    internal interface IBlotterPublisher
+    public interface IBlotterPublisher
     {
         Task Publish(TradeDto trade);
     }

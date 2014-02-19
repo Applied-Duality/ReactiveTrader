@@ -3,7 +3,7 @@ using Adaptive.ReactiveTrader.Shared.ReferenceData;
 
 namespace Adaptive.ReactiveTrader.Server.ReferenceData
 {
-    class CurrencyPairRepository : ICurrencyPairRepository
+    public class CurrencyPairRepository : ICurrencyPairRepository
     {
         private readonly Dictionary<string, CurrencyPairDto> _currencyPairs = new Dictionary<string, CurrencyPairDto>
         {

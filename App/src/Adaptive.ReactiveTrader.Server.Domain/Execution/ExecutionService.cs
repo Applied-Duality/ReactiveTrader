@@ -5,7 +5,7 @@ using Adaptive.ReactiveTrader.Shared.Execution;
 
 namespace Adaptive.ReactiveTrader.Server.Execution
 {
-    class ExecutionService : IExecutionService
+    public class ExecutionService : IExecutionService
     {
         private readonly IBlotterPublisher _blotterPublisher;
         private readonly ITradeRepository _tradeRepository;

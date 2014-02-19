@@ -1,11 +1,12 @@
 ﻿using Adaptive.ReactiveTrader.Server.Pricing;
+using Adaptive.ReactiveTrader.Server.Transport;
 using Autofac;
 using Microsoft.AspNet.SignalR;
 using Owin;
 
-namespace Adaptive.ReactiveTrader.Server.Transport
+namespace Adaptive.ReactiveTrader.Server
 {
-    class Startup
+    public class Startup
     {
         public void Configuration(IAppBuilder app)
         {
