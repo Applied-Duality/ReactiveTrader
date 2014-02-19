@@ -20,6 +20,8 @@ namespace Adaptive.ReactiveTrader.Client.Repositories
         {
             return _pricingServiceClient.GetSpotStream(currencyPair.Symbol)
                 .Select(p => _priceFactory.Create(p, currencyPair))
+                .Catch(Observable.Return(new StalePrice(currencyPair)))
+                .Repeat()
                 .Publish()
                 .RefCount();
         }
