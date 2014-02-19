@@ -22,6 +22,8 @@ namespace Adaptive.ReactiveTrader.Client.Repositories
         {
             return _blotterServiceClient.GetTrades()
                 .Select(trades => trades.Select(_tradeFactory.Create))
+                .Catch(Observable.Return(new ITrade[0]))
+                .Repeat()
                 .Publish()
                 .RefCount();
         }

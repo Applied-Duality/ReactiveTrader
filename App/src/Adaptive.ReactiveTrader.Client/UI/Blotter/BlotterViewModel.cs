@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Models;
 using Adaptive.ReactiveTrader.Client.Repositories;
@@ -39,7 +40,14 @@ namespace Adaptive.ReactiveTrader.Client.UI.Blotter
 
         private void AddTrades(IEnumerable<ITrade> trades)
         {
-            foreach (var trade in trades)
+            var allTrades = trades as IList<ITrade> ?? trades.ToList();
+            if (!allTrades.Any())
+            {
+                // TODO we currently use an empty enumerable to represent blotter disconnected, we need a proper representation for that 
+                Trades.Clear();
+            }
+
+            foreach (var trade in allTrades)
             {
                 var tradeViewMode = _tradeViewModelFactory(trade);
                 Trades.Add(tradeViewMode);
