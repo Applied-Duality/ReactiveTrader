@@ -48,10 +48,18 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
 
         private void OnPrice(IPrice price)
         {
-            Bid.OnPrice(price.Bid);
-            Ask.OnPrice(price.Ask);
-
-            Spread = PriceFormatter.GetFormattedSpread(price.Spread, _currencyPair.RatePrecision, _currencyPair.PipsPosition);
+            if (price.IsStale)
+            {
+                Bid.OnStalePrice();
+                Ask.OnStalePrice();
+                Spread = string.Empty;
+            }
+            else
+            {
+                Bid.OnPrice(price.Bid);
+                Ask.OnPrice(price.Ask);
+                Spread = PriceFormatter.GetFormattedSpread(price.Spread, _currencyPair.RatePrecision, _currencyPair.PipsPosition);
+            }
 
             // Olivier: looks like fody is not working, not sure why... remove this hack when it's fixed
             OnPropertyChangedManual("Spread");

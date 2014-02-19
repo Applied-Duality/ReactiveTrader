@@ -10,5 +10,6 @@ namespace Adaptive.ReactiveTrader.Client.Models
         long QuoteId { get; }
         DateTime ValueDate { get; }
         decimal Spread { get; }
+        bool IsStale { get; }
     }
 }

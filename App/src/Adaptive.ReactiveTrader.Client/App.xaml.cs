@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive.Linq;
 using System.Windows;
 using Adaptive.ReactiveTrader.Client.Transport;
 using Adaptive.ReactiveTrader.Client.UI.Shell;
@@ -27,11 +28,15 @@ namespace Adaptive.ReactiveTrader.Client
             var container = bootstrapper.Build();
 
             var connectionProvider = container.Resolve<IConnectionProvider>();
-            _connectionProviderSubscription = connectionProvider.GetActiveConnection()
+            _connectionProviderSubscription = 
+                connectionProvider.GetActiveConnection()
+                                  .Do( c => Log.Info("New connecion was created"))
+                                  .Select(c => c.Status)
+                                  .Switch()
                 .Subscribe(
-                connection => Log.InfoFormat("A new connection was created {0}", connection),
-                ex => Log.Error("An error occured in connection provider, this should not happen", ex),
-                () => Log.Error("Subscription to connection provider completed, this should never happen."));
+                    status => Log.InfoFormat("Connection status changed: {0}", status),
+                ex => Log.Error("An error occured in connection status stream.", ex),
+                () => Log.Error("Subscription to connection provider completed."));
 
             MainWindow = new MainWindow();
             MainWindow.Show();

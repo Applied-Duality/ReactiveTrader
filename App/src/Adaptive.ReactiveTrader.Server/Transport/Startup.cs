@@ -22,7 +22,7 @@ namespace Adaptive.ReactiveTrader.Server.Transport
                 EnableDetailedErrors = true,
                 Resolver = new AutofacSignalRDependencyResolver(container)
             };
-            GlobalHost.HubPipeline.AddModule(new LoggingPipelineModule()); 
+
             app.MapSignalR(hubConfiguration);
         }
     }

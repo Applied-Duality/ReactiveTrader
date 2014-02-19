@@ -24,5 +24,6 @@ namespace Adaptive.ReactiveTrader.Client.Models
         public long QuoteId { get; private set; }
         public DateTime ValueDate { get; private set; }
         public decimal Spread { get; private set; }
+        public bool IsStale { get { return false; } }
     }
 }

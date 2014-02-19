@@ -3,6 +3,8 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Configuration;
 using Adaptive.ReactiveTrader.Shared.Extensions;
+using log4net;
+using log4net.Config;
 
 namespace Adaptive.ReactiveTrader.Client.Transport
 {
@@ -15,6 +17,8 @@ namespace Adaptive.ReactiveTrader.Client.Transport
         private readonly IUserProvider _userProvider;
         private readonly IObservable<IConnection> _connectionSequence;
         private readonly string[] _servers;
+
+        private static readonly ILog Log = LogManager.GetLogger(typeof(ConnectionProvider));
 
         private int _currentIndex;
 
@@ -36,14 +40,19 @@ namespace Adaptive.ReactiveTrader.Client.Transport
         {
             return Observable.Create<IConnection>(o =>
             {
-                // TODO randomize
+                Log.Info("Creating new connection...");
                 var connection = GetNextConnection();
 
                 var statusSubscription = connection.Status.Subscribe(
                     _ => { },
                     ex => o.OnCompleted(),
-                    o.OnCompleted);
+                    () =>
+                    {
+                        Log.Info("Status subscription completed");
+                        o.OnCompleted();
+                    });
 
+                // TODO if we fail to connect we should not retry straight away to connect to same server, we need some back off
                 var connectionSubscription =
                     connection.Initialize().Subscribe(
                         _ => o.OnNext(connection),

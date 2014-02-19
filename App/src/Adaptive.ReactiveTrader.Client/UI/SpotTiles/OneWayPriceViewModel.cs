@@ -79,7 +79,20 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             _executeCommand.RaiseCanExecuteChanged();
         }
 
-        
+        public void OnStalePrice()
+        {
+            _executablePrice = null;
+
+            BigFigures = string.Empty;
+            Pips = string.Empty;
+            TenthOfPip = string.Empty;
+
+            OnPropertyChangedManual("BigFigures");
+            OnPropertyChangedManual("Pips");
+            OnPropertyChangedManual("TenthOfPip");
+
+            _executeCommand.RaiseCanExecuteChanged();
+        }
 
         private static void OnExecuted(ITrade trade)
         {

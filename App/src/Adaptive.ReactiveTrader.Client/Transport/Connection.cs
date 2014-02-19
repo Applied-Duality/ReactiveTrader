@@ -29,7 +29,10 @@ namespace Adaptive.ReactiveTrader.Client.Transport
             _address = address;
             _hubConnection = new HubConnection(address);
             _hubConnection.Headers.Add(ServiceConstants.Server.UsernameHeader, username);
-            CreateStatus().Subscribe(_status.OnNext);
+            CreateStatus().Subscribe(
+                _status.OnNext,
+                _status.OnError,
+                _status.OnCompleted);
             _hubConnection.Error += exception => Log.Error("There was a connection error with " + address, exception);
 
             BlotterHubProxy = _hubConnection.CreateHubProxy(ServiceConstants.Server.BlotterHub);
@@ -96,6 +99,34 @@ namespace Adaptive.ReactiveTrader.Client.Transport
         {
             get { return _status; }
         }
+
+        public IObservable<bool> IsConnected
+        {
+            get
+            {
+                return Status.Select(status =>
+                {
+                    switch (status)
+                    {
+                        case ConnectionStatus.ConnectionSlow:
+                        case ConnectionStatus.Reconnected:
+                        case ConnectionStatus.Connected:
+                            return true;
+                        
+                        case ConnectionStatus.Uninitialized:
+                        case ConnectionStatus.Connecting:
+                        case ConnectionStatus.Reconnecting:
+                        case ConnectionStatus.Closed:
+                        default:
+                            return false;
+                    }
+                })
+                    .DistinctUntilChanged()
+                    .Publish()
+                    .RefCount();
+            }
+        }
+
 
         public IHubProxy ReferenceDataHubProxy { get; private set; }
         public IHubProxy PricingHubProxy { get; private set; }

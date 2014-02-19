@@ -7,6 +7,7 @@ namespace Adaptive.ReactiveTrader.Client.Transport
     public interface IConnection
     {
         IObservable<ConnectionStatus> Status { get; }
+        IObservable<bool> IsConnected { get; }
         IObservable<Unit> Initialize();
         IHubProxy ReferenceDataHubProxy { get; }
         IHubProxy PricingHubProxy { get; }
