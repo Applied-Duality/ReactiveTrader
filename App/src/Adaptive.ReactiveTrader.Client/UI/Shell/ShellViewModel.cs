@@ -1,5 +1,6 @@
 ﻿using Adaptive.ReactiveTrader.Client.UI.Blotter;
 using Adaptive.ReactiveTrader.Client.UI.SpotTiles;
+using Adaptive.ReactiveTrader.Shared.UI;
 using PropertyChanged;
 
 namespace Adaptive.ReactiveTrader.Client.UI.Shell

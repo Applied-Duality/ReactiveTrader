@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace Adaptive.ReactiveTrader.Client.UI
+namespace Adaptive.ReactiveTrader.Shared.UI
 {
     public class DelegateCommand : ICommand
     {

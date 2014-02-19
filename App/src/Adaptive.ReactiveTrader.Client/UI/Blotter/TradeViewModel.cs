@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using Adaptive.ReactiveTrader.Client.Models;
+using Adaptive.ReactiveTrader.Shared.UI;
 using PropertyChanged;
 
 namespace Adaptive.ReactiveTrader.Client.UI.Blotter

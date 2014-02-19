@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using Adaptive.ReactiveTrader.Client.Models;
+using Adaptive.ReactiveTrader.Shared.UI;
 
 namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
 {

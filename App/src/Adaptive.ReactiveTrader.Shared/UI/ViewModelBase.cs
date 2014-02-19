@@ -1,4 +1,4 @@
-﻿namespace Adaptive.ReactiveTrader.Client.UI
+﻿namespace Adaptive.ReactiveTrader.Shared.UI
 {
     public class ViewModelBase : NotifyingBase, IViewModel
     {

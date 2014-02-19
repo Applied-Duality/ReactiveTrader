@@ -1,4 +1,6 @@
-﻿namespace Adaptive.ReactiveTrader.Client.UI.Blotter
+﻿using Adaptive.ReactiveTrader.Shared.UI;
+
+namespace Adaptive.ReactiveTrader.Client.UI.Blotter
 {
     public interface ITradeViewModel : IViewModel
     {

@@ -1,5 +1,6 @@
 ﻿using System;
 using Adaptive.ReactiveTrader.Client.Models;
+using Adaptive.ReactiveTrader.Shared.UI;
 using log4net;
 using PropertyChanged;
 

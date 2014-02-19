@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using Adaptive.ReactiveTrader.Client.Properties;
+using Adaptive.ReactiveTrader.Shared.Annotations;
 
-namespace Adaptive.ReactiveTrader.Client.UI
+namespace Adaptive.ReactiveTrader.Shared.UI
 {
     public class NotifyingBase : INotifyPropertyChanged
     {
@@ -15,7 +14,7 @@ namespace Adaptive.ReactiveTrader.Client.UI
             if (handler != null)
             {
                 handler(this, new PropertyChangedEventArgs(propertyName));
-            } 
+            }
         }
     }
 }

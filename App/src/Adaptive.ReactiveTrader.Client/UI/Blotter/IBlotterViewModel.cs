@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using Adaptive.ReactiveTrader.Shared.UI;
 
 namespace Adaptive.ReactiveTrader.Client.UI.Blotter
 {

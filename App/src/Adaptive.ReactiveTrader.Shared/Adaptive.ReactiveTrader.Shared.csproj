@@ -61,10 +61,15 @@
     <Compile Include="Extensions\ObservableExtensions.cs" />
     <Compile Include="Pricing\PriceDto.cs" />
     <Compile Include="Pricing\PriceSubscriptionRequestDto.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReferenceData\CurrencyPairDto.cs" />
     <Compile Include="ReferenceData\CurrencyPairUpdateDto.cs" />
     <Compile Include="ServiceConstants.cs" />
+    <Compile Include="UI\DelegateCommand.cs" />
+    <Compile Include="UI\IViewModel.cs" />
+    <Compile Include="UI\NotifyingBase.cs" />
+    <Compile Include="UI\ViewModelBase.cs" />
     <Compile Include="UpdateTypeDto.cs" />
   </ItemGroup>
   <ItemGroup>

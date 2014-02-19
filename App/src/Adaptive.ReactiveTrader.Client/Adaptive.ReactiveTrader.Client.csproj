@@ -145,9 +145,6 @@
     <Compile Include="UI\Blotter\TradeViewModel.cs" />
     <Compile Include="UI\Controls\ContentControl3D.cs" />
     <Compile Include="UI\Converters\InvertingValueConverter.cs" />
-    <Compile Include="UI\DelegateCommand.cs" />
-    <Compile Include="UI\IViewModel.cs" />
-    <Compile Include="UI\NotifyingBase.cs" />
     <Compile Include="UI\Shell\IShellViewModel.cs" />
     <Compile Include="UI\Shell\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
@@ -177,7 +174,6 @@
       <DependentUpon>SpotTileView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\SpotTiles\SpotTileViewModel.cs" />
-    <Compile Include="UI\ViewModelBase.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

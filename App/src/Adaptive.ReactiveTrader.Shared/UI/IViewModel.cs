@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Adaptive.ReactiveTrader.Client.UI
+namespace Adaptive.ReactiveTrader.Shared.UI
 {
     public interface IViewModel : INotifyPropertyChanged
     {
