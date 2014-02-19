@@ -39,7 +39,7 @@
         <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding TradeStatus, Mode=OneWay}" />
 
         <TextBlock Grid.Column="0" Grid.Row="5" Text="Trade Date: " />
-        <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding TradeDate, Mode=OneWay}" />
+        <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding TradeDate, Mode=OneWay, StringFormat='{}{0:dd/MM/yyyy}'}" />
 
         <TextBlock Grid.Column="0" Grid.Row="6" Text="Trade ID: " />
         <TextBlock Grid.Column="1" Grid.Row="6" Text="{Binding TradeId, Mode=OneWay}" />
@@ -48,7 +48,7 @@
         <TextBlock Grid.Column="1" Grid.Row="7" Text="{Binding TraderName, Mode=OneWay}" />
 
         <TextBlock Grid.Column="0" Grid.Row="8" Text="Value Date: " />
-        <TextBlock Grid.Column="1" Grid.Row="8" Text="{Binding ValueDate, Mode=OneWay}" />
+        <TextBlock Grid.Column="1" Grid.Row="8" Text="{Binding ValueDate, Mode=OneWay, StringFormat='{}{0:dd/MM/yyyy}'}" />
 
         <Button Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2" Content="Dismiss" Command="{Binding DismissCommand, Mode=OneWay}" />
     </Grid>
