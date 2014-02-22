@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net.Configuration;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Domain.Models;
 using Adaptive.ReactiveTrader.Shared.UI;
@@ -16,6 +15,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         public IOneWayPriceViewModel Ask { get; private set; }
         public string Notional { get; set; }
         public string Spread { get; private set; }
+        public string DealtCurrency { get; private set; }
 
         private readonly ICurrencyPair _currencyPair;
         private readonly ISpotTileViewModel _parent;
@@ -31,6 +31,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             Bid = oneWayPriceFactory(Direction.Sell, this);
             Ask = oneWayPriceFactory(Direction.Buy, this);
             Notional = "1000000";
+            DealtCurrency = currencyPair.BaseCurrency;
 
             SubscribeForPrices();
         }

@@ -8,5 +8,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Models
         IObservable<IPrice> Prices { get; }
         int RatePrecision { get; }
         int PipsPosition { get; }
+        string BaseCurrency { get; }
+        string CounterCurrency { get; }
     }
 }

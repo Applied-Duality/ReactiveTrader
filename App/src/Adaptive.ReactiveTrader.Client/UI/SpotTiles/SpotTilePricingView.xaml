@@ -11,10 +11,7 @@
              d:DataContext="{d:DesignInstance designer:DesignTimeSpotTilePricingViewModel, IsDesignTimeCreatable=True}">
     <Control.Resources>
         <DataTemplate x:Key="PriceDataTemplate" DataType="spotTiles:IOneWayPriceViewModel">
-            <Button Width="147" Height="77" 
-                    Command="{Binding ExecuteCommand}"
-                    Background="Transparent"
-                    BorderBrush="Transparent">
+            <Button Command="{Binding ExecuteCommand}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
                 <StackPanel>
                     <TextBlock Text="{Binding Direction, Mode=OneWay}" Style="{StaticResource DirectionTextStyleStyle}" HorizontalAlignment="Center" Margin="0,9,0,0"/>
                     <StackPanel Orientation="Horizontal">
@@ -84,12 +81,15 @@
                             ContentTemplate="{StaticResource PriceDataTemplate}"/>
         </Grid>
 
-        <TextBox Grid.Row="2"
-                 Margin="0,5,0,0"
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5,5,0,0">
+            <TextBlock Text="{Binding DealtCurrency}" Style="{StaticResource BigFiguresTextStyleStyle}" />
+            <TextBox 
                  TextAlignment="Right"
                  Text="{Binding Notional}"
                  Background="Transparent"
                  Foreground="{StaticResource SecondaryForeground}"
-                 HorizontalAlignment="Left"/>
+                 HorizontalAlignment="Left"
+                 BorderThickness="0"/>
+        </StackPanel>        
     </Grid>
 </UserControl>

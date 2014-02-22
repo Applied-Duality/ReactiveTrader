@@ -11,6 +11,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         IOneWayPriceViewModel Ask { get; }
         string Notional { get; set; }
         string Spread { get; }
+        string DealtCurrency { get; }
 
         void OnTrade(ITrade trade);
     }

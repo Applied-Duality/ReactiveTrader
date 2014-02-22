@@ -27,6 +27,8 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer
             set { }
         }
         public string Spread { get { return "1.0"; } }
+        public string DealtCurrency { get { return "EUR"; } }
+
         public void OnTrade(ITrade trade)
         {
             throw new NotImplementedException();
