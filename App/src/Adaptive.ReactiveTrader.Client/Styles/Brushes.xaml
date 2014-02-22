@@ -6,8 +6,8 @@
     <Color x:Key="TileBackgroundColor" A="255" R="41" G="53" B="67" />-->
     
     
-    <Color x:Key="PrimaryForegroundColor" A="255" R="0" G="0" B="0"/>
-    <Color x:Key="SecondaryForegroundColor" A="255" R="167" G="167" B="167"/>
+    <Color x:Key="PrimaryForegroundColor" A="255" R="240" G="240" B="241"/>
+    <Color x:Key="SecondaryForegroundColor" A="255" R="160" G="175" B="167"/>
     <Color x:Key="ColorRamp1" A="255" R="33" G="42" B="53" />
     <Color x:Key="ColorRamp2"  A="255" R="41" G="53" B="67" />
     <Color x:Key="ColorRamp3" A="255" R="24" G="106" B="166"/>

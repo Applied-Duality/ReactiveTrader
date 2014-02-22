@@ -51,9 +51,8 @@
         <Setter Property="FontWeight" Value="ExtraLight"/>
     </Style>
     <Style x:Key="ContentHeading1Style" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
-        <Setter Property="FontSize" Value="28"/>
-        <Setter Property="Foreground" Value="{StaticResource SecondaryForeground}"/>
-        <Setter Property="FontWeight" Value="ExtraLight"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryForeground}"/>
     </Style>
     <Style x:Key="ContentHeading2Style" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
         <Setter Property="Foreground" Value="{StaticResource PrimaryForeground}"/>
@@ -88,12 +87,15 @@
         <Setter Property="Padding" Value="4"/>
     </Style>
 
-
-    <Style x:Key="BigFiguresTextStyleStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
-        <Setter Property="FontSize" Value="20"/>
+    <Style x:Key="DirectionTextStyleStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="FontSize" Value="11"/>
         <Setter Property="Foreground" Value="{StaticResource SecondaryForeground}"/>
     </Style>
-    <Style x:Key="ColoredPriceTextStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+    <Style x:Key="BigFiguresTextStyleStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Foreground" Value="{StaticResource SecondaryForeground}"/>
+    </Style>
+    <!--<Style x:Key="ColoredPriceTextStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
         <Setter Property="Foreground" Value="{StaticResource StalePriceForeground}"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
         <Setter Property="LineStackingStrategy" Value="BlockLineHeight"/>
@@ -109,14 +111,18 @@
                 </BeginStoryboard>
             </EventTrigger>
         </Style.Triggers>
+    </Style>-->
+    <Style x:Key="PipsTextStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="FontSize" Value="35"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryForeground}"/>
     </Style>
-    <Style x:Key="PipsTextStyle" TargetType="TextBlock" BasedOn="{StaticResource ColoredPriceTextStyle}">
-        <Setter Property="FontSize" Value="42"/>
-        <Setter Property="LineHeight" Value="42"/>
+    <Style x:Key="TenthOfPipTextStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Foreground" Value="{StaticResource SecondaryForeground}"/>
     </Style>
-    <Style x:Key="TenthOfPipTextStyle" TargetType="TextBlock" BasedOn="{StaticResource ColoredPriceTextStyle}">
-        <Setter Property="FontSize" Value="20"/>
-        <Setter Property="LineHeight" Value="20"/>
+    <Style x:Key="SpreadTextStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryForeground}"/>
     </Style>
-    
+
 </ResourceDictionary>

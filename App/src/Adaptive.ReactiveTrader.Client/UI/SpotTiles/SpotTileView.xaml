@@ -6,10 +6,14 @@
              xmlns:converters="clr-namespace:Adaptive.ReactiveTrader.Client.UI.Converters"
              xmlns:spotTiles="clr-namespace:Adaptive.ReactiveTrader.Client.UI.SpotTiles"
              xmlns:controls="clr-namespace:Adaptive.ReactiveTrader.Client.UI.Controls"
+             xmlns:designer="clr-namespace:Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer"
              mc:Ignorable="d" 
-             Height="300" Width="300"
+             d:DesignHeight="150"
+             d:DesignWidth="328"
+             Height="150"
+             Width="328"
              Background="{StaticResource PrimaryContentBackgroudBrush}"
-             Margin="5">
+             d:DataContext="{d:DesignInstance designer:DesignTimeSpotTileViewModel, IsDesignTimeCreatable=True}">
     <UserControl.Resources>
         <converters:InvertingValueConverter x:Key="Inverter" />
     </UserControl.Resources>

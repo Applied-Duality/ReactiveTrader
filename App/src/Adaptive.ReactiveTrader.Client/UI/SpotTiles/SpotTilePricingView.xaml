@@ -6,25 +6,30 @@
              xmlns:spotTiles="clr-namespace:Adaptive.ReactiveTrader.Client.UI.SpotTiles"
              xmlns:designer="clr-namespace:Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300"
+             d:DesignHeight="150"
+             d:DesignWidth="328"
              d:DataContext="{d:DesignInstance designer:DesignTimeSpotTilePricingViewModel, IsDesignTimeCreatable=True}">
     <Control.Resources>
         <DataTemplate x:Key="PriceDataTemplate" DataType="spotTiles:IOneWayPriceViewModel">
-            <Button Width="100" Height="100" 
-                    Command="{Binding ExecuteCommand}">
+            <Button Width="147" Height="77" 
+                    Command="{Binding ExecuteCommand}"
+                    Background="Transparent"
+                    BorderBrush="Transparent">
                 <StackPanel>
-                    <TextBlock Text="{Binding BigFigures, Mode=OneWay}" Style="{StaticResource BigFiguresTextStyleStyle}"/>
+                    <TextBlock Text="{Binding Direction, Mode=OneWay}" Style="{StaticResource DirectionTextStyleStyle}" HorizontalAlignment="Center" Margin="0,9,0,0"/>
                     <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding BigFigures, Mode=OneWay}" Style="{StaticResource BigFiguresTextStyleStyle}" Margin="0,0,10,0"/>
                         <TextBlock x:Name="PipsText" 
                                    Text="{Binding Pips, Mode=OneWay, NotifyOnTargetUpdated=True}" 
                                    Style="{StaticResource PipsTextStyle}" />
                         <TextBlock x:Name="TenthOfPipText" 
                                    Text="{Binding TenthOfPip, Mode=OneWay, NotifyOnTargetUpdated=True}" 
-                                   Style="{StaticResource TenthOfPipTextStyle}" />
+                                   Style="{StaticResource TenthOfPipTextStyle}" 
+                                    Margin="10,0,0,0"/>
                     </StackPanel>
                 </StackPanel>
             </Button>
-            <DataTemplate.Triggers>
+            <!--<DataTemplate.Triggers>
                 <DataTrigger Binding="{Binding Movement}" Value="{x:Static spotTiles:PriceMovement.None}">
                     <Setter TargetName="PipsText" Property="Foreground" Value="Black"/>
                     <Setter TargetName="TenthOfPipText" Property="Foreground" Value="Black"/>
@@ -37,10 +42,12 @@
                     <Setter TargetName="PipsText" Property="Foreground" Value="DarkGreen"/>
                     <Setter TargetName="TenthOfPipText" Property="Foreground" Value="DarkGreen"/>
                 </DataTrigger>
-            </DataTemplate.Triggers>
+            </DataTemplate.Triggers>-->
         </DataTemplate>
     </Control.Resources>
-    <Grid Margin="5">
+    <Grid Background="{StaticResource TitleBackground}"
+            Height="150"
+            Width="328">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -49,9 +56,9 @@
 
         <TextBlock Grid.Row="0" 
                    Text="{Binding Symbol, Mode=OneWay}"
-                   TextAlignment="Center"
                    HorizontalAlignment="Stretch"
-                   Style="{StaticResource ContentHeading1Style}"/>
+                   Style="{StaticResource ContentHeading1Style}"
+                   Margin="19,17,0,0"/>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -62,21 +69,27 @@
 
             <ContentControl Grid.Column="0" 
                             Margin="0,0,5,0"
-                            Content="{Binding Bid}" ContentTemplate="{StaticResource PriceDataTemplate}"/>
+                            Content="{Binding Bid}" 
+                            ContentTemplate="{StaticResource PriceDataTemplate}"/>
 
             <TextBlock Grid.Column="1" 
-                       HorizontalAlignment="Stretch" VerticalAlignment="Bottom" 
+                       HorizontalAlignment="Stretch" 
                        TextAlignment="Center" 
-                       Text="{Binding Spread, Mode=OneWay}"  />
+                       Text="{Binding Spread, Mode=OneWay}" 
+                       Style="{StaticResource SpreadTextStyle}"/>
 
             <ContentControl Grid.Column="2" 
                             Margin="5,0,0,0"
-                            Content="{Binding Ask}" ContentTemplate="{StaticResource PriceDataTemplate}"/>
+                            Content="{Binding Ask}" 
+                            ContentTemplate="{StaticResource PriceDataTemplate}"/>
         </Grid>
 
         <TextBox Grid.Row="2"
                  Margin="0,5,0,0"
                  TextAlignment="Right"
-                 Text="{Binding Notional}"  />
+                 Text="{Binding Notional}"
+                 Background="Transparent"
+                 Foreground="{StaticResource SecondaryForeground}"
+                 HorizontalAlignment="Left"/>
     </Grid>
 </UserControl>
