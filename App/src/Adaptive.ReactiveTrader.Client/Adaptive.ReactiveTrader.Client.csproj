@@ -105,6 +105,8 @@
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Shell\ShellViewModel.cs" />
+    <Compile Include="UI\SpotTiles\Designer\DesignTimeOneWayPriceViewModel.cs" />
+    <Compile Include="UI\SpotTiles\Designer\DesignTimeSpotTilePricingViewModel.cs" />
     <Compile Include="UI\SpotTiles\FormattedPrice.cs" />
     <Compile Include="UI\SpotTiles\IOneWayPriceViewModel.cs" />
     <Compile Include="UI\SpotTiles\ISpotTileAffirmationViewModel.cs" />

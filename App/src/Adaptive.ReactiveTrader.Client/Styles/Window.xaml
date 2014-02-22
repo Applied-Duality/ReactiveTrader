@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" >
     <Style TargetType="Window" x:Key="WindowStyle">
         <Setter Property="Icon" Value="adaptive-logo.png"/>
-        <Setter Property="Background" Value="#104870"/>
+        <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource PrimaryForeground}"/>
     </Style>
 </ResourceDictionary>

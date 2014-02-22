@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Configuration;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Domain.Models;
 using Adaptive.ReactiveTrader.Shared.UI;

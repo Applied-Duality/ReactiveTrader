@@ -4,8 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:spotTiles="clr-namespace:Adaptive.ReactiveTrader.Client.UI.SpotTiles"
+             xmlns:designer="clr-namespace:Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+             d:DataContext="{d:DesignInstance designer:DesignTimeSpotTilePricingViewModel, IsDesignTimeCreatable=True}">
     <Control.Resources>
         <DataTemplate x:Key="PriceDataTemplate" DataType="spotTiles:IOneWayPriceViewModel">
             <Button Width="100" Height="100" 
