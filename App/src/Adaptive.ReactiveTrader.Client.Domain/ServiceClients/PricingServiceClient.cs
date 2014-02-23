@@ -54,9 +54,9 @@ namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
                         .Subscribe(
                             _ => Log.InfoFormat("Unsubscribed from {0}", currencyPair),
                             ex =>
-                                Log.Error(
-                                    string.Format("An error occured while sending unsubscription request for {0}",
-                                        currencyPair), ex));
+                                Log.WarnFormat(
+                                    string.Format("An error occured while sending unsubscription request for {0}:{1}",
+                                        currencyPair), ex.Message));
                 });
 
                 return new CompositeDisposable {priceSubscription, unsubscriptionDisposable};

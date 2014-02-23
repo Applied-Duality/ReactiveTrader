@@ -48,5 +48,10 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Models
             }
         }
         public bool IsStale { get { return true; } }
+
+        public override string ToString()
+        {
+            return string.Format("[{0}]: Stale", CurrencyPair.Symbol);
+        }
     }
 }

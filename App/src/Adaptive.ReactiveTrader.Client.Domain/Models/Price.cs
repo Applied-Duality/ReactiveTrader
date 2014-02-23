@@ -25,5 +25,10 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Models
         public DateTime ValueDate { get; private set; }
         public decimal Spread { get; private set; }
         public bool IsStale { get { return false; } }
+
+        public override string ToString()
+        {
+            return string.Format("[{0}] Bid:{1} / Ask:{2}", CurrencyPair.Symbol, Bid.Rate, Ask.Rate);
+        }
     }
 }

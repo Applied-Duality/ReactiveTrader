@@ -12,5 +12,10 @@ namespace Adaptive.ReactiveTrader.Client.Domain
             ConnectionStatus = connectionStatus;
             Server = server;
         }
+
+        public override string ToString()
+        {
+            return string.Format("ConnectionStatus: {0}, Server: {1}", ConnectionStatus, Server);
+        }
     }
 }
