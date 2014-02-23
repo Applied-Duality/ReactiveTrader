@@ -1,6 +1,5 @@
 ﻿using System;
 using Adaptive.ReactiveTrader.Server;
-using Adaptive.ReactiveTrader.Server.Transport;
 using log4net;
 using Microsoft.Owin;
 using Microsoft.Owin.Hosting;
