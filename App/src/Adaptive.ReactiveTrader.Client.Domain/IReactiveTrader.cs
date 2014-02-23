@@ -1,6 +1,5 @@
 ﻿using System;
 using Adaptive.ReactiveTrader.Client.Domain.Repositories;
-using Adaptive.ReactiveTrader.Client.Domain.Transport;
 
 namespace Adaptive.ReactiveTrader.Client.Domain
 {
@@ -8,7 +7,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain
     {
         IReferenceDataRepository ReferenceData { get; }
         ITradeRepository TradeRepository { get; }
-        IObservable<ConnectionStatus> ConnectionStatus { get; }
+        IObservable<ConnectionInfo> ConnectionStatus { get; }
         void Initialize(string username, string[] servers);
     }
 }

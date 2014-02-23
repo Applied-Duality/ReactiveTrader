@@ -124,5 +124,9 @@
         <Setter Property="FontSize" Value="13"/>
         <Setter Property="Foreground" Value="{StaticResource PrimaryForeground}"/>
     </Style>
+    <Style x:Key="ConnectivityStatusTextStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Foreground" Value="{StaticResource SecondaryForeground}"/>
+    </Style>
 
 </ResourceDictionary>

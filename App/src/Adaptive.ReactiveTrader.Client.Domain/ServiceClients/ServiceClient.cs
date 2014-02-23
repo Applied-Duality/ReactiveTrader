@@ -21,9 +21,8 @@ namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
         {
             var activeConnections = (from connection in _connectionProvider.GetActiveConnection()
                                      from status in connection.Status
-                                     where status == ConnectionStatus.Connected || status == ConnectionStatus.Reconnected
+                                     where status.ConnectionStatus == ConnectionStatus.Connected || status.ConnectionStatus == ConnectionStatus.Reconnected
                                      select connection)
-                .Do(_ => Log.Info("New connection"))
                 .Publish()
                 .RefCount();
 
@@ -33,7 +32,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
             // 1 - notifies when the first connection gets disconnected
             var firstDisconnection = from connection in firstConnection
                                      from status in connection.Status
-                                     where status == ConnectionStatus.Reconnecting || status == ConnectionStatus.Closed
+                                     where status.ConnectionStatus == ConnectionStatus.Reconnecting || status.ConnectionStatus == ConnectionStatus.Closed
                                      select Unit.Default;
 
             // 2- connection provider created a new connection it means the active one has droped
@@ -41,16 +40,14 @@ namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
 
             // OnError when we get 1 or 2
             var disconnected = firstDisconnection.Merge(subsequentConnection)
-                .Select(_ => Notification.CreateOnError<T>(new Exception("Connection was disconnected.")))
-                .Dematerialize()
-                .Do(_ => Log.Info("Stream disconnected"));
+                .Select(_ => Notification.CreateOnError<T>(new Exception("Connection was closed.")))
+                .Dematerialize();
 
             // create a stream which will OnError as soon as the connection drops
             return (from connection in firstConnection
                     from t in streamFactory(connection)
                     select t)
                 .Merge(disconnected)
-                .OnSubscribe(() => Log.Info("Subscribing to Stream"))
                 .Publish()
                 .RefCount();
         }

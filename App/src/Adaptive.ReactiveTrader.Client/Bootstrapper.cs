@@ -1,6 +1,7 @@
 ﻿using Adaptive.ReactiveTrader.Client.Configuration;
 using Adaptive.ReactiveTrader.Client.Domain;
 using Adaptive.ReactiveTrader.Client.UI.Blotter;
+using Adaptive.ReactiveTrader.Client.UI.Connectivity;
 using Adaptive.ReactiveTrader.Client.UI.Shell;
 using Adaptive.ReactiveTrader.Client.UI.SpotTiles;
 using Autofac;
@@ -32,6 +33,7 @@ namespace Adaptive.ReactiveTrader.Client
             builder.RegisterType<SpotTileAffirmationViewModel>().As<ISpotTileAffirmationViewModel>();
             builder.RegisterType<BlotterViewModel>().As<IBlotterViewModel>();
             builder.RegisterType<TradeViewModel>().As<ITradeViewModel>();
+            builder.RegisterType<ConnectivityStatusViewModel>().As<IConnectivityStatusViewModel>();
 
             return builder.Build();
         } 

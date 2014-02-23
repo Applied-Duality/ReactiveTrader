@@ -5,12 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:spotTiles="clr-namespace:Adaptive.ReactiveTrader.Client.UI.SpotTiles"
              xmlns:blotter="clr-namespace:Adaptive.ReactiveTrader.Client.UI.Blotter"
+             xmlns:connectivity="clr-namespace:Adaptive.ReactiveTrader.Client.UI.Connectivity"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="600" 
+             d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         
         <ContentPresenter Grid.Row="0" Content="{Binding SpotTiles, Mode=OneTime}">
@@ -25,6 +28,14 @@
             <ContentPresenter.ContentTemplate>
                 <DataTemplate DataType="blotter:IBlotterViewModel">
                     <blotter:BlotterView DataContext="{Binding Mode=OneWay}" />
+                </DataTemplate>
+            </ContentPresenter.ContentTemplate>
+        </ContentPresenter>
+
+        <ContentPresenter Grid.Row="2" Content="{Binding ConnectivityStatus, Mode=OneTime}">
+            <ContentPresenter.ContentTemplate>
+                <DataTemplate DataType="connectivity:IConnectivityStatusViewModel">
+                    <connectivity:ConnectivityStatusView DataContext="{Binding Mode=OneWay}" />
                 </DataTemplate>
             </ContentPresenter.ContentTemplate>
         </ContentPresenter>

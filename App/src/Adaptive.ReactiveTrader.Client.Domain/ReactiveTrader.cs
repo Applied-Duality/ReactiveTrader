@@ -34,7 +34,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain
         public IReferenceDataRepository ReferenceData { get; private set; }
         public ITradeRepository TradeRepository { get; private set; }
 
-        public IObservable<ConnectionStatus> ConnectionStatus
+        public IObservable<ConnectionInfo> ConnectionStatus
         {
             get
             {

@@ -6,9 +6,9 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Transport
 {
     internal interface IConnection
     {
-        IObservable<ConnectionStatus> Status { get; }
-        IObservable<bool> IsConnected { get; }
+        IObservable<ConnectionInfo> Status { get; }
         IObservable<Unit> Initialize();
+        string Address { get; }
         IHubProxy ReferenceDataHubProxy { get; }
         IHubProxy PricingHubProxy { get; }
         IHubProxy ExecutionHubProxy { get; }

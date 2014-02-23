@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Reactive.Linq;
+using System.Threading;
 using System.Windows;
 using Adaptive.ReactiveTrader.Client.Configuration;
 using Adaptive.ReactiveTrader.Client.Domain;
-using Adaptive.ReactiveTrader.Client.Domain.Transport;
 using Adaptive.ReactiveTrader.Client.UI.Shell;
 using Autofac;
 using log4net;
@@ -57,6 +56,8 @@ namespace Adaptive.ReactiveTrader.Client
 
         private void InitializeLogging()
         {
+            Thread.CurrentThread.Name = "UI";
+
             log4net.Config.XmlConfigurator.Configure();
 
             Log.Info(@"  _____                 _   _           ");
