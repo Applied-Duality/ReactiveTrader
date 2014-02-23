@@ -23,8 +23,8 @@
 
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Throughput" Margin="4"/>
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="4" >
-            <TextBlock Text="{Binding Throughput}" />
-            <TextBlock Text="msg/sec"/>
+            <TextBlock Name="ThroughputTextBlock"  Text="0" />
+            <TextBlock Text=" msg/sec"/>
         </StackPanel>
         <Slider Grid.Row="1" Grid.Column="2" Minimum="0" Maximum="5000" Margin="4" ValueChanged="Slider_ValueChanged" />
     </Grid>

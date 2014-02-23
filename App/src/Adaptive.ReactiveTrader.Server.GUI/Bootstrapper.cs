@@ -34,6 +34,9 @@ namespace Adaptive.ReactiveTrader.Server
             
             builder.RegisterType<ContextHolder>().As<IContextHolder>().SingleInstance();
 
+            // UI
+            builder.RegisterType<MainWindow>().SingleInstance();
+
             return builder.Build();
         }
     }

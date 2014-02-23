@@ -17,6 +17,7 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
         private readonly Random _random;
         private readonly List<CurrencyPairDto> _allCurrencyPairs;
         private Timer _timer;
+        private int _updatesPerTick = 1;
 
         public PriceFeedSimulator(
             ICurrencyPairRepository currencyPairRepository, 
@@ -35,6 +36,24 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
             PopulateLastValueCache();
 
             _timer = new Timer(OnTimerTick, null, UpdatePeriodMs, UpdatePeriodMs);
+        }
+
+        public void SetUpdateFrequency(double updatesPerSecond)
+        {
+            if (_timer != null)
+            {
+                _timer.Dispose();
+            }
+
+            var periodMs = 1000.0/updatesPerSecond;
+
+            if (periodMs < 15.5) // timer resolution is about 15ms, bellow that we start sending multiple update per tick
+            {
+                _updatesPerTick = (int) (15.5/periodMs);
+                periodMs = 15;
+            }
+
+            _timer = new Timer(OnTimerTick, null, (int)periodMs, (int)periodMs);
         }
 
         private void PopulateLastValueCache()
@@ -74,12 +93,15 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
 
         private void OnTimerTick(object state)
         {
-            var randomCurrencyPair = _allCurrencyPairs[_random.Next(0, _allCurrencyPairs.Count)];
-            var lastPrice = _priceLastValueCache.GetLastValue(randomCurrencyPair.Symbol);
+            for (int i = 0; i < _updatesPerTick; i++)
+            {
+                var randomCurrencyPair = _allCurrencyPairs[_random.Next(0, _allCurrencyPairs.Count)];
+                var lastPrice = _priceLastValueCache.GetLastValue(randomCurrencyPair.Symbol);
 
-            var newPrice = GenerateNextQuote(lastPrice);
-            _priceLastValueCache.StoreLastValue(newPrice);
-            _pricePublisher.Publish(newPrice);
+                var newPrice = GenerateNextQuote(lastPrice);
+                _priceLastValueCache.StoreLastValue(newPrice);
+                _pricePublisher.Publish(newPrice);
+            }
         }
 
         public void Dispose()

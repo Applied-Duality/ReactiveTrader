@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using Adaptive.ReactiveTrader.Server.Pricing;
 using log4net;
 using Microsoft.Owin.Hosting;
 
@@ -6,12 +8,18 @@ namespace Adaptive.ReactiveTrader.Server
 {
     public partial class MainWindow
     {
+        private readonly IPricePublisher _pricePublisher;
+        private readonly IPriceFeed _priceFeed;
         private IDisposable _signalr;
         private const string Address = "http://localhost:8080";
         private static readonly ILog Log = LogManager.GetLogger(typeof(MainWindow));
+        private Timer _timer;
+        private long _lastTickTotalUpdates;
 
-        public MainWindow()
+        public MainWindow(IPricePublisher pricePublisher, IPriceFeed priceFeed)
         {
+            _pricePublisher = pricePublisher;
+            _priceFeed = priceFeed;
             InitializeComponent();
         }
 
@@ -23,6 +31,13 @@ namespace Adaptive.ReactiveTrader.Server
                 _signalr = null;
                 ServerStatusTextBlock.Text = "Stoped";
                 ServerButton.Content = "Start";
+
+                if (_timer != null)
+                {
+                    _timer.Dispose();
+                    _timer = null;
+                    ThroughputTextBlock.Text = "0";
+                }
             }
             else
             {
@@ -37,12 +52,30 @@ namespace Adaptive.ReactiveTrader.Server
                 }
                 ServerStatusTextBlock.Text = "Started on " + Address;
                 ServerButton.Content = "Stop";
+                StartMeasuringThroughput();
             }
+        }
+
+        private void StartMeasuringThroughput()
+        {
+            _lastTickTotalUpdates = _pricePublisher.TotalPricesPublished;
+            _timer = new Timer(state =>
+            {
+                var newTotalUpdates = _pricePublisher.TotalPricesPublished;
+                var publishedLastSecond = newTotalUpdates - _lastTickTotalUpdates;
+                _lastTickTotalUpdates = newTotalUpdates;
+
+                Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    ThroughputTextBlock.Text = publishedLastSecond.ToString("N0");
+                }));
+                
+            }, null, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
         }
 
         private void Slider_ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<double> e)
         {
-
+            _priceFeed.SetUpdateFrequency(e.NewValue);
         }
     }
 }

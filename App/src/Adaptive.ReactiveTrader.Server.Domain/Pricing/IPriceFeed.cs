@@ -3,5 +3,6 @@
     public interface IPriceFeed
     {
         void Start();
+        void SetUpdateFrequency(double value);
     }
 }
