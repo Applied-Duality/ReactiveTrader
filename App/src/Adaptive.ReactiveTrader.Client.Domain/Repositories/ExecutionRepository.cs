@@ -33,6 +33,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Repositories
             };
 
             return _executionServiceClient.Execute(request)
+                .Timeout(TimeSpan.FromSeconds(2))
                 .Select(_tradeFactory.Create)
                 .CacheFirstResult();
         }

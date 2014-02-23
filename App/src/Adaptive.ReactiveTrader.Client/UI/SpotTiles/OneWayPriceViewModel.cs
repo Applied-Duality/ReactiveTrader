@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Linq;
+using System.Windows;
 using System.Windows.Input;
 using Adaptive.ReactiveTrader.Client.Domain.Models;
 using Adaptive.ReactiveTrader.Shared.UI;
@@ -52,8 +53,23 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             _executablePrice.Execute(notional)
                 .ObserveOnDispatcher()
                 .Subscribe(OnExecuted,
-                    error => Log.Error("Failed to execute trade", error));
+                    OnExecutionError);    
         }
+
+        private void OnExecutionError(Exception exception)
+        {
+            if (exception is TimeoutException)
+            {
+                MessageBox.Show("No response was received from the server, the execution status is unknown.\nPlease contact your sales representative.", "Execution timeout", MessageBoxButton.OK, MessageBoxImage.Error);
+                Log.Error("Trade execution request timed out.");
+            }
+            else
+            {
+                MessageBox.Show("An error occured while processing the trade request.", "Execution error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Log.Error("An error occured while processing the trade request.", exception);
+            }
+        }
+
         #endregion
 
         public void OnPrice(IExecutablePrice executablePrice)

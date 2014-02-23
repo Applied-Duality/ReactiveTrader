@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Adaptive.ReactiveTrader.Server.Blotter;
 using Adaptive.ReactiveTrader.Shared.Execution;
 
@@ -20,8 +21,13 @@ namespace Adaptive.ReactiveTrader.Server.Execution
             _tradeId = 0;
         }
 
-        public TradeDto Execute(TradeRequestDto tradeRequest, string user)
+        public async Task<TradeDto> Execute(TradeRequestDto tradeRequest, string user)
         {
+            if (tradeRequest.Symbol == "EURJPY")
+            {
+                await Task.Delay(TimeSpan.FromSeconds(5));
+            }
+
             var trade =  new TradeDto
             {
                 CurrencyPair = tradeRequest.Symbol,
