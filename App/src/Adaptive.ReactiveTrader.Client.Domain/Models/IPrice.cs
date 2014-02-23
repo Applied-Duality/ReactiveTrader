@@ -11,5 +11,6 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Models
         DateTime ValueDate { get; }
         decimal Spread { get; }
         bool IsStale { get; }
+        TimeSpan ElpasedTimeSinceCreated { get; }
     }
 }

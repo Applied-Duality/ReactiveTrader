@@ -48,6 +48,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Models
             }
         }
         public bool IsStale { get { return true; } }
+        public TimeSpan ElpasedTimeSinceCreated { get { return TimeSpan.Zero; } }
 
         public override string ToString()
         {

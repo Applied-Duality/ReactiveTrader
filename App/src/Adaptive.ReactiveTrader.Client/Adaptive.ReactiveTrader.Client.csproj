@@ -87,6 +87,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Instrumentation\IPriceLatencyRecorder.cs" />
+    <Compile Include="Instrumentation\PriceLatencyRecorder.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Configuration\ConfigurationProvider.cs" />
     <Compile Include="Configuration\IConfigurationProvider.cs" />

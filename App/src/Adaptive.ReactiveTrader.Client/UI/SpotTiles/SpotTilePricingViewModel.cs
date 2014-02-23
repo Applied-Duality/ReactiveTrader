@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Domain.Models;
+using Adaptive.ReactiveTrader.Client.Instrumentation;
 using Adaptive.ReactiveTrader.Shared.UI;
 using log4net;
 using PropertyChanged;
@@ -19,14 +20,17 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
 
         private readonly ICurrencyPair _currencyPair;
         private readonly ISpotTileViewModel _parent;
+        private readonly IPriceLatencyRecorder _priceLatencyRecorder;
         private bool _disposed;
         private IDisposable _priceSubscription;
 
         public SpotTilePricingViewModel(ICurrencyPair currencyPair, ISpotTileViewModel parent,
-            Func<Direction, ISpotTilePricingViewModel, IOneWayPriceViewModel> oneWayPriceFactory)
+            Func<Direction, ISpotTilePricingViewModel, IOneWayPriceViewModel> oneWayPriceFactory,
+            IPriceLatencyRecorder priceLatencyRecorder)
         {
             _currencyPair = currencyPair;
             _parent = parent;
+            _priceLatencyRecorder = priceLatencyRecorder;
 
             Bid = oneWayPriceFactory(Direction.Sell, this);
             Ask = oneWayPriceFactory(Direction.Buy, this);
@@ -67,6 +71,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
                 Bid.OnPrice(price.Bid);
                 Ask.OnPrice(price.Ask);
                 Spread = PriceFormatter.GetFormattedSpread(price.Spread, _currencyPair.RatePrecision, _currencyPair.PipsPosition);
+                _priceLatencyRecorder.RecordProcessingTime(price.ElpasedTimeSinceCreated);
             }
         }
 

@@ -8,5 +8,10 @@
              d:DesignWidth="800">
     <StackPanel Orientation="Horizontal">
         <TextBlock Text="{Binding Status}" Style="{StaticResource ConnectivityStatusTextStyle}" Margin="3" />
+        <TextBlock Text=" - UI Latency: " Style="{StaticResource ConnectivityStatusTextStyle}" Margin="3" />
+        <TextBlock Text="{Binding UiLatency}" Style="{StaticResource ConnectivityStatusTextStyle}" Margin="3" />
+        <TextBlock Text="ms - Throughput: " Style="{StaticResource ConnectivityStatusTextStyle}" Margin="3" />
+        <TextBlock Text="{Binding Throughput}" Style="{StaticResource ConnectivityStatusTextStyle}" Margin="3" />
+        <TextBlock Text="tick/sec" Style="{StaticResource ConnectivityStatusTextStyle}" Margin="3" />
     </StackPanel>
 </UserControl>
