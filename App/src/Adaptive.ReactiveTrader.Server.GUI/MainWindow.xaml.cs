@@ -21,39 +21,51 @@ namespace Adaptive.ReactiveTrader.Server
             _pricePublisher = pricePublisher;
             _priceFeed = priceFeed;
             InitializeComponent();
+
+            StartServer();
         }
 
         private void ServerButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             if (_signalr != null)
             {
-                _signalr.Dispose();
-                _signalr = null;
-                ServerStatusTextBlock.Text = "Stoped";
-                ServerButton.Content = "Start";
-
-                if (_timer != null)
-                {
-                    _timer.Dispose();
-                    _timer = null;
-                    ThroughputTextBlock.Text = "0";
-                }
+                StopServer();
             }
             else
             {
-                ServerStatusTextBlock.Text = "Starting...";
-                try
-                {
-                    _signalr = WebApp.Start(Address);
-                }
-                catch (Exception exception)
-                {
-                    Log.Error("An error occured while starting SignalR", exception);
-                }
-                ServerStatusTextBlock.Text = "Started on " + Address;
-                ServerButton.Content = "Stop";
-                StartMeasuringThroughput();
+                StartServer();
             }
+        }
+
+        private void StopServer()
+        {
+            _signalr.Dispose();
+            _signalr = null;
+            ServerStatusTextBlock.Text = "Stoped";
+            ServerButton.Content = "Start";
+
+            if (_timer != null)
+            {
+                _timer.Dispose();
+                _timer = null;
+                ThroughputTextBlock.Text = "0";
+            }
+        }
+
+        private void StartServer()
+        {
+            ServerStatusTextBlock.Text = "Starting...";
+            try
+            {
+                _signalr = WebApp.Start(Address);
+            }
+            catch (Exception exception)
+            {
+                Log.Error("An error occured while starting SignalR", exception);
+            }
+            ServerStatusTextBlock.Text = "Started on " + Address;
+            ServerButton.Content = "Stop";
+            StartMeasuringThroughput();
         }
 
         private void StartMeasuringThroughput()

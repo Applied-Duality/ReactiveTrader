@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Reactive.Concurrency;
 using System.Reactive.Linq;
+using System.Threading;
 using Adaptive.ReactiveTrader.Client.Domain.Models;
 using Adaptive.ReactiveTrader.Client.Instrumentation;
+using Adaptive.ReactiveTrader.Shared.Extensions;
 using Adaptive.ReactiveTrader.Shared.UI;
 using log4net;
 using PropertyChanged;
@@ -54,7 +57,8 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         private void SubscribeForPrices()
         {
             _priceSubscription = _currencyPair.Prices
-                .ObserveOnDispatcher()
+                .ObserveLatestOn(DispatcherScheduler.Current) 
+                //.ObserveOnDispatcher()
                 .Subscribe(OnPrice, error => Log.Error("Failed to get prices"));
         }
 
