@@ -8,5 +8,6 @@ namespace Adaptive.ReactiveTrader.Server.ReferenceData
         IEnumerable<CurrencyPairDto> GetAllCurrencyPairs();
         CurrencyPairDto GetCurrencyPair(string symbol);
         bool Exists(string symbol);
+        decimal GetSampleRate(string symbol);
     }
 }

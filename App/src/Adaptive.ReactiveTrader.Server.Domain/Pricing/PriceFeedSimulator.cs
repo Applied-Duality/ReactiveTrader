@@ -18,13 +18,6 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
         private readonly List<CurrencyPairDto> _allCurrencyPairs;
         private Timer _timer;
 
-        private static readonly Dictionary<string, decimal> SamplePrices = new Dictionary<string, decimal>
-        {
-            {"EURUSD", 1.34860m},
-            {"EURGBP", 0.82040m},
-            {"EURJPY", 139.431m},
-        };
-
         public PriceFeedSimulator(
             ICurrencyPairRepository currencyPairRepository, 
             IPricePublisher pricePublisher,
@@ -48,12 +41,7 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
         {
             foreach (var currencyPair in _currencyPairRepository.GetAllCurrencyPairs())
             {
-                if (!SamplePrices.ContainsKey(currencyPair.Symbol))
-                {
-                    throw new InvalidOperationException(string.Format("Default value for currency pair {0} must be defined in PriceFeedSimulator", currencyPair.Symbol));
-                }
-                    
-                decimal mid = SamplePrices[currencyPair.Symbol];
+                decimal mid = _currencyPairRepository.GetSampleRate(currencyPair.Symbol);
                 
                 var initialQuote = new PriceDto
                 {

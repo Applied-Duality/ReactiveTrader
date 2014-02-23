@@ -90,6 +90,7 @@
   <ItemGroup>
     <Compile Include="Blotter\BlotterHub.cs" />
     <Compile Include="Execution\ExecutionHub.cs" />
+    <Compile Include="ReferenceData\CurrencyPairInfo.cs" />
     <Compile Include="ReferenceData\CurrencyPairRepository.cs" />
     <Compile Include="Execution\ExecutionService.cs" />
     <Compile Include="Blotter\IBlotterPublisher.cs" />
