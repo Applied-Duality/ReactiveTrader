@@ -17,8 +17,19 @@
     <UserControl.Resources>
         <converters:InvertingValueConverter x:Key="Inverter" />
     </UserControl.Resources>
-    <Grid>
-        <controls:ContentControl3D Content="{Binding Pricing, Mode=OneWay}"
+    <Grid Margin="2">
+
+        <!-- TODO to remove, this is temporary until John fixes the rotating thing -->
+        <ContentPresenter Content="{Binding Pricing, Mode=OneTime}">
+            <ContentPresenter.ContentTemplate>
+                <DataTemplate DataType="spotTiles:ISpotTilePricingViewModel">
+                    <spotTiles:SpotTilePricingView DataContext="{Binding Mode=OneWay}" />
+                </DataTemplate>
+            </ContentPresenter.ContentTemplate>
+        </ContentPresenter>
+
+        <!-- TODO JOHN TO FIX THIS -->
+        <!--<controls:ContentControl3D Content="{Binding Pricing, Mode=OneWay}"
                                 BackContent="{Binding Affirmation, Mode=OneWay}"
                                 IsFrontInView="{Binding ShowingAffirmation, Converter={StaticResource Inverter}, Mode=OneWay}"
                                 AnimationLength="250">
@@ -32,6 +43,6 @@
                     <spotTiles:SpotTileAffirmationView />
                 </DataTemplate>
             </controls:ContentControl3D.BackContentTemplate>
-        </controls:ContentControl3D>
+        </controls:ContentControl3D>-->
     </Grid>
 </UserControl>
