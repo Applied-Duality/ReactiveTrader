@@ -43,6 +43,10 @@
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Blend.Interactivity.Wpf.1.0.1340.0\lib\net\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="PropertyChanged">
       <HintPath>..\packages\PropertyChanged.Fody.1.46.0.0\Lib\NET35\PropertyChanged.dll</HintPath>
@@ -70,6 +74,10 @@
     <Reference Include="System.Reactive.Windows.Threading">
       <HintPath>..\packages\Rx-XAML.2.2.2\lib\net45\System.Reactive.Windows.Threading.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Blend.Interactivity.Wpf.1.0.1340.0\lib\net\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -94,6 +102,10 @@
     <Compile Include="Configuration\IConfigurationProvider.cs" />
     <Compile Include="Configuration\IUserProvider.cs" />
     <Compile Include="Configuration\UserProvider.cs" />
+    <Compile Include="UI\Behaviors\CloseWindowButtonBehavior.cs" />
+    <Compile Include="UI\Behaviors\MaximizeWindowButtonBehavior.cs" />
+    <Compile Include="UI\Behaviors\MinimizeWindowButtonBehavior.cs" />
+    <Compile Include="UI\Behaviors\WindowButtonBehavior.cs" />
     <Compile Include="UI\Blotter\BlotterView.xaml.cs">
       <DependentUpon>BlotterView.xaml</DependentUpon>
     </Compile>
