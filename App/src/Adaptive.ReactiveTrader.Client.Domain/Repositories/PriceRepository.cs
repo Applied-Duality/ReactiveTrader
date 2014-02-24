@@ -20,8 +20,8 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Repositories
         {
             return Observable.Defer(() => _pricingServiceClient.GetSpotStream(currencyPair.Symbol))
                 .Select(p => _priceFactory.Create(p, currencyPair))
-                .Catch(Observable.Return(new StalePrice(currencyPair)))
-                .Repeat()
+                .Catch(Observable.Return(new StalePrice(currencyPair))) // if the stream errors (server disconnected), we push a stale price 
+                .Repeat()                                               // and resubscribe
                 .Publish()
                 .RefCount();
         }

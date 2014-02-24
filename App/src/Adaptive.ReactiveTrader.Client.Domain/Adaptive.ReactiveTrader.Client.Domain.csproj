@@ -100,6 +100,7 @@
     <Compile Include="ServiceClients\PricingServiceClient.cs" />
     <Compile Include="ServiceClients\ReferenceDataServiceClient.cs" />
     <Compile Include="ServiceClients\ServiceClient.cs" />
+    <Compile Include="ServiceClients\TransportDisconnectedException.cs" />
     <Compile Include="Transport\Connection.cs" />
     <Compile Include="Transport\ConnectionProvider.cs" />
     <Compile Include="Transport\ConnectionStatus.cs" />
@@ -108,6 +109,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="readme.md" />
+    <None Include="ServiceClients\readme.md" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Adaptive.ReactiveTrader.Shared\Adaptive.ReactiveTrader.Shared.csproj">

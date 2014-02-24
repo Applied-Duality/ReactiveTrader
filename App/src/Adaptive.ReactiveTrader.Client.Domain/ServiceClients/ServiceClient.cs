@@ -40,7 +40,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
 
             // OnError when we get 1 or 2
             var disconnected = firstDisconnection.Merge(subsequentConnection)
-                .Select(_ => Notification.CreateOnError<T>(new Exception("Connection was closed.")))
+                .Select(_ => Notification.CreateOnError<T>(new TransportDisconnectedException("Connection was closed.")))
                 .Dematerialize();
 
             // create a stream which will OnError as soon as the connection drops
