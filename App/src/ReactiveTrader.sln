@@ -24,6 +24,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adaptive.ReactiveTrader.Ser
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adaptive.ReactiveTrader.Client.Domain", "Adaptive.ReactiveTrader.Client.Domain\Adaptive.ReactiveTrader.Client.Domain.csproj", "{8E9D2733-A4EF-4BDA-A89A-6F9EA87C91E7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{45C3AFE6-745A-4C4D-B999-5619B22DDF0E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{45F076B4-7668-4889-BC7C-053165AE47DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,5 +65,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CA35010F-7F38-4DCF-828E-A825F1E8D525} = {45C3AFE6-745A-4C4D-B999-5619B22DDF0E}
+		{8E9D2733-A4EF-4BDA-A89A-6F9EA87C91E7} = {45C3AFE6-745A-4C4D-B999-5619B22DDF0E}
+		{05CC1E86-FBB3-4A5D-912D-1276EBDC46FC} = {45C3AFE6-745A-4C4D-B999-5619B22DDF0E}
+		{05DDA5B6-CD4E-483A-8B2E-68163187B15A} = {45F076B4-7668-4889-BC7C-053165AE47DE}
+		{1348ACC4-D5B2-4328-9C80-7EC813E82CE4} = {45F076B4-7668-4889-BC7C-053165AE47DE}
+		{70579FD7-DAC6-41D0-87CD-BB7D25EDA137} = {45F076B4-7668-4889-BC7C-053165AE47DE}
 	EndGlobalSection
 EndGlobal
