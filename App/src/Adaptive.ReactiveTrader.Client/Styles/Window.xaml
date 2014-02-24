@@ -9,9 +9,10 @@
         <Setter Property="Icon" Value="adaptive-logo.png"/>
         <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource PrimaryForeground}"/>
+        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
-                <WindowChrome GlassFrameThickness="0" ResizeBorderThickness="4" CaptionHeight="30" UseAeroCaptionButtons="False" CornerRadius="0" />
+                <WindowChrome GlassFrameThickness="-1" ResizeBorderThickness="4" CaptionHeight="30" UseAeroCaptionButtons="False" CornerRadius="0" />
             </Setter.Value>
         </Setter>
         <Setter Property="Template">
@@ -60,42 +61,49 @@
                             </Setter>
                         </Style>
                     </ControlTemplate.Resources>
-                    <Grid Background="#FFDEE3E8">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="30" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
+                    <Border x:Name="RootBorder" Background="#FFDEE3E8" BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
 
-                        <Grid Grid.Row="0">
-                            <Border Height="1" Background="{StaticResource CloseButtonBrush}" VerticalAlignment="Top" />
-                            
-                            <TextBlock HorizontalAlignment="Center" Text="{TemplateBinding Title}" Foreground="Black" />
-                            
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,7,0">
-                                <Button Style="{StaticResource MinMaxButtonStyle}" VerticalContentAlignment="Bottom">
-                                    <i:Interaction.Behaviors>
-                                        <behaviors:MinimizeWindowButtonBehavior AssociatedWindow="{Binding RelativeSource={RelativeSource TemplatedParent}}"/>
-                                    </i:Interaction.Behaviors>
-                                    <Path Data="M0,0L8,0 8,2 0,2z" Fill="Black" Height="2" Width="8" Margin="0,0,0,7" />
-                                </Button>
-                                <Button Style="{StaticResource MinMaxButtonStyle}">
-                                    <i:Interaction.Behaviors>
-                                        <behaviors:MaximizeWindowButtonBehavior AssociatedWindow="{Binding RelativeSource={RelativeSource TemplatedParent}}"/>
-                                    </i:Interaction.Behaviors>
-                                    <Path Data="M9,7L1,7 1,2 9,2z M0,8L10,8 10,0 0,0z" Fill="Black" Height="8" Width="10" />
-                                </Button>
-                                <Button Style="{StaticResource CloseButtonStyle}">
-                                    <i:Interaction.Behaviors>
-                                        <behaviors:CloseWindowButtonBehavior AssociatedWindow="{Binding RelativeSource={RelativeSource TemplatedParent}}"/>
-                                    </i:Interaction.Behaviors>
-                                </Button>
-                            </StackPanel>
+                            <Grid Grid.Row="0">
+                                <Border Height="1" Background="{StaticResource CloseButtonBrush}" VerticalAlignment="Top" />
+
+                                <TextBlock HorizontalAlignment="Center" Text="{TemplateBinding Title}" Foreground="Black" />
+
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,7,0">
+                                    <Button Style="{StaticResource MinMaxButtonStyle}" VerticalContentAlignment="Bottom">
+                                        <i:Interaction.Behaviors>
+                                            <behaviors:MinimizeWindowButtonBehavior AssociatedWindow="{Binding RelativeSource={RelativeSource TemplatedParent}}"/>
+                                        </i:Interaction.Behaviors>
+                                        <Path Data="M0,0L8,0 8,2 0,2z" Fill="Black" Height="2" Width="8" Margin="0,0,0,7" />
+                                    </Button>
+                                    <Button Style="{StaticResource MinMaxButtonStyle}">
+                                        <i:Interaction.Behaviors>
+                                            <behaviors:MaximizeWindowButtonBehavior AssociatedWindow="{Binding RelativeSource={RelativeSource TemplatedParent}}"/>
+                                        </i:Interaction.Behaviors>
+                                        <Path Data="M9,7L1,7 1,2 9,2z M0,8L10,8 10,0 0,0z" Fill="Black" Height="8" Width="10" />
+                                    </Button>
+                                    <Button Style="{StaticResource CloseButtonStyle}">
+                                        <i:Interaction.Behaviors>
+                                            <behaviors:CloseWindowButtonBehavior AssociatedWindow="{Binding RelativeSource={RelativeSource TemplatedParent}}"/>
+                                        </i:Interaction.Behaviors>
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+
+                            <ContentPresenter Grid.Row="1" Content="{TemplateBinding Content}" />
                         </Grid>
-
-                        <ContentPresenter Grid.Row="1" Content="{TemplateBinding Content}" />
-                    </Grid>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="WindowState" Value="Maximized">
+                <Setter Property="BorderThickness" Value="5" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>
