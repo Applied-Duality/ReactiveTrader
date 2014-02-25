@@ -10,6 +10,7 @@
         <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource PrimaryForeground}"/>
         <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
                 <WindowChrome GlassFrameThickness="-1" ResizeBorderThickness="4" CaptionHeight="30" UseAeroCaptionButtons="False" CornerRadius="0" />

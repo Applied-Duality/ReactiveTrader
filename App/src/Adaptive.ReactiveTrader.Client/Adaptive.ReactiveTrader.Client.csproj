@@ -48,6 +48,7 @@
       <HintPath>..\packages\Blend.Interactivity.Wpf.1.0.1340.0\lib\net\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework.Aero" />
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="PropertyChanged">
       <HintPath>..\packages\PropertyChanged.Fody.1.46.0.0\Lib\NET35\PropertyChanged.dll</HintPath>
       <Private>False</Private>
@@ -173,6 +174,10 @@
     <Page Include="Styles\Button.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\DataGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\ScrollViewer.xaml">
       <SubType>Designer</SubType>
