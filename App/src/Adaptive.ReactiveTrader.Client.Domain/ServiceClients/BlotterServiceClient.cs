@@ -31,8 +31,8 @@ namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
                 // subscribe to trade feed first, otherwise there is a race condition 
                 var spotTradeSubscription = blotterHubProxy.On<IEnumerable<TradeDto>>(ServiceConstants.Client.OnNewTrade, observer.OnNext);
 
-                Log.Info("Sending trade subscription...");
-                SendSubscription(blotterHubProxy)
+                Log.Info("Sending blotter subscription...");
+                var sendSubscriptionDisposable = SendSubscription(blotterHubProxy)
                     .Subscribe(
                         _ => Log.InfoFormat("Subscribed to blotter."),
                         observer.OnError);
@@ -46,7 +46,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
                             _ => Log.InfoFormat("Subscribed to blotter."),
                             ex => Log.WarnFormat("An error occured while unsubscribing to blotter: {0}", ex.Message));
                 });
-                return new CompositeDisposable { spotTradeSubscription, unsubscriptionDisposable };
+                return new CompositeDisposable { spotTradeSubscription, unsubscriptionDisposable, sendSubscriptionDisposable };
             })
                 .Publish()
                 .RefCount();

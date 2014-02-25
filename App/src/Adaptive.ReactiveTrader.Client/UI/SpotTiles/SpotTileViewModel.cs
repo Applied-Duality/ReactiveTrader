@@ -1,7 +1,6 @@
 ﻿using System;
 using Adaptive.ReactiveTrader.Client.Domain.Models;
 using Adaptive.ReactiveTrader.Shared.UI;
-using log4net;
 using PropertyChanged;
 
 namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
@@ -9,8 +8,6 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
     [ImplementPropertyChanged]
     public class SpotTileViewModel : ViewModelBase, ISpotTileViewModel
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(SpotTileViewModel));
-        
         public ISpotTilePricingViewModel Pricing { get; private set; }
         public ISpotTileAffirmationViewModel Affirmation { get; private set; }
         public bool ShowingAffirmation { get; private set; }

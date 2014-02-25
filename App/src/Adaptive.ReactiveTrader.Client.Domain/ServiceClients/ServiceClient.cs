@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Reactive;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Domain.Transport;

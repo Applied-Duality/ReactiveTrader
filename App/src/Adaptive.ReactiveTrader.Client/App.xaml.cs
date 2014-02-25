@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Windows;
 using Adaptive.ReactiveTrader.Client.Configuration;
@@ -12,7 +13,6 @@ namespace Adaptive.ReactiveTrader.Client
     public partial class App
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(App));
-        private IDisposable _statusSubscription;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -28,30 +28,20 @@ namespace Adaptive.ReactiveTrader.Client
             var bootstrapper = new Bootstrapper();
             var container = bootstrapper.Build();
 
+            Log.Info("Initializing reactive trader API...");
+            var sw = Stopwatch.StartNew();
             var reactiveTraderApi = container.Resolve<IReactiveTrader>();
-            reactiveTraderApi.Initialize(container.Resolve<IUserProvider>().Username, container.Resolve<IConfigurationProvider>().Servers);
 
-            _statusSubscription =
-                reactiveTraderApi.ConnectionStatus
-                .Subscribe(
-                    status => Log.InfoFormat("Connection status changed: {0}", status),
-                ex => Log.Error("An error occured in connection status stream.", ex),
-                () => Log.Error("Subscription to connection provider completed."));
+            var username = container.Resolve<IUserProvider>().Username;
+            reactiveTraderApi.Initialize(username, container.Resolve<IConfigurationProvider>().Servers);
+            Log.InfoFormat("Reactive trader API initialized in {0}ms", sw.ElapsedMilliseconds);
 
             MainWindow = new MainWindow();
             MainWindow.Show();
+            Log.InfoFormat("Main UI displayed {0}ms after process start.", DateTime.Now - Process.GetCurrentProcess().StartTime);
 
             var shellView = container.Resolve<ShellView>();
             MainWindow.Content = shellView;
-        }
-
-        protected override void OnExit(ExitEventArgs e)
-        {
-            if (_statusSubscription != null)
-            {
-                _statusSubscription.Dispose();                
-            }
-            base.OnExit(e);
         }
 
         private void InitializeLogging()
