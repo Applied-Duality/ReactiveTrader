@@ -126,6 +126,9 @@
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Shell\ShellViewModel.cs" />
+    <Compile Include="UI\Splash\SplashWindow.xaml.cs">
+      <DependentUpon>SplashWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\SpotTiles\Designer\DesignTimeOneWayPriceViewModel.cs" />
     <Compile Include="UI\SpotTiles\Designer\DesignTimeSpotTilePricingViewModel.cs" />
     <Compile Include="UI\SpotTiles\Designer\DesignTimeSpotTilesViewModel.cs" />
@@ -206,6 +209,10 @@
     <Page Include="UI\Shell\ShellView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Splash\SplashWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\SpotTiles\SpotTileAffirmationView.xaml">
       <SubType>Designer</SubType>
