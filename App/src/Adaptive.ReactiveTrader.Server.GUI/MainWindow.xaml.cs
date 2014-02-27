@@ -8,11 +8,13 @@ namespace Adaptive.ReactiveTrader.Server
 {
     public partial class MainWindow
     {
-        private readonly IPricePublisher _pricePublisher;
-        private readonly IPriceFeed _priceFeed;
-        private IDisposable _signalr;
         private const string Address = "http://localhost:8080";
         private static readonly ILog Log = LogManager.GetLogger(typeof(MainWindow));
+
+        private readonly IPricePublisher _pricePublisher;
+        private readonly IPriceFeed _priceFeed;
+
+        private IDisposable _signalr;
         private Timer _timer;
         private long _lastTickTotalUpdates;
 

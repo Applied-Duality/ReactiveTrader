@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using Adaptive.ReactiveTrader.Client.Configuration;
 using Adaptive.ReactiveTrader.Client.Domain;
@@ -24,7 +25,7 @@ namespace Adaptive.ReactiveTrader.Client
             Start();
         }
 
-        private void Start()
+        private async void Start()
         {
             var splash = new SplashWindow();
             splash.Show();
@@ -43,9 +44,11 @@ namespace Adaptive.ReactiveTrader.Client
             MainWindow = new MainWindow();
             var shellView = container.Resolve<ShellView>();
             MainWindow.Content = shellView;
+
+            await Task.Delay(TimeSpan.FromSeconds(3));
+            splash.Close();
             MainWindow.Show();
             Log.InfoFormat("Main UI displayed {0}ms after process start.", DateTime.Now - Process.GetCurrentProcess().StartTime);
-            splash.Close();
         }
 
         private void InitializeLogging()
