@@ -1,16 +1,16 @@
 ﻿<Window x:Class="Adaptive.ReactiveTrader.Client.UI.Splash.SplashWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="SplashWindow" Height="582" Width="710" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}">
+        Title="SplashWindow" Height="582" Width="710" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <SolidColorBrush x:Key="LogoBrush" Color="#FF294464" />
     </Window.Resources>
     <Grid>
         <Canvas>
-            <Rectangle Width="133" Height="321" Fill="{StaticResource LogoBrush}" Canvas.Left="94" Canvas.Top="145" />
-            <Rectangle Width="133" Height="321" Fill="{StaticResource LogoBrush}" Canvas.Left="227" Canvas.Top="177" />
-            <Rectangle Width="133" Height="321" Fill="{StaticResource LogoBrush}" Canvas.Left="360" Canvas.Top="126" />
-            <Rectangle Width="133" Height="321" Fill="{StaticResource LogoBrush}" Canvas.Left="493" Canvas.Top="53" />
+            <Rectangle x:Name="Bar1" Width="133" Height="321" Fill="{StaticResource LogoBrush}" Canvas.Left="94" Canvas.Top="145" />
+            <Rectangle x:Name="Bar2" Width="133" Height="321" Fill="{StaticResource LogoBrush}" Canvas.Left="227" Canvas.Top="177" />
+            <Rectangle x:Name="Bar3" Width="133" Height="321" Fill="{StaticResource LogoBrush}" Canvas.Left="360" Canvas.Top="126" />
+            <Rectangle x:Name="Bar4" Width="133" Height="321" Fill="{StaticResource LogoBrush}" Canvas.Left="493" Canvas.Top="53" />
 
             <StackPanel Canvas.Left="140" Canvas.Top="210">
                 <TextBlock Text="Reactive Trader" Foreground="White" FontSize="40" FontFamily="Segoe UI" />

@@ -5,6 +5,7 @@ using System.Windows;
 using Adaptive.ReactiveTrader.Client.Configuration;
 using Adaptive.ReactiveTrader.Client.Domain;
 using Adaptive.ReactiveTrader.Client.UI.Shell;
+using Adaptive.ReactiveTrader.Client.UI.Splash;
 using Autofac;
 using log4net;
 
@@ -25,6 +26,9 @@ namespace Adaptive.ReactiveTrader.Client
 
         private void Start()
         {
+            var splash = new SplashWindow();
+            splash.Show();
+
             var bootstrapper = new Bootstrapper();
             var container = bootstrapper.Build();
 
@@ -37,11 +41,11 @@ namespace Adaptive.ReactiveTrader.Client
             Log.InfoFormat("Reactive trader API initialized in {0}ms", sw.ElapsedMilliseconds);
 
             MainWindow = new MainWindow();
-            MainWindow.Show();
-            Log.InfoFormat("Main UI displayed {0}ms after process start.", DateTime.Now - Process.GetCurrentProcess().StartTime);
-
             var shellView = container.Resolve<ShellView>();
             MainWindow.Content = shellView;
+            MainWindow.Show();
+            Log.InfoFormat("Main UI displayed {0}ms after process start.", DateTime.Now - Process.GetCurrentProcess().StartTime);
+            splash.Close();
         }
 
         private void InitializeLogging()
