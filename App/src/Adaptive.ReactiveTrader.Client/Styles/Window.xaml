@@ -7,8 +7,7 @@
             <SolidColorBrush x:Key="CloseButtonBrush" Color="#FFC7CCD0" />
         </Style.Resources>
         <Setter Property="Icon" Value="adaptive-logo.png"/>
-        <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}"/>
-        <Setter Property="Foreground" Value="{StaticResource PrimaryForeground}"/>
+        <Setter Property="Background" Value="#FFDEE3E8"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="WindowChrome.WindowChrome">
@@ -62,7 +61,7 @@
                             </Setter>
                         </Style>
                     </ControlTemplate.Resources>
-                    <Border x:Name="RootBorder" Background="#FFDEE3E8" BorderThickness="{TemplateBinding BorderThickness}">
+                    <Border x:Name="RootBorder" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="30" />

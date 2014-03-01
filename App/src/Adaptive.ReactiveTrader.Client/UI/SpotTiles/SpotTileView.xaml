@@ -12,7 +12,6 @@
              d:DesignWidth="328"
              Height="150"
              Width="328"
-             Background="{StaticResource PrimaryContentBackgroudBrush}"
              d:DataContext="{d:DesignInstance designer:DesignTimeSpotTileViewModel, IsDesignTimeCreatable=True}">
     <UserControl.Resources>
         <converters:InvertingValueConverter x:Key="Inverter" />

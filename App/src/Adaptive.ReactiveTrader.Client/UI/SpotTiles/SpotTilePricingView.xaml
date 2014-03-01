@@ -6,22 +6,44 @@
              xmlns:spotTiles="clr-namespace:Adaptive.ReactiveTrader.Client.UI.SpotTiles"
              xmlns:designer="clr-namespace:Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer"
              mc:Ignorable="d" 
-             d:DesignHeight="150"
-             d:DesignWidth="328"
+             Height="150"
+             Width="328"
              d:DataContext="{d:DesignInstance designer:DesignTimeSpotTilePricingViewModel, IsDesignTimeCreatable=True}">
-    <Control.Resources>
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="PrimaryForeground" Color="#E5FFFFFF" />
+        <SolidColorBrush x:Key="SecondaryForeground" Color="#F290AFC1" />
+
         <DataTemplate x:Key="PriceDataTemplate" DataType="spotTiles:IOneWayPriceViewModel">
-            <Button Command="{Binding ExecuteCommand}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-                <StackPanel>
-                    <TextBlock Text="{Binding Direction, Mode=OneWay}" HorizontalAlignment="Center" Margin="0,9,0,0"/>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding BigFigures, Mode=OneWay}" Margin="0,0,10,0"/>
-                        <TextBlock x:Name="PipsText" 
-                                   Text="{Binding Pips, Mode=OneWay, NotifyOnTargetUpdated=True}" />
-                        <TextBlock x:Name="TenthOfPipText" 
-                                   Text="{Binding TenthOfPip, Mode=OneWay, NotifyOnTargetUpdated=True}" 
-                               
-                                    Margin="10,0,0,0"/>
+            <Button Command="{Binding ExecuteCommand}">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter Content="{TemplateBinding Content}" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF2F5078" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#345C8B" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+
+                <StackPanel Margin="0,5,0,0">
+                    <TextBlock Text="{Binding Direction}" HorizontalAlignment="Center" FontSize="16" Foreground="{StaticResource SecondaryForeground}" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,-8,0,0">
+                        <TextBlock Text="{Binding BigFigures}" FontSize="18" Foreground="{StaticResource SecondaryForeground}" Style="{StaticResource {x:Type TextBlock}}" />
+                        <TextBlock x:Name="PipsText" Text="{Binding Pips}" FontSize="48" FontWeight="Light" Foreground="{StaticResource PrimaryForeground}" Margin="5,0" />
+                        <TextBlock x:Name="TenthOfPipText" Text="{Binding TenthOfPip}" FontSize="18" Foreground="{StaticResource SecondaryForeground}" Style="{StaticResource {x:Type TextBlock}}" />
                     </StackPanel>
                 </StackPanel>
             </Button>
@@ -40,53 +62,64 @@
                 </DataTrigger>
             </DataTemplate.Triggers>-->
         </DataTemplate>
-    </Control.Resources>
-    <Grid Background="{StaticResource TitleBackground}"
-            Height="150"
-            Width="328">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    </UserControl.Resources>
 
-        <TextBlock Grid.Row="0" 
-                   Text="{Binding Symbol, Mode=OneWay}"
-                   HorizontalAlignment="Stretch"
-                   Margin="19,17,0,0"/>
+    <Border Padding="15,12">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" 
+                Text="{Binding Symbol, Mode=OneWay}" 
+                Foreground="{StaticResource PrimaryForeground}" FontSize="18" />
 
-            <ContentControl Grid.Column="0" 
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <ContentControl Grid.Column="0" 
                             Margin="0,0,5,0"
                             Content="{Binding Bid}" 
                             ContentTemplate="{StaticResource PriceDataTemplate}"/>
 
-            <TextBlock Grid.Column="1" 
-                       HorizontalAlignment="Stretch" 
-                       TextAlignment="Center" 
-                       Text="{Binding Spread, Mode=OneWay}" />
+                <TextBlock Grid.Column="1" Text="{Binding Spread}" FontSize="16" Foreground="{StaticResource PrimaryForeground}" />
 
-            <ContentControl Grid.Column="2" 
+                <ContentControl Grid.Column="2" 
                             Margin="5,0,0,0"
                             Content="{Binding Ask}" 
                             ContentTemplate="{StaticResource PriceDataTemplate}"/>
-        </Grid>
+            </Grid>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5,5,0,0">
-            <TextBlock Text="{Binding DealtCurrency}" />
-            <TextBox 
-                 TextAlignment="Right"
-                 Text="{Binding Notional}"
-                 Background="Transparent"
-                 Foreground="{StaticResource SecondaryForeground}"
-                 HorizontalAlignment="Left"
-                 BorderThickness="0"/>
-        </StackPanel>        
-    </Grid>
+            <DockPanel Grid.Row="2">
+                <TextBlock DockPanel.Dock="Left" Text="{Binding DealtCurrency}" Foreground="{StaticResource SecondaryForeground}" FontSize="16" />
+                <TextBlock DockPanel.Dock="Right" Text="SP" Foreground="{StaticResource SecondaryForeground}" FontSize="16" />
+
+                <TextBox Text="{Binding Notional, Mode=TwoWay}"
+                    TextAlignment="Right"
+                    VerticalContentAlignment="Center" Margin="5,0"
+                    FontSize="16"
+                    Background="Transparent"
+                    Foreground="{StaticResource SecondaryForeground}"
+                    HorizontalAlignment="Left"
+                    BorderThickness="0" />
+            </DockPanel>
+        </Grid>
+        <Border.Style>
+            <Style TargetType="Border">
+                <Setter Property="Background" Value="#FF293543" />
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="#FF294464" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Border.Style>
+    </Border>
+
 </UserControl>

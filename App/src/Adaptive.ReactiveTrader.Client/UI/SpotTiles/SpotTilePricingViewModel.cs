@@ -52,7 +52,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             }
         }
 
-        public string Symbol { get { return _currencyPair.Symbol; } }
+        public string Symbol { get { return String.Format("{0} / {1}", _currencyPair.BaseCurrency, _currencyPair.CounterCurrency); } }
 
         private void SubscribeForPrices()
         {
