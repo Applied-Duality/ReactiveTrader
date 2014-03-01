@@ -13,15 +13,14 @@
         <DataTemplate x:Key="PriceDataTemplate" DataType="spotTiles:IOneWayPriceViewModel">
             <Button Command="{Binding ExecuteCommand}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
                 <StackPanel>
-                    <TextBlock Text="{Binding Direction, Mode=OneWay}" Style="{StaticResource DirectionTextStyleStyle}" HorizontalAlignment="Center" Margin="0,9,0,0"/>
+                    <TextBlock Text="{Binding Direction, Mode=OneWay}" HorizontalAlignment="Center" Margin="0,9,0,0"/>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding BigFigures, Mode=OneWay}" Style="{StaticResource BigFiguresTextStyleStyle}" Margin="0,0,10,0"/>
+                        <TextBlock Text="{Binding BigFigures, Mode=OneWay}" Margin="0,0,10,0"/>
                         <TextBlock x:Name="PipsText" 
-                                   Text="{Binding Pips, Mode=OneWay, NotifyOnTargetUpdated=True}" 
-                                   Style="{StaticResource PipsTextStyle}" />
+                                   Text="{Binding Pips, Mode=OneWay, NotifyOnTargetUpdated=True}" />
                         <TextBlock x:Name="TenthOfPipText" 
                                    Text="{Binding TenthOfPip, Mode=OneWay, NotifyOnTargetUpdated=True}" 
-                                   Style="{StaticResource TenthOfPipTextStyle}" 
+                               
                                     Margin="10,0,0,0"/>
                     </StackPanel>
                 </StackPanel>
@@ -54,7 +53,6 @@
         <TextBlock Grid.Row="0" 
                    Text="{Binding Symbol, Mode=OneWay}"
                    HorizontalAlignment="Stretch"
-                   Style="{StaticResource ContentHeading1Style}"
                    Margin="19,17,0,0"/>
 
         <Grid Grid.Row="1">
@@ -72,8 +70,7 @@
             <TextBlock Grid.Column="1" 
                        HorizontalAlignment="Stretch" 
                        TextAlignment="Center" 
-                       Text="{Binding Spread, Mode=OneWay}" 
-                       Style="{StaticResource SpreadTextStyle}"/>
+                       Text="{Binding Spread, Mode=OneWay}" />
 
             <ContentControl Grid.Column="2" 
                             Margin="5,0,0,0"
@@ -82,7 +79,7 @@
         </Grid>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5,5,0,0">
-            <TextBlock Text="{Binding DealtCurrency}" Style="{StaticResource BigFiguresTextStyleStyle}" />
+            <TextBlock Text="{Binding DealtCurrency}" />
             <TextBox 
                  TextAlignment="Right"
                  Text="{Binding Notional}"

@@ -5,7 +5,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/Brushes.xaml" />
-                <ResourceDictionary Source="/Styles/Text.xaml" />
+                <ResourceDictionary Source="/Styles/TextBlock.xaml" />
                 <ResourceDictionary Source="/Styles/Button.xaml" />
                 <ResourceDictionary Source="/Styles/ScrollViewer.xaml" />
                 <ResourceDictionary Source="/Styles/DataGrid.xaml" />
