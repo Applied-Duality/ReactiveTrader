@@ -50,7 +50,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
                 return;
             }
 
-            _executablePrice.Execute(notional)
+            _executablePrice.Execute(notional, _parent.DealtCurrency)
                 .ObserveOnDispatcher()
                 .Subscribe(OnExecuted,
                     OnExecutionError);    

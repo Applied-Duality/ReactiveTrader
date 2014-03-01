@@ -38,7 +38,8 @@ namespace Adaptive.ReactiveTrader.Server.Execution
                 TradeDate = DateTime.UtcNow,
                 ValueDate = tradeRequest.ValueDate,
                 TradeId = Interlocked.Increment(ref _tradeId),
-                TraderName = user
+                TraderName = user,
+                DealtCurrency = tradeRequest.DealtCurrency
             };
 
             _tradeRepository.StoreTrade(trade);

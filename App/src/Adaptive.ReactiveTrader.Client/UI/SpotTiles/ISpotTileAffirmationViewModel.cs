@@ -18,5 +18,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         DateTime ValueDate { get; }
 
         ICommand DismissCommand { get; }
+        string DealtCurrency { get; }
+        string OtherCurrency { get; }
     }
 }

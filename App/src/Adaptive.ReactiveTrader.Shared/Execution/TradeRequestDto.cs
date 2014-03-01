@@ -10,10 +10,11 @@ namespace Adaptive.ReactiveTrader.Shared.Execution
         public DateTime ValueDate { get; set; }
         public DirectionDto Direction { get; set; }
         public long Notional { get; set; }
+        public string DealtCurrency { get; set; }
 
         public override string ToString()
         {
-            return string.Format("Symbol: {0}, QuoteId: {1}, SpotRate: {2}, ValueDate: {3}, Direction: {4}, Notional: {5}", Symbol, QuoteId, SpotRate, ValueDate, Direction, Notional);
+            return string.Format("Symbol: {0}, QuoteId: {1}, SpotRate: {2}, ValueDate: {3}, Direction: {4}, Notional: {5}, DealtCurrency: {6}", Symbol, QuoteId, SpotRate, ValueDate, Direction, Notional, DealtCurrency);
         }
     }
 }

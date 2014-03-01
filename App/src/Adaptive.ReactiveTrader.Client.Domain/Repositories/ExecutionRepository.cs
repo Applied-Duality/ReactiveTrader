@@ -18,7 +18,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Repositories
             _tradeFactory = tradeFactory;
         }
 
-        public IObservable<ITrade> Execute(IExecutablePrice executablePrice, long notional)
+        public IObservable<ITrade> Execute(IExecutablePrice executablePrice, long notional, string dealtCurrency)
         {
             var price = executablePrice.Parent;
 
@@ -29,7 +29,8 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Repositories
                 QuoteId = price.QuoteId,
                 SpotRate = executablePrice.Rate,
                 Symbol = price.CurrencyPair.Symbol,
-                ValueDate = price.ValueDate
+                ValueDate = price.ValueDate,
+                DealtCurrency = dealtCurrency
             };
 
             return _executionServiceClient.Execute(request)

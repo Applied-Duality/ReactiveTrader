@@ -21,7 +21,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             _dismissCommand = new DelegateCommand(OnDismissExecute);
         }
 
-        public string CurrencyPair { get { return _trade.CurrencyPair; } }
+        public string CurrencyPair { get { return BaseCurrency + " / " + CounterCurrency; } }
         public Direction Direction { get { return _trade.Direction; } }
         public long Notional { get { return _trade.Notional; } }
         public decimal SpotRate { get { return _trade.SpotRate; } }
@@ -31,6 +31,22 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         public string TraderName { get { return _trade.TraderName; } }
         public DateTime ValueDate { get { return _trade.ValueDate; } }
         public ICommand DismissCommand { get { return _dismissCommand; } }
+        public string DealtCurrency { get { return _trade.DealtCurrency; } }
+
+        public string OtherCurrency
+        {
+            get { return DealtCurrency == BaseCurrency ? CounterCurrency : BaseCurrency; }
+        }
+
+        private string BaseCurrency
+        {
+            get { return _trade.CurrencyPair.Substring(0, 3); }
+        }
+
+        private string CounterCurrency
+        {
+            get { return _trade.CurrencyPair.Substring(3, 3); }
+        }
 
         private void OnDismissExecute()
         {

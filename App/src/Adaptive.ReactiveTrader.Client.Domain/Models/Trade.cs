@@ -13,8 +13,9 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Models
         public long TradeId { get; private set; }
         public string TraderName { get; private set; }
         public DateTime ValueDate { get; private set; }
+        public string DealtCurrency { get; private set; }
 
-        public Trade(string currencyPair, Direction direction, long notional, decimal spotRate, TradeStatus tradeStatus, DateTime tradeDate, long tradeId, string traderName, DateTime valueDate)
+        public Trade(string currencyPair, Direction direction, long notional, string dealtCurrency, decimal spotRate, TradeStatus tradeStatus, DateTime tradeDate, long tradeId, string traderName, DateTime valueDate)
         {
             CurrencyPair = currencyPair;
             Direction = direction;
@@ -25,6 +26,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Models
             TradeId = tradeId;
             TraderName = traderName;
             ValueDate = valueDate;
+            DealtCurrency = dealtCurrency;
         }
     }
 }

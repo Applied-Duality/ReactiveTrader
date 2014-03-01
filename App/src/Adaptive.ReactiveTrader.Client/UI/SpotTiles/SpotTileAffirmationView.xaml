@@ -2,10 +2,12 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:designer="clr-namespace:Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer"
              mc:Ignorable="d" 
              d:DesignHeight="150"
-             d:DesignWidth="328">
+             d:DesignWidth="328"
+             d:DataContext="{d:DesignInstance designer:DesignTimeSpotTileAffirmationViewModel, IsDesignTimeCreatable=True}">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -30,19 +32,21 @@
 
                 <DockPanel>
                     <TextBlock Text="Sold " Foreground="{StaticResource SecondaryForeground}" />
-                    <TextBlock Text="{Binding CurrenyPair}" Foreground="{StaticResource PrimaryForeground}" />
-                    <TextBlock Text="{Binding Notional}" Foreground="{StaticResource PrimaryForeground}" />
+                    <TextBlock Text="{Binding DealtCurrency}" Foreground="{StaticResource PrimaryForeground}" />
+                    <TextBlock Text=" " Foreground="{StaticResource PrimaryForeground}" />
+                    <TextBlock Text="{Binding Notional, StringFormat='{}{0:#,0}'}" Foreground="{StaticResource PrimaryForeground}" />
                 </DockPanel>
 
                 <DockPanel>
                     <TextBlock Text="vs " Foreground="{StaticResource SecondaryForeground}" />
-                    <TextBlock Text="{Binding CurrenyPair}" Foreground="{StaticResource PrimaryForeground}" />
+                    <TextBlock Text="{Binding OtherCurrency}" Foreground="{StaticResource PrimaryForeground}" />
+                    <TextBlock Text=" at " Foreground="{StaticResource SecondaryForeground}" />
                     <TextBlock Text="{Binding SpotRate}" Foreground="{StaticResource PrimaryForeground}" />
                 </DockPanel>
 
                 <DockPanel>
                     <TextBlock Text="Spot " Foreground="{StaticResource SecondaryForeground}" />
-                    <TextBlock Text="{Binding TradeDate}" Foreground="{StaticResource PrimaryForeground}" />
+                    <TextBlock Text="{Binding TradeDate, StringFormat='d MMMM'}" Foreground="{StaticResource PrimaryForeground}" />
                 </DockPanel>
 
                 <DockPanel>

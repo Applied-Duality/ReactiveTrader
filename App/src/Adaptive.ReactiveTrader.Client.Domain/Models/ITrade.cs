@@ -13,5 +13,6 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Models
         long TradeId { get; }
         string TraderName { get; }
         DateTime ValueDate { get; }
+        string DealtCurrency { get; }
     }
 }

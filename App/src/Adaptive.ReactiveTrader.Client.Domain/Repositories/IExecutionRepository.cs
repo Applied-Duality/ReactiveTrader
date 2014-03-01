@@ -5,6 +5,6 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Repositories
 {
     interface IExecutionRepository
     {
-        IObservable<ITrade> Execute(IExecutablePrice executablePrice, long notional);
+        IObservable<ITrade> Execute(IExecutablePrice executablePrice, long notional, string dealtCurrency);
     }
 }
