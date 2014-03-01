@@ -111,6 +111,8 @@
       <DependentUpon>BlotterView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Blotter\BlotterViewModel.cs" />
+    <Compile Include="UI\Blotter\Designer\DesignerModeBlotterViewModel.cs" />
+    <Compile Include="UI\Blotter\Designer\DesignerModeTradeViewModel.cs" />
     <Compile Include="UI\Blotter\IBlotterViewModel.cs" />
     <Compile Include="UI\Blotter\ITradeViewModel.cs" />
     <Compile Include="UI\Blotter\TradeViewModel.cs" />

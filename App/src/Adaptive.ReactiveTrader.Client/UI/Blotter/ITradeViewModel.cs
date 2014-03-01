@@ -1,18 +1,18 @@
-﻿using Adaptive.ReactiveTrader.Shared.UI;
+﻿using System;
+using Adaptive.ReactiveTrader.Shared.UI;
 
 namespace Adaptive.ReactiveTrader.Client.UI.Blotter
 {
     public interface ITradeViewModel : IViewModel
     {
-        string ProductType { get; }
-        string SpotRate { get; set; }
-        string Notional { get; set; }
-        string Direction { get; set; }
-        string CurrencyPair { get; set; }
+        decimal SpotRate { get; }
+        string Notional { get; }
+        string Direction { get; }
+        string CurrencyPair { get; }
         string TradeId { get; }
-        string TradeDate { get; }
+        DateTime TradeDate { get; }
         string TradeStatus { get; }
         string TraderName { get; }
-        string ValueDate { get; }
+        DateTime ValueDate { get; }
     }
 }
