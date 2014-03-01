@@ -6,51 +6,52 @@
              mc:Ignorable="d" 
              d:DesignHeight="150"
              d:DesignWidth="328">
-    <Grid Height="150" Width="328">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition Height="30" />
-        </Grid.RowDefinitions>
-        
-        <TextBlock Grid.Column="0" Grid.Row="0" Text="Currency Pair: " />
-        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding CurrencyPair, Mode=OneWay}" />
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Adaptive.ReactiveTrader.Client;component/Styles/Brushes.xaml" />
+                <ResourceDictionary Source="/Adaptive.ReactiveTrader.Client;component/Styles/Button.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
+            <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
 
-        <TextBlock Grid.Column="0" Grid.Row="1" Text="Direction: " />
-        <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Direction, Mode=OneWay}" />
+    <Border Padding="15,12" Background="{StaticResource TileBackgroundBrush}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0">
+                <TextBlock Text="{Binding CurrencyPair}" Foreground="{StaticResource PrimaryForeground}" FontSize="18" />
 
-        <TextBlock Grid.Column="0" Grid.Row="2" Text="Notional: " />
-        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Notional, Mode=OneWay}" />
+                <DockPanel>
+                    <TextBlock Text="Sold " Foreground="{StaticResource SecondaryForeground}" />
+                    <TextBlock Text="{Binding CurrenyPair}" Foreground="{StaticResource PrimaryForeground}" />
+                    <TextBlock Text="{Binding Notional}" Foreground="{StaticResource PrimaryForeground}" />
+                </DockPanel>
 
-        <TextBlock Grid.Column="0" Grid.Row="3" Text="Spot Rate: " />
-        <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding SpotRate, Mode=OneWay}" />
+                <DockPanel>
+                    <TextBlock Text="vs " Foreground="{StaticResource SecondaryForeground}" />
+                    <TextBlock Text="{Binding CurrenyPair}" Foreground="{StaticResource PrimaryForeground}" />
+                    <TextBlock Text="{Binding SpotRate}" Foreground="{StaticResource PrimaryForeground}" />
+                </DockPanel>
 
-        <TextBlock Grid.Column="0" Grid.Row="4" Text="Trade Status: " />
-        <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding TradeStatus, Mode=OneWay}" />
+                <DockPanel>
+                    <TextBlock Text="Spot " Foreground="{StaticResource SecondaryForeground}" />
+                    <TextBlock Text="{Binding TradeDate}" Foreground="{StaticResource PrimaryForeground}" />
+                </DockPanel>
 
-        <TextBlock Grid.Column="0" Grid.Row="5" Text="Trade Date: " />
-        <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding TradeDate, Mode=OneWay, StringFormat='{}{0:dd/MM/yyyy}'}" />
+                <DockPanel>
+                    <TextBlock Text="Trade ID " Foreground="{StaticResource SecondaryForeground}" />
+                    <TextBlock Text="{Binding TradeId}" Foreground="{StaticResource PrimaryForeground}" />
+                </DockPanel>
+            </StackPanel>
 
-        <TextBlock Grid.Column="0" Grid.Row="6" Text="Trade ID: " />
-        <TextBlock Grid.Column="1" Grid.Row="6" Text="{Binding TradeId, Mode=OneWay}" />
-
-        <TextBlock Grid.Column="0" Grid.Row="7" Text="Trader Name: " />
-        <TextBlock Grid.Column="1" Grid.Row="7" Text="{Binding TraderName, Mode=OneWay}" />
-
-        <TextBlock Grid.Column="0" Grid.Row="8" Text="Value Date: " />
-        <TextBlock Grid.Column="1" Grid.Row="8" Text="{Binding ValueDate, Mode=OneWay, StringFormat='{}{0:dd/MM/yyyy}'}" />
-
-        <Button Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2" Content="Dismiss" Command="{Binding DismissCommand, Mode=OneWay}" />
-    </Grid>
+            <Button Grid.Row="1" Content="Done" Command="{Binding DismissCommand, Mode=OneWay}" Style="{StaticResource HyperlinkButtonStyle}" FontSize="16" HorizontalAlignment="Right" />
+        </Grid>
+    </Border>
 </UserControl>

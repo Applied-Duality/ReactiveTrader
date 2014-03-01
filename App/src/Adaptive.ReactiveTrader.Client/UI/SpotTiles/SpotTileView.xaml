@@ -3,45 +3,39 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:converters="clr-namespace:Adaptive.ReactiveTrader.Client.UI.Converters"
              xmlns:spotTiles="clr-namespace:Adaptive.ReactiveTrader.Client.UI.SpotTiles"
-             xmlns:controls="clr-namespace:Adaptive.ReactiveTrader.Client.UI.Controls"
              xmlns:designer="clr-namespace:Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer"
              mc:Ignorable="d" 
-             d:DesignHeight="150"
-             d:DesignWidth="328"
              Height="150"
              Width="328"
+             Margin="0,0,3,3"
              d:DataContext="{d:DesignInstance designer:DesignTimeSpotTileViewModel, IsDesignTimeCreatable=True}">
-    <UserControl.Resources>
-        <converters:InvertingValueConverter x:Key="Inverter" />
-    </UserControl.Resources>
-    <Grid Margin="2">
 
-        <!-- TODO to remove, this is temporary until John fixes the rotating thing -->
-        <ContentPresenter Content="{Binding Pricing, Mode=OneTime}">
-            <ContentPresenter.ContentTemplate>
-                <DataTemplate DataType="spotTiles:ISpotTilePricingViewModel">
-                    <spotTiles:SpotTilePricingView DataContext="{Binding Mode=OneWay}" />
-                </DataTemplate>
-            </ContentPresenter.ContentTemplate>
-        </ContentPresenter>
+    <UserControl.Template>
+        <ControlTemplate TargetType="UserControl">
+            <Grid>
+                <ContentPresenter x:Name="TileContentPresenter" Content="{Binding Pricing, Mode=OneTime}">
+                    <ContentPresenter.ContentTemplate>
+                        <DataTemplate>
+                            <spotTiles:SpotTilePricingView />
+                        </DataTemplate>
+                    </ContentPresenter.ContentTemplate>
+                </ContentPresenter>
 
-        <!-- TODO JOHN TO FIX THIS -->
-        <!--<controls:ContentControl3D Content="{Binding Pricing, Mode=OneWay}"
-                                BackContent="{Binding Affirmation, Mode=OneWay}"
-                                IsFrontInView="{Binding ShowingAffirmation, Converter={StaticResource Inverter}, Mode=OneWay}"
-                                AnimationLength="250">
-            <controls:ContentControl3D.ContentTemplate>
-                <DataTemplate DataType="spotTiles:ISpotTilePricingViewModel">
-                    <spotTiles:SpotTilePricingView />
-                </DataTemplate>
-            </controls:ContentControl3D.ContentTemplate>
-            <controls:ContentControl3D.BackContentTemplate>
-                <DataTemplate DataType="spotTiles:ISpotTileAffirmationViewModel">
-                    <spotTiles:SpotTileAffirmationView />
-                </DataTemplate>
-            </controls:ContentControl3D.BackContentTemplate>
-        </controls:ContentControl3D>-->
-    </Grid>
+                <ContentPresenter x:Name="AffirmationContentPresenter" Content="{Binding Affirmation}" Visibility="Collapsed">
+                    <ContentPresenter.ContentTemplate>
+                        <DataTemplate>
+                            <spotTiles:SpotTileAffirmationView />
+                        </DataTemplate>
+                    </ContentPresenter.ContentTemplate>
+                </ContentPresenter>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <DataTrigger Binding="{Binding ShowingAffirmation}" Value="True">
+                    <Setter TargetName="AffirmationContentPresenter" Property="Visibility" Value="Visible" />
+                    <Setter TargetName="TileContentPresenter" Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </UserControl.Template>
 </UserControl>

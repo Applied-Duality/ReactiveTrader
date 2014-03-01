@@ -11,7 +11,7 @@
              d:DataContext="{d:DesignInstance designer:DesignTimeSpotTilesViewModel, IsDesignTimeCreatable=True}"
              Background="#FF212A35">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <ItemsControl ItemsSource="{Binding SpotTiles}">
+        <ItemsControl ItemsSource="{Binding SpotTiles}" Margin="7,7,0,0">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel />

@@ -6,13 +6,15 @@
              xmlns:spotTiles="clr-namespace:Adaptive.ReactiveTrader.Client.UI.SpotTiles"
              xmlns:designer="clr-namespace:Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer"
              mc:Ignorable="d" 
-             Height="150"
-             Width="328"
+             d:DesignHeight="150"
+             d:DesignWidth="328"
              d:DataContext="{d:DesignInstance designer:DesignTimeSpotTilePricingViewModel, IsDesignTimeCreatable=True}">
     <UserControl.Resources>
-        <SolidColorBrush x:Key="PrimaryForeground" Color="#E5FFFFFF" />
-        <SolidColorBrush x:Key="SecondaryForeground" Color="#F290AFC1" />
-
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Adaptive.ReactiveTrader.Client;component/Styles/Brushes.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
         <DataTemplate x:Key="PriceDataTemplate" DataType="spotTiles:IOneWayPriceViewModel">
             <Button Command="{Binding ExecuteCommand}">
                 <Button.Style>
@@ -62,6 +64,7 @@
                 </DataTrigger>
             </DataTemplate.Triggers>-->
         </DataTemplate>
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <Border Padding="15,12">
@@ -112,7 +115,7 @@
         </Grid>
         <Border.Style>
             <Style TargetType="Border">
-                <Setter Property="Background" Value="#FF293543" />
+                <Setter Property="Background" Value="{StaticResource TileBackgroundBrush}" />
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
                         <Setter Property="Background" Value="#FF294464" />
