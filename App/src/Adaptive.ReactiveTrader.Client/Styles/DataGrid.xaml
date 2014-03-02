@@ -91,9 +91,19 @@
             <Trigger Property="IsSelected" Value="True">
                 <Setter Property="Background" Value="#FFFFFED7"/>
             </Trigger>
+            <EventTrigger RoutedEvent="Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ColorAnimation 
+                                Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" 
+                                Duration="00:00:03" 
+                                From="SteelBlue" 
+                                To="Transparent" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
         </Style.Triggers>
     </Style>
-
 
     <Style TargetType="{x:Type DataGrid}">
         <Setter Property="Background" Value="White"/>
