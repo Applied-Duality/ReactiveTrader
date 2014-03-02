@@ -12,6 +12,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         string TenthOfPip { get; }
         PriceMovement Movement { get; }
         ICommand ExecuteCommand { get; }
+        bool IsExecuting { get; }
         void OnPrice(IExecutablePrice executablePrice);
         void OnStalePrice();
     }

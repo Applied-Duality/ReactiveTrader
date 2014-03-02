@@ -22,6 +22,8 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer
         public string TenthOfPip { get; private set; }
         public PriceMovement Movement { get; private set; }
         public ICommand ExecuteCommand { get; private set; }
+        public bool IsExecuting { get; private set; }
+
         public void OnPrice(IExecutablePrice executablePrice)
         {
             throw new NotImplementedException();

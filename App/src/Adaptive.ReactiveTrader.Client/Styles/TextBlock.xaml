@@ -6,6 +6,7 @@
         <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
     </Style>
 
 </ResourceDictionary>

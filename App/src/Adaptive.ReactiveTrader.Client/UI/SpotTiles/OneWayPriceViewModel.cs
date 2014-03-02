@@ -24,6 +24,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         public string Pips { get; private set; }
         public string TenthOfPip { get; private set; }
         public PriceMovement Movement { get; private set; }
+        public bool IsExecuting { get; private set; }
         
         public OneWayPriceViewModel(Direction direction, ISpotTilePricingViewModel parent)
         {
@@ -38,7 +39,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
 
         private bool CanExecute()
         {
-            return _executablePrice != null;
+            return _executablePrice != null && !IsExecuting;
         }
 
         private void OnExecute()
@@ -49,7 +50,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
                 // TODO handle notional validation properly
                 return;
             }
-
+            IsExecuting = true;
             _executablePrice.Execute(notional, _parent.DealtCurrency)
                 .ObserveOnDispatcher()
                 .Subscribe(OnExecuted,
@@ -68,6 +69,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
                 MessageBox.Show("An error occured while processing the trade request.", "Execution error", MessageBoxButton.OK, MessageBoxImage.Error);
                 Log.Error("An error occured while processing the trade request.", exception);
             }
+            IsExecuting = false;
         }
 
         #endregion
@@ -110,6 +112,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         {
             Log.Info("Trade executed");
             _parent.OnTrade(trade);
+            IsExecuting = false;
         }
     }
 
