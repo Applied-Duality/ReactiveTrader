@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Adaptive.ReactiveTrader.Client.Domain.Models;
 using Adaptive.ReactiveTrader.Shared.UI;
 
@@ -25,12 +24,10 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer
 
         public void OnPrice(IExecutablePrice executablePrice)
         {
-            throw new NotImplementedException();
         }
 
         public void OnStalePrice()
         {
-            throw new NotImplementedException();
         }
     }
 }

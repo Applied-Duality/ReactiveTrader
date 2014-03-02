@@ -1,5 +1,4 @@
-﻿using System;
-using Adaptive.ReactiveTrader.Client.Domain.Models;
+﻿using Adaptive.ReactiveTrader.Client.Domain.Models;
 using Adaptive.ReactiveTrader.Shared.UI;
 
 namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer
@@ -10,6 +9,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer
         {
             Bid = new DesignTimeOneWayPriceViewModel(Direction.Sell, "1.23", "45", "6");
             Ask = new DesignTimeOneWayPriceViewModel(Direction.Buy, "1.23", "46", "7");
+            Movement = PriceMovement.Down;
         }
 
         public void Dispose()
@@ -33,12 +33,10 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer
 
         public void OnTrade(ITrade trade)
         {
-            throw new NotImplementedException();
         }
 
         public void OnExecutionError(string message)
         {
-            throw new NotImplementedException();
         }
     }
 }

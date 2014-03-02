@@ -6,6 +6,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Models
     {
         IExecutablePrice Bid { get; }
         IExecutablePrice Ask { get; }
+        decimal Mid { get; }
         ICurrencyPair CurrencyPair { get; }
         long QuoteId { get; }
         DateTime ValueDate { get; }

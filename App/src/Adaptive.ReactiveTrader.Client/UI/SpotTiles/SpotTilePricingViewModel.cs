@@ -84,15 +84,15 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             else
             {
                 if (_previousRate.HasValue)
-                {   // todo - should be using a mid price
-                    if (price.Bid.Rate > _previousRate.Value) 
+                {   
+                    if (price.Mid > _previousRate.Value) 
                         Movement = PriceMovement.Up;
-                    else if (price.Bid.Rate < _previousRate.Value)
+                    else if (price.Mid < _previousRate.Value)
                         Movement = PriceMovement.Down;
                     else
                         Movement = PriceMovement.None;
                 }
-                _previousRate = price.Bid.Rate;
+                _previousRate = price.Mid;
 
                 Bid.OnPrice(price.Bid);
                 Ask.OnPrice(price.Ask);

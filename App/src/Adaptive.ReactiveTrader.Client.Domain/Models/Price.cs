@@ -7,13 +7,14 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Models
     {
         private readonly Stopwatch _priceCreationTime;
 
-        public Price(ExecutablePrice bid, ExecutablePrice ask, long quoteId, DateTime valueDate, ICurrencyPair currencyPair)
+        public Price(ExecutablePrice bid, ExecutablePrice ask, decimal mid, long quoteId, DateTime valueDate, ICurrencyPair currencyPair)
         {
             Bid = bid;
             Ask = ask;
             QuoteId = quoteId;
             ValueDate = valueDate;
             CurrencyPair = currencyPair;
+            Mid = mid;
 
             bid.Parent = this;
             ask.Parent = this;
@@ -24,6 +25,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Models
 
         public IExecutablePrice Bid { get; private set; }
         public IExecutablePrice Ask { get; private set; }
+        public decimal Mid { get; private set; }
         public ICurrencyPair CurrencyPair { get; private set; }
         public long QuoteId { get; private set; }
         public DateTime ValueDate { get; private set; }

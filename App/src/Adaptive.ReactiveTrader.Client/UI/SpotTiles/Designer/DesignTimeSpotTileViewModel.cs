@@ -9,11 +9,12 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer
         {
             Pricing = new DesignTimeSpotTilePricingViewModel();
             CurrencyPair = "EURUSD";
+            Affirmation = null;
+            Error = null;
         }
 
         public void Dispose()
         {
-            throw new System.NotImplementedException();
         }
 
         public ISpotTilePricingViewModel Pricing { get; private set; }
@@ -24,22 +25,18 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer
 
         public void OnTrade(ITrade trade)
         {
-            throw new System.NotImplementedException();
         }
 
         public void OnExecutionError(string message)
         {
-            throw new System.NotImplementedException();
         }
 
         public void DismissAffirmation()
         {
-            throw new System.NotImplementedException();
         }
 
         public void DismissError()
         {
-            throw new System.NotImplementedException();
         }
     }
 }

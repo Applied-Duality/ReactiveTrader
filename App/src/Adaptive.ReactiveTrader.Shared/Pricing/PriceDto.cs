@@ -10,7 +10,6 @@ namespace Adaptive.ReactiveTrader.Shared.Pricing
         public decimal Ask { get; set; }
         public DateTime ValueDate { get; set; }
         public decimal Mid { get; set; }
-        public bool IsStale { get; set; }
 
         public override string ToString()
         {
