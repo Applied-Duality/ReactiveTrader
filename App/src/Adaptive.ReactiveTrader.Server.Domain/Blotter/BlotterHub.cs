@@ -34,7 +34,6 @@ namespace Adaptive.ReactiveTrader.Server.Blotter
             Log.InfoFormat("Connection {0} of user {1} added to group '{2}'", Context.ConnectionId, user, BlotterGroupName);
 
             var trades = _tradeRepository.GetAllTrades();
-            // TODO implement blotter snapshot properly
             await Clients.Caller.OnNewTrade(trades);
             Log.InfoFormat("Snapshot published to {0}", Context.ConnectionId);
         }
