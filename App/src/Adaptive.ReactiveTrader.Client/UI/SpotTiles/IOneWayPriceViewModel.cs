@@ -10,7 +10,6 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         string BigFigures { get; }
         string Pips { get; }
         string TenthOfPip { get; }
-        PriceMovement Movement { get; }
         ICommand ExecuteCommand { get; }
         bool IsExecuting { get; }
         bool IsStale { get; }

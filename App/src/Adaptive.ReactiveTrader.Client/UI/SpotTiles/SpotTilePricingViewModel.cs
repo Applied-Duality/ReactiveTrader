@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Reactive.Concurrency;
-using System.Reactive.Linq;
-using System.Threading;
 using Adaptive.ReactiveTrader.Client.Domain.Models;
 using Adaptive.ReactiveTrader.Client.Instrumentation;
 using Adaptive.ReactiveTrader.Shared.Extensions;
@@ -20,12 +18,14 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         public string Notional { get; set; }
         public string Spread { get; private set; }
         public string DealtCurrency { get; private set; }
+        public PriceMovement Movement { get; private set; }
 
         private readonly ICurrencyPair _currencyPair;
         private readonly ISpotTileViewModel _parent;
         private readonly IPriceLatencyRecorder _priceLatencyRecorder;
         private bool _disposed;
         private IDisposable _priceSubscription;
+        private decimal? _previousRate;
 
         public SpotTilePricingViewModel(ICurrencyPair currencyPair, ISpotTileViewModel parent,
             Func<Direction, ISpotTilePricingViewModel, IOneWayPriceViewModel> oneWayPriceFactory,
@@ -81,9 +81,22 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
                 Bid.OnStalePrice();
                 Ask.OnStalePrice();
                 Spread = string.Empty;
+                _previousRate = null;
+                Movement = PriceMovement.None;
             }
             else
             {
+                if (_previousRate.HasValue)
+                {   // todo - should be using a mid price
+                    if (price.Bid.Rate > _previousRate.Value) 
+                        Movement = PriceMovement.Up;
+                    else if (price.Bid.Rate < _previousRate.Value)
+                        Movement = PriceMovement.Down;
+                    else
+                        Movement = PriceMovement.None;
+                }
+                _previousRate = price.Bid.Rate;
+
                 Bid.OnPrice(price.Bid);
                 Ask.OnPrice(price.Ask);
                 Spread = PriceFormatter.GetFormattedSpread(price.Spread, _currencyPair.RatePrecision, _currencyPair.PipsPosition);

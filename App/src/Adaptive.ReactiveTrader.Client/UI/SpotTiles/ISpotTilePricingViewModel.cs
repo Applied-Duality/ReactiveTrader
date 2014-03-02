@@ -12,6 +12,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         string Notional { get; set; }
         string Spread { get; }
         string DealtCurrency { get; }
+        PriceMovement Movement { get; }
 
         void OnTrade(ITrade trade);
     }
