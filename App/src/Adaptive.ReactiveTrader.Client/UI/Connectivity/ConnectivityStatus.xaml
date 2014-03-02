@@ -5,11 +5,41 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignWidth="800">
-    <Grid Margin="3">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Adaptive.ReactiveTrader.Client;component/Styles/Brushes.xaml" />
+                <ResourceDictionary Source="/Adaptive.ReactiveTrader.Client;component/Styles/Button.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="Foreground" Value="Black" />
+                <Setter Property="Margin" Value="10,3" />
+                
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Disconnected}" Value="True">
+                        <Setter Property="Foreground" Value="White" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="Grid" x:Key="GridStyle">
+                <Setter Property="Background" Value="#FFDEE3E8" />
+
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Disconnected}" Value="True">
+                        <Setter Property="Background" Value="#FFCE3C1C" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Style="{StaticResource GridStyle}">
         <TextBlock>
-            <Run Text="{Binding Status, Mode=OneWay}" />
+            <Run Text="{Binding Status, Mode=OneWay}"  />
             <Run Text="- UI Latency:" />
-            <Run Text="{Binding UiLatency, Mode=OneWay}" />
+            <Run Text="{Binding UiLatency, Mode=OneWay}"  />
             <Run Text="ms - Throughput:" />
             <Run Text="{Binding Throughput, Mode=OneWay}" />
             <Run Text="tick/sec" />

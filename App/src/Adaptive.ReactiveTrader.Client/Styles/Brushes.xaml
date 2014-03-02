@@ -7,5 +7,4 @@
 
     <SolidColorBrush x:Key="TileBackgroundBrush" Color="#FF293543" />
     <SolidColorBrush x:Key="ErrorBackgroundBrush" Color="#FF341E1D" />
-
 </ResourceDictionary>

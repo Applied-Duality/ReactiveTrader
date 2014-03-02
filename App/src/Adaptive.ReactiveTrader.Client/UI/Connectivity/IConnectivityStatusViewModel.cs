@@ -5,5 +5,6 @@
         string Status { get; }
         long UiLatency { get; }
         long Throughput { get; }
+        bool Disconnected { get; }
     }
 }

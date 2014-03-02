@@ -43,19 +43,24 @@ namespace Adaptive.ReactiveTrader.Client.UI.Connectivity
                 case ConnectionStatus.Uninitialized:
                 case ConnectionStatus.Connecting:
                     Status = string.Format("Connecting to {0} ...", connectionInfo.Server);
+                    Disconnected = true;
                     break;
                 case ConnectionStatus.Reconnected:
                 case ConnectionStatus.Connected:
                     Status = string.Format("Connected to {0}", connectionInfo.Server);
+                    Disconnected = false;
                     break;
                 case ConnectionStatus.ConnectionSlow:
                     Status = string.Format("Slow connection detected with {0}", connectionInfo.Server);
+                    Disconnected = false;
                     break;
                 case ConnectionStatus.Reconnecting:
                     Status = string.Format("Reconnecting to {0} ...", connectionInfo.Server);
+                    Disconnected = true;
                     break;
                 case ConnectionStatus.Closed:
                     Status = string.Format("Disconnected from {0}", connectionInfo.Server);
+                    Disconnected = true;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -65,5 +70,6 @@ namespace Adaptive.ReactiveTrader.Client.UI.Connectivity
         public string Status { get; private set; }
         public long UiLatency { get; private set; }
         public long Throughput { get; private set; }
+        public bool Disconnected { get; private set; }
     }
 }
