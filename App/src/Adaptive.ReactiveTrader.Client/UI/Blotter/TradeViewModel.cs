@@ -17,7 +17,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.Blotter
             Notional = trade.Notional.ToString("N0", CultureInfo.InvariantCulture) + " " + trade.DealtCurrency;
             SpotRate = trade.SpotRate;
             TradeDate = trade.TradeDate;
-            TradeStatus = trade.TradeStatus.ToString();
+            TradeStatus = trade.TradeStatus == Domain.Models.TradeStatus.Done ? "Done" : "REJECTED";
             TraderName = trade.TraderName;
             ValueDate = trade.ValueDate;
             DealtCurrency = trade.DealtCurrency;

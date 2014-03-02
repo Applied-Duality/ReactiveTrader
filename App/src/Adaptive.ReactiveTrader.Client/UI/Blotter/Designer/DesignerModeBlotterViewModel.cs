@@ -21,7 +21,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.Blotter.Designer
                 TradeDate = DateTime.Now,
                 ValueDate = DateTime.Now.AddDays(2),
                 TradeId = "12834",
-                TradeStatus = "Rejected",
+                TradeStatus = "REJECTED",
                 TraderName = "Olivier"
             });
 
