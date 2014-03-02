@@ -14,6 +14,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         string DealtCurrency { get; }
         PriceMovement Movement { get; }
         string SpotDate { get; }
+        bool IsSubscribing { get; }
 
         void OnTrade(ITrade trade);
         void OnExecutionError(string message);

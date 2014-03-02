@@ -20,6 +20,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         public string DealtCurrency { get; private set; }
         public PriceMovement Movement { get; private set; }
         public string SpotDate { get; private set; }
+        public bool IsSubscribing { get; private set; }
 
         private readonly ICurrencyPair _currencyPair;
         private readonly ISpotTileViewModel _parent;
@@ -41,6 +42,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             Notional = "1000000";
             DealtCurrency = currencyPair.BaseCurrency;
             SpotDate = "SP";
+            IsSubscribing = true;
 
             SubscribeForPrices();
         }
@@ -72,6 +74,8 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
 
         private void OnPrice(IPrice price)
         {
+            IsSubscribing = false;
+
             if (price.IsStale)
             {
                 Bid.OnStalePrice();

@@ -9,12 +9,10 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer
         {
             Bid = new DesignTimeOneWayPriceViewModel(Direction.Sell, "1.23", "45", "6");
             Ask = new DesignTimeOneWayPriceViewModel(Direction.Buy, "1.23", "46", "7");
-            Movement = PriceMovement.Down;
         }
 
         public void Dispose()
         {
-
         }
 
         public string Symbol { get { return "EUR / USD"; } }
@@ -28,8 +26,9 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer
         }
         public string Spread { get { return "1.0"; } }
         public string DealtCurrency { get { return "EUR"; } }
-        public PriceMovement Movement { get; private set; }
+        public PriceMovement Movement { get { return PriceMovement.Up; } }
         public string SpotDate { get { return "SP. 9 Apr"; } }
+        public bool IsSubscribing { get; private set; }
 
         public void OnTrade(ITrade trade)
         {
