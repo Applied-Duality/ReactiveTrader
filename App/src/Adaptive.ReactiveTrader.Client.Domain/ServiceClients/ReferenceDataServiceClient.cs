@@ -47,7 +47,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
 
                 var unsubscriptionDisposable = Disposable.Create(() =>
                 {
-                    // TODO we should add an unsubscription method server side (not a big deal as it gets cleanedup by signalR
+                    // TODO we should add an unsubscription method server side (not a big deal as it gets cleaned-up by signalR
                 });
                 return new CompositeDisposable { currencyPairUpdateSubscription, unsubscriptionDisposable, sendSubscriptionDisposable };
             })
