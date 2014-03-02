@@ -20,10 +20,11 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Repositories
 
         public IObservable<IEnumerable<ICurrencyPairUpdate>> GetCurrencyPairs()
         {
-            return _referenceDataServiceClient.GetCurrencyPairUpdates()
-                //.Select(updates => updates.Where(update => update.UpdateType == UpdateTypeDto.Added))
+            return Observable.Defer(() => _referenceDataServiceClient.GetCurrencyPairUpdates())
                 .Where(updates => updates.Any())
                 .Select(updates => updates.Select(update => _currencyPairUpdateFactory.Create(update)))
+                .Catch(Observable.Return(new ICurrencyPairUpdate[0]))  // if the stream errors (server disconnected), we push an empty list of ccy pairs  
+                .Repeat()                                               // and resubscribe
                 .Publish()
                 .RefCount();
             }

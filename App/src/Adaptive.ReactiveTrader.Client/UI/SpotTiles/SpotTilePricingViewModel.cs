@@ -70,12 +70,6 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
 
         private void OnPrice(IPrice price)
         {
-            if (_currencyPair.Symbol == "EURUSD")
-            {
-                // log EURUSD updates so we can check in logs we receive updates at expected time interval under load
-                Log.InfoFormat("Price update at {0}", DateTime.Now);
-            }
-
             if (price.IsStale)
             {
                 Bid.OnStalePrice();
