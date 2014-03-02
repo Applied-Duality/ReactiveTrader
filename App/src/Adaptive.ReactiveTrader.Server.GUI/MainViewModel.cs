@@ -23,7 +23,7 @@ namespace Adaptive.ReactiveTrader.Server
 
         private IDisposable _signalr;
         private DispatcherTimer _timer;
-        private int _updateFrequency = 20;
+        private int _updateFrequency = 100;
 
         public ICommand StartStopCommand { get; private set; }
         public string ServerStatus { get; private set; }
@@ -54,6 +54,7 @@ namespace Adaptive.ReactiveTrader.Server
             {
                 CurrencyPairs.Add(_ccyViewModelFactory(cpi));   
             }
+            UpdateFrequency = 100;
         }
 
         public int UpdateFrequency

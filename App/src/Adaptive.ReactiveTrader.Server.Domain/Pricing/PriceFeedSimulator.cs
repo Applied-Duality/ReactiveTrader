@@ -10,7 +10,6 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
 {
     public class PriceFeedSimulator : IPriceFeed, IDisposable
     {
-        private const int UpdatePeriodMs = 700;
         private readonly ICurrencyPairRepository _currencyPairRepository;
         private readonly IPricePublisher _pricePublisher;
         private readonly IPriceLastValueCache _priceLastValueCache;
@@ -33,7 +32,7 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
         {
             PopulateLastValueCache();
 
-            _timer = new Timer(OnTimerTick, null, UpdatePeriodMs, UpdatePeriodMs);
+            SetUpdateFrequency(100);
         }
 
         public void SetUpdateFrequency(double updatesPerSecond)

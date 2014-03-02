@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Domain.Models;
 using Adaptive.ReactiveTrader.Client.Domain.ServiceClients;
+using Adaptive.ReactiveTrader.Shared.Extensions;
 
 namespace Adaptive.ReactiveTrader.Client.Domain.Repositories
 {
@@ -22,6 +24,8 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Repositories
                 .Select(p => _priceFactory.Create(p, currencyPair))
                 .Catch(Observable.Return(new StalePrice(currencyPair))) // if the stream errors (server disconnected), we push a stale price 
                 .Repeat()                                               // and resubscribe
+                .DetectStale(TimeSpan.FromSeconds(2),  Scheduler.Default)
+                .Select(s => s.IsStale ? new StalePrice(currencyPair) : s.Update)
                 .Publish()
                 .RefCount();
         }
