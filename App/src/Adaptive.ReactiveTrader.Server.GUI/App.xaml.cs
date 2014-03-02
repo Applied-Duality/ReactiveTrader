@@ -36,6 +36,8 @@ namespace Adaptive.ReactiveTrader.Server
             priceFeed.Start();
 
             var mainWindow = container.Resolve<MainWindow>();
+            var vm = container.Resolve<IMainViewModel>();
+            mainWindow.DataContext = vm;
             mainWindow.Show();
         }
 

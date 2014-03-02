@@ -36,6 +36,7 @@ namespace Adaptive.ReactiveTrader.Server
 
             // UI
             builder.RegisterType<MainWindow>().SingleInstance();
+            builder.RegisterType<MainViewModel>().As<IMainViewModel>().SingleInstance();
 
             return builder.Build();
         }

@@ -18,14 +18,14 @@
         </Grid.RowDefinitions>
         
         <TextBlock Grid.Row="0" Grid.Column="0" Text="Server state:" Margin="4" />
-        <TextBlock Grid.Row="0" Grid.Column="1" Margin="4" Name="ServerStatusTextBlock" Text="Stoped" />
-        <Button Grid.Row="0" Grid.Column="2" Margin="4" Name="ServerButton" Click="ServerButton_Click">Start</Button>
+        <TextBlock Grid.Row="0" Grid.Column="1" Margin="4" Text="{Binding ServerStatus, Mode=OneWay}" />
+        <Button Grid.Row="0" Grid.Column="2" Margin="4" Command="{Binding StartStopCommand}" Content="{Binding StartStopCommandText}" />
 
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Throughput" Margin="4"/>
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="4" >
-            <TextBlock Name="ThroughputTextBlock"  Text="0" />
+            <TextBlock Text="{Binding Throughput, Mode=OneWay}" />
             <TextBlock Text=" msg/sec"/>
         </StackPanel>
-        <Slider Grid.Row="1" Grid.Column="2" Minimum="0" Maximum="5000" Margin="4" ValueChanged="Slider_ValueChanged" />
+        <Slider Grid.Row="1" Grid.Column="2" Minimum="10" Maximum="5000" Margin="4" Value="{Binding UpdateFrequency, Mode=TwoWay}" />
     </Grid>
 </Window>
