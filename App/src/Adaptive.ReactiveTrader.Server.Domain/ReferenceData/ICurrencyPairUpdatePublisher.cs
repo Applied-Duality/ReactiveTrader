@@ -5,6 +5,7 @@ namespace Adaptive.ReactiveTrader.Server.ReferenceData
 {
     public interface ICurrencyPairUpdatePublisher
     {
-        Task Publish(CurrencyPairUpdateDto update);
+        Task AddCurrencyPair(CurrencyPairDto ccyPair);
+        Task RemoveCurrencyPair(CurrencyPairDto ccyPair);
     }
 }

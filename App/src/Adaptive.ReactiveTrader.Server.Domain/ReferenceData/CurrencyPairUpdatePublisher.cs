@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Adaptive.ReactiveTrader.Server.Transport;
+using Adaptive.ReactiveTrader.Shared;
 using Adaptive.ReactiveTrader.Shared.ReferenceData;
 using log4net;
 using Microsoft.AspNet.SignalR.Hubs;
@@ -17,7 +18,29 @@ namespace Adaptive.ReactiveTrader.Server.ReferenceData
             _contextHolder = contextHolder;
         }
 
-        public async Task Publish(CurrencyPairUpdateDto update)
+        public Task AddCurrencyPair(CurrencyPairDto ccyPair)
+        {
+            var update = new CurrencyPairUpdateDto
+            {
+                CurrencyPair = ccyPair,
+                UpdateType = UpdateTypeDto.Added
+            };
+
+            return Publish(update);
+        }
+
+        public Task RemoveCurrencyPair(CurrencyPairDto ccyPair)
+        {
+            var update = new CurrencyPairUpdateDto
+            {
+                CurrencyPair = ccyPair,
+                UpdateType = UpdateTypeDto.Removed
+            };
+
+            return Publish(update);
+        }
+
+        private async Task Publish(CurrencyPairUpdateDto update)
         {
             IHubCallerConnectionContext context = _contextHolder.ReferenceDataHubClients;
             if (context == null) return;

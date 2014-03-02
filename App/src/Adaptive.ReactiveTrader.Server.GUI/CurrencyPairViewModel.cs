@@ -1,6 +1,4 @@
 ﻿using Adaptive.ReactiveTrader.Server.ReferenceData;
-using Adaptive.ReactiveTrader.Shared;
-using Adaptive.ReactiveTrader.Shared.ReferenceData;
 using Adaptive.ReactiveTrader.Shared.UI;
 
 namespace Adaptive.ReactiveTrader.Server
@@ -27,14 +25,15 @@ namespace Adaptive.ReactiveTrader.Server
             get { return _currencyPairInfo.Enabled; }
             set
             {
-                // TODO refactor this code (this logic should be in the server)
-                var update = new CurrencyPairUpdateDto
+                if (value)
                 {
-                    CurrencyPair = _currencyPairInfo.CurrencyPair,
-                    UpdateType = value ? UpdateTypeDto.Added : UpdateTypeDto.Removed
-                };
-
-                _currencyPairUpdatePublisher.Publish(update);
+                    _currencyPairUpdatePublisher.AddCurrencyPair(_currencyPairInfo.CurrencyPair);
+                }
+                else
+                {
+                    _currencyPairUpdatePublisher.RemoveCurrencyPair(_currencyPairInfo.CurrencyPair);   
+                }
+                
                 _currencyPairInfo.Enabled = value;
             }
         }
