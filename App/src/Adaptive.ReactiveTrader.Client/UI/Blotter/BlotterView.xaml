@@ -9,7 +9,16 @@
              d:DesignWidth="1200"
              d:DataContext="{d:DesignInstance designer:DesignerModeBlotterViewModel, IsDesignTimeCreatable=True}">
     <UserControl.Resources>
+        <Style x:Key="RightAlignedHeaderStyle" TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource DataGridColumnHeaderStyle}">
+            <Setter Property="HorizontalContentAlignment" Value="Right" />
+        </Style>
+
         <Style x:Key="SemiBoldCellStyle" TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource DataGridCellStyle}">
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+
+        <Style x:Key="RightAlignedCellStyle" TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource DataGridCellStyle}">
+            <Setter Property="HorizontalContentAlignment" Value="Right" />
             <Setter Property="FontWeight" Value="SemiBold" />
         </Style>
 
@@ -36,8 +45,8 @@
                 <DataGridTextColumn Header="Date" Binding="{Binding TradeDate, StringFormat='dd MMM yy hh:mm'}" Width="140" ElementStyle="{StaticResource StrikethroughRejectedStyle}" />
                 <DataGridTextColumn Header="Dir." Binding="{Binding Direction}" CellStyle="{StaticResource SemiBoldCellStyle}" Width="50" ElementStyle="{StaticResource StrikethroughRejectedStyle}" />
                 <DataGridTextColumn Header="CCY" Binding="{Binding CurrencyPair}" CellStyle="{StaticResource SemiBoldCellStyle}"  Width="130" ElementStyle="{StaticResource StrikethroughRejectedStyle}" />
-                <DataGridTextColumn Header="Notional" Binding="{Binding Notional}" CellStyle="{StaticResource SemiBoldCellStyle}" Width="150" ElementStyle="{StaticResource StrikethroughRejectedStyle}" />
-                <DataGridTextColumn Header="Rate" Binding="{Binding SpotRate}" CellStyle="{StaticResource SemiBoldCellStyle}"  Width="100" ElementStyle="{StaticResource StrikethroughRejectedStyle}" />
+                <DataGridTextColumn Header="Notional" Binding="{Binding Notional}" HeaderStyle="{StaticResource RightAlignedHeaderStyle}" CellStyle="{StaticResource RightAlignedCellStyle}" Width="130" ElementStyle="{StaticResource StrikethroughRejectedStyle}" />
+                <DataGridTextColumn Header="Rate" Binding="{Binding SpotRate}" HeaderStyle="{StaticResource RightAlignedHeaderStyle}" CellStyle="{StaticResource RightAlignedCellStyle}"  Width="100" ElementStyle="{StaticResource StrikethroughRejectedStyle}" />
                 <DataGridTextColumn Header="Status" Binding="{Binding TradeStatus}" Width="100" ElementStyle="{StaticResource RedRejectedStyle}" />
                 <DataGridTextColumn Header="Value Date" Binding="{Binding ValueDate, StringFormat='dd MMM yy'}" Width="120" ElementStyle="{StaticResource StrikethroughRejectedStyle}" />
                 <DataGridTextColumn Header="Trader" Binding="{Binding TraderName}" Width="100" ElementStyle="{StaticResource StrikethroughRejectedStyle}" />
