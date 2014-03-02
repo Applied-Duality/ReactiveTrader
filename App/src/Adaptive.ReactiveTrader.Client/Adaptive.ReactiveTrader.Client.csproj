@@ -292,6 +292,9 @@
   <ItemGroup>
     <Folder Include="UI\Controls\" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Styles\favicon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="Fody.targets" />

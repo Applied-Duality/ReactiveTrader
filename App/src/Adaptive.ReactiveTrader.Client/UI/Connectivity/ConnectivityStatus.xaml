@@ -36,6 +36,11 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid Style="{StaticResource GridStyle}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        
         <TextBlock>
             <Run Text="{Binding Status, Mode=OneWay}"  />
             <Run Text="- UI Latency:" />
@@ -44,5 +49,15 @@
             <Run Text="{Binding Throughput, Mode=OneWay}" />
             <Run Text="tick/sec" />
         </TextBlock>
+        
+        <StackPanel Orientation="Horizontal" Grid.Column="1">
+            <Image Source="..\..\Styles\favicon.png"></Image>
+            <TextBlock>           
+            <Hyperlink NavigateUri="http://www.weareadaptive.com" RequestNavigate="Hyperlink_OnRequestNavigate">
+                WeAreAdaptive.com
+            </Hyperlink>
+            </TextBlock>
+        </StackPanel>
+        
     </Grid>
 </UserControl>
