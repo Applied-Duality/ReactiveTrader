@@ -23,6 +23,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer
         public PriceMovement Movement { get; private set; }
         public ICommand ExecuteCommand { get; private set; }
         public bool IsExecuting { get; private set; }
+        public bool IsStale { get; private set; }
 
         public void OnPrice(IExecutablePrice executablePrice)
         {

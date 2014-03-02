@@ -15,6 +15,8 @@
                 <ResourceDictionary Source="/Adaptive.ReactiveTrader.Client;component/Styles/Brushes.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
+            <SolidColorBrush x:Key="MouseOverBrush">#FF2F5078</SolidColorBrush>
+
             <DataTemplate x:Key="PriceDataTemplate" DataType="spotTiles:IOneWayPriceViewModel">
                 <Button Command="{Binding ExecuteCommand}">
                     <Button.Style>
@@ -31,13 +33,13 @@
                             </Setter>
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#FF2F5078" />
+                                    <Setter Property="Background" Value="{StaticResource MouseOverBrush}" />
                                 </Trigger>
                                 <Trigger Property="IsPressed" Value="True">
                                     <Setter Property="Background" Value="#FF345C8B" />
                                 </Trigger>
                                 <DataTrigger Binding="{Binding IsExecuting}" Value="True">
-                                    <Setter Property="Background" Value="#FF2F5078" />
+                                    <Setter Property="Background" Value="{StaticResource MouseOverBrush}" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -82,7 +84,7 @@
     </UserControl.Resources>
     <UserControl.Template>
         <ControlTemplate TargetType="UserControl">
-            <Border Padding="15,12">
+            <Border x:Name="RootBorder" Padding="15,12" Background="{StaticResource TileBackgroundBrush}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -100,7 +102,7 @@
                             Foreground="{StaticResource PrimaryForeground}" FontSize="18" />
                     </DockPanel>
 
-                    <Grid Grid.Row="1">
+                    <Grid x:Name="PriceButtonsPanel" Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
@@ -120,36 +122,53 @@
                             ContentTemplate="{StaticResource PriceDataTemplate}"/>
                     </Grid>
 
-                    <DockPanel Grid.Row="2">
-                        <TextBlock DockPanel.Dock="Left" Text="{Binding DealtCurrency}" Foreground="{StaticResource SecondaryForeground}" FontSize="16" />
+                    <TextBlock x:Name="StaleTextBlock" Grid.Row="1" Visibility="Collapsed" VerticalAlignment="Top"
+                            Text="Stale" 
+                            Foreground="{StaticResource SecondaryForeground}" FontSize="16" />
+
+                    <DockPanel x:Name="NotionalPanel" Grid.Row="2">
                         <TextBlock DockPanel.Dock="Right" Text="SP" Foreground="{StaticResource SecondaryForeground}" FontSize="16" />
 
-                        <TextBox Text="{Binding Notional, Mode=TwoWay}"
-                            TextAlignment="Right"
-                            VerticalContentAlignment="Center" Margin="5,0"
-                            FontSize="16"
-                            Background="Transparent"
-                            Foreground="{StaticResource SecondaryForeground}"
-                            HorizontalAlignment="Left"
-                            BorderThickness="0" />
+                        <UserControl>
+                            <UserControl.Template>
+                                <ControlTemplate TargetType="UserControl">
+                                    <Border x:Name="Border" BorderThickness="0,0,0,1" HorizontalAlignment="Left" Width="146">
+                                        <DockPanel>
+                                            <TextBlock x:Name="DealtCcyTextBlock" DockPanel.Dock="Left" Text="{Binding DealtCurrency}" Foreground="{StaticResource SecondaryForeground}" FontSize="16" />
+
+                                            <TextBox x:Name="NotionalTextBox" Text="{Binding Notional, Mode=TwoWay}" 
+                                                TextAlignment="Left"
+                                                VerticalContentAlignment="Center" Margin="5,0"
+                                                FontSize="16"
+                                                Background="Black" 
+                                                Foreground="{StaticResource SecondaryForeground}">
+                                                <TextBox.Template>
+                                                    <ControlTemplate TargetType="TextBox">
+                                                        <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                                                    </ControlTemplate>
+                                                </TextBox.Template>
+                                            </TextBox>
+                                        </DockPanel>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="{StaticResource MouseOverBrush}" />
+                                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource PrimaryForeground}" />
+                                            <Setter TargetName="DealtCcyTextBlock" Property="Foreground" Value="{StaticResource PrimaryForeground}" />
+                                            <Setter TargetName="NotionalTextBox" Property="Foreground" Value="{StaticResource PrimaryForeground}" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </UserControl.Template>
+                        </UserControl>
+                       
                     </DockPanel>
                 </Grid>
-                <Border.Style>
-                    <Style TargetType="Border">
-                        <Setter Property="Background" Value="{StaticResource TileBackgroundBrush}" />
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#FF294464" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Border.Style>
             </Border>
             <ControlTemplate.Triggers>
-                <!--<DataTrigger Binding="{Binding IsExecuting}" Value="True">
-                    <Setter TargetName="SpreadTextBlock" Property="Foreground" Value="{StaticResource SecondaryForeground}" />
-                    <Setter TargetName="ExecutingStatusTextBlock" Property="Visibility" Value="Visible" />
-                </DataTrigger>-->
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="RootBorder" Property="Background" Value="#FF294464" />
+                </Trigger>
                 <DataTrigger Binding="{Binding Bid.IsExecuting}" Value="True">
                     <Setter TargetName="SpreadTextBlock" Property="Foreground" Value="{StaticResource SecondaryForeground}" />
                     <Setter TargetName="ExecutingStatusTextBlock" Property="Visibility" Value="Visible" />
@@ -161,6 +180,16 @@
                     <Setter TargetName="ExecutingStatusTextBlock" Property="Visibility" Value="Visible" />
                     <Setter TargetName="BidContentControl" Property="IsEnabled" Value="False" />
                     <Setter TargetName="AskContentControl" Property="IsEnabled" Value="False" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Bid.IsStale}" Value="True">
+                    <Setter TargetName="PriceButtonsPanel" Property="Visibility" Value="Hidden" />
+                    <Setter TargetName="NotionalPanel" Property="Visibility" Value="Hidden" />
+                    <Setter TargetName="StaleTextBlock" Property="Visibility" Value="Visible" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Ask.IsStale}" Value="True">
+                    <Setter TargetName="PriceButtonsPanel" Property="Visibility" Value="Hidden" />
+                    <Setter TargetName="NotionalPanel" Property="Visibility" Value="Hidden" />
+                    <Setter TargetName="StaleTextBlock" Property="Visibility" Value="Visible" />
                 </DataTrigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>

@@ -13,6 +13,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         PriceMovement Movement { get; }
         ICommand ExecuteCommand { get; }
         bool IsExecuting { get; }
+        bool IsStale { get; }
         void OnPrice(IExecutablePrice executablePrice);
         void OnStalePrice();
     }
