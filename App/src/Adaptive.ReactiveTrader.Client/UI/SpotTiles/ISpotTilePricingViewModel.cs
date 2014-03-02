@@ -15,5 +15,6 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         PriceMovement Movement { get; }
 
         void OnTrade(ITrade trade);
+        void OnExecutionError(string message);
     }
 }

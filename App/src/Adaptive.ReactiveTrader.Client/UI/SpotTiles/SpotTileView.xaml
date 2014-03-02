@@ -29,11 +29,30 @@
                         </DataTemplate>
                     </ContentPresenter.ContentTemplate>
                 </ContentPresenter>
+
+                <ContentPresenter x:Name="ErrorContentPresenter" Content="{Binding Error}" Visibility="Collapsed">
+                    <ContentPresenter.ContentTemplate>
+                        <DataTemplate>
+                            <spotTiles:SpotTileErrorView />
+                        </DataTemplate>
+                    </ContentPresenter.ContentTemplate>
+                </ContentPresenter>
             </Grid>
             <ControlTemplate.Triggers>
-                <DataTrigger Binding="{Binding ShowingAffirmation}" Value="True">
+                <DataTrigger Binding="{Binding State}" Value="{x:Static spotTiles:TileState.Pricing}">
+                    <Setter TargetName="AffirmationContentPresenter" Property="Visibility" Value="Collapsed" />
+                    <Setter TargetName="TileContentPresenter" Property="Visibility" Value="Visible" />
+                    <Setter TargetName="ErrorContentPresenter" Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding State}" Value="{x:Static spotTiles:TileState.Affirmation}">
                     <Setter TargetName="AffirmationContentPresenter" Property="Visibility" Value="Visible" />
                     <Setter TargetName="TileContentPresenter" Property="Visibility" Value="Collapsed" />
+                    <Setter TargetName="ErrorContentPresenter" Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding State}" Value="{x:Static spotTiles:TileState.Error}">
+                    <Setter TargetName="AffirmationContentPresenter" Property="Visibility" Value="Collapsed" />
+                    <Setter TargetName="TileContentPresenter" Property="Visibility" Value="Collapsed" />
+                    <Setter TargetName="ErrorContentPresenter" Property="Visibility" Value="Visible" />
                 </DataTrigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>

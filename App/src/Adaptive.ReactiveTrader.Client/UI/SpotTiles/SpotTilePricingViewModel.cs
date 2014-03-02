@@ -102,5 +102,10 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         {
             _parent.OnTrade(trade);
         }
+
+        public void OnExecutionError(string message)
+        {
+            _parent.OnExecutionError(message);
+        }
     }
 }

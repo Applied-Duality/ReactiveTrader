@@ -8,9 +8,12 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
     {
         ISpotTilePricingViewModel Pricing { get; }
         ISpotTileAffirmationViewModel Affirmation { get; }
-        bool ShowingAffirmation { get; }
+        ISpotTileErrorViewModel Error { get; }
+        TileState State { get; }
         string CurrencyPair { get; }
         void OnTrade(ITrade trade);
+        void OnExecutionError(string message);
         void DismissAffirmation();
+        void DismissError();
     }
 }

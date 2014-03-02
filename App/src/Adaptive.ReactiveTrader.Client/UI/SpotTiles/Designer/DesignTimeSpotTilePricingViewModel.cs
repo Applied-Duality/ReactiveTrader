@@ -34,5 +34,10 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer
         {
             throw new NotImplementedException();
         }
+
+        public void OnExecutionError(string message)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

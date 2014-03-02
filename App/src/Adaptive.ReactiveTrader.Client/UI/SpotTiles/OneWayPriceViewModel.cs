@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reactive.Linq;
-using System.Windows;
 using System.Windows.Input;
 using Adaptive.ReactiveTrader.Client.Domain.Models;
 using Adaptive.ReactiveTrader.Shared.UI;
@@ -60,13 +59,13 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         {
             if (exception is TimeoutException)
             {
-                MessageBox.Show("No response was received from the server, the execution status is unknown.\nPlease contact your sales representative.", "Execution timeout", MessageBoxButton.OK, MessageBoxImage.Error);
                 Log.Error("Trade execution request timed out.");
+                _parent.OnExecutionError("No response was received from the server, the execution status is unknown. Please contact your sales representative.");
             }
             else
             {
-                MessageBox.Show("An error occured while processing the trade request.", "Execution error", MessageBoxButton.OK, MessageBoxImage.Error);
                 Log.Error("An error occured while processing the trade request.", exception);
+                _parent.OnExecutionError("An error occured while executing the trade. Please check your blotter and if your position is unknown, contact your support representative.");
             }
             IsExecuting = false;
         }

@@ -18,7 +18,8 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer
 
         public ISpotTilePricingViewModel Pricing { get; private set; }
         public ISpotTileAffirmationViewModel Affirmation { get; private set; }
-        public bool ShowingAffirmation { get { return false; } }
+        public ISpotTileErrorViewModel Error { get; private set; }
+        public TileState State { get { return TileState.Pricing;} }
         public string CurrencyPair { get; private set; }
 
         public void OnTrade(ITrade trade)
@@ -26,7 +27,17 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer
             throw new System.NotImplementedException();
         }
 
+        public void OnExecutionError(string message)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void DismissAffirmation()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void DismissError()
         {
             throw new System.NotImplementedException();
         }

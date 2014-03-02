@@ -30,6 +30,7 @@ namespace Adaptive.ReactiveTrader.Client
             builder.RegisterType<ShellViewModel>().As<IShellViewModel>();
             builder.RegisterType<SpotTilesViewModel>().As<ISpotTilesViewModel>();
             builder.RegisterType<SpotTileViewModel>().As<ISpotTileViewModel>();
+            builder.RegisterType<SpotTileErrorViewModel>().As<ISpotTileErrorViewModel>();
             builder.RegisterType<SpotTilePricingViewModel>().As<ISpotTilePricingViewModel>();
             builder.RegisterType<OneWayPriceViewModel>().As<IOneWayPriceViewModel>();
             builder.RegisterType<SpotTileAffirmationViewModel>().As<ISpotTileAffirmationViewModel>();
