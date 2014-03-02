@@ -26,9 +26,9 @@ namespace Adaptive.ReactiveTrader.Client.Domain
             var executionRepository = new ExecutionRepository(executionServiceClient, tradeFactory);
             var priceFactory = new PriceFactory(executionRepository);
             var priceRepository = new PriceRepository(pricingServiceClient, priceFactory);
-            var currencyPairFactory = new CurrencyPairFactory(priceRepository);
+            var currencyPairUpdateFactory = new CurrencyPairUpdateFactory(priceRepository);
             TradeRepository = new TradeRepository(blotterServiceClient, tradeFactory);
-            ReferenceData = new ReferenceDataRepository(referenceDataServiceClient, currencyPairFactory);
+            ReferenceData = new ReferenceDataRepository(referenceDataServiceClient, currencyPairUpdateFactory);
         }
 
         public IReferenceDataRepository ReferenceData { get; private set; }

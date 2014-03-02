@@ -9,6 +9,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         ISpotTilePricingViewModel Pricing { get; }
         ISpotTileAffirmationViewModel Affirmation { get; }
         bool ShowingAffirmation { get; }
+        string CurrencyPair { get; }
         void OnTrade(ITrade trade);
         void DismissAffirmation();
     }

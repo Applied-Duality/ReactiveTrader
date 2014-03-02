@@ -65,11 +65,12 @@
     <Compile Include="ConnectionInfo.cs" />
     <Compile Include="IReactiveTrader.cs" />
     <Compile Include="Models\CurrencyPair.cs" />
-    <Compile Include="Models\CurrencyPairFactory.cs" />
+    <Compile Include="Models\CurrencyPairUpdateFactory.cs" />
     <Compile Include="Models\Direction.cs" />
     <Compile Include="Models\ExecutablePrice.cs" />
     <Compile Include="Models\ICurrencyPair.cs" />
     <Compile Include="Models\ICurrencyPairFactory.cs" />
+    <Compile Include="Models\ICurrencyPairUpdate.cs" />
     <Compile Include="Models\IExecutablePrice.cs" />
     <Compile Include="Models\IPrice.cs" />
     <Compile Include="Models\IPriceFactory.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Models\TradeStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReactiveTrader.cs" />
+    <Compile Include="Models\CurrencyPairUpdate.cs" />
     <Compile Include="Repositories\ExecutionRepository.cs" />
     <Compile Include="Repositories\IExecutionRepository.cs" />
     <Compile Include="Repositories\IPriceRepository.cs" />
@@ -91,6 +93,7 @@
     <Compile Include="Repositories\PriceRepository.cs" />
     <Compile Include="Repositories\ReferenceDataRepository.cs" />
     <Compile Include="Repositories\TradeRepository.cs" />
+    <Compile Include="Models\UpdateType.cs" />
     <Compile Include="ServiceClients\BlotterServiceClient.cs" />
     <Compile Include="ServiceClients\ExecutionServiceClient.cs" />
     <Compile Include="ServiceClients\IBlotterServiceClient.cs" />

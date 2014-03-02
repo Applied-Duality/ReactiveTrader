@@ -21,6 +21,7 @@ namespace Adaptive.ReactiveTrader.Server
 
             // reference data
             builder.RegisterType<CurrencyPairRepository>().As<ICurrencyPairRepository>().SingleInstance();
+            builder.RegisterType<CurrencyPairUpdatePublisher>().As<ICurrencyPairUpdatePublisher>().SingleInstance();
             builder.RegisterType<ReferenceDataHub>().SingleInstance();            
 
             // execution            
@@ -37,6 +38,7 @@ namespace Adaptive.ReactiveTrader.Server
             // UI
             builder.RegisterType<MainWindow>().SingleInstance();
             builder.RegisterType<MainViewModel>().As<IMainViewModel>().SingleInstance();
+            builder.RegisterType<CurrencyPairViewModel>().As<ICurrencyPairViewModel>();
 
             return builder.Build();
         }

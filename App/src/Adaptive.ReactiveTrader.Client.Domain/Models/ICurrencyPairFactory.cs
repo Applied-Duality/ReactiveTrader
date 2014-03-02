@@ -2,8 +2,8 @@
 
 namespace Adaptive.ReactiveTrader.Client.Domain.Models
 {
-    interface ICurrencyPairFactory
+    interface ICurrencyPairUpdateFactory
     {
-        ICurrencyPair Create(CurrencyPairDto currencyPair);
+        ICurrencyPairUpdate Create(CurrencyPairUpdateDto currencyPairUpdate);
     }
 }

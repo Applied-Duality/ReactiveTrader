@@ -33,17 +33,34 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         private void LoadSpotTiles()
         {
             _referenceDataRepository.GetCurrencyPairs()
-                .Take(1) // remove this to handle updates
                 .ObserveOnDispatcher()
                 .Subscribe(
-                    currencyPairs => currencyPairs.ForEach(CreateSpotTile),
+                    currencyPairs => currencyPairs.ForEach(HandleCurrencyPairUpdate),
                     error => Log.Error("Failed to get currencies", error));
         }
 
-        private void CreateSpotTile(ICurrencyPair currencyPair)
+        private void HandleCurrencyPairUpdate(ICurrencyPairUpdate update)
         {
-            var spotTile = _spotTileFactory(currencyPair);
-            SpotTiles.Add(spotTile);
+            var spotTileViewModel = SpotTiles.FirstOrDefault(stvm => stvm.CurrencyPair == update.CurrencyPair.Symbol);
+            if (update.UpdateType == UpdateType.Add)
+            {
+                if (spotTileViewModel != null)
+                {
+                    // we already have a tile for this currency pair
+                    return;
+                }
+
+                var spotTile = _spotTileFactory(update.CurrencyPair);
+                SpotTiles.Add(spotTile);
+            }
+            else
+            {
+                if (spotTileViewModel != null)
+                {
+                    SpotTiles.Remove(spotTileViewModel);
+                    spotTileViewModel.Dispose();
+                }
+            }
         }
     }
 }

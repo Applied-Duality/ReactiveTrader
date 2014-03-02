@@ -28,7 +28,8 @@
         public static class Client
         {
             public const string OnNewPrice = "OnNewPrice";
-            public const string OnNewTrade = "OnNewTrade"; 
+            public const string OnNewTrade = "OnNewTrade";
+            public const string OnCurrencyPairUpdate = "OnCurrencyPairUpdate"; 
         }
     }
 }

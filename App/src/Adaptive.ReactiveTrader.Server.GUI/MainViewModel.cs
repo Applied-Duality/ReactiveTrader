@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Adaptive.ReactiveTrader.Server.Pricing;
+using Adaptive.ReactiveTrader.Server.ReferenceData;
 using Adaptive.ReactiveTrader.Shared.UI;
 using log4net;
 using Microsoft.Owin.Hosting;
@@ -14,6 +16,8 @@ namespace Adaptive.ReactiveTrader.Server
         private static readonly ILog Log = LogManager.GetLogger(typeof (MainWindow));
 
         private readonly IPriceFeed _priceFeed;
+        private readonly ICurrencyPairRepository _currencyPairRepository;
+        private readonly Func<CurrencyPairInfo, ICurrencyPairViewModel> _ccyViewModelFactory;
         private readonly IPricePublisher _pricePublisher;
         private long _lastTickTotalUpdates;
 
@@ -21,20 +25,36 @@ namespace Adaptive.ReactiveTrader.Server
         private DispatcherTimer _timer;
         private int _updateFrequency = 20;
 
-        public MainViewModel(IPricePublisher pricePublisher, IPriceFeed priceFeed)
-        {
-            _pricePublisher = pricePublisher;
-            _priceFeed = priceFeed;
-
-            StartServer();
-
-            StartStopCommand = new DelegateCommand(StartStopServer);
-        }
-
         public ICommand StartStopCommand { get; private set; }
         public string ServerStatus { get; private set; }
         public string StartStopCommandText { get; private set; }
         public string Throughput { get; private set; }
+        public ObservableCollection<ICurrencyPairViewModel> CurrencyPairs { get; private set; } 
+
+        public MainViewModel(
+            IPricePublisher pricePublisher, 
+            IPriceFeed priceFeed, 
+            ICurrencyPairRepository currencyPairRepository, 
+            Func<CurrencyPairInfo, ICurrencyPairViewModel> ccyViewModelFactory)
+        {
+            _pricePublisher = pricePublisher;
+            _priceFeed = priceFeed;
+            _currencyPairRepository = currencyPairRepository;
+            _ccyViewModelFactory = ccyViewModelFactory;
+
+            StartStopCommand = new DelegateCommand(StartStopServer);
+            CurrencyPairs = new ObservableCollection<ICurrencyPairViewModel>();
+        }
+
+        public void Start()
+        {
+            StartServer();
+
+            foreach (var cpi in _currencyPairRepository.GetAllCurrencyPairInfos())
+            {
+                CurrencyPairs.Add(_ccyViewModelFactory(cpi));   
+            }
+        }
 
         public int UpdateFrequency
         {
