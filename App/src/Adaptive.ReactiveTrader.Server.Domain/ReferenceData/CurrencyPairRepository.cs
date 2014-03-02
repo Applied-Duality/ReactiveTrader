@@ -10,7 +10,7 @@ namespace Adaptive.ReactiveTrader.Server.ReferenceData
         {
             {"EURUSD", CreateCurrencyPairInfo("EURUSD", 4, 5, 1.3629m, true)},
             {"USDJPY", CreateCurrencyPairInfo("USDJPY", 2, 3, 102.14m, true)},
-            {"GBPUSD", CreateCurrencyPairInfo("GBPUSD", 4, 5, 1.6395m, true, "Server waits 1.5sec to execute then sends a trade done.")},         // ExecutionService
+            {"GBPUSD", CreateCurrencyPairInfo("GBPUSD", 4, 5, 1.6395m, true, "Server waits 1.5sec to execute then sends a trade done.")},       // ExecutionService
             {"GBPJPY", CreateCurrencyPairInfo("GBPJPY", 2, 3, 167.67m, true, "Always rejects upon execution.")},                                // ExecutionService
             {"EURGBP", CreateCurrencyPairInfo("EURGBP", 4, 5, 0.8312m, false)},
             {"USDCHF", CreateCurrencyPairInfo("USDCHF", 4, 5, 0.897m, false)},

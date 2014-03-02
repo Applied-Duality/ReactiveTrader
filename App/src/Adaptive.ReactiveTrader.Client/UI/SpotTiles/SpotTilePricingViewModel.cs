@@ -19,6 +19,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         public string Spread { get; private set; }
         public string DealtCurrency { get; private set; }
         public PriceMovement Movement { get; private set; }
+        public string SpotDate { get; private set; }
 
         private readonly ICurrencyPair _currencyPair;
         private readonly ISpotTileViewModel _parent;
@@ -39,6 +40,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             Ask = oneWayPriceFactory(Direction.Buy, this);
             Notional = "1000000";
             DealtCurrency = currencyPair.BaseCurrency;
+            SpotDate = "SP";
 
             SubscribeForPrices();
         }
@@ -77,6 +79,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
                 Spread = string.Empty;
                 _previousRate = null;
                 Movement = PriceMovement.None;
+                SpotDate = "SP";
             }
             else
             {
@@ -95,6 +98,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
                 Ask.OnPrice(price.Ask);
                 Spread = PriceFormatter.GetFormattedSpread(price.Spread, _currencyPair.RatePrecision, _currencyPair.PipsPosition);
                 _priceLatencyRecorder.RecordProcessingTime(price.ElpasedTimeSinceCreated);
+                SpotDate = "SP. " + price.ValueDate.ToString("dd MMM");
             }
         }
 

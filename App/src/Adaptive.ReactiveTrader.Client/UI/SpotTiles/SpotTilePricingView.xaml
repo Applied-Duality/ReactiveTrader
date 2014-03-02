@@ -131,7 +131,7 @@
                             Foreground="{StaticResource SecondaryForeground}" FontSize="16" />
 
                     <DockPanel x:Name="NotionalPanel" Grid.Row="2">
-                        <TextBlock DockPanel.Dock="Right" Text="SP" Foreground="{StaticResource SecondaryForeground}" FontSize="16" />
+                        <TextBlock DockPanel.Dock="Right" Text="{Binding SpotDate}" Foreground="{StaticResource SecondaryForeground}" FontSize="16" />
 
                         <UserControl>
                             <UserControl.Template>

@@ -29,6 +29,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer
         public string Spread { get { return "1.0"; } }
         public string DealtCurrency { get { return "EUR"; } }
         public PriceMovement Movement { get; private set; }
+        public string SpotDate { get { return "SP. 9 Apr"; } }
 
         public void OnTrade(ITrade trade)
         {
