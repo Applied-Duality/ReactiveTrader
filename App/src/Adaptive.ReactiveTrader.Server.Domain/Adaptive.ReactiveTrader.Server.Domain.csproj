@@ -88,6 +88,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Blotter\BlotterHub.cs" />
     <Compile Include="Execution\ExecutionHub.cs" />
     <Compile Include="ReferenceData\CurrencyPairInfo.cs" />

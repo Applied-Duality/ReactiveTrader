@@ -96,6 +96,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Instrumentation\IPriceLatencyRecorder.cs" />
     <Compile Include="Instrumentation\PriceLatencyRecorder.cs" />
     <Compile Include="Properties\Annotations.cs" />

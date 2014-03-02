@@ -107,6 +107,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="CurrencyPairViewModel.cs" />
     <Compile Include="ICurrencyPairViewModel.cs" />
     <Compile Include="IMainViewModel.cs" />
