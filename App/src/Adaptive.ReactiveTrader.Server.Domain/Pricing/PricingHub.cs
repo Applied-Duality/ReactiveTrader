@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Adaptive.ReactiveTrader.Server.ReferenceData;
 using Adaptive.ReactiveTrader.Server.Transport;
 using Adaptive.ReactiveTrader.Shared;
@@ -40,6 +41,12 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
             {
                 Log.WarnFormat("Received a subscription request for an invalid currency pair '{0}', it was ignored.", request.CurrencyPair);
                 return;
+            }
+
+            // simulate slow response for EURCHF
+            if (request.CurrencyPair == "EURCHF")
+            {
+                await Task.Delay(TimeSpan.FromSeconds(2));
             }
 
             // add client to this group

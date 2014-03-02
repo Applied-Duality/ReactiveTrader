@@ -7,5 +7,6 @@ namespace Adaptive.ReactiveTrader.Server
         string Symbol { get; }
         bool Available { get; set; }
         bool Stale { get; set; }
+        string Comment { get; }
     }
 }

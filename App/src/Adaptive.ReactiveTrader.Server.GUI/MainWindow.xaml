@@ -2,8 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="ReactiveTrader Server" 
-        Height="700" 
-        Width="525"
+        Height="570" 
+        Width="600"
         ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -45,6 +45,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

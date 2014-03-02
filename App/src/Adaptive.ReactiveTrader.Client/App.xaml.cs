@@ -45,7 +45,7 @@ namespace Adaptive.ReactiveTrader.Client
             var shellView = container.Resolve<ShellView>();
             MainWindow.Content = shellView;
 
-            await Task.Delay(TimeSpan.FromSeconds(3));
+            await Task.Delay(TimeSpan.FromSeconds(1.5));
             splash.Close();
             MainWindow.Show();
             Log.InfoFormat("Main UI displayed {0}ms after process start.", DateTime.Now - Process.GetCurrentProcess().StartTime);

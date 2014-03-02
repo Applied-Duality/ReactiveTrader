@@ -10,12 +10,12 @@ namespace Adaptive.ReactiveTrader.Server.ReferenceData
         {
             {"EURUSD", CreateCurrencyPairInfo("EURUSD", 4, 5, 1.3629m, true)},
             {"USDJPY", CreateCurrencyPairInfo("USDJPY", 2, 3, 102.14m, true)},
-            {"GBPUSD", CreateCurrencyPairInfo("GBPUSD", 4, 5, 1.6395m, true)},
-            {"GBPJPY", CreateCurrencyPairInfo("GBPJPY", 2, 3, 167.67m, true)},
+            {"GBPUSD", CreateCurrencyPairInfo("GBPUSD", 4, 5, 1.6395m, true, "Server waits 1.5sec to execute then sends a trade done.")},         // ExecutionService
+            {"GBPJPY", CreateCurrencyPairInfo("GBPJPY", 2, 3, 167.67m, true, "Always rejects upon execution.")},                                // ExecutionService
             {"EURGBP", CreateCurrencyPairInfo("EURGBP", 4, 5, 0.8312m, false)},
             {"USDCHF", CreateCurrencyPairInfo("USDCHF", 4, 5, 0.897m, false)},
-            {"EURJPY", CreateCurrencyPairInfo("EURJPY", 2, 3, 139.22m, true)},
-            {"EURCHF", CreateCurrencyPairInfo("EURCHF", 4, 5, 1.2224m, false)},
+            {"EURJPY", CreateCurrencyPairInfo("EURJPY", 2, 3, 139.22m, true, "Waits 5sec before sending a trade response (times-out).")},       // ExecutionService
+            {"EURCHF", CreateCurrencyPairInfo("EURCHF", 4, 5, 1.2224m, false, "Server waits before sending a first price update.")},            // PricingHub
             {"AUDUSD", CreateCurrencyPairInfo("AUDUSD", 4, 5, 0.8925m, false)},
             {"NZDUSD", CreateCurrencyPairInfo("NZDUSD", 4, 5, 0.8263m, false)},
             {"USDCAD", CreateCurrencyPairInfo("USDCAD", 4, 5, 1.1043m, false)},
@@ -33,9 +33,9 @@ namespace Adaptive.ReactiveTrader.Server.ReferenceData
             {"EURSEK", CreateCurrencyPairInfo("EURSEK", 4, 4, 8.8505m, false)},
         };
 
-        private static CurrencyPairInfo CreateCurrencyPairInfo(string symbol, int pipsPosition, int ratePrecision, decimal sampleRate, bool enabled)
+        private static CurrencyPairInfo CreateCurrencyPairInfo(string symbol, int pipsPosition, int ratePrecision, decimal sampleRate, bool enabled, string comment= "")
         {
-            return new CurrencyPairInfo(new CurrencyPairDto(symbol, ratePrecision, pipsPosition), sampleRate, enabled);
+            return new CurrencyPairInfo(new CurrencyPairDto(symbol, ratePrecision, pipsPosition), sampleRate, enabled, comment);
         }
 
         public IEnumerable<CurrencyPairDto> GetAllCurrencyPairs()

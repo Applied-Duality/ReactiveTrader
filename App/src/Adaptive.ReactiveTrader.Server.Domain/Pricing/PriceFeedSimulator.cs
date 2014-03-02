@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Adaptive.ReactiveTrader.Server.ReferenceData;
 using Adaptive.ReactiveTrader.Shared.Pricing;
-using Adaptive.ReactiveTrader.Shared.ReferenceData;
 
 namespace Adaptive.ReactiveTrader.Server.Pricing
 {
@@ -32,7 +30,7 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
         {
             PopulateLastValueCache();
 
-            SetUpdateFrequency(100);
+            SetUpdateFrequency(15);
         }
 
         public void SetUpdateFrequency(double updatesPerSecond)

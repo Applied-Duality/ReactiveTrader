@@ -9,7 +9,8 @@ namespace Adaptive.ReactiveTrader.Server
     {
         private readonly CurrencyPairInfo _currencyPairInfo;
         private readonly ICurrencyPairUpdatePublisher _currencyPairUpdatePublisher;
-        private bool _available;
+        public string Comment { get; private set; }
+        public string Symbol { get; private set; }
 
         public CurrencyPairViewModel(CurrencyPairInfo currencyPairInfo, ICurrencyPairUpdatePublisher currencyPairUpdatePublisher)
         {
@@ -18,13 +19,12 @@ namespace Adaptive.ReactiveTrader.Server
             Symbol = currencyPairInfo.CurrencyPair.Symbol;
             Available = currencyPairInfo.Enabled;
             Stale = currencyPairInfo.Stale;
+            Comment = currencyPairInfo.Comment;
         }
-
-        public string Symbol { get; private set; }
 
         public bool Available
         {
-            get { return _available; }
+            get { return _currencyPairInfo.Enabled; }
             set
             {
                 // TODO refactor this code (this logic should be in the server)
@@ -35,8 +35,7 @@ namespace Adaptive.ReactiveTrader.Server
                 };
 
                 _currencyPairUpdatePublisher.Publish(update);
-
-                _available = value;
+                _currencyPairInfo.Enabled = value;
             }
         }
 
