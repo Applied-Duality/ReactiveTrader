@@ -21,6 +21,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.Blotter
 
         private static readonly ILog Log = LogManager.GetLogger(typeof(BlotterViewModel));
         private IDisposable _tradesSubscription;
+        private bool _stale;
 
         public BlotterViewModel(IReactiveTrader reactiveTrader, Func<ITrade, ITradeViewModel> tradeViewModelFactory)
         {
@@ -45,8 +46,16 @@ namespace Adaptive.ReactiveTrader.Client.UI.Blotter
             var allTrades = trades as IList<ITrade> ?? trades.ToList();
             if (!allTrades.Any())
             {
-                // TODO we currently use an empty enumerable to represent blotter disconnected, we need a proper representation for that 
-                Trades.Clear();
+                // empty list of trades means we are disconnected
+                _stale = true;
+            }
+            else
+            {
+                if (_stale)
+                {
+                    Trades.Clear();
+                    _stale = false;
+                }
             }
 
             foreach (var trade in allTrades)
