@@ -25,13 +25,13 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         public Direction Direction { get { return _trade.Direction; } }
         public long Notional { get { return _trade.Notional; } }
         public decimal SpotRate { get { return _trade.SpotRate; } }
-        public TradeStatus TradeStatus { get { return _trade.TradeStatus; } }
         public DateTime TradeDate { get { return _trade.TradeDate; } }
         public long TradeId { get { return _trade.TradeId; } }
         public string TraderName { get { return _trade.TraderName; } }
         public DateTime ValueDate { get { return _trade.ValueDate; } }
         public ICommand DismissCommand { get { return _dismissCommand; } }
         public string DealtCurrency { get { return _trade.DealtCurrency; } }
+        public string Rejected { get {  return _trade.TradeStatus == TradeStatus.Done? "":"REJECTED";} }
 
         public string OtherCurrency
         {

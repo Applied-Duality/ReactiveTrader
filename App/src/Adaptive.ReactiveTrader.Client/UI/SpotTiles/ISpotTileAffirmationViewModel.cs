@@ -11,7 +11,8 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         Direction Direction { get; }
         long Notional { get; }
         decimal SpotRate { get; }
-        TradeStatus TradeStatus { get; }
+        string Rejected { get; }
+
         DateTime TradeDate { get; }
         long TradeId { get; }
         string TraderName { get; }

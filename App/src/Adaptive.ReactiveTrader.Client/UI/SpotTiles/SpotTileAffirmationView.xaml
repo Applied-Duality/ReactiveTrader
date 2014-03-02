@@ -28,7 +28,10 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0">
-                <TextBlock Text="{Binding CurrencyPair}" Foreground="{StaticResource PrimaryForeground}" FontSize="18" />
+                <DockPanel>
+                    <TextBlock Text="{Binding CurrencyPair}" Foreground="{StaticResource PrimaryForeground}" FontSize="18" />
+                    <TextBlock DockPanel.Dock="Right" TextAlignment="Right" Text="{Binding Rejected}" Foreground="{StaticResource ErrorForeground}" FontSize="18" FontWeight="DemiBold" />
+                </DockPanel>
 
                 <DockPanel>
                     <TextBlock Text="Sold " Foreground="{StaticResource SecondaryForeground}" />

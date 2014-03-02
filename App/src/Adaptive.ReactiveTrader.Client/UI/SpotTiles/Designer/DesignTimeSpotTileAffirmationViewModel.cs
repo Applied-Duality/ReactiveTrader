@@ -11,7 +11,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer
         public Direction Direction { get { return Direction.Buy; } }
         public long Notional { get { return 1000000; } }
         public decimal SpotRate { get { return 1.23456m; } }
-        public TradeStatus TradeStatus { get { return TradeStatus.Done; } }
+        public string Rejected { get { return "REJECTED"; } }
         public DateTime TradeDate { get { return DateTime.Now; } }
         public long TradeId { get { return 897345; } }
         public string TraderName { get { return "Olivier"; } }
