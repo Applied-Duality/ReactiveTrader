@@ -1,7 +1,7 @@
 ﻿using Adaptive.ReactiveTrader.Client.UI.SpotTiles;
 using NUnit.Framework;
 
-namespace Adaptive.ReactiveTrader.Client.Tests
+namespace Adaptive.ReactiveTrader.Tests
 {
     [TestFixture]
     public class PriceExtensionsTests
