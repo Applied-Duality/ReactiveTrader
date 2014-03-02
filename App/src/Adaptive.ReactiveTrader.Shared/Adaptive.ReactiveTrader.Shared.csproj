@@ -58,7 +58,11 @@
     <Compile Include="Execution\TradeRequestDto.cs" />
     <Compile Include="Execution\TradeStatusDto.cs" />
     <Compile Include="Extensions\ArrayExtensions.cs" />
+    <Compile Include="Extensions\Heartbeat.cs" />
+    <Compile Include="Extensions\IHeartbeat.cs" />
+    <Compile Include="Extensions\IStale.cs" />
     <Compile Include="Extensions\ObservableExtensions.cs" />
+    <Compile Include="Extensions\Stale.cs" />
     <Compile Include="Pricing\PriceDto.cs" />
     <Compile Include="Pricing\PriceSubscriptionRequestDto.cs" />
     <Compile Include="Properties\Annotations.cs" />

@@ -187,5 +187,107 @@ namespace Adaptive.ReactiveTrader.Shared.Extensions
                 return new CompositeDisposable { sourceSubscription };
             });
         }
+
+        /// <summary>
+        /// Injects heartbeats in a stream when the source stream becomes quiet:
+        ///  - upon subscription if the source does not OnNext any update a heartbeat will be pushed after heartbeatPeriod, periodilcally until source receives an update
+        ///  - when an update is received it is immediatly pushed. After this update, if source does not OnNext after heartbeatPeriod, heartbeats will be pushed
+        /// </summary>
+        /// <typeparam name="T">update type</typeparam>
+        /// <param name="source">source stream</param>
+        /// <param name="heartbeatPeriod"></param>
+        /// <param name="scheduler"></param>
+        /// <returns></returns>
+        public static IObservable<IHeartbeat<T>> Heartbeat<T>(this IObservable<T> source, TimeSpan heartbeatPeriod, IScheduler scheduler)
+        {
+            return Observable.Create<IHeartbeat<T>>(observer =>
+            {
+                var heartbeatTimerSubscription = new MultipleAssignmentDisposable();
+                var gate = new object();
+
+                Action scheduleHeartbeats = () =>
+                {
+                    var disposable = Observable
+                                .Timer(heartbeatPeriod, heartbeatPeriod, scheduler)
+                                .Subscribe(
+                                    _ => observer.OnNext(new Heartbeat<T>()));
+
+                    lock (gate)
+                    {
+                        heartbeatTimerSubscription.Disposable = disposable;
+                    }
+                };
+
+                var sourceSubscription = source.Subscribe(
+                    x =>
+                    {
+                        lock (gate)
+                        {
+                            // cancel any scheduled heartbeat
+                            heartbeatTimerSubscription.Disposable.Dispose();    
+                        }
+                        
+                        observer.OnNext(new Heartbeat<T>(x));
+
+                        scheduleHeartbeats();
+                    },
+                    observer.OnError,
+                    observer.OnCompleted);
+
+                scheduleHeartbeats();
+
+                return new CompositeDisposable { sourceSubscription, heartbeatTimerSubscription };
+            });
+        }
+
+        /// <summary>
+        /// Detects when a stream becomes inactive for some period of time
+        /// </summary>
+        /// <typeparam name="T">update type</typeparam>
+        /// <param name="source">source stream</param>
+        /// <param name="stalenessPeriod">if source steam does not OnNext any update during this period, it is declared staled</param>
+        /// <param name="scheduler"></param>
+        /// <returns></returns>
+        public static IObservable<IStale<T>> DetectStale<T>(this IObservable<T> source, TimeSpan stalenessPeriod, IScheduler scheduler)
+        {
+            return Observable.Create<IStale<T>>(observer =>
+            {
+                var timerSubscription = new MultipleAssignmentDisposable();
+                var gate = new object();
+
+                Action scheduleStale = () =>
+                {
+                    var disposable = Observable
+                                .Timer(stalenessPeriod, scheduler)
+                                .Subscribe(
+                                    _ => observer.OnNext(new Stale<T>()));
+
+                    lock (gate)
+                    {
+                        timerSubscription.Disposable = disposable;
+                    }
+                };
+
+                var sourceSubscription = source.Subscribe(
+                    x =>
+                    {
+                        lock (gate)
+                        {
+                            // cancel any scheduled stale update
+                            timerSubscription.Disposable.Dispose();
+                        }
+
+                        observer.OnNext(new Stale<T>(x));
+
+                        scheduleStale();
+                    },
+                    observer.OnError,
+                    observer.OnCompleted);
+
+                scheduleStale();
+
+                return new CompositeDisposable { sourceSubscription, timerSubscription };
+            });
+        }
     }
 }

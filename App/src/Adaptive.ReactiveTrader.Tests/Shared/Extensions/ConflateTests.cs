@@ -6,10 +6,10 @@ using Adaptive.ReactiveTrader.Shared.Extensions;
 using Microsoft.Reactive.Testing;
 using NUnit.Framework;
 
-namespace Adaptive.ReactiveTrader.Tests
+namespace Adaptive.ReactiveTrader.Tests.Shared.Extensions
 {
     [TestFixture]
-    public class ObservableExtensionsTests
+    public class ConflateTests
     {
         private readonly TimeSpan _minimumUpdatePeriod = TimeSpan.FromSeconds(1);
 
