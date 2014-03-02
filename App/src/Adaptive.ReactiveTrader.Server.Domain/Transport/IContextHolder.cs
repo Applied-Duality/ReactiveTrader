@@ -4,7 +4,8 @@ namespace Adaptive.ReactiveTrader.Server.Transport
 {
     public interface IContextHolder
     {
-        IHubCallerConnectionContext Context { get; set; }
+        IHubCallerConnectionContext PricingHubClient { get; set; }
         IHubCallerConnectionContext BlotterHubClients { get; set; }
+        IHubCallerConnectionContext ReferenceDataHubClients { get; set; }
     }
 }

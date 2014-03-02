@@ -15,7 +15,6 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
         private readonly IPricePublisher _pricePublisher;
         private readonly IPriceLastValueCache _priceLastValueCache;
         private readonly Random _random;
-        private readonly List<CurrencyPairDto> _allCurrencyPairs;
         private Timer _timer;
         private int _updatesPerTick = 1;
 
@@ -28,7 +27,6 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
             _pricePublisher = pricePublisher;
             _priceLastValueCache = priceLastValueCache;
             _random = new Random(_currencyPairRepository.GetHashCode());
-            _allCurrencyPairs = _currencyPairRepository.GetAllCurrencyPairs().ToList();
         }
 
         public void Start()
@@ -95,7 +93,8 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
         {
             for (int i = 0; i < _updatesPerTick; i++)
             {
-                var randomCurrencyPair = _allCurrencyPairs[_random.Next(0, _allCurrencyPairs.Count)];
+                var activePairs = _currencyPairRepository.GetAllCurrencyPairInfos().Where(cp=>cp.Enabled && !cp.Stale).ToList();
+                var randomCurrencyPair = activePairs[_random.Next(0, activePairs.Count)].CurrencyPair;
                 var lastPrice = _priceLastValueCache.GetLastValue(randomCurrencyPair.Symbol);
 
                 var newPrice = GenerateNextQuote(lastPrice);

@@ -19,7 +19,7 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
 
         public async Task Publish(PriceDto price)
         {
-            var context = _contextHolder.Context;
+            var context = _contextHolder.PricingHubClient;
             if (context == null) return;
 
             _totalUpdatesPublished++;

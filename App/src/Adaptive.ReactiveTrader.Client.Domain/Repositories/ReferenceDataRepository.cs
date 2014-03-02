@@ -4,27 +4,27 @@ using System.Linq;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Domain.Models;
 using Adaptive.ReactiveTrader.Client.Domain.ServiceClients;
-using Adaptive.ReactiveTrader.Shared;
 
 namespace Adaptive.ReactiveTrader.Client.Domain.Repositories
 {
     class ReferenceDataRepository : IReferenceDataRepository
     {
         private readonly IReferenceDataServiceClient _referenceDataServiceClient;
-        private readonly ICurrencyPairFactory _currencyPairFactory;
+        private readonly ICurrencyPairUpdateFactory _currencyPairUpdateFactory;
 
-        public ReferenceDataRepository(IReferenceDataServiceClient referenceDataServiceClient, ICurrencyPairFactory currencyPairFactory)
+        public ReferenceDataRepository(IReferenceDataServiceClient referenceDataServiceClient, ICurrencyPairUpdateFactory currencyPairUpdateFactory)
         {
             _referenceDataServiceClient = referenceDataServiceClient;
-            _currencyPairFactory = currencyPairFactory;
+            _currencyPairUpdateFactory = currencyPairUpdateFactory;
         }
 
-        public IObservable<IEnumerable<ICurrencyPair>> GetCurrencyPairs()
+        public IObservable<IEnumerable<ICurrencyPairUpdate>> GetCurrencyPairs()
         {
-            return _referenceDataServiceClient.GetCurrencyPairUpdates()
-                .Select(updates => updates.Where(update => update.UpdateType == UpdateTypeDto.Added))
+            return Observable.Defer(() => _referenceDataServiceClient.GetCurrencyPairUpdates())
                 .Where(updates => updates.Any())
-                .Select(updates => updates.Select(update => _currencyPairFactory.Create(update.CurrencyPair)))
+                .Select(updates => updates.Select(update => _currencyPairUpdateFactory.Create(update)))
+                .Catch(Observable.Return(new ICurrencyPairUpdate[0]))  // if the stream errors (server disconnected), we push an empty list of ccy pairs  
+                .Repeat()                                               // and resubscribe
                 .Publish()
                 .RefCount();
             }

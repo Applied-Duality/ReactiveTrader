@@ -11,6 +11,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         public ISpotTilePricingViewModel Pricing { get; private set; }
         public ISpotTileAffirmationViewModel Affirmation { get; private set; }
         public bool ShowingAffirmation { get; private set; }
+        public string CurrencyPair { get; private set; }
 
         private readonly Func<ITrade, ISpotTileViewModel, ISpotTileAffirmationViewModel> _affirmationFactory;
         private bool _disposed;
@@ -22,6 +23,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             _affirmationFactory = affirmationFactory;
 
             Pricing = pricingFactory(currencyPair, this);
+            CurrencyPair = currencyPair.Symbol;
         }
 
         public void Dispose()

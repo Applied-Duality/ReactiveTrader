@@ -38,6 +38,7 @@ namespace Adaptive.ReactiveTrader.Server
             var mainWindow = container.Resolve<MainWindow>();
             var vm = container.Resolve<IMainViewModel>();
             mainWindow.DataContext = vm;
+            vm.Start();
             mainWindow.Show();
         }
 

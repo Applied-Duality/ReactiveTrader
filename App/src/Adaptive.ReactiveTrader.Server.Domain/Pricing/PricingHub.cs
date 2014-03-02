@@ -32,7 +32,7 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
         [HubMethodName(ServiceConstants.Server.SubscribePriceStream)]
         public async Task SubscribePriceStream(PriceSubscriptionRequestDto request)
         {
-            _contextHolder.Context = Clients;
+            _contextHolder.PricingHubClient = Clients;
 
             Log.InfoFormat("Received subscription request {0} from connection {1}", request, Context.ConnectionId);
 

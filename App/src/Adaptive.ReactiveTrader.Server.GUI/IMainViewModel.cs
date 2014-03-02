@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
 using Adaptive.ReactiveTrader.Shared.UI;
 
 namespace Adaptive.ReactiveTrader.Server
@@ -10,5 +11,7 @@ namespace Adaptive.ReactiveTrader.Server
         string StartStopCommandText { get; }
         string Throughput { get; }
         int UpdateFrequency { get; set; }
+        ObservableCollection<ICurrencyPairViewModel> CurrencyPairs { get; }
+        void Start();
     }
 }

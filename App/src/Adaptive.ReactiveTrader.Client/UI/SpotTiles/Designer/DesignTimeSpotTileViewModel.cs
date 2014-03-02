@@ -8,6 +8,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer
         public DesignTimeSpotTileViewModel()
         {
             Pricing = new DesignTimeSpotTilePricingViewModel();
+            CurrencyPair = "EURUSD";
         }
 
         public void Dispose()
@@ -18,6 +19,8 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer
         public ISpotTilePricingViewModel Pricing { get; private set; }
         public ISpotTileAffirmationViewModel Affirmation { get; private set; }
         public bool ShowingAffirmation { get { return false; } }
+        public string CurrencyPair { get; private set; }
+
         public void OnTrade(ITrade trade)
         {
             throw new System.NotImplementedException();

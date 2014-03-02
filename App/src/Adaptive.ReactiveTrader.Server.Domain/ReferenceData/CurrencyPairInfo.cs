@@ -6,11 +6,14 @@ namespace Adaptive.ReactiveTrader.Server.ReferenceData
     {
         public CurrencyPairDto CurrencyPair { get; private set; }
         public decimal SampleRate { get; private set; }
+        public bool Enabled { get; set; }
+        public bool Stale { get; set; }
 
-        public CurrencyPairInfo(CurrencyPairDto currencyPair, decimal sampleRate)
+        public CurrencyPairInfo(CurrencyPairDto currencyPair, decimal sampleRate, bool enabled)
         {
             CurrencyPair = currencyPair;
             SampleRate = sampleRate;
+            Enabled = enabled;
         }
     }
 }
