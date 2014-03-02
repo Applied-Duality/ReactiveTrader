@@ -5,6 +5,11 @@
         Height="570" 
         Width="600"
         ResizeMode="NoResize">
+    <Window.Style>
+        <Style TargetType="Window">
+            <Setter Property="Icon" Value="adaptive-logo.png"/>
+        </Style>
+    </Window.Style>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -16,7 +21,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
+
         <TextBlock Grid.Row="0" Grid.Column="0" Text="Server state:" Margin="4" />
         <TextBlock Grid.Row="0" Grid.Column="1" Margin="4" Text="{Binding ServerStatus, Mode=OneWay}" />
         <Button Grid.Row="0" Grid.Column="2" Margin="4" Command="{Binding StartStopCommand}" Content="{Binding StartStopCommandText}" />
