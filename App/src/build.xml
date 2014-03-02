@@ -53,7 +53,7 @@
   </Target>
 
   <ItemGroup>
-    <TestProjects Include="Adaptive.ReactiveTrader.Tests\bin\Debug\Adaptive.ReactiveTrader.Tests.dll" />
+    <TestProjects Include="Adaptive.ReactiveTrader.Tests\bin\$(BuildConfiguration)\Adaptive.ReactiveTrader.Tests.dll" />
   </ItemGroup>
   
   <Target Name="RunTests" DependsOnTargets="Compile">
@@ -61,5 +61,26 @@
         ToolPath=".\packages\NUnit.Runners.lite.2.6.3.20131019\"
         OutputXmlFile="$(NUnitResultsFile)"
     />
+  </Target>
+
+  <ItemGroup>
+    <FilesToCopy Include=".\Adaptive.ReactiveTrader.Client\bin\$(BuildConfiguration)\*.dll" />
+    <FilesToCopy Include=".\Adaptive.ReactiveTrader.Client\bin\$(BuildConfiguration)\*.exe" />
+    <FilesToCopy Include=".\Adaptive.ReactiveTrader.Client\bin\$(BuildConfiguration)\*.config" />
+    <FilesToCopy Include=".\Adaptive.ReactiveTrader.Server.GUI\bin\$(BuildConfiguration)\*.dll" />
+    <FilesToCopy Include=".\Adaptive.ReactiveTrader.Server.GUI\bin\$(BuildConfiguration)\*.exe" />
+    <FilesToCopy Include=".\Adaptive.ReactiveTrader.Server.GUI\bin\$(BuildConfiguration)\*.config" />
+    <FilesToCopy Include=".\.build\__LaunchReactiveTrader__.bat" />
+    <FilesToCopy Include=".\.build\__README__.txt" />
+    <FilesToZip Include=".\Output\*.*" />
+  </ItemGroup>
+  
+  <Target Name="Package" >
+    <RemoveDir Directories=".\Output" />
+    <Delete Files=".\ReactiveTrader.zip" />
+
+    <Copy SourceFiles="@(FilesToCopy)" DestinationFolder=".\Output" />  
+    
+    <Zip ZipFileName=".\ReactiveTrader.zip" Files="@(FilesToZip)" Flatten="True" />
   </Target>
 </Project>
