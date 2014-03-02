@@ -1,3 +1,8 @@
+Download
+========
+
+[Download Reactive Trader](https://github.com/AdaptiveConsulting/ReactiveTrader/raw/master/App/src/ReactiveTrader.zip)
+
 Reactive Trader
 ===============
 
