@@ -75,7 +75,7 @@
     <FilesToZip Include=".\Output\*.*" />
   </ItemGroup>
   
-  <Target Name="Package" >
+  <Target Name="Package" DependsOnTargets="RunTests">
     <RemoveDir Directories=".\Output" />
     <Delete Files=".\ReactiveTrader.zip" />
 
