@@ -98,8 +98,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Adaptive.ReactiveTrader.Client\Adaptive.ReactiveTrader.Client.GUI.csproj">
-      <Project>{CA35010F-7F38-4DCF-828E-A825F1E8D525}</Project>
+    <ProjectReference Include="..\Adaptive.ReactiveTrader.Client.GUI\Adaptive.ReactiveTrader.Client.GUI.csproj">
+      <Project>{ca35010f-7f38-4dcf-828e-a825f1e8d525}</Project>
       <Name>Adaptive.ReactiveTrader.Client.GUI</Name>
     </ProjectReference>
     <ProjectReference Include="..\Adaptive.ReactiveTrader.Shared\Adaptive.ReactiveTrader.Shared.csproj">

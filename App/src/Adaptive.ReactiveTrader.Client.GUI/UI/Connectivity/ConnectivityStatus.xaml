@@ -8,8 +8,8 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Adaptive.ReactiveTrader.Client;component/Styles/Brushes.xaml" />
-                <ResourceDictionary Source="/Adaptive.ReactiveTrader.Client;component/Styles/Button.xaml" />
+                <ResourceDictionary Source="/Adaptive.ReactiveTrader.Client.GUI;component/Styles/Brushes.xaml" />
+                <ResourceDictionary Source="/Adaptive.ReactiveTrader.Client.GUI;component/Styles/Button.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">

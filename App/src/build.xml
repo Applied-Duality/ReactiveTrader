@@ -63,23 +63,29 @@
     />
   </Target>
 
-  <ItemGroup>
-    <FilesToCopy Include=".\Adaptive.ReactiveTrader.Client\bin\$(BuildConfiguration)\*.dll" />
-    <FilesToCopy Include=".\Adaptive.ReactiveTrader.Client\bin\$(BuildConfiguration)\*.exe" />
-    <FilesToCopy Include=".\Adaptive.ReactiveTrader.Client\bin\$(BuildConfiguration)\*.config" />
-    <FilesToCopy Include=".\Adaptive.ReactiveTrader.Server.GUI\bin\$(BuildConfiguration)\*.dll" />
-    <FilesToCopy Include=".\Adaptive.ReactiveTrader.Server.GUI\bin\$(BuildConfiguration)\*.exe" />
-    <FilesToCopy Include=".\Adaptive.ReactiveTrader.Server.GUI\bin\$(BuildConfiguration)\*.config" />
-    <FilesToCopy Include=".\.build\__LaunchReactiveTrader__.bat" />
-    <FilesToCopy Include=".\.build\__README__.txt" />
-    <FilesToZip Include=".\Output\*.*" />
-  </ItemGroup>
-  
-  <Target Name="Package" DependsOnTargets="RunTests">
+  <Target Name="GatherFiles" DependsOnTargets="RunTests">
+    <ItemGroup>
+      <FilesToCopy Include=".\Adaptive.ReactiveTrader.Client.GUI\bin\$(BuildConfiguration)\*.dll" />
+      <FilesToCopy Include=".\Adaptive.ReactiveTrader.Client.GUI\bin\$(BuildConfiguration)\*.exe" />
+      <FilesToCopy Include=".\Adaptive.ReactiveTrader.Client.GUI\bin\$(BuildConfiguration)\*.config" />
+      <FilesToCopy Include=".\Adaptive.ReactiveTrader.Server.GUI\bin\$(BuildConfiguration)\*.dll" />
+      <FilesToCopy Include=".\Adaptive.ReactiveTrader.Server.GUI\bin\$(BuildConfiguration)\*.exe" />
+      <FilesToCopy Include=".\Adaptive.ReactiveTrader.Server.GUI\bin\$(BuildConfiguration)\*.config" />
+      <FilesToCopy Include=".\.build\__LaunchReactiveTrader__.bat" />
+      <FilesToCopy Include=".\.build\__README__.txt" />
+    </ItemGroup>
+    
     <RemoveDir Directories=".\Output" />
     <Delete Files=".\ReactiveTrader.zip" />
 
-    <Copy SourceFiles="@(FilesToCopy)" DestinationFolder=".\Output" />  
+    <Copy SourceFiles="@(FilesToCopy)" DestinationFolder=".\Output" />
+  </Target>
+
+  
+  <Target Name="Package" DependsOnTargets="GatherFiles">
+    <ItemGroup>
+      <FilesToZip Include=".\Output\*.*" />
+    </ItemGroup>
     
     <Zip ZipFileName=".\ReactiveTrader.zip" Files="@(FilesToZip)" Flatten="True" />
   </Target>

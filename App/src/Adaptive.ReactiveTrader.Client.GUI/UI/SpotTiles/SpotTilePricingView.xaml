@@ -12,7 +12,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Adaptive.ReactiveTrader.Client;component/Styles/Brushes.xaml" />
+                <ResourceDictionary Source="/Adaptive.ReactiveTrader.Client.GUI;component/Styles/Brushes.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <SolidColorBrush x:Key="MouseOverBrush">#FF2F5078</SolidColorBrush>
