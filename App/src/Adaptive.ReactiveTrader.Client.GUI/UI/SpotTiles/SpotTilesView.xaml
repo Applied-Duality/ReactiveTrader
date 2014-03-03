@@ -18,7 +18,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <spotTiles:SpotTileView DataContext="{Binding}" />
+                    <spotTiles:SpotTileView />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
