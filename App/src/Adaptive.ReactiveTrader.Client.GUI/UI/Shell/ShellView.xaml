@@ -9,9 +9,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" 
              d:DesignWidth="800">
-    <Grid>
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="BackgroundBrush" Color="#FF212A35" />
+    </UserControl.Resources>
+    <Grid Background="{StaticResource BackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -23,8 +27,10 @@
                 </DataTemplate>
             </ContentPresenter.ContentTemplate>
         </ContentPresenter>
+
+        <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="7" Background="{StaticResource BackgroundBrush}" />
         
-        <ContentPresenter Grid.Row="1" Content="{Binding Blotter, Mode=OneTime}">
+        <ContentPresenter Grid.Row="2" Content="{Binding Blotter, Mode=OneTime}">
             <ContentPresenter.ContentTemplate>
                 <DataTemplate DataType="blotter:IBlotterViewModel">
                     <blotter:BlotterView DataContext="{Binding Mode=OneWay}" />
@@ -32,7 +38,7 @@
             </ContentPresenter.ContentTemplate>
         </ContentPresenter>
 
-        <ContentPresenter Grid.Row="2" Content="{Binding ConnectivityStatus, Mode=OneTime}">
+        <ContentPresenter Grid.Row="3" Content="{Binding ConnectivityStatus, Mode=OneTime}">
             <ContentPresenter.ContentTemplate>
                 <DataTemplate DataType="connectivity:IConnectivityStatusViewModel">
                     <connectivity:ConnectivityStatusView DataContext="{Binding Mode=OneWay}" />
