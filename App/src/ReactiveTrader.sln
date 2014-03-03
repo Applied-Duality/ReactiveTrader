@@ -1,9 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adaptive.ReactiveTrader.Client", "Adaptive.ReactiveTrader.Client\Adaptive.ReactiveTrader.Client.csproj", "{CA35010F-7F38-4DCF-828E-A825F1E8D525}"
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adaptive.ReactiveTrader.Client.GUI", "Adaptive.ReactiveTrader.Client.GUI\Adaptive.ReactiveTrader.Client.GUI.csproj", "{CA35010F-7F38-4DCF-828E-A825F1E8D525}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adaptive.ReactiveTrader.Server.Domain", "Adaptive.ReactiveTrader.Server.Domain\Adaptive.ReactiveTrader.Server.Domain.csproj", "{1348ACC4-D5B2-4328-9C80-7EC813E82CE4}"
 EndProject

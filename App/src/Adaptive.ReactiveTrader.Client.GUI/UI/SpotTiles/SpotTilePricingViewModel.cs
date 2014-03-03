@@ -66,9 +66,9 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             //  - observe only the most recent update (ObserveLatestOn)
 
             _priceSubscription = _currencyPair.Prices
-                //.ObserveLatestOn(DispatcherScheduler.Current) 
+                .ObserveLatestOn(DispatcherScheduler.Current) 
                 //.ObserveOnDispatcher()
-                .Conflate(TimeSpan.FromMilliseconds(250), DispatcherScheduler.Current)
+                //.Conflate(TimeSpan.FromMilliseconds(100), DispatcherScheduler.Current)
                 .Subscribe(OnPrice, error => Log.Error("Failed to get prices"));
         }
 

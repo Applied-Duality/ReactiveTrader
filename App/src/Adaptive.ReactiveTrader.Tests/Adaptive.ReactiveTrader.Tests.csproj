@@ -98,9 +98,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Adaptive.ReactiveTrader.Client\Adaptive.ReactiveTrader.Client.csproj">
+    <ProjectReference Include="..\Adaptive.ReactiveTrader.Client\Adaptive.ReactiveTrader.Client.GUI.csproj">
       <Project>{CA35010F-7F38-4DCF-828E-A825F1E8D525}</Project>
-      <Name>Adaptive.ReactiveTrader.Client</Name>
+      <Name>Adaptive.ReactiveTrader.Client.GUI</Name>
     </ProjectReference>
     <ProjectReference Include="..\Adaptive.ReactiveTrader.Shared\Adaptive.ReactiveTrader.Shared.csproj">
       <Project>{918ED78D-1E46-4305-B9FC-FAD07B582AFF}</Project>
