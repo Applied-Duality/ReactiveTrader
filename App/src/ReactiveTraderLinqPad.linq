@@ -1,4 +1,4 @@
-<Query Kind="Statements">
+<Query Kind="Program">
   <Reference Relative="Adaptive.ReactiveTrader.Client.Domain\bin\Debug\Adaptive.ReactiveTrader.Client.Domain.dll">&lt;MyDocuments&gt;\git\ReactiveTrader\App\src\Adaptive.ReactiveTrader.Client.Domain\bin\Debug\Adaptive.ReactiveTrader.Client.Domain.dll</Reference>
   <Reference Relative="Adaptive.ReactiveTrader.Client.Domain\bin\Debug\Adaptive.ReactiveTrader.Shared.dll">&lt;MyDocuments&gt;\git\ReactiveTrader\App\src\Adaptive.ReactiveTrader.Client.Domain\bin\Debug\Adaptive.ReactiveTrader.Shared.dll</Reference>
   <Reference Relative="Adaptive.ReactiveTrader.Client.Domain\bin\Debug\log4net.dll">&lt;MyDocuments&gt;\git\ReactiveTrader\App\src\Adaptive.ReactiveTrader.Client.Domain\bin\Debug\log4net.dll</Reference>
@@ -12,17 +12,27 @@
   <Namespace>System</Namespace>
   <Namespace>System.Reactive</Namespace>
   <Namespace>System.Reactive.Linq</Namespace>
+  <Namespace>Adaptive.ReactiveTrader.Client.Domain.Models</Namespace>
 </Query>
 
-var api = new ReactiveTrader();
-api.Initialize("olivier", new []{"http://localhost:8080"});
-
-api.ConnectionStatus.Dump();
-
-
-var prices = from currencyPairs in api.ReferenceData.GetCurrencyPairs()
-             from currencyPair in currencyPairs
-             from price in currencyPair.Prices
-			 select price.ToString(); 
-			 
-prices.Dump();
+void Main()
+{
+	var api = new ReactiveTrader();
+	api.Initialize("Olivier", new []{"http://localhost:8080"});
+	
+	api.ConnectionStatus.DumpLive();
+	
+	var eurusd = from currencyPairs in api.ReferenceData.GetCurrencyPairs()
+	             from currencyPair in currencyPairs
+				 where currencyPair.CurrencyPair.Symbol == "EURUSD"
+	             from price in currencyPair.CurrencyPair.Prices
+				 select price;
+				 
+	eurusd.Select((p,i)=> "price" + i + ":" + p.ToString()).DumpLive();
+	
+	var execution = from price in eurusd.Skip(10).Take(1)
+					from trade in price.Ask.Execute(10000, "EUR")
+					select trade.ToString();
+	
+	execution.DumpLive();				 
+}

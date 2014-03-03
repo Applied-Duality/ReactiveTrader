@@ -28,5 +28,10 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Models
             ValueDate = valueDate;
             DealtCurrency = dealtCurrency;
         }
+
+        public override string ToString()
+        {
+            return string.Format("CurrencyPair: {0}, Direction: {1}, Notional: {2}, SpotRate: {3}, TradeStatus: {4}, TradeDate: {5}, TradeId: {6}, TraderName: {7}, ValueDate: {8}, DealtCurrency: {9}", CurrencyPair, Direction, Notional, SpotRate, TradeStatus, TradeDate, TradeId, TraderName, ValueDate, DealtCurrency);
+        }
     }
 }
