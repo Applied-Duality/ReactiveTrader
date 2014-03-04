@@ -13,7 +13,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.Blotter
         {
             TradeId = trade.TradeId.ToString(CultureInfo.InvariantCulture);
             CurrencyPair = trade.CurrencyPair.Substring(0, 3) + " / " + trade.CurrencyPair.Substring(3, 3);
-            Direction = trade.Direction == Domain.Models.Direction.Buy ? "Buy" : "Sell";
+            Direction = trade.Direction == Domain.Models.Direction.BUY ? "BUY" : "SELL";
             Notional = trade.Notional.ToString("N0", CultureInfo.InvariantCulture) + " " + trade.DealtCurrency;
             SpotRate = trade.SpotRate;
             TradeDate = trade.TradeDate;

@@ -8,7 +8,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer
     public class DesignTimeSpotTileAffirmationViewModel : ViewModelBase, ISpotTileAffirmationViewModel
     {
         public string CurrencyPair { get { return "EUR / USD"; } }
-        public Direction Direction { get { return Direction.Buy; } }
+        public Direction Direction { get { return Direction.BUY; } }
         public long Notional { get { return 1000000; } }
         public decimal SpotRate { get { return 1.23456m; } }
         public string Rejected { get { return "REJECTED"; } }

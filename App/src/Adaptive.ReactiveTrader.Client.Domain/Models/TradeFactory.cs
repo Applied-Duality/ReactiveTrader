@@ -8,7 +8,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Models
         {
             return new Trade(
                 trade.CurrencyPair,
-                trade.Direction == DirectionDto.Buy ? Direction.Buy : Direction.Sell,
+                trade.Direction == DirectionDto.Buy ? Direction.BUY : Direction.SELL,
                 trade.Notional,
                 trade.DealtCurrency,
                 trade.SpotRate,

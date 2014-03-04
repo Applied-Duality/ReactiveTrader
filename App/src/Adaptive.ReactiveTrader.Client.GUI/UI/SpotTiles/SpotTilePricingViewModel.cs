@@ -37,8 +37,8 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             _parent = parent;
             _priceLatencyRecorder = priceLatencyRecorder;
 
-            Bid = oneWayPriceFactory(Direction.Sell, this);
-            Ask = oneWayPriceFactory(Direction.Buy, this);
+            Bid = oneWayPriceFactory(Direction.SELL, this);
+            Ask = oneWayPriceFactory(Direction.BUY, this);
             Notional = "1000000";
             DealtCurrency = currencyPair.BaseCurrency;
             SpotDate = "SP";

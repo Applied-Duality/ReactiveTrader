@@ -24,7 +24,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Repositories
 
             var request = new TradeRequestDto
             {
-                Direction = executablePrice.Direction == Direction.Buy ? DirectionDto.Buy : DirectionDto.Sell,
+                Direction = executablePrice.Direction == Direction.BUY ? DirectionDto.Buy : DirectionDto.Sell,
                 Notional = notional,
                 QuoteId = price.QuoteId,
                 SpotRate = executablePrice.Rate,

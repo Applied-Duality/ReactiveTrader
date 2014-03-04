@@ -2,7 +2,7 @@
 {
     public enum Direction
     {
-        Buy,
-        Sell
+        BUY,
+        SELL
     }
 }

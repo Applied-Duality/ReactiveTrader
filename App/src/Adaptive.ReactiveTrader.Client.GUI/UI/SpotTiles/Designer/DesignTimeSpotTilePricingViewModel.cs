@@ -7,8 +7,8 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer
     {
         public DesignTimeSpotTilePricingViewModel()
         {
-            Bid = new DesignTimeOneWayPriceViewModel(Direction.Sell, "1.23", "45", "6");
-            Ask = new DesignTimeOneWayPriceViewModel(Direction.Buy, "1.23", "46", "7");
+            Bid = new DesignTimeOneWayPriceViewModel(Direction.SELL, "1.23", "45", "6");
+            Ask = new DesignTimeOneWayPriceViewModel(Direction.BUY, "1.23", "46", "7");
         }
 
         public void Dispose()

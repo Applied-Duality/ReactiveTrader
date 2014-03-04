@@ -15,7 +15,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.Blotter.Designer
             Trades.Add(new DesignerModeTradeViewModel
             {
                 CurrencyPair = "EUR / USD",
-                Direction = "Sell",
+                Direction = "SELL",
                 Notional = "1,000,000 EUR",
                 SpotRate = 1.23456m,
                 TradeDate = DateTime.Now,
@@ -28,7 +28,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.Blotter.Designer
             Trades.Add(new DesignerModeTradeViewModel
             {
                 CurrencyPair = "EUR / USD",
-                Direction = "Sell",
+                Direction = "SELL",
                 Notional = "1,000,000 EUR",
                 SpotRate = 1.23456m,
                 TradeDate = DateTime.Now,
