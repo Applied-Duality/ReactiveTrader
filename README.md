@@ -1,202 +1,94 @@
-Download
-========
+## For the impatient
 
-[Download Reactive Trader](https://github.com/AdaptiveConsulting/ReactiveTrader/raw/master/App/src/ReactiveTrader.zip)
+Requirements:
+ - Windows 
+ - [Microsoft .NET Framework 4.5](http://www.microsoft.com/en-gb/download/details.aspx?id=30653)
 
-Reactive Trader
-===============
+1. Download the [package](https://github.com/AdaptiveConsulting/ReactiveTrader/raw/master/App/src/ReactiveTrader.zip)
+2. If you are on Windows 7+ unblock the zip (right click, properties, unblock)
+3. Extract the zip
+4. Launch the file __LaunchReactiveTrader__.bat to start both the client UI and the server admin UI, which allow you to control the server
+5. Have fun
 
-Reactive Trader is a reference implementation for a reactive UI application, as defined in the [reactive manifesto](http://www.reactivemanifesto.org/). 
+![image](https://f.cloud.github.com/assets/1256913/2311956/3fd6d2ca-a2f6-11e3-8224-d83a4e107b5a.png)
 
-Reactive Trader is developed and maintained by [Adaptive](http://weareadaptive.com/): we are a London based consultancy specialised in building real-time trading systems.
+... talking via Web Sockets ...
 
-The application was presented at [ReactConf 2014](http://reactconf.com/) by Lee Campbell and Matt Barrett as part of their talk on reactive UIs. (TODO link video here)
+![image](https://f.cloud.github.com/assets/1256913/2311970/5c2b2f0c-a2f6-11e3-92ba-380d2f383351.png)
 
-We build reactive trader to demonstrate what we think a reactive UI application is and specifically chose the requirements for this application to highlight the 4 pillars of reactive applications:
- - event-driven
- - scalable
- - resilient
- - responsive
+## Overview
 
-Requirements
-============
+Reactive Trader is a client server application demonstrating some of the problems you have to deal with when building reactive UIs. It was initially build as a demo app for a presentation we gave at ReactConf 2014 and we decided to open source it (video available soon).
 
-This section contains functional and non-functional requirements for the app. For a discussion are UI / UX requirements, have a look on the [wiki](https://github.com/AdaptiveConsulting/ReactiveTrader/wiki/UX)
+We have selected the requirements carefully for this app to highlight the 4 pillars of reactive applications as defined in the reactive manifesto: resilient, event-driven, scalable and responsive.
 
-1. Display real-time streaming prices
-------------------------------------
+We are a London based software consultancy called Adaptive and, even if the company is relatively new, our consultants have been working on reactive backend systems and building reactive UIs in the finance industry for pretty much the last decade. We thought it would be great to share some of our ideas and design and hopefully open the discussion. If you have questions or ideas, please give us a shout!
 
-The application will present the user with a set of FX SPOT tiles, which are classically used to display FX prices in trading applications. 
+## No experience with trading systems? Read this
 
-The user should be able to select a currency pair within each tile. Once the currency pair is selected the application will subscribe to a server component which will provide a real-time price feed. The feed can be simulated (pseudo random numbers), a replay of some historical price tick data or a real feed.
+If you know what FX, SPOT and SDP means, you can skip this section.
 
-The subscription to a price feed will contain:
- - the currency pair
- - the notional (optionally - this can be build if we have time to show how to modify or switch to another stream)
+This application is a (very) simplified and cut-down version of what you would find in the the finance industry and more specifically in FX (Foreign Exchange). Banks, for instance, offer this type of applications to their clients so they can trade electronically with them. You might have heard of SDP - it stands for Single Dealer Platforms, this is how Banks eCommerce platforms are often called.
 
-The quotes will contain
- - an identifier for the quote: a long starting a 0 and incremented by 1 for each currency pair stream 
- - a bid price
- - a ask price
- - a mid price
- - the value date (spot in this case)
+In the real-world clients would launch those trading UI and they would connect via internet or some private lines to the bank backend system.
 
-This requirement will help to highlight the [event-driven](http://www.reactivemanifesto.org/#event-driven) nature of reactive applications.
+Some financial products' price moves very quickly and this is very much the case in FX, especially for SPOT. What is FX SPOT? When some big company want to change millions of US Dollars (USD) to Euro (EUR) for instance, and need to do this transaction "now" this is called a SPOT trade. FX eCommerce platform "stream" SPOT prices to their clients via APIs or providing UIs and this price has to sides: a buy side and a sell side. The different between those prices is called the spread. It is not rare that a price will be moving several times per second on the main currency pairs.
 
-2. Unsubscribe from a stream
-----------------------------
+## Intro to Reactive Trader
 
-The user should be able to close a tile. Once a tile is closed, reactive trader should notify the streaming service that this stream is no longer required and unsubscribe.
+Reactive Trader is a sample trading application composed a UI, written in WPF and a server, also written in .NET. To illustrate reactive UI problems we decided to implement trading functionalities around FX (Foreign Exchange): this is an area where price are moving quickly and you need an event driven architecture to cope with that.
 
-Closing the application should have the same effect and unsubscribe from all streams.
+Client-server communication needs to be duplex (ie. both the server and the client need to be able to send a message to the other party at any point in time). Lots of solutions exist for that, from simple web socket based libraries to high performance gateways that we commonly use when building such system in Finance.
 
-This requirement helps to show that when an application consumes a real-time feed of data, this is a stateful operation for the server - and this state needs to be disposed at some point to not exhaust server resources or use resources which are no longer required.
+We wanted something very simple to setup so somebody can clone from GitHub and hit run, without much more configuration and also wanted the transport to be "web friendly" so you can use the same concepts in HTML5/Javascript or any other UI technology. In the .NET world SignalR was a good candidate (it's an abstraction on top of web socket with fallback to Server Send Event, long polling, etc) - we did some investigations and decided that it was perfectly good enough for what we want to demonstrate here.
 
-3. Server to dispose all subscriptions on client disconnected
--------------------------------------------------------------
 
-The server should be fault tolerant to a mis-behaving client. If the client crashes or the client / server connectivity is lost, the server should detect the disconnection and dispose all the active subscriptions for that user session with 10 seconds (to be able to demonstrate this during a demo).
+## Features
 
-4. Client to detect server disconnection
-----------------------------------------
+In this section you will find a description of the different features of Reactive Trader, how you can reproduce them in the application and also some pointers to the relevant source code.
 
-The client should be fault tolerant to a crash from the server or a loss of network connectivity. 
-The client should detect within 5 seconds or less that the connection with the server has been lost, invalidate all prices and notify the user of the issue. The application will automatically enter in a reconnection loop and attempt to reconnect to the server and re-subscribe to all currency pairs. 
+### Streaming
 
-If it fails to do so within 30 seconds it will attempt to connect to a secondary pricing server instance and re-subscribe all price streams.
+The application streams spot prices for different currency pairs: the UI connects to the server and subscribes to price streams for EUR/USD and other currency pairs. The server generate pseudo-random prices and push them to the client. 
 
-This requirement highlights some resilience aspects of the application and how fault detection and fail over can be implemented.
+![image](https://f.cloud.github.com/assets/1256913/2321909/a8a6fcb2-a3aa-11e3-9cc2-036c77b6c6e7.png)
 
-5. Client to detect a stale stream
-----------------------------------
+**Resilience**:
+ - if connectivity with the server is lost, the UI client detects the error and invalidate all the prices (pricing tiles become blank). Pricing tiles resubscribe automatically when the connection is re-established.
+ - if a stream becomes stale (stops to update for some time), the client will assume that there is a problem with the stream and invalid the price, until it receives a new price.
 
-The pricing server could stay up and running but have some internal fault or one of its downstream systems could have a fault which could stale (or freeze) one or all the price streams. The client should detect when a price stream becomes stale, notify the client (invalidate the tile). Once the stream becomes live again the application should display prices again. The contract here is that the server should be able to heal itself from stale stream: the client is not going to resubscribe or fail-over when a single stream becomes stale.
+**Responsive**: the UI client applies a conflation algorithm to protect the UI against burst of prices.
+### Trade execution
 
-This requirement will help to show techniques like heart-beating (resilience).
+The user can client the buy or sell price to execute a trade. The server will process the request and accept or reject the trade. 
 
-6. Client to handle burst of events without adding excessive latency
---------------------------------------------------------------------
+**Resilience**:
+ - It is possible that the server does not respond in a timely maner and the client will timeout and display an error message.
 
-When a client is subscribed to a set of streams it may happen that the server sends an important number of updates per seconds (tens to hundreds of updates per second per stream). The UI should implement some algorithm to prevent price tick processing time to exceed 200ms (time displayed in UI - time received from socket < 200ms)
+### Blotter
 
-The application will for instance apply a conflation algorithm: if several prices of a same stream (ie. same currency pair) are received within a fraction of a second the application can drop (ie. not render) some prices, as long as it meets the previous SLA.
+All trade executed, wether accepted or rejected are inserted in the blotter. In a real trading system the user would see only his own trade (or trades for his desk), in reative trade all clients see all the trades.
 
-The application should also display a visual indicator of the internal UI latency for price distribution so we can see the effects of bursts. A chart would be ideal.
+**Resilience**: 
+ - If the server fails or connection is lost, the blotter will still display the current trades, so that the user can continue to work, and attempt to reconnect. Once the connectivity is retrieved, the blotter will re-synchronize with the server and display the up to date list of trades.
 
-7. client to be able to subscribe quickly to tens to hundreds of price streams
--------------------------------------------------------------------------------
+### Reference Data
 
-When the UI starts up or when the user switch from one tab of tiles to another, the client should be able to subscribe and receive prices in a timely manner, even when the client has poor connectivity with the server (high latency link client/server).
+Reactive Trader UI request the list of currency pairs from the server and automatically creates a pricing tile for each currency pair. 
 
-This requirement will help showing the importance of batching, and the impacts of head of line blocking. A general rule of thumb should be that one user action should never trigger O(N) messages but a constant O(1) number of messages (ideally 1).  
+The server can also notify the client when a currency pair is added or removed (you can think of this as adding a user permission for this currency pair or removing one). We decided to implement that feature to show that a push based design makes sense not only for streaming prices, but also to notify the client in real time when permissions or some other slow moving reference data changes, without requiring a restart of the client application.
 
-8. Client to view its blotter
------------------------------
+**Resilience**: 
+ - If the server fails or connection is lost, the client will keep the current list of currency pairs it has and wait for the connection to come back. Once the connection comes back it will re-subscribe and synchronize the currency pairs.
 
-The client should be able to see all trades he made during the day. The blotter will also display trades performed by other users (normally it would be limited to a desk but we won't model that here).
+## Architecture
 
-Once opened the blotter should receive all trades performed during the day (aka. state of the world).
-When a trade is performed (done or rejected), a new line should appear in the blotter with the trade details.
+The following architecture diagram provides a view of the main components and layering within the client and server. Note that the focus of reactive trader is reactive UI design, so we kept the server as dumb and simple as possible here.
 
-Columns:
- - tradeId
- - trader name or sessionid of user who did the trade
- - currency pair
- - notional
- - direction (buy/sell)
- - spot price
- - trade date
- - value date
- - status (done/rejected)
+![image](https://f.cloud.github.com/assets/1256913/2321883/421d7f48-a3aa-11e3-8a4c-22bf0858a085.png)
 
-9. Blotter to detect server failure
------------------------------------
+## Reactive domain
 
-In the event of server failure (crash) or loss of connectivity between the client and its server, the blotter should detect the issue and notify the user. The blotter should then attempt to reconnect to the same node for 30sec, after which it will failover to another server.
+## Technologies used
 
-Upon reconnection, the blotter should be able to sync it state with the server and display the correct list of trades (ie. some new trades might have been executed during the disconnection).
 
-10. Blotter service to dispose client subscription on disconnection
--------------------------------------------------------------------
-
-The blotter service should be able to detect a client disconnection (client close the app or network failure or client crash) and release all resources used for this user (subscription, cached trades, etc).
-
-11. Client to execute a trade
------------------------------
-
-Double clicking on a side of a SPOT tile should send a trade request to the server. Upon reception of the request the server will accept or reject the trade (since we are simulating the server we can randomly reject 20% of the trades).
-
-Once the server has decided if the trade was done or rejected it will send an affirmation back to the client who requested the trade.
-
-The trade execution service will notify the blotter service with this new trade (done or rejected) and the blotter service will in turn notify all subscribed clients (broadcast).
-
-Trade execution request:
- - currency pair
- - notional
- - quote id
- - streamID (if we decide to identity streams per an identifier, otherwise currency pair should be fine)
- - direction (buy/sell)
- - dealt currency (for simplicity dealt currency will always be base currency, ie. for EURUSD the dealt currency is EUR)
- - user name / session ID (this should ideally be known of the server and not send by the client: we should not trust the client)
-
-Affirmation:
- - tradeId
- - trader name or sessionid of user who did the trade
- - currency pair
- - notional
- - direction (buy/sell)
- - spot price
- - trade date
- - value date
- - status (done/rejected)
-
-12. Client to detect trade execution failure
---------------------------------------------
-
-Trade execution roundtrip should take less than 2 seconds. If the client does not receive a trade affirmation within this period it should notify the user of a technical error and inform him to contact his sales representative: the position of the client is unknown.
-
-13. Client should retrieve reference data from server and reference data changes should not require client restart
-------------------------------------------------------------------------------------------------------------------
-
-Currency pair details will be exposed by a reference data service.
-All clients will receive the same set of currency pairs.
-It should be possible to add or remove a currency pair in the system at runtime and get clients automatically updated, without requiring a restart.
-
-When a currency pair is added it should become available in the currency pair selector of SPOT tiles.
-When a currency pair is removed it should be removed from the currency pair selector and if a tile was streaming this currency pair it should be defaulted to no currency pair and stop streaming.
-
-In reality it is very rare to have to add or remove currency pairs. Reactive trader uses a simplified model and updating currency pairs is used to illustrate reference data changes at runtime: in a real application the same principles could be used to for instance propagate entitlements changes at runtime, roll maturity dates at end of day, etc.
-
-Currency pair reference data:
- - currency pair (6 chars)
- - spot precision: number of digits to display after the dot for a spot rate (EURUSD is 5 for instance: rate 1.234 would be displayed 1.23400 with 2 trailing zeros to accomodate the precison)
- - big number start index: when representing a spot price 2 digits are traditionally displayed bigger than the others. For instance a EURUSD spot rate 1.23456 would be displayed with 45 as bigger number (this is the number traders look at the most to make a trade decision). `Big number start index` indicates the position of the first digit to display in big, from the dot. For instance with a rate of 1.23456 and a `Big number start index` of 0 you would highlight `1.2`, with a `Big number start index` of 3 you would highlight `45`. `Big number start index` can be negative (123.456 with a big number start index of -2 would highligh `12`).
-
-
-14. Client to minimize subscriptions when displaying multiple time the same currency pair stream
-------------------------------------------------------------------------------------------------
-
-The client could configure the application with multiple tiles using the same currency pair. To minimize network utilisation and improve efficiency the client should be able to detect that a stream is already subscribed and reuse this same stream for multiple tiles.
-
-15. Client should be able to switch back and force between tabs of tiles without incurring a long resubscription delay
-----------------------------------------------------------------------------------------------------------------------
-
-Tiles can be organized in tabs. When a tab is not active the tiles it contains should become inactive and unsubscribe from the server to minimize resource utilisation (both client side and server side). 
-
-It may happen that the user will switch to a tab and come back to the initial tab a few seconds later, it is therefore better to delay the unsubscription (15 seconds), to not force all unsubscription and then resubscription just after.
-
-Also a tab can contain lots of SPOT tiles so it is important to minimize the number of requests send to the server for this type of operation.
-
-16. Server dashboard requirements
----------------------------------
-Display the list of active streams:
- - currency pair
- - number of active subscriptions
- - frequency of update / sec (average over last minute)
- - command to simulate stale price / resume (ie. stops all activity for that stream)
- 
-Display other general information:
- - total updates per second published
- - slider to increase/decrease update frequency for all streams (ie. to simulate burst or volatile market conditions)
- - display count of users subscribed to blotter
- - display counter for number of trades (done and rejected)
