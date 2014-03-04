@@ -18,7 +18,7 @@
             <SolidColorBrush x:Key="MouseOverBrush">#FF2F5078</SolidColorBrush>
 
             <DataTemplate x:Key="PriceDataTemplate" DataType="spotTiles:IOneWayPriceViewModel">
-                <Button Command="{Binding ExecuteCommand}">
+                <Button Command="{Binding ExecuteCommand}" Cursor="Hand">
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Background" Value="Transparent" />
@@ -121,7 +121,7 @@
                             Foreground="{StaticResource SecondaryForeground}" FontSize="16" />
 
                     <DockPanel x:Name="NotionalPanel" Grid.Row="2">
-                        <TextBlock DockPanel.Dock="Right" Text="{Binding SpotDate}" Foreground="{StaticResource SecondaryForeground}" FontSize="16" />
+                        <TextBlock x:Name="SpotDateTextBlock" DockPanel.Dock="Right" Text="{Binding SpotDate}" Foreground="{StaticResource SecondaryForeground}" FontSize="16" Visibility="Collapsed" />
 
                         <UserControl>
                             <UserControl.Template>
@@ -162,6 +162,7 @@
             <ControlTemplate.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter TargetName="RootBorder" Property="Background" Value="#FF294464" />
+                    <Setter TargetName="SpotDateTextBlock" Property="Visibility" Value="Visible" />
                 </Trigger>
                 <DataTrigger Binding="{Binding Bid.IsExecuting}" Value="True">
                     <Setter TargetName="SpreadTextBlock" Property="Foreground" Value="{StaticResource SecondaryForeground}" />

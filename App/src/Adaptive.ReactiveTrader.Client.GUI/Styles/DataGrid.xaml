@@ -60,7 +60,7 @@
                                                SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical" Visibility="{Binding HeadersVisibility, ConverterParameter={x:Static DataGridHeadersVisibility.Row}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
                             </SelectiveScrollingGrid>
 
-                            <Rectangle Stroke="#FFBCBFC2" Height="1" StrokeThickness="1" StrokeDashArray="1,2" SnapsToDevicePixels="True" RenderOptions.EdgeMode="Aliased" />
+                            <Rectangle Stroke="#FFBCBFC2" Height="1" StrokeThickness="1" StrokeDashArray="2,2" SnapsToDevicePixels="True" RenderOptions.EdgeMode="Aliased" />
                         </StackPanel>
 
                     </Border>
@@ -108,6 +108,7 @@
     <Style TargetType="{x:Type DataGrid}">
         <Setter Property="Background" Value="White"/>
         <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="RowHeaderWidth" Value="0"/>
         <Setter Property="ColumnHeaderStyle" Value="{StaticResource DataGridColumnHeaderStyle}" />
         <Setter Property="RowStyle" Value="{StaticResource DataGridRowStyle}" />
         <Setter Property="CellStyle" Value="{StaticResource DataGridCellStyle}" />
