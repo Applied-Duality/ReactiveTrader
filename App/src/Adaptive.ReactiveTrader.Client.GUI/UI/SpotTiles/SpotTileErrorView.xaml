@@ -31,11 +31,11 @@
                 <TextBlock Text="Error" Foreground="{StaticResource PrimaryForeground}" FontSize="18" />
 
                 <DockPanel>
-                    <TextBlock Text="{Binding ErrorMessage}" Foreground="{StaticResource SecondaryForeground}" TextWrapping="Wrap" FontSize="15" />
+                    <TextBlock Text="{Binding ErrorMessage}" Foreground="#FFE8C0BB" TextWrapping="Wrap" FontSize="15" />
                 </DockPanel>
             </StackPanel>
 
-            <Button Grid.Row="1" Content="Done" Command="{Binding DismissCommand, Mode=OneWay}" Style="{StaticResource HyperlinkButtonStyle}" FontSize="16" HorizontalAlignment="Right" />
+            <Button Grid.Row="1" Content="Done" Command="{Binding DismissCommand, Mode=OneWay}" Foreground="#FFE8C0BB" Style="{StaticResource HyperlinkButtonStyle}" FontSize="16" HorizontalAlignment="Right" />
         </Grid>
     </Border>
 </UserControl>

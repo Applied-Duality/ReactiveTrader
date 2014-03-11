@@ -29,7 +29,7 @@
 
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding Disconnected}" Value="True">
-                        <Setter Property="Background" Value="#FFCE3C1C" />
+                        <Setter Property="Background" Value="{StaticResource ErrorBackgroundBrush}" />
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
