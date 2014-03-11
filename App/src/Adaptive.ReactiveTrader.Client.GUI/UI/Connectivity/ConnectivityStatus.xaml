@@ -40,16 +40,25 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        
-        <TextBlock>
+
+        <TextBlock ToolTipService.ShowDuration="40000">
             <Run Text="{Binding Status, Mode=OneWay}"  />
             <Run Text="- UI Latency:" />
             <Run Text="{Binding UiLatency, Mode=OneWay}"  />
-            <Run Text="ms - server to client Latency:" />
+            <Run Text="ms - Server > Client Latency:" />
             <Run Text="{Binding ServerClientLatency, Mode=OneWay}"  />
             <Run Text="ms - Throughput:" />
             <Run Text="{Binding Throughput, Mode=OneWay}" />
             <Run Text="tick/sec" />
+            <TextBlock.ToolTip>
+                <ToolTip Width="600">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock TextWrapping="Wrap">Latencies: we collect latency information for all prices displayed by the UI. We keep track of the slowest price measured from the price creation in the server to the price being fetched on the view model. Every second display statistics for the slowest price:</TextBlock>
+                        <TextBlock TextWrapping="Wrap"> - UI Latency: this is the time elapsed between the price being received by the client and being fetched on the view model (ie. pricess by the UI thread)</TextBlock>
+                        <TextBlock TextWrapping="Wrap"> - Server > Client latency: this is the time elapsed between the price being created by the server and being received by the client.</TextBlock>
+                    </StackPanel>
+                </ToolTip>
+            </TextBlock.ToolTip>
         </TextBlock>
         
         <StackPanel Orientation="Horizontal" Grid.Column="1">
