@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Reactive.Concurrency;
+using System.Reactive.Linq;
+using Adaptive.ReactiveTrader.Client.Concurrency;
 using Adaptive.ReactiveTrader.Client.Domain.Models;
 using Adaptive.ReactiveTrader.Client.Domain.Models.Execution;
 using Adaptive.ReactiveTrader.Client.Domain.Models.Pricing;
@@ -28,17 +30,20 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         private readonly ICurrencyPair _currencyPair;
         private readonly ISpotTileViewModel _parent;
         private readonly IPriceLatencyRecorder _priceLatencyRecorder;
+        private readonly ISchedulerProvider _schedulerProvider;
         private bool _disposed;
         private IDisposable _priceSubscription;
         private decimal? _previousRate;
 
         public SpotTilePricingViewModel(ICurrencyPair currencyPair, ISpotTileViewModel parent,
             Func<Direction, ISpotTilePricingViewModel, IOneWayPriceViewModel> oneWayPriceFactory,
-            IPriceLatencyRecorder priceLatencyRecorder)
+            IPriceLatencyRecorder priceLatencyRecorder,
+            ISchedulerProvider schedulerProvider)
         {
             _currencyPair = currencyPair;
             _parent = parent;
             _priceLatencyRecorder = priceLatencyRecorder;
+            _schedulerProvider = schedulerProvider;
 
             Bid = oneWayPriceFactory(Direction.SELL, this);
             Ask = oneWayPriceFactory(Direction.BUY, this);
@@ -69,9 +74,10 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             //  - observe only the most recent update (ObserveLatestOn)
 
             _priceSubscription = _currencyPair.Prices
-                .ObserveLatestOn(DispatcherScheduler.Current) 
-                //.ObserveOnDispatcher()
-                //.Conflate(TimeSpan.FromMilliseconds(100), DispatcherScheduler.Current)
+                .ObserveLatestOn(_schedulerProvider.Dispatcher)
+                //.ObserveOn(_schedulerProvider.Dispatcher)
+                //.Conflate(TimeSpan.FromMilliseconds(100), _schedulerProvider.Dispatcher)
+                .SubscribeOn(_schedulerProvider.ThreadPool)
                 .Subscribe(OnPrice, error => Log.Error("Failed to get prices"));
         }
 

@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
+using Adaptive.ReactiveTrader.Client.Concurrency;
 using Adaptive.ReactiveTrader.Client.Domain;
 using Adaptive.ReactiveTrader.Client.Domain.Models;
 using Adaptive.ReactiveTrader.Client.Domain.Models.ReferenceData;
@@ -20,12 +21,15 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         public ObservableCollection<ISpotTileViewModel> SpotTiles { get; private set; }
         private readonly IReferenceDataRepository _referenceDataRepository;
         private readonly Func<ICurrencyPair, ISpotTileViewModel> _spotTileFactory;
+        private readonly ISchedulerProvider _schedulerProvider;
 
         public SpotTilesViewModel(IReactiveTrader reactiveTrader,
-            Func<ICurrencyPair, ISpotTileViewModel> spotTileFactory)
+            Func<ICurrencyPair, ISpotTileViewModel> spotTileFactory,
+            ISchedulerProvider schedulerProvider)
         {
             _referenceDataRepository = reactiveTrader.ReferenceData;
             _spotTileFactory = spotTileFactory;
+            _schedulerProvider = schedulerProvider;
 
             SpotTiles = new ObservableCollection<ISpotTileViewModel>();
             LoadSpotTiles();
@@ -34,7 +38,8 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         private void LoadSpotTiles()
         {
             _referenceDataRepository.GetCurrencyPairs()
-                .ObserveOnDispatcher()
+                .ObserveOn(_schedulerProvider.Dispatcher)
+                .SubscribeOn(_schedulerProvider.ThreadPool)
                 .Subscribe(
                     currencyPairs => currencyPairs.ForEach(HandleCurrencyPairUpdate),
                     error => Log.Error("Failed to get currencies", error));

@@ -1,4 +1,5 @@
-﻿using Adaptive.ReactiveTrader.Client.Configuration;
+﻿using Adaptive.ReactiveTrader.Client.Concurrency;
+using Adaptive.ReactiveTrader.Client.Configuration;
 using Adaptive.ReactiveTrader.Client.Domain;
 using Adaptive.ReactiveTrader.Client.Instrumentation;
 using Adaptive.ReactiveTrader.Client.UI.Blotter;
@@ -19,6 +20,7 @@ namespace Adaptive.ReactiveTrader.Client
             builder.RegisterType<ConfigurationProvider>().As<IConfigurationProvider>();
             builder.RegisterType<UserProvider>().As<IUserProvider>();
             builder.RegisterType<PriceLatencyRecorder>().As<IPriceLatencyRecorder>().SingleInstance();
+            builder.RegisterType<SchedulerProvider>().As<ISchedulerProvider>();
 
             // views
             builder.RegisterType<ShellView>();

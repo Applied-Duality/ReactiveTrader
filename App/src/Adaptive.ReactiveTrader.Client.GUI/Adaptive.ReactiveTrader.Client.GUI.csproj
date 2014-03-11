@@ -99,6 +99,8 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Concurrency\ISchedulerProvider.cs" />
+    <Compile Include="Concurrency\SchedulerProvider.cs" />
     <Compile Include="Instrumentation\IPriceLatencyRecorder.cs" />
     <Compile Include="Instrumentation\PriceLatencyRecorder.cs" />
     <Compile Include="Properties\Annotations.cs" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Linq;
+using Adaptive.ReactiveTrader.Client.Concurrency;
 using Adaptive.ReactiveTrader.Client.Domain;
 using Adaptive.ReactiveTrader.Client.Domain.Transport;
 using Adaptive.ReactiveTrader.Client.Instrumentation;
@@ -13,11 +14,12 @@ namespace Adaptive.ReactiveTrader.Client.UI.Connectivity
         private readonly IPriceLatencyRecorder _priceLatencyRecorder;
         private static readonly ILog Log = LogManager.GetLogger(typeof(ConnectivityStatusViewModel));
 
-        public ConnectivityStatusViewModel(IReactiveTrader reactiveTrader, IPriceLatencyRecorder priceLatencyRecorder)
+        public ConnectivityStatusViewModel(IReactiveTrader reactiveTrader, IPriceLatencyRecorder priceLatencyRecorder, ISchedulerProvider schedulerProvider)
         {
             _priceLatencyRecorder = priceLatencyRecorder;
             reactiveTrader.ConnectionStatus
-                .ObserveOnDispatcher()
+                .ObserveOn(schedulerProvider.Dispatcher)
+                .SubscribeOn(schedulerProvider.ThreadPool)
                 .Subscribe(
                 OnStatusChange,
                 ex => Log.Error("An error occured within the connection status stream.", ex));
@@ -25,7 +27,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.Connectivity
             Observable
                 .Timer(TimeSpan.FromSeconds(1))
                 .Repeat()
-                .ObserveOnDispatcher()
+                .ObserveOn(schedulerProvider.Dispatcher)
                 .Subscribe(OnTimerTick);
         }
 
