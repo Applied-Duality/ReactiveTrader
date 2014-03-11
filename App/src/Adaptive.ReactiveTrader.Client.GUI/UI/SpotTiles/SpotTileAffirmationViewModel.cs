@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using Adaptive.ReactiveTrader.Client.Domain.Models;
+using Adaptive.ReactiveTrader.Client.Domain.Models.Execution;
 using Adaptive.ReactiveTrader.Shared.UI;
 using PropertyChanged;
 

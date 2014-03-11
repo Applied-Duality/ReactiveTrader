@@ -1,4 +1,5 @@
 ﻿using Adaptive.ReactiveTrader.Client.Domain.Models;
+using Adaptive.ReactiveTrader.Client.Domain.Models.Execution;
 using Adaptive.ReactiveTrader.Shared.UI;
 
 namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer

@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Domain;
-using Adaptive.ReactiveTrader.Client.Domain.Models;
+using Adaptive.ReactiveTrader.Client.Domain.Models.Execution;
 using Adaptive.ReactiveTrader.Client.Domain.Repositories;
 using Adaptive.ReactiveTrader.Shared.UI;
 using log4net;
@@ -20,7 +20,6 @@ namespace Adaptive.ReactiveTrader.Client.UI.Blotter
         public ObservableCollection<ITradeViewModel> Trades { get; private set; }
 
         private static readonly ILog Log = LogManager.GetLogger(typeof(BlotterViewModel));
-        private IDisposable _tradesSubscription;
         private bool _stale;
 
         public BlotterViewModel(IReactiveTrader reactiveTrader, Func<ITrade, ITradeViewModel> tradeViewModelFactory)
@@ -34,11 +33,11 @@ namespace Adaptive.ReactiveTrader.Client.UI.Blotter
 
         private void LoadTrades()
         {
-            _tradesSubscription = _tradeRepository.GetTrades()
-                .ObserveOnDispatcher()
-                .Subscribe(
-                AddTrades,
-                ex => Log.Error("An error occured within the trade stream", ex));
+            _tradeRepository.GetTrades()
+                            .ObserveOnDispatcher()
+                            .Subscribe(
+                                AddTrades,
+                                ex => Log.Error("An error occured within the trade stream", ex));
         }
 
         private void AddTrades(IEnumerable<ITrade> trades)
@@ -58,11 +57,11 @@ namespace Adaptive.ReactiveTrader.Client.UI.Blotter
                 }
             }
 
-            foreach (var trade in allTrades)
-            {
-                var tradeViewMode = _tradeViewModelFactory(trade);
-                Trades.Add(tradeViewMode);
-            }
+            allTrades.ForEach(trade =>
+                {
+                    var tradeViewMode = _tradeViewModelFactory(trade);
+                    Trades.Add(tradeViewMode);
+                });
         }
     }
 }

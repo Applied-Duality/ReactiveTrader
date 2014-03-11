@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Adaptive.ReactiveTrader.Server.Transport;
-using Adaptive.ReactiveTrader.Shared.Pricing;
+using Adaptive.ReactiveTrader.Shared.DTO.Pricing;
 using log4net;
 
 namespace Adaptive.ReactiveTrader.Server.Pricing

@@ -91,7 +91,7 @@
     <Compile Include="Shared\Extensions\ConflateTests.cs" />
     <Compile Include="Shared\Extensions\DetectStaleTests.cs" />
     <Compile Include="Shared\Extensions\HeartbeatTests.cs" />
-    <Compile Include="PriceExtensionsTests.cs" />
+    <Compile Include="Client\UI\SpotTiles\PriceExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

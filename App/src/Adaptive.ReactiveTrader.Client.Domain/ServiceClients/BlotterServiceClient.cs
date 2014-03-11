@@ -5,13 +5,13 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Domain.Transport;
 using Adaptive.ReactiveTrader.Shared;
-using Adaptive.ReactiveTrader.Shared.Execution;
+using Adaptive.ReactiveTrader.Shared.DTO.Execution;
 using log4net;
 using Microsoft.AspNet.SignalR.Client;
 
 namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
 {
-    class BlotterServiceClient : ServiceClient, IBlotterServiceClient
+    internal class BlotterServiceClient : ServiceClientBase, IBlotterServiceClient
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(BlotterServiceClient));
 
@@ -24,7 +24,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
             return GetResilientStream(connection => GetTradesForConnection(connection.BlotterHubProxy), TimeSpan.FromSeconds(5));
         }
 
-        private IObservable<IEnumerable<TradeDto>> GetTradesForConnection(IHubProxy blotterHubProxy)
+        private static IObservable<IEnumerable<TradeDto>> GetTradesForConnection(IHubProxy blotterHubProxy)
         {
             return Observable.Create<IEnumerable<TradeDto>>(observer =>
             {
@@ -52,12 +52,12 @@ namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
                 .RefCount();
         }
 
-        private IObservable<Unit> SendSubscription(IHubProxy blotterHubProxy)
+        private static IObservable<Unit> SendSubscription(IHubProxy blotterHubProxy)
         {
             return Observable.FromAsync(() => blotterHubProxy.Invoke(ServiceConstants.Server.SubscribeTrades));
         }
 
-        private IObservable<Unit> SendUnsubscription(IHubProxy blotterHubProxy)
+        private static IObservable<Unit> SendUnsubscription(IHubProxy blotterHubProxy)
         {
             return Observable.FromAsync(() => blotterHubProxy.Invoke(ServiceConstants.Server.UnsubscribeTrades));
         } 

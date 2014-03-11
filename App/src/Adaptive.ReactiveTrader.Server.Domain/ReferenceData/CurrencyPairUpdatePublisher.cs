@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Adaptive.ReactiveTrader.Server.Transport;
-using Adaptive.ReactiveTrader.Shared;
-using Adaptive.ReactiveTrader.Shared.ReferenceData;
+using Adaptive.ReactiveTrader.Shared.DTO;
+using Adaptive.ReactiveTrader.Shared.DTO.ReferenceData;
 using log4net;
 using Microsoft.AspNet.SignalR.Hubs;
 

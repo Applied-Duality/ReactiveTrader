@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Adaptive.ReactiveTrader.Server.Blotter;
-using Adaptive.ReactiveTrader.Shared.Execution;
+using Adaptive.ReactiveTrader.Shared.DTO.Execution;
 
 namespace Adaptive.ReactiveTrader.Server.Execution
 {
@@ -10,14 +10,12 @@ namespace Adaptive.ReactiveTrader.Server.Execution
     {
         private readonly IBlotterPublisher _blotterPublisher;
         private readonly ITradeRepository _tradeRepository;
-        private readonly Random _random;
         private long _tradeId;
 
         public ExecutionService(IBlotterPublisher blotterPublisher, ITradeRepository tradeRepository)
         {
             _blotterPublisher = blotterPublisher;
             _tradeRepository = tradeRepository;
-            _random = new Random();
             _tradeId = 0;
         }
 

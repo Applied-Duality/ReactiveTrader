@@ -56,28 +56,28 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Execution\DirectionDto.cs" />
-    <Compile Include="Execution\TradeDto.cs" />
-    <Compile Include="Execution\TradeRequestDto.cs" />
-    <Compile Include="Execution\TradeStatusDto.cs" />
+    <Compile Include="DTO\Execution\DirectionDto.cs" />
+    <Compile Include="DTO\Execution\TradeDto.cs" />
+    <Compile Include="DTO\Execution\TradeRequestDto.cs" />
+    <Compile Include="DTO\Execution\TradeStatusDto.cs" />
     <Compile Include="Extensions\ArrayExtensions.cs" />
     <Compile Include="Extensions\Heartbeat.cs" />
     <Compile Include="Extensions\IHeartbeat.cs" />
     <Compile Include="Extensions\IStale.cs" />
     <Compile Include="Extensions\ObservableExtensions.cs" />
     <Compile Include="Extensions\Stale.cs" />
-    <Compile Include="Pricing\PriceDto.cs" />
-    <Compile Include="Pricing\PriceSubscriptionRequestDto.cs" />
+    <Compile Include="DTO\Pricing\PriceDto.cs" />
+    <Compile Include="DTO\Pricing\PriceSubscriptionRequestDto.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReferenceData\CurrencyPairDto.cs" />
-    <Compile Include="ReferenceData\CurrencyPairUpdateDto.cs" />
+    <Compile Include="DTO\ReferenceData\CurrencyPairDto.cs" />
+    <Compile Include="DTO\ReferenceData\CurrencyPairUpdateDto.cs" />
     <Compile Include="ServiceConstants.cs" />
     <Compile Include="UI\DelegateCommand.cs" />
     <Compile Include="UI\IViewModel.cs" />
     <Compile Include="UI\NotifyingBase.cs" />
     <Compile Include="UI\ViewModelBase.cs" />
-    <Compile Include="UpdateTypeDto.cs" />
+    <Compile Include="DTO\UpdateTypeDto.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Reactive.Concurrency;
 using Adaptive.ReactiveTrader.Client.Domain.Models;
+using Adaptive.ReactiveTrader.Client.Domain.Models.Execution;
+using Adaptive.ReactiveTrader.Client.Domain.Models.Pricing;
+using Adaptive.ReactiveTrader.Client.Domain.Models.ReferenceData;
 using Adaptive.ReactiveTrader.Client.Instrumentation;
 using Adaptive.ReactiveTrader.Shared.Extensions;
 using Adaptive.ReactiveTrader.Shared.UI;

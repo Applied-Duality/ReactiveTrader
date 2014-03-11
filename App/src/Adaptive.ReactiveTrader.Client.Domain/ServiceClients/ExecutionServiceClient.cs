@@ -2,12 +2,12 @@
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Domain.Transport;
 using Adaptive.ReactiveTrader.Shared;
-using Adaptive.ReactiveTrader.Shared.Execution;
+using Adaptive.ReactiveTrader.Shared.DTO.Execution;
 using Microsoft.AspNet.SignalR.Client;
 
 namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
 {
-    class ExecutionServiceClient :ServiceClient, IExecutionServiceClient
+    internal class ExecutionServiceClient : ServiceClientBase, IExecutionServiceClient
     {
         public ExecutionServiceClient(IConnectionProvider connectionProvider) : base(connectionProvider)
         {
@@ -18,11 +18,10 @@ namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
             return RequestUponConnection(connection => ExecuteForConnection(connection.ExecutionHubProxy, tradeRequest), TimeSpan.FromMilliseconds(500));
         }
 
-        private IObservable<TradeDto> ExecuteForConnection(IHubProxy executionHubProxy, TradeRequestDto tradeRequestDto)
+        private static IObservable<TradeDto> ExecuteForConnection(IHubProxy executionHubProxy, TradeRequestDto tradeRequestDto)
         {
-            return
-                Observable.FromAsync(
-                    () => executionHubProxy.Invoke<TradeDto>(ServiceConstants.Server.Execute, tradeRequestDto));
+            return Observable.FromAsync(
+                () => executionHubProxy.Invoke<TradeDto>(ServiceConstants.Server.Execute, tradeRequestDto));
         } 
     }
 }

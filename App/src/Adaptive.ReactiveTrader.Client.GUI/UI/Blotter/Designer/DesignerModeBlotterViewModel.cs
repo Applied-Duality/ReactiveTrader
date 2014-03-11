@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using Adaptive.ReactiveTrader.Client.Domain.Models;
 using Adaptive.ReactiveTrader.Shared.UI;
 
 namespace Adaptive.ReactiveTrader.Client.UI.Blotter.Designer
@@ -15,7 +16,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.Blotter.Designer
             Trades.Add(new DesignerModeTradeViewModel
             {
                 CurrencyPair = "EUR / USD",
-                Direction = "SELL",
+                Direction = Direction.SELL,
                 Notional = "1,000,000 EUR",
                 SpotRate = 1.23456m,
                 TradeDate = DateTime.Now,
@@ -28,7 +29,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.Blotter.Designer
             Trades.Add(new DesignerModeTradeViewModel
             {
                 CurrencyPair = "EUR / USD",
-                Direction = "SELL",
+                Direction = Direction.BUY,
                 Notional = "1,000,000 EUR",
                 SpotRate = 1.23456m,
                 TradeDate = DateTime.Now,

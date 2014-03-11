@@ -2,6 +2,8 @@
 using System.Reactive.Linq;
 using System.Windows.Input;
 using Adaptive.ReactiveTrader.Client.Domain.Models;
+using Adaptive.ReactiveTrader.Client.Domain.Models.Execution;
+using Adaptive.ReactiveTrader.Client.Domain.Models.Pricing;
 using Adaptive.ReactiveTrader.Shared.UI;
 using log4net;
 using PropertyChanged;

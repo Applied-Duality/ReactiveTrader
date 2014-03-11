@@ -124,7 +124,6 @@
     </Compile>
     <Compile Include="UI\Connectivity\ConnectivityStatusViewModel.cs" />
     <Compile Include="UI\Connectivity\IConnectivityStatusViewModel.cs" />
-    <Compile Include="UI\Converters\InvertingValueConverter.cs" />
     <Compile Include="UI\Shell\IShellViewModel.cs" />
     <Compile Include="UI\Shell\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>

@@ -1,4 +1,4 @@
-﻿using Adaptive.ReactiveTrader.Shared.ReferenceData;
+﻿using Adaptive.ReactiveTrader.Shared.DTO.ReferenceData;
 
 namespace Adaptive.ReactiveTrader.Server.ReferenceData
 {

@@ -1,4 +1,4 @@
-using Adaptive.ReactiveTrader.Shared.Pricing;
+using Adaptive.ReactiveTrader.Shared.DTO.Pricing;
 
 namespace Adaptive.ReactiveTrader.Server.Pricing
 {

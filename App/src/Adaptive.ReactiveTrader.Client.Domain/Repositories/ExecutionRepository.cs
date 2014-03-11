@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Domain.Models;
+using Adaptive.ReactiveTrader.Client.Domain.Models.Execution;
+using Adaptive.ReactiveTrader.Client.Domain.Models.Pricing;
 using Adaptive.ReactiveTrader.Client.Domain.ServiceClients;
-using Adaptive.ReactiveTrader.Shared.Execution;
+using Adaptive.ReactiveTrader.Shared.DTO.Execution;
 using Adaptive.ReactiveTrader.Shared.Extensions;
 
 namespace Adaptive.ReactiveTrader.Client.Domain.Repositories

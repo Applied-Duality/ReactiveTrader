@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Adaptive.ReactiveTrader.Server.ReferenceData;
 using Adaptive.ReactiveTrader.Server.Transport;
 using Adaptive.ReactiveTrader.Shared;
-using Adaptive.ReactiveTrader.Shared.Pricing;
+using Adaptive.ReactiveTrader.Shared.DTO.Pricing;
 using log4net;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;

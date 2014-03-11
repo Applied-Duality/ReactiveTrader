@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Adaptive.ReactiveTrader.Shared.Execution;
+using Adaptive.ReactiveTrader.Shared.DTO.Execution;
 
 namespace Adaptive.ReactiveTrader.Server.Blotter
 {

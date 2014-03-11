@@ -4,13 +4,13 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Domain.Transport;
 using Adaptive.ReactiveTrader.Shared;
-using Adaptive.ReactiveTrader.Shared.Pricing;
+using Adaptive.ReactiveTrader.Shared.DTO.Pricing;
 using log4net;
 using Microsoft.AspNet.SignalR.Client;
 
 namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
 {
-    class PricingServiceClient : ServiceClient, IPricingServiceClient
+    internal class PricingServiceClient : ServiceClientBase, IPricingServiceClient
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(PricingServiceClient));
 
@@ -25,7 +25,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
             return GetResilientStream(connection => GetSpotStreamForConnection(currencyPair, connection.PricingHubProxy), TimeSpan.FromSeconds(5));
         }
 
-        private IObservable<PriceDto> GetSpotStreamForConnection(string currencyPair, IHubProxy pricingHubProxy)
+        private static IObservable<PriceDto> GetSpotStreamForConnection(string currencyPair, IHubProxy pricingHubProxy)
         {
             return Observable.Create<PriceDto>(observer =>
             {
@@ -63,22 +63,18 @@ namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
             .RefCount();
         }
 
-        private IObservable<Unit> SendSubscription(string currencyPair, IHubProxy pricingHubProxy)
+        private static IObservable<Unit> SendSubscription(string currencyPair, IHubProxy pricingHubProxy)
         {
-            return
-                Observable.FromAsync(
-                    () =>
-                        pricingHubProxy.Invoke(ServiceConstants.Server.SubscribePriceStream,
-                            new PriceSubscriptionRequestDto {CurrencyPair = currencyPair}));
+            return Observable.FromAsync(
+                () => pricingHubProxy.Invoke(ServiceConstants.Server.SubscribePriceStream,
+                new PriceSubscriptionRequestDto {CurrencyPair = currencyPair}));
         }
 
-        private IObservable<Unit> SendUnsubscription(string currencyPair, IHubProxy pricingHubProxy)
+        private static IObservable<Unit> SendUnsubscription(string currencyPair, IHubProxy pricingHubProxy)
         {
-            return
-                Observable.FromAsync(
-                    () =>
-                        pricingHubProxy.Invoke(ServiceConstants.Server.UnsubscribePriceStream,
-                            new PriceSubscriptionRequestDto { CurrencyPair = currencyPair }));
+            return Observable.FromAsync(
+                () => pricingHubProxy.Invoke(ServiceConstants.Server.UnsubscribePriceStream,
+                new PriceSubscriptionRequestDto { CurrencyPair = currencyPair }));
         }
     }
 }

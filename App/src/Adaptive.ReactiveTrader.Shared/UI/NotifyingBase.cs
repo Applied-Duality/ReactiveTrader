@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-using Adaptive.ReactiveTrader.Shared.Annotations;
+using Adaptive.ReactiveTrader.Shared.Properties;
 
 namespace Adaptive.ReactiveTrader.Shared.UI
 {

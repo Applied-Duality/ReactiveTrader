@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Adaptive.ReactiveTrader.Shared;
-using Adaptive.ReactiveTrader.Shared.Execution;
+using Adaptive.ReactiveTrader.Shared.DTO.Execution;
 using log4net;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;

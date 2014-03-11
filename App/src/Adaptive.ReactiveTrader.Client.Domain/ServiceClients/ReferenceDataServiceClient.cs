@@ -5,14 +5,14 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Domain.Transport;
 using Adaptive.ReactiveTrader.Shared;
+using Adaptive.ReactiveTrader.Shared.DTO.ReferenceData;
 using Adaptive.ReactiveTrader.Shared.Extensions;
-using Adaptive.ReactiveTrader.Shared.ReferenceData;
 using log4net;
 using Microsoft.AspNet.SignalR.Client;
 
 namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
 {
-    class ReferenceDataServiceClient : ServiceClient, IReferenceDataServiceClient
+    class ReferenceDataServiceClient : ServiceClientBase, IReferenceDataServiceClient
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(ReferenceDataServiceClient));
 
@@ -25,7 +25,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
             return GetResilientStream(connection => GetTradesForConnection(connection.ReferenceDataHubProxy), TimeSpan.FromSeconds(5));
         }
 
-        private IObservable<IEnumerable<CurrencyPairUpdateDto>> GetTradesForConnection(IHubProxy referenceDataHubProxy)
+        private static IObservable<IEnumerable<CurrencyPairUpdateDto>> GetTradesForConnection(IHubProxy referenceDataHubProxy)
         {
             return Observable.Create<IEnumerable<CurrencyPairUpdateDto>>(observer =>
             {
@@ -56,11 +56,11 @@ namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
         }
 
 
-        private IObservable<IEnumerable<CurrencyPairUpdateDto>> GetCurrencyPairUpdatesForConnection(IHubProxy referenceDataHubProxy)
+        private static IObservable<IEnumerable<CurrencyPairUpdateDto>> GetCurrencyPairUpdatesForConnection(IHubProxy referenceDataHubProxy)
         {
-            return
-                Observable.FromAsync(() => referenceDataHubProxy.Invoke<IEnumerable<CurrencyPairUpdateDto>>(ServiceConstants.Server.GetCurrencyPairs))
-                    .CacheFirstResult();
+            return Observable.FromAsync(
+                () => referenceDataHubProxy.Invoke<IEnumerable<CurrencyPairUpdateDto>>(ServiceConstants.Server.GetCurrencyPairs))
+                .CacheFirstResult();
         }
     }
 }

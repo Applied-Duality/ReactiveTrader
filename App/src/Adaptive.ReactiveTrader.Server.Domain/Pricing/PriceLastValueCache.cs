@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Concurrent;
-using Adaptive.ReactiveTrader.Shared.Pricing;
+using Adaptive.ReactiveTrader.Shared.DTO.Pricing;
 
 namespace Adaptive.ReactiveTrader.Server.Pricing
 {

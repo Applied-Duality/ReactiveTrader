@@ -1,4 +1,5 @@
 ﻿using System;
+using Adaptive.ReactiveTrader.Client.Domain.Models;
 using Adaptive.ReactiveTrader.Shared.UI;
 
 namespace Adaptive.ReactiveTrader.Client.UI.Blotter.Designer
@@ -7,7 +8,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.Blotter.Designer
     {
         public decimal SpotRate { get; set; }
         public string Notional { get; set; }
-        public string Direction { get; set; }
+        public Direction Direction { get; set; }
         public string CurrencyPair { get; set; }
         public string TradeId { get; set; }
         public DateTime TradeDate { get; set; }

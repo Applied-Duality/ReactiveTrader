@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading;
 using Adaptive.ReactiveTrader.Server.ReferenceData;
-using Adaptive.ReactiveTrader.Shared.Pricing;
+using Adaptive.ReactiveTrader.Shared.DTO.Pricing;
 
 namespace Adaptive.ReactiveTrader.Server.Pricing
 {
@@ -55,7 +55,7 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
         {
             foreach (var currencyPair in _currencyPairRepository.GetAllCurrencyPairs())
             {
-                decimal mid = _currencyPairRepository.GetSampleRate(currencyPair.Symbol);
+                var mid = _currencyPairRepository.GetSampleRate(currencyPair.Symbol);
                 
                 var initialQuote = new PriceDto
                 {

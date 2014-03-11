@@ -1,9 +1,9 @@
 ﻿using System;
-using Adaptive.ReactiveTrader.Shared.Execution;
+using Adaptive.ReactiveTrader.Shared.DTO.Execution;
 
 namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
 {
-    interface IExecutionServiceClient
+    internal interface IExecutionServiceClient
     {
         IObservable<TradeDto> Execute(TradeRequestDto tradeRequest);
     }

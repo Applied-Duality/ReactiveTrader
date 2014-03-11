@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Adaptive.ReactiveTrader.Shared.ReferenceData;
+using Adaptive.ReactiveTrader.Shared.DTO.ReferenceData;
 
 namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
 {
-    interface IReferenceDataServiceClient
+    internal interface IReferenceDataServiceClient
     {
         IObservable<IEnumerable<CurrencyPairUpdateDto>> GetCurrencyPairUpdates();
     }

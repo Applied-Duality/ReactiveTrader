@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Domain;
 using Adaptive.ReactiveTrader.Client.Domain.Models;
+using Adaptive.ReactiveTrader.Client.Domain.Models.ReferenceData;
 using Adaptive.ReactiveTrader.Shared.UI;
 using Adaptive.ReactiveTrader.Client.Domain.Repositories;
 using log4net;

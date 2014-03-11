@@ -122,8 +122,7 @@ namespace Adaptive.ReactiveTrader.Shared.Extensions
                 var completionRequested = false;
                 var gate = new object();
 
-                var sourceSubscription =
-                    source
+                var subscription = source
                         .ObserveOn(scheduler)
                         .Subscribe(
                             x =>
@@ -184,7 +183,7 @@ namespace Adaptive.ReactiveTrader.Shared.Extensions
                                 }
                             });
 
-                return new CompositeDisposable { sourceSubscription };
+                return subscription;
             });
         }
 
