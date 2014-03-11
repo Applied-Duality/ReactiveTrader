@@ -290,7 +290,9 @@
   <ItemGroup>
     <Resource Include="FodyWeavers.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Styles\statusbar_logo.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Styles\favicon.png" />
   </ItemGroup>
