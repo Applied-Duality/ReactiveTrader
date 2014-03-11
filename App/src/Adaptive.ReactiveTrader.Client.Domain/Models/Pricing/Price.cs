@@ -4,12 +4,11 @@ using Adaptive.ReactiveTrader.Client.Domain.Models.ReferenceData;
 
 namespace Adaptive.ReactiveTrader.Client.Domain.Models.Pricing
 {
-    internal class Price : IPrice
+    internal class Price : IPrice, IPriceLatency
     {
-        private readonly Stopwatch _priceCreationTime;
-
-        public Price(ExecutablePrice bid, ExecutablePrice ask, decimal mid, long quoteId, DateTime valueDate, ICurrencyPair currencyPair)
+        public Price(ExecutablePrice bid, ExecutablePrice ask, decimal mid, long quoteId, DateTime valueDate, ICurrencyPair currencyPair, long serverTimestamp)
         {
+            _serverTimestamp = serverTimestamp;
             Bid = bid;
             Ask = ask;
             QuoteId = quoteId;
@@ -21,7 +20,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Models.Pricing
             ask.Parent = this;
 
             Spread = (ask.Rate - bid.Rate)* (long)Math.Pow(10, currencyPair.PipsPosition);
-            _priceCreationTime = Stopwatch.StartNew();
+            _receivedTime = Stopwatch.GetTimestamp();
         }
 
         public IExecutablePrice Bid { get; private set; }
@@ -32,11 +31,44 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Models.Pricing
         public DateTime ValueDate { get; private set; }
         public decimal Spread { get; private set; }
         public bool IsStale { get { return false; } }
-        public TimeSpan ElpasedTimeSinceCreated { get { return _priceCreationTime.Elapsed; } }
 
         public override string ToString()
         {
             return string.Format("[{0}] Bid:{1} / Ask:{2}", CurrencyPair.Symbol, Bid.Rate, Ask.Rate);
         }
+
+        #region IPriceLatency
+
+        private readonly long _serverTimestamp;
+        private readonly long _receivedTime;
+        private long _renderedTimestamp;
+
+        public double ServerToClientMs
+        {
+            get { return GetElapsedMs(_serverTimestamp, _receivedTime); }
+        }
+
+        public double UiProcessingTimeMs
+        {
+            get { return GetElapsedMs(_receivedTime, _renderedTimestamp); }
+        }
+
+        public void DisplayedOnUi()
+        {
+            _renderedTimestamp = Stopwatch.GetTimestamp();
+        }
+
+        public double TotalLatencyMs
+        {
+            get { return UiProcessingTimeMs + ServerToClientMs; }
+        }
+
+        private static double GetElapsedMs(long start, long end)
+        {
+            return (double) (end - start)/Stopwatch.Frequency*1000;
+        }
+
+        #endregion
+
     }
 }

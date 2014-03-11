@@ -67,6 +67,7 @@
     </Compile>
     <Compile Include="ConnectionInfo.cs" />
     <Compile Include="IReactiveTrader.cs" />
+    <Compile Include="Models\Pricing\IPriceLatency.cs" />
     <Compile Include="Models\ReferenceData\CurrencyPair.cs" />
     <Compile Include="Models\ReferenceData\CurrencyPairUpdateFactory.cs" />
     <Compile Include="Models\Direction.cs" />

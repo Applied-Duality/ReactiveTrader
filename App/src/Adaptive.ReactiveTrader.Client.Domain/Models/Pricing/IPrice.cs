@@ -13,6 +13,5 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Models.Pricing
         DateTime ValueDate { get; }
         decimal Spread { get; }
         bool IsStale { get; }
-        TimeSpan ElpasedTimeSinceCreated { get; }
     }
 }

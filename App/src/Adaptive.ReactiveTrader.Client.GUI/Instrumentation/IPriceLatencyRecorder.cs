@@ -1,10 +1,11 @@
 ﻿using System;
+using Adaptive.ReactiveTrader.Client.Domain.Models.Pricing;
 
 namespace Adaptive.ReactiveTrader.Client.Instrumentation
 {
     public interface IPriceLatencyRecorder
     {
-        void RecordProcessingTime(TimeSpan elapsed);
-        Tuple<TimeSpan, long> GetCurrentAndReset();
+        void Record(IPrice price);
+        Tuple<IPriceLatency, long> GetMaxLatencyAndReset();
     }
 }

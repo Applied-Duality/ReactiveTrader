@@ -6,5 +6,6 @@
         long UiLatency { get; }
         long Throughput { get; }
         bool Disconnected { get; }
+        long ServerClientLatency { get; }
     }
 }

@@ -33,8 +33,11 @@ namespace Adaptive.ReactiveTrader.Client.UI.Connectivity
 
         private void OnTimerTick(long _)
         {
-            var current = _priceLatencyRecorder.GetCurrentAndReset();
-            UiLatency = (int)current.Item1.TotalMilliseconds;
+            var current = _priceLatencyRecorder.GetMaxLatencyAndReset();
+            if (current == null || current.Item1 == null) return;
+
+            UiLatency = (int)current.Item1.UiProcessingTimeMs;
+            ServerClientLatency = (int)current.Item1.ServerToClientMs;
             Throughput = current.Item2;
         }
 
@@ -71,6 +74,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.Connectivity
 
         public string Status { get; private set; }
         public long UiLatency { get; private set; }
+        public long ServerClientLatency { get; private set; }
         public long Throughput { get; private set; }
         public bool Disconnected { get; private set; }
     }

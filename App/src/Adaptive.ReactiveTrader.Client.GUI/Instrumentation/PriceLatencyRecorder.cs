@@ -1,28 +1,35 @@
 ﻿using System;
+using Adaptive.ReactiveTrader.Client.Domain.Models.Pricing;
 
 namespace Adaptive.ReactiveTrader.Client.Instrumentation
 {
     class PriceLatencyRecorder : IPriceLatencyRecorder
     {
-        private TimeSpan _currentWorst = TimeSpan.Zero;
         private long _count;
+        private IPriceLatency _maxLatency;
 
-        public void RecordProcessingTime(TimeSpan elapsed)
+        public void Record(IPrice price)
         {
-            _count++;
-            if (elapsed > _currentWorst)
+            var priceLatency = price as IPriceLatency;
+            if (priceLatency != null)
             {
-                _currentWorst = elapsed;
+                priceLatency.DisplayedOnUi();
+
+                _count++;
+                if (_maxLatency == null || priceLatency.TotalLatencyMs > _maxLatency.TotalLatencyMs)
+                {
+                    _maxLatency = priceLatency;
+                }
             }
         }
 
-        public Tuple<TimeSpan, long> GetCurrentAndReset()
+        public Tuple<IPriceLatency, long> GetMaxLatencyAndReset()
         {
-            var value = _currentWorst;
+            var value = _maxLatency;
             var count = _count;
-            _currentWorst = TimeSpan.Zero;
+            _maxLatency = null;
             _count = 0;
-            return new Tuple<TimeSpan, long>(value, count);
+            return new Tuple<IPriceLatency, long>(value, count);
         }
     }
 }

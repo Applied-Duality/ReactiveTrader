@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using Adaptive.ReactiveTrader.Server.ReferenceData;
@@ -82,7 +83,8 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
                 ValueDate = DateTime.UtcNow.AddDays(2).Date,
                 Mid = newMid,
                 Ask = newMid + 5/pow,
-                Bid = newMid - 5/pow
+                Bid = newMid - 5/pow,
+                CreationTimestamp = Stopwatch.GetTimestamp()
             };
         }
 

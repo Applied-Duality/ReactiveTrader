@@ -45,6 +45,8 @@
             <Run Text="{Binding Status, Mode=OneWay}"  />
             <Run Text="- UI Latency:" />
             <Run Text="{Binding UiLatency, Mode=OneWay}"  />
+            <Run Text="ms - server to client Latency:" />
+            <Run Text="{Binding ServerClientLatency, Mode=OneWay}"  />
             <Run Text="ms - Throughput:" />
             <Run Text="{Binding Throughput, Mode=OneWay}" />
             <Run Text="tick/sec" />
