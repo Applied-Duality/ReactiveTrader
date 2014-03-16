@@ -106,9 +106,58 @@ var Connection = (function () {
     });
     return Connection;
 })();
+/// <reference path="../typings/signalr/signalr.d.ts"/>
+/// <reference path="../typings/rx.js/rx.d.ts"/>
+var UpdateTypeDto;
+(function (UpdateTypeDto) {
+    UpdateTypeDto[UpdateTypeDto["Added"] = 0] = "Added";
+    UpdateTypeDto[UpdateTypeDto["Removed"] = 1] = "Removed";
+})(UpdateTypeDto || (UpdateTypeDto = {}));
+/// <reference path="../typings/rx.js/rx.d.ts"/>
+/// <reference path="../Dto/ICurrencyPairUpdateDto.ts"/>
+/// <reference path="../Dto/ICurrencyPairDto.ts"/>
+/// <reference path="../Dto/UpdateTypeDto.ts"/>
+/// <reference path="../typings/rx.js/rx.d.ts"/>
+/// <reference path="../typings/signalr/signalr.d.ts"/>
+/// <reference path="../Dto/ICurrencyPairUpdateDto.ts"/>
+/// <reference path="../Transport/IConnection.ts"/>
+/// <reference path="IReferenceDataServiceClient.ts"/>
+var ReferenceDataServiceClient = (function () {
+    function ReferenceDataServiceClient(connection) {
+        this._connection = connection;
+    }
+    ReferenceDataServiceClient.prototype.getCurrencyPairUpdates = function () {
+        return this.getTradesForConnection(this._connection.referenceDataHubProxy);
+    };
+
+    ReferenceDataServiceClient.prototype.getTradesForConnection = function (referenceDataHubProxy) {
+        return Rx.Observable.create(function (observer) {
+            referenceDataHubProxy.on("OnCurrencyPairUpdate", function (dto) {
+                return observer.onNext([dto]);
+            });
+
+            console.log("Sending currency pair subscription...");
+
+            referenceDataHubProxy.invoke("GetCurrencyPairs").done(function (currencyPairs) {
+                observer.onNext(currencyPairs);
+                console.log("Subscribed to currency pairs and received " + currencyPairs.length + " currency pairs.");
+            }).fail(function (ex) {
+                return observer.onError(ex);
+            });
+
+            return Rx.Disposable.create(function () {
+                //TODO unsubscribe referenceDataHubProxy.off("OnCurrencyPairUpdate");
+            });
+        });
+        //.publish()
+        //.refCount();
+    };
+    return ReferenceDataServiceClient;
+})();
 /// <reference path="typings/signalr/signalr.d.ts" />
 /// <reference path="typings/rx.js/rx.d.ts"/>
 /// <reference path="Transport/Connection.ts" />
+/// <reference path="ServiceClients/ReferenceDataServiceClient.ts" />
 window.onload = function () {
     var el = document.getElementById('content');
 
@@ -121,32 +170,17 @@ window.onload = function () {
     });
 
     connection.initialize().subscribe(function (_) {
-        return console.log("Connected");
+        console.log("Connected");
+        var refData = new ReferenceDataServiceClient(connection);
+        refData.getCurrencyPairUpdates().subscribe(function (currencyPairs) {
+            return console.log(currencyPairs);
+        }, function (ex) {
+            return console.log(ex);
+        });
     }, function (ex) {
         return console.log(ex);
     });
 };
-var UpdateTypeDto;
-(function (UpdateTypeDto) {
-    UpdateTypeDto[UpdateTypeDto["Added"] = 0] = "Added";
-    UpdateTypeDto[UpdateTypeDto["Removed"] = 1] = "Removed";
-})(UpdateTypeDto || (UpdateTypeDto = {}));
-/// <reference path="../typings/signalr/signalr.d.ts"/>
-/// <reference path="../typings/rx.js/rx.d.ts"/>
-/// <reference path="../typings/rx.js/rx.d.ts"/>
-/// <reference path="../typings/signalr/signalr.d.ts"/>
-/// <reference path="../Dto/ICurrencyPairUpdateDto.ts"/>
-/// <reference path="../Transport/IConnection.ts"/>
-var ReferenceDataServiceClient = (function () {
-    function ReferenceDataServiceClient(connection) {
-    }
-    ReferenceDataServiceClient.prototype.getCurrencyPairUpdates = function () {
-        return null;
-    };
-    return ReferenceDataServiceClient;
-})();
-/// <reference path="../typings/rx.js/rx.d.ts"/>
-/// <reference path="../Dto/ICurrencyPairUpdateDto.ts"/>
 var ConnectionStatus;
 (function (ConnectionStatus) {
     ConnectionStatus[ConnectionStatus["Connecting"] = 0] = "Connecting";

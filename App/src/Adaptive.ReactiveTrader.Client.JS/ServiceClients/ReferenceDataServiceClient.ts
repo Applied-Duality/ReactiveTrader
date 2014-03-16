@@ -2,15 +2,42 @@
 /// <reference path="../typings/signalr/signalr.d.ts"/>
 /// <reference path="../Dto/ICurrencyPairUpdateDto.ts"/>
 /// <reference path="../Transport/IConnection.ts"/>
+/// <reference path="IReferenceDataServiceClient.ts"/>
 
-class ReferenceDataServiceClient
+class ReferenceDataServiceClient implements IReferenceDataServiceClient
 {
+    private _connection: IConnection;
+
     constructor(connection: IConnection){
-        
+        this._connection = connection;
     }
 
+    getCurrencyPairUpdates() : Rx.Observable<ICurrencyPairUpdateDto[]> {
+        return this.getTradesForConnection(this._connection.referenceDataHubProxy);
+    }
 
-    getCurrencyPairUpdates() : Rx.Observable<ICurrencyPairUpdateDto> {
-        return null;
+    private getTradesForConnection(referenceDataHubProxy: HubProxy) : Rx.Observable<ICurrencyPairUpdateDto[]> {
+        return Rx.Observable.create<ICurrencyPairUpdateDto[]>(observer =>
+        { 
+            referenceDataHubProxy.on("OnCurrencyPairUpdate", dto => observer.onNext([dto]));
+
+            console.log("Sending currency pair subscription...");
+
+            referenceDataHubProxy
+                .invoke("GetCurrencyPairs")
+                .done(currencyPairs => {
+                    observer.onNext(currencyPairs);
+                    console.log("Subscribed to currency pairs and received " + currencyPairs.length +" currency pairs.");
+                })
+                .fail(ex => observer.onError(ex));
+
+            return Rx.Disposable.create(() => {
+                //TODO unsubscribe referenceDataHubProxy.off("OnCurrencyPairUpdate");
+            });
+        });
+        //.publish()
+        //.refCount();
     }
 }
+
+        

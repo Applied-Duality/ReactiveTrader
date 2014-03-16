@@ -1,6 +1,7 @@
 ﻿/// <reference path="typings/signalr/signalr.d.ts" />
 /// <reference path="typings/rx.js/rx.d.ts"/>
 /// <reference path="Transport/Connection.ts" />
+/// <reference path="ServiceClients/ReferenceDataServiceClient.ts" />
 
 window.onload = () => {
     var el = document.getElementById('content');
@@ -16,6 +17,13 @@ window.onload = () => {
     connection
        .initialize()
        .subscribe(
-            _ => console.log("Connected"),
+            _ => {
+                console.log("Connected");
+                var refData = new ReferenceDataServiceClient(connection);
+                refData.getCurrencyPairUpdates()
+                    .subscribe(
+                        currencyPairs => console.log(currencyPairs),
+                        ex => console.log(ex));
+            },
             ex => console.log(ex));
 };
