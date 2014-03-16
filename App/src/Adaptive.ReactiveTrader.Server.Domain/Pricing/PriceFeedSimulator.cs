@@ -90,9 +90,13 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
 
         private void OnTimerTick(object state)
         {
+            var activePairs = _currencyPairRepository.GetAllCurrencyPairInfos().Where(cp => cp.Enabled && !cp.Stale).ToList();
+
+            if (activePairs.Count == 0)
+                return;
+
             for (int i = 0; i < _updatesPerTick; i++)
             {
-                var activePairs = _currencyPairRepository.GetAllCurrencyPairInfos().Where(cp=>cp.Enabled && !cp.Stale).ToList();
                 var randomCurrencyPair = activePairs[_random.Next(0, activePairs.Count)].CurrencyPair;
                 var lastPrice = _priceLastValueCache.GetLastValue(randomCurrencyPair.Symbol);
 

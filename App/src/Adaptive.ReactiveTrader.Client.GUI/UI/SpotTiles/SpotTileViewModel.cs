@@ -24,7 +24,8 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         private bool _disposed;
 
         public SpotTileViewModel(ICurrencyPair currencyPair,
-            Func<ICurrencyPair, ISpotTileViewModel, ISpotTilePricingViewModel> pricingFactory,
+            SpotTileSubscriptionMode spotTileSubscriptionMode,
+            Func<ICurrencyPair, SpotTileSubscriptionMode, ISpotTileViewModel, ISpotTilePricingViewModel> pricingFactory,
             Func<ITrade, ISpotTileViewModel, ISpotTileAffirmationViewModel> affirmationFactory,
             Func<string, ISpotTileViewModel, ISpotTileErrorViewModel> errorFactory,
             Func<ISpotTileConfigViewModel> configFactory)
@@ -35,7 +36,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
 
             if (currencyPair != null)
             {
-                Pricing = pricingFactory(currencyPair, this);
+                Pricing = pricingFactory(currencyPair, spotTileSubscriptionMode, this);
                 CurrencyPair = currencyPair.Symbol;
             }
         }

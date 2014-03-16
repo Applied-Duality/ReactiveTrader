@@ -20,12 +20,12 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
 
         public ObservableCollection<ISpotTileViewModel> SpotTiles { get; private set; }
         private readonly IReferenceDataRepository _referenceDataRepository;
-        private readonly Func<ICurrencyPair, ISpotTileViewModel> _spotTileFactory;
+        private readonly Func<ICurrencyPair, SpotTileSubscriptionMode, ISpotTileViewModel> _spotTileFactory;
         private readonly IConcurrencyService _concurrencyService;
         private readonly ISpotTileViewModel _config;
 
         public SpotTilesViewModel(IReactiveTrader reactiveTrader,
-            Func<ICurrencyPair, ISpotTileViewModel> spotTileFactory,
+            Func<ICurrencyPair, SpotTileSubscriptionMode, ISpotTileViewModel> spotTileFactory,
             IConcurrencyService concurrencyService)
         {
             _referenceDataRepository = reactiveTrader.ReferenceData;
@@ -34,7 +34,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
 
             SpotTiles = new ObservableCollection<ISpotTileViewModel>();
 
-            _config = spotTileFactory(null);
+            _config = spotTileFactory(null, SpotTileSubscriptionMode.Conflate);
             _config.ToConfig();
 
             SpotTiles.Add(_config);
@@ -67,7 +67,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
                     return;
                 }
 
-                var spotTile = _spotTileFactory(update.CurrencyPair);
+                var spotTile = _spotTileFactory(update.CurrencyPair, _config.Config.SubscriptionMode);
                 SpotTiles.Add(spotTile);
             }
             else

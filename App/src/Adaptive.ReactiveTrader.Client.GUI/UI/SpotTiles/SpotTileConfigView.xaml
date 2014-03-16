@@ -27,6 +27,7 @@
                 <Button Content="Standard" Command="{Binding StandardCommand, Mode=OneWay}" Style="{StaticResource HyperlinkButtonStyle}" FontSize="16" />    
                 <Button Content="Drop Frame" Command="{Binding DropFrameCommand, Mode=OneWay}" Style="{StaticResource HyperlinkButtonStyle}" FontSize="16" />    
                 <Button Content="Conflate" Command="{Binding ConflateCommand, Mode=OneWay}" Style="{StaticResource HyperlinkButtonStyle}" FontSize="16" />    
+                <Button Content="ConstantRate" Command="{Binding ConstantRateCommand, Mode=OneWay}" Style="{StaticResource HyperlinkButtonStyle}" FontSize="16" />    
             </StackPanel>
     </Border>
 </UserControl>

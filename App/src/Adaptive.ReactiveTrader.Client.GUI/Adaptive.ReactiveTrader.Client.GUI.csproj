@@ -101,6 +101,7 @@
     </Compile>
     <Compile Include="Concurrency\IConcurrencyService.cs" />
     <Compile Include="Concurrency\ConcurrencyService.cs" />
+    <Compile Include="Concurrency\PeriodicBatchScheduler.cs" />
     <Compile Include="Instrumentation\IPriceLatencyRecorder.cs" />
     <Compile Include="Instrumentation\PriceLatencyRecorder.cs" />
     <Compile Include="Properties\Annotations.cs" />
@@ -136,7 +137,7 @@
     </Compile>
     <Compile Include="UI\SpotTiles\Designer\DesignTimeSpotTileConfigViewModel.cs" />
     <Compile Include="UI\SpotTiles\ISpotTileConfigViewModel.cs" />
-    <Compile Include="UI\SpotTiles\SpotTileConfigView.cs" />
+    <Compile Include="UI\SpotTiles\SpotTileConfigViewModel.cs" />
     <Compile Include="UI\SpotTiles\SpotTileConfigView.xaml.cs">
       <DependentUpon>SpotTileConfigView.xaml</DependentUpon>
     </Compile>

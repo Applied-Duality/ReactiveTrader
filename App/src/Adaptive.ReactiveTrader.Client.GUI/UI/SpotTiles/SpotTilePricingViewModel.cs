@@ -36,17 +36,22 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         private bool _disposed;
         private decimal? _previousRate;
         private SpotTileSubscriptionMode _subscriptionMode;
+        
+        private volatile IPrice _latestPrice;
+        private IPrice _currentPrice;
 
-        public SpotTilePricingViewModel(ICurrencyPair currencyPair, ISpotTileViewModel parent,
+        public SpotTilePricingViewModel(ICurrencyPair currencyPair, SpotTileSubscriptionMode spotTileSubscriptionMode, ISpotTileViewModel parent,
             Func<Direction, ISpotTilePricingViewModel, IOneWayPriceViewModel> oneWayPriceFactory,
             IPriceLatencyRecorder priceLatencyRecorder,
             IConcurrencyService concurrencyService)
         {
             _currencyPair = currencyPair;
+            _subscriptionMode = spotTileSubscriptionMode;
             _parent = parent;
             _priceLatencyRecorder = priceLatencyRecorder;
             _concurrencyService = concurrencyService;
 
+            
             _priceSubscription = new SerialDisposable();
             Bid = oneWayPriceFactory(Direction.SELL, this);
             Ask = oneWayPriceFactory(Direction.BUY, this);
@@ -84,39 +89,69 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
 
         private void SubscribeForPrices()
         {
-            _priceSubscription.Disposable = GetPriceStream()
-                                            .Subscribe(OnPrice, error => Log.Error("Failed to get prices"));
-        }
-
-        private IObservable<IPrice> GetPriceStream()
-        {
-            // 3 different options here: 
-            //  - observe everything (ObserveOnDispatcher)
-            //  - conflate 
-            //  - observe only the most recent update (ObserveLatestOn)
-
             switch (SubscriptionMode)
             {
                 case SpotTileSubscriptionMode.OnDispatcher:
-                    return _currencyPair.PriceStream
-                                        .SubscribeOn(_concurrencyService.ThreadPool)
-                                        .ObserveOn(_concurrencyService.Dispatcher);
-
+                    SubscribeForPricesOnDispatcher();
+                    break;
                 case SpotTileSubscriptionMode.ObserveLatestOnDispatcher:
-                    return _currencyPair.PriceStream
-                                        .SubscribeOn(_concurrencyService.ThreadPool)
-                                        .ObserveLatestOn(_concurrencyService.Dispatcher);
-
+                    SubscribeForPricesLatestOnDispatch();
+                    break;
                 case SpotTileSubscriptionMode.Conflate:
-                    return _currencyPair.PriceStream
-                                        .SubscribeOn(_concurrencyService.ThreadPool)
-                                        .Conflate(TimeSpan.FromMilliseconds(100), _concurrencyService.Dispatcher);
-
+                    SubscribeForPricesConflate();
+                    break;
+                case SpotTileSubscriptionMode.ConstantRate:
+                    SubscribeForPricesConstantRate();
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
+        private void SubscribeForPricesOnDispatcher()
+        {
+            _priceSubscription.Disposable = _currencyPair.PriceStream
+                                        .SubscribeOn(_concurrencyService.ThreadPool)
+                                        .ObserveOn(_concurrencyService.Dispatcher)
+                                        .Subscribe(OnPrice, OnError);
+        }
+
+        private void SubscribeForPricesLatestOnDispatch()
+        {
+            _priceSubscription.Disposable = _currencyPair.PriceStream
+                                        .SubscribeOn(_concurrencyService.ThreadPool)
+                                        .ObserveLatestOn(_concurrencyService.Dispatcher)
+                                        .Subscribe(OnPrice, OnError);
+        }
+
+        private void SubscribeForPricesConflate()
+        {
+            _priceSubscription.Disposable = _currencyPair.PriceStream
+                                        .SubscribeOn(_concurrencyService.ThreadPool)
+                                        .Conflate(TimeSpan.FromMilliseconds(100), _concurrencyService.Dispatcher)
+                                        .Subscribe(OnPrice, OnError);
+        }
+
+        private void SubscribeForPricesConstantRate()
+        {
+            var ps = _currencyPair.PriceStream
+                                  .SubscribeOn(_concurrencyService.ThreadPool)
+                                  .Subscribe(price =>
+                                      {
+                                          _latestPrice = price;
+                                      }, OnError);
+
+            var el = _concurrencyService.DispatcherPeriodic.Schedule(() =>
+                {
+                    if (_currentPrice != _latestPrice && _latestPrice != null)
+                    {
+                        OnPrice(_latestPrice);
+                    }
+                });
+
+            _priceSubscription.Disposable = new CompositeDisposable(ps, el);
+        }
+        
         private void OnPrice(IPrice price)
         {
             IsSubscribing = false;
@@ -151,6 +186,12 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
                 _priceLatencyRecorder.Record(price);
 
             }
+            _currentPrice = price;
+        }
+
+        private void OnError(Exception ex)
+        {
+            Log.Error("Failed to get prices", ex);
         }
 
         public void OnTrade(ITrade trade)

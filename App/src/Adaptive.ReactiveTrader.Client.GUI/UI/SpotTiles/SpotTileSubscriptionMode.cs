@@ -4,6 +4,7 @@
     {
         OnDispatcher,
         ObserveLatestOnDispatcher,
-        Conflate
+        Conflate,
+        ConstantRate
     }
 }
