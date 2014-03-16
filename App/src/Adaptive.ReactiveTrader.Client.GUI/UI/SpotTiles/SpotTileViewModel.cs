@@ -13,24 +13,31 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         public ISpotTilePricingViewModel Pricing { get; private set; }
         public ISpotTileAffirmationViewModel Affirmation { get; private set; }
         public ISpotTileErrorViewModel Error { get; private set; }
+        public ISpotTileConfigViewModel Config { get; private set; }
         public TileState State { get; private set; }
 
         public string CurrencyPair { get; private set; }
 
         private readonly Func<ITrade, ISpotTileViewModel, ISpotTileAffirmationViewModel> _affirmationFactory;
         private readonly Func<string, ISpotTileViewModel, ISpotTileErrorViewModel> _errorFactory;
+        private readonly Func<ISpotTileConfigViewModel> _configFactory;
         private bool _disposed;
 
         public SpotTileViewModel(ICurrencyPair currencyPair,
             Func<ICurrencyPair, ISpotTileViewModel, ISpotTilePricingViewModel> pricingFactory,
             Func<ITrade, ISpotTileViewModel, ISpotTileAffirmationViewModel> affirmationFactory,
-            Func<string, ISpotTileViewModel, ISpotTileErrorViewModel> errorFactory)
+            Func<string, ISpotTileViewModel, ISpotTileErrorViewModel> errorFactory,
+            Func<ISpotTileConfigViewModel> configFactory)
         {
             _affirmationFactory = affirmationFactory;
             _errorFactory = errorFactory;
+            _configFactory = configFactory;
 
-            Pricing = pricingFactory(currencyPair, this);
-            CurrencyPair = currencyPair.Symbol;
+            if (currencyPair != null)
+            {
+                Pricing = pricingFactory(currencyPair, this);
+                CurrencyPair = currencyPair.Symbol;
+            }
         }
 
         public void Dispose()
@@ -65,12 +72,19 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             State = TileState.Pricing;
             Error = null;
         }
+
+        public void ToConfig()
+        {
+            State = TileState.Config;
+            Config = _configFactory();
+        }
     }
 
     public enum TileState
     {
         Pricing,
         Affirmation,
-        Error
+        Error,
+        Config
     }
 }

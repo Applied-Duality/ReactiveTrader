@@ -134,6 +134,12 @@
     <Compile Include="UI\Splash\SplashWindow.xaml.cs">
       <DependentUpon>SplashWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\SpotTiles\Designer\DesignTimeSpotTileConfigViewModel.cs" />
+    <Compile Include="UI\SpotTiles\ISpotTileConfigViewModel.cs" />
+    <Compile Include="UI\SpotTiles\SpotTileConfigView.cs" />
+    <Compile Include="UI\SpotTiles\SpotTileConfigView.xaml.cs">
+      <DependentUpon>SpotTileConfigView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\SpotTiles\Designer\DesignTimeOneWayPriceViewModel.cs" />
     <Compile Include="UI\SpotTiles\Designer\DesignTimeSpotTileAffirmationViewModel.cs" />
     <Compile Include="UI\SpotTiles\Designer\DesignTimeSpotTileErrorViewModel.cs" />
@@ -161,6 +167,7 @@
       <DependentUpon>SpotTilePricingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\SpotTiles\SpotTilePricingViewModel.cs" />
+    <Compile Include="UI\SpotTiles\SpotTileSubscriptionMode.cs" />
     <Compile Include="UI\SpotTiles\SpotTilesView.xaml.cs">
       <DependentUpon>SpotTilesView.xaml</DependentUpon>
     </Compile>
@@ -221,6 +228,10 @@
     <Page Include="UI\Splash\SplashWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\SpotTiles\SpotTileConfigView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\SpotTiles\SpotTileErrorView.xaml">
       <Generator>MSBuild:Compile</Generator>

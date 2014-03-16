@@ -7,6 +7,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
 {
     public interface ISpotTilePricingViewModel : IViewModel, IDisposable
     {
+        SpotTileSubscriptionMode SubscriptionMode { get; set; }
         string Symbol { get; }
         IOneWayPriceViewModel Bid { get; }
         IOneWayPriceViewModel Ask { get; }

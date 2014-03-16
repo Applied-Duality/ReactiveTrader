@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Concurrency;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Concurrency;
 using Adaptive.ReactiveTrader.Client.Domain.Models;
@@ -27,13 +28,14 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         public string SpotDate { get; private set; }
         public bool IsSubscribing { get; private set; }
 
+        private readonly SerialDisposable _priceSubscription;
         private readonly ICurrencyPair _currencyPair;
         private readonly ISpotTileViewModel _parent;
         private readonly IPriceLatencyRecorder _priceLatencyRecorder;
         private readonly ISchedulerProvider _schedulerProvider;
         private bool _disposed;
-        private IDisposable _priceSubscription;
         private decimal? _previousRate;
+        private SpotTileSubscriptionMode _subscriptionMode;
 
         public SpotTilePricingViewModel(ICurrencyPair currencyPair, ISpotTileViewModel parent,
             Func<Direction, ISpotTilePricingViewModel, IOneWayPriceViewModel> oneWayPriceFactory,
@@ -45,13 +47,14 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             _priceLatencyRecorder = priceLatencyRecorder;
             _schedulerProvider = schedulerProvider;
 
+            _priceSubscription = new SerialDisposable();
             Bid = oneWayPriceFactory(Direction.SELL, this);
             Ask = oneWayPriceFactory(Direction.BUY, this);
             Notional = "1000000";
             DealtCurrency = currencyPair.BaseCurrency;
             SpotDate = "SP";
             IsSubscribing = true;
-
+            
             SubscribeForPrices();
         }
 
@@ -66,19 +69,52 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
 
         public string Symbol { get { return String.Format("{0} / {1}", _currencyPair.BaseCurrency, _currencyPair.CounterCurrency); } }
 
+        public SpotTileSubscriptionMode SubscriptionMode
+        {
+            get { return _subscriptionMode; }
+            set
+            {
+                if (_subscriptionMode != value)
+                {
+                    _subscriptionMode = value;
+                    SubscribeForPrices();
+                }
+            }
+        }
+
         private void SubscribeForPrices()
+        {
+            _priceSubscription.Disposable = GetPriceStream()
+                                            .Subscribe(OnPrice, error => Log.Error("Failed to get prices"));
+        }
+
+        private IObservable<IPrice> GetPriceStream()
         {
             // 3 different options here: 
             //  - observe everything (ObserveOnDispatcher)
             //  - conflate 
             //  - observe only the most recent update (ObserveLatestOn)
 
-            _priceSubscription = _currencyPair.Prices
-                .ObserveLatestOn(_schedulerProvider.Dispatcher)
-                //.ObserveOn(_schedulerProvider.Dispatcher)
-                //.Conflate(TimeSpan.FromMilliseconds(100), _schedulerProvider.Dispatcher)
-                .SubscribeOn(_schedulerProvider.ThreadPool)
-                .Subscribe(OnPrice, error => Log.Error("Failed to get prices"));
+            switch (SubscriptionMode)
+            {
+                case SpotTileSubscriptionMode.OnDispatcher:
+                    return _currencyPair.Prices
+                                        .SubscribeOn(_schedulerProvider.ThreadPool)
+                                        .ObserveOn(_schedulerProvider.Dispatcher);
+
+                case SpotTileSubscriptionMode.ObserveLatestOnDispatcher:
+                    return _currencyPair.Prices
+                                        .SubscribeOn(_schedulerProvider.ThreadPool)
+                                        .ObserveLatestOn(_schedulerProvider.Dispatcher);
+
+                case SpotTileSubscriptionMode.Conflate:
+                    return _currencyPair.Prices
+                                        .SubscribeOn(_schedulerProvider.ThreadPool)
+                                        .Conflate(TimeSpan.FromMilliseconds(100), _schedulerProvider.Dispatcher);
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         private void OnPrice(IPrice price)

@@ -21,6 +21,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer
         public ISpotTilePricingViewModel Pricing { get; private set; }
         public ISpotTileAffirmationViewModel Affirmation { get; private set; }
         public ISpotTileErrorViewModel Error { get; private set; }
+        public ISpotTileConfigViewModel Config { get; private set; }
         public TileState State { get { return TileState.Pricing;} }
         public string CurrencyPair { get; private set; }
 
@@ -29,6 +30,10 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer
         }
 
         public void OnExecutionError(string message)
+        {
+        }
+
+        public void ToConfig()
         {
         }
 

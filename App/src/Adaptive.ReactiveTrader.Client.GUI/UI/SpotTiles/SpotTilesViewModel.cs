@@ -22,6 +22,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         private readonly IReferenceDataRepository _referenceDataRepository;
         private readonly Func<ICurrencyPair, ISpotTileViewModel> _spotTileFactory;
         private readonly ISchedulerProvider _schedulerProvider;
+        private readonly ISpotTileViewModel _config;
 
         public SpotTilesViewModel(IReactiveTrader reactiveTrader,
             Func<ICurrencyPair, ISpotTileViewModel> spotTileFactory,
@@ -32,6 +33,16 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             _schedulerProvider = schedulerProvider;
 
             SpotTiles = new ObservableCollection<ISpotTileViewModel>();
+
+            _config = spotTileFactory(null);
+            _config.ToConfig();
+
+            SpotTiles.Add(_config);
+            _config.Config.PropertyChanged += (_, e) => { if (e.PropertyName == "SubscriptionMode")
+            {
+                SpotTiles.Where(vm => vm.Pricing != null).ForEach(vm => vm.Pricing.SubscriptionMode = _config.Config.SubscriptionMode);
+            }};
+
             LoadSpotTiles();
         }
 

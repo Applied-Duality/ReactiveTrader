@@ -16,6 +16,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer
         {
         }
 
+        public SpotTileSubscriptionMode SubscriptionMode { get; set; }
         public string Symbol { get { return "EUR / USD"; } }
         public IOneWayPriceViewModel Bid { get; private set; }
         public IOneWayPriceViewModel Ask { get; private set; }
