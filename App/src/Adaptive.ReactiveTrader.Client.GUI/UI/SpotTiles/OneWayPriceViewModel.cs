@@ -54,7 +54,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
                 return;
             }
             IsExecuting = true;
-            _executablePrice.Execute(notional, _parent.DealtCurrency)
+            _executablePrice.ExecuteRequest(notional, _parent.DealtCurrency)
                 .ObserveOn(_concurrencyService.Dispatcher)
                 .SubscribeOn(_concurrencyService.ThreadPool)
                 .Subscribe(OnExecuted,

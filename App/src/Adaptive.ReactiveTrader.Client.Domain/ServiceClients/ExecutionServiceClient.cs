@@ -13,7 +13,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
         {
         }
 
-        public IObservable<TradeDto> Execute(TradeRequestDto tradeRequest)
+        public IObservable<TradeDto> ExecuteRequest(TradeRequestDto tradeRequest)
         {
             return RequestUponConnection(connection => ExecuteForConnection(connection.ExecutionHubProxy, tradeRequest), TimeSpan.FromMilliseconds(500));
         }

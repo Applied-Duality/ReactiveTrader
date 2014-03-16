@@ -18,9 +18,9 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Repositories
             _currencyPairUpdateFactory = currencyPairUpdateFactory;
         }
 
-        public IObservable<IEnumerable<ICurrencyPairUpdate>> GetCurrencyPairs()
+        public IObservable<IEnumerable<ICurrencyPairUpdate>> GetCurrencyPairsStream()
         {
-            return Observable.Defer(() => _referenceDataServiceClient.GetCurrencyPairUpdates())
+            return Observable.Defer(() => _referenceDataServiceClient.GetCurrencyPairUpdatesStream())
                 .Where(updates => updates.Any())
                 .Select(updates => updates.Select(update => _currencyPairUpdateFactory.Create(update)))
                 .Catch(Observable.Return(new ICurrencyPairUpdate[0]))  // if the stream errors (server disconnected), we push an empty list of ccy pairs  

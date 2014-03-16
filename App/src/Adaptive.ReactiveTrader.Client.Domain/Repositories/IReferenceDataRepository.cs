@@ -6,6 +6,6 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Repositories
 {
     public interface IReferenceDataRepository
     {
-        IObservable<IEnumerable<ICurrencyPairUpdate>> GetCurrencyPairs();
+        IObservable<IEnumerable<ICurrencyPairUpdate>> GetCurrencyPairsStream();
     }
 }

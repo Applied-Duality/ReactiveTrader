@@ -6,7 +6,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Models.ReferenceData
     public interface ICurrencyPair
     {
         string Symbol { get; }
-        IObservable<IPrice> Prices { get; }
+        IObservable<IPrice> PriceStream { get; }
         int RatePrecision { get; }
         int PipsPosition { get; }
         string BaseCurrency { get; }

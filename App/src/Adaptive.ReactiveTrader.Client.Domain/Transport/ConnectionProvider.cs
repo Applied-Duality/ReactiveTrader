@@ -41,7 +41,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Transport
                 Log.Info("Creating new connection...");
                 var connection = GetNextConnection();
 
-                var statusSubscription = connection.Status.Subscribe(
+                var statusSubscription = connection.StatusStream.Subscribe(
                     _ => { },
                     ex => o.OnCompleted(),
                     () =>

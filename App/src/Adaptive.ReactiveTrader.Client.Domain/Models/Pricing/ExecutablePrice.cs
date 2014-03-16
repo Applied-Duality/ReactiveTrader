@@ -16,9 +16,9 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Models.Pricing
             Rate = rate;
         }
 
-        public IObservable<ITrade> Execute(long notional, string dealtCurrency)
+        public IObservable<ITrade> ExecuteRequest(long notional, string dealtCurrency)
         {
-            return _executionRepository.Execute(this, notional, dealtCurrency)
+            return _executionRepository.ExecuteRequest(this, notional, dealtCurrency)
                 .CacheFirstResult();
         }
 

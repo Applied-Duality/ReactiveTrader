@@ -19,7 +19,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Repositories
             _priceFactory = priceFactory;
         }
 
-        public IObservable<IPrice> GetPrices(ICurrencyPair currencyPair)
+        public IObservable<IPrice> GetPriceStream(ICurrencyPair currencyPair)
         {
             return Observable.Defer(() => _pricingServiceClient.GetSpotStream(currencyPair.Symbol))
                 .Select(p => _priceFactory.Create(p, currencyPair))

@@ -36,13 +36,13 @@ namespace Adaptive.ReactiveTrader.Client.Domain
         public IReferenceDataRepository ReferenceData { get; private set; }
         public ITradeRepository TradeRepository { get; private set; }
 
-        public IObservable<ConnectionInfo> ConnectionStatus
+        public IObservable<ConnectionInfo> ConnectionStatusStream
         {
             get
             {
                 return _connectionProvider.GetActiveConnection()
                     .Do(_ => Log.Info("New connection created by connection provider"))
-                    .Select(c => c.Status)
+                    .Select(c => c.StatusStream)
                     .Switch()
                     .Publish()
                     .RefCount();

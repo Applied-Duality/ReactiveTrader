@@ -20,7 +20,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
         {
         }
 
-        public IObservable<IEnumerable<CurrencyPairUpdateDto>> GetCurrencyPairUpdates()
+        public IObservable<IEnumerable<CurrencyPairUpdateDto>> GetCurrencyPairUpdatesStream()
         {
             return GetResilientStream(connection => GetTradesForConnection(connection.ReferenceDataHubProxy), TimeSpan.FromSeconds(5));
         }

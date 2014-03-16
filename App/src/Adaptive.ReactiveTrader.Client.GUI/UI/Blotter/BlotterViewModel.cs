@@ -38,7 +38,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.Blotter
 
         private void LoadTrades()
         {
-            _tradeRepository.GetTrades()
+            _tradeRepository.GetTradesStream()
                             .ObserveOn(_concurrencyService.Dispatcher)
                             .SubscribeOn(_concurrencyService.ThreadPool)
                             .Subscribe(

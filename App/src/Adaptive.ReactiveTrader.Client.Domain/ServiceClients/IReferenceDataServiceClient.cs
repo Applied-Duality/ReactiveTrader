@@ -6,6 +6,6 @@ namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
 {
     internal interface IReferenceDataServiceClient
     {
-        IObservable<IEnumerable<CurrencyPairUpdateDto>> GetCurrencyPairUpdates();
+        IObservable<IEnumerable<CurrencyPairUpdateDto>> GetCurrencyPairUpdatesStream();
     }
 }

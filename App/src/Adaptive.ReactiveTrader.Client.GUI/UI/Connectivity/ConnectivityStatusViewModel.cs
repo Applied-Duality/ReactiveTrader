@@ -17,7 +17,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.Connectivity
         public ConnectivityStatusViewModel(IReactiveTrader reactiveTrader, IPriceLatencyRecorder priceLatencyRecorder, IConcurrencyService concurrencyService)
         {
             _priceLatencyRecorder = priceLatencyRecorder;
-            reactiveTrader.ConnectionStatus
+            reactiveTrader.ConnectionStatusStream
                 .ObserveOn(concurrencyService.Dispatcher)
                 .SubscribeOn(concurrencyService.ThreadPool)
                 .Subscribe(

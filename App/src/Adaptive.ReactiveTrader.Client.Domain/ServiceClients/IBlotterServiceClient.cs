@@ -6,6 +6,6 @@ namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
 {
     internal interface IBlotterServiceClient
     {
-        IObservable<IEnumerable<TradeDto>> GetTrades();
+        IObservable<IEnumerable<TradeDto>> GetTradesStream();
     }
 }

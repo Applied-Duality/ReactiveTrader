@@ -20,7 +20,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
         protected IObservable<T> GetResilientStream<T>(Func<IConnection, IObservable<T>> streamFactory, TimeSpan connectionTimeout)
         {
             var activeConnections = (from connection in _connectionProvider.GetActiveConnection()
-                                     from status in connection.Status
+                                     from status in connection.StatusStream
                                      where status.ConnectionStatus == ConnectionStatus.Connected || status.ConnectionStatus == ConnectionStatus.Reconnected
                                      select connection)
                 .Publish()
@@ -31,7 +31,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
 
             // 1 - notifies when the first connection gets disconnected
             var firstDisconnection = from connection in firstConnection
-                                     from status in connection.Status
+                                     from status in connection.StatusStream
                                      where status.ConnectionStatus == ConnectionStatus.Reconnecting || status.ConnectionStatus == ConnectionStatus.Closed
                                      select Unit.Default;
 

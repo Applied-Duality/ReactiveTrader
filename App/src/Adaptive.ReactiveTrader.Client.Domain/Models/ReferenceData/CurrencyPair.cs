@@ -7,7 +7,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Models.ReferenceData
 {
     internal class CurrencyPair : ICurrencyPair
     {
-        private readonly Lazy<IObservable<IPrice>> _lazyPrices;
+        private readonly Lazy<IObservable<IPrice>> _lazyPriceStream;
 
         public CurrencyPair(string symbol, int ratePrecision, int pipsPosition, IPriceRepository priceRepository)
         {
@@ -17,13 +17,13 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Models.ReferenceData
             BaseCurrency = symbol.Substring(0, 3);
             CounterCurrency = symbol.Substring(3, 3);
 
-            _lazyPrices = new Lazy<IObservable<IPrice>>(() => CreatePrices(priceRepository));
+            _lazyPriceStream = new Lazy<IObservable<IPrice>>(() => CreatePriceStream(priceRepository));
         }
 
 
-        private IObservable<IPrice> CreatePrices(IPriceRepository priceRepository)
+        private IObservable<IPrice> CreatePriceStream(IPriceRepository priceRepository)
         {
-            return priceRepository.GetPrices(this)
+            return priceRepository.GetPriceStream(this)
                 .Publish()
                 .RefCount();
         }
@@ -33,6 +33,6 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Models.ReferenceData
         public int PipsPosition { get; private set; }
         public string BaseCurrency { get; private set; }
         public string CounterCurrency { get; private set; }
-        public IObservable<IPrice> Prices { get { return _lazyPrices.Value; } }
+        public IObservable<IPrice> PriceStream { get { return _lazyPriceStream.Value; } }
     }
 }

@@ -19,7 +19,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
         {
         }
 
-        public IObservable<IEnumerable<TradeDto>> GetTrades()
+        public IObservable<IEnumerable<TradeDto>> GetTradesStream()
         {
             return GetResilientStream(connection => GetTradesForConnection(connection.BlotterHubProxy), TimeSpan.FromSeconds(5));
         }

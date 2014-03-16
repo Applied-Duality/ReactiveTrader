@@ -7,7 +7,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain
     {
         IReferenceDataRepository ReferenceData { get; }
         ITradeRepository TradeRepository { get; }
-        IObservable<ConnectionInfo> ConnectionStatus { get; }
+        IObservable<ConnectionInfo> ConnectionStatusStream { get; }
         void Initialize(string username, string[] servers);
     }
 }

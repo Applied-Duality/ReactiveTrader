@@ -98,17 +98,17 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             switch (SubscriptionMode)
             {
                 case SpotTileSubscriptionMode.OnDispatcher:
-                    return _currencyPair.Prices
+                    return _currencyPair.PriceStream
                                         .SubscribeOn(_concurrencyService.ThreadPool)
                                         .ObserveOn(_concurrencyService.Dispatcher);
 
                 case SpotTileSubscriptionMode.ObserveLatestOnDispatcher:
-                    return _currencyPair.Prices
+                    return _currencyPair.PriceStream
                                         .SubscribeOn(_concurrencyService.ThreadPool)
                                         .ObserveLatestOn(_concurrencyService.Dispatcher);
 
                 case SpotTileSubscriptionMode.Conflate:
-                    return _currencyPair.Prices
+                    return _currencyPair.PriceStream
                                         .SubscribeOn(_concurrencyService.ThreadPool)
                                         .Conflate(TimeSpan.FromMilliseconds(100), _concurrencyService.Dispatcher);
 

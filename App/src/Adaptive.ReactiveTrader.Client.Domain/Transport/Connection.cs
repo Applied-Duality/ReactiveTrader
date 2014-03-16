@@ -18,21 +18,21 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Transport
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(Connection));
 
-        private readonly ISubject<ConnectionInfo> _status;
+        private readonly ISubject<ConnectionInfo> _statusStream;
         private readonly HubConnection _hubConnection;
 
         private bool _initialized;
 
         public Connection(string address, string username)
         {
-            _status = new BehaviorSubject<ConnectionInfo>(new ConnectionInfo(ConnectionStatus.Uninitialized, address));
+            _statusStream = new BehaviorSubject<ConnectionInfo>(new ConnectionInfo(ConnectionStatus.Uninitialized, address));
             Address = address;
             _hubConnection = new HubConnection(address);
             _hubConnection.Headers.Add(ServiceConstants.Server.UsernameHeader, username);
             CreateStatus().Subscribe(
-                s => _status.OnNext(new ConnectionInfo(s, address)),
-                _status.OnError,
-                _status.OnCompleted);
+                s => _statusStream.OnNext(new ConnectionInfo(s, address)),
+                _statusStream.OnError,
+                _statusStream.OnCompleted);
             _hubConnection.Error += exception => Log.Error("There was a connection error with " + address, exception);
 
             BlotterHubProxy = _hubConnection.CreateHubProxy(ServiceConstants.Server.BlotterHub);
@@ -51,13 +51,13 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Transport
 
             return Observable.Create<Unit>(async observer =>
             {
-                _status.OnNext(new ConnectionInfo(ConnectionStatus.Connecting, Address)); 
+                _statusStream.OnNext(new ConnectionInfo(ConnectionStatus.Connecting, Address)); 
 
                 try
                 {
                     Log.InfoFormat("Connecting to {0}", Address);
                     await _hubConnection.Start();
-                    _status.OnNext(new ConnectionInfo(ConnectionStatus.Connected, Address));
+                    _statusStream.OnNext(new ConnectionInfo(ConnectionStatus.Connected, Address));
                     observer.OnNext(Unit.Default);
                 }
                 catch (Exception e)
@@ -95,9 +95,9 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Transport
                 .TakeUntilInclusive(status => status == ConnectionStatus.Closed); // complete when the connection is closed (it's terminal, SignalR will not attempt to reconnect anymore)
         }
 
-        public IObservable<ConnectionInfo> Status
+        public IObservable<ConnectionInfo> StatusStream
         {
-            get { return _status; }
+            get { return _statusStream; }
         }
 
         public string Address { get; private set; }
