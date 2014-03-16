@@ -53,6 +53,21 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
+    <TypeScriptCompile Include="Models\Direction.ts" />
+    <TypeScriptCompile Include="Models\Pricing\ExecutablePrice.ts" />
+    <TypeScriptCompile Include="Models\Pricing\IExecutablePrice.ts" />
+    <TypeScriptCompile Include="Models\Pricing\IPrice.ts" />
+    <TypeScriptCompile Include="Models\Pricing\IPriceFactory.ts" />
+    <TypeScriptCompile Include="Models\Pricing\Price.ts" />
+    <TypeScriptCompile Include="Models\Pricing\PriceFactory.ts" />
+    <TypeScriptCompile Include="Models\Pricing\StalePrice.ts" />
+    <TypeScriptCompile Include="Models\ReferenceData\CurrencyPair.ts" />
+    <TypeScriptCompile Include="Models\ReferenceData\CurrencyPairUpdate.ts" />
+    <TypeScriptCompile Include="Models\ReferenceData\CurrencyPairUpdateFactory.ts" />
+    <TypeScriptCompile Include="Models\ReferenceData\ICurrencyPair.ts" />
+    <TypeScriptCompile Include="Models\ReferenceData\ICurrencyPairUpdate.ts" />
+    <TypeScriptCompile Include="Models\ReferenceData\ICurrencyPairUpdateFactory.ts" />
+    <TypeScriptCompile Include="Models\UpdateType.ts" />
     <TypeScriptCompile Include="Dto\TradeStatus.ts" />
     <TypeScriptCompile Include="Dto\TradeDto.ts" />
     <TypeScriptCompile Include="Dto\DirectionDto.ts" />
@@ -62,6 +77,8 @@
     <TypeScriptCompile Include="Dto\UpdateTypeDto.ts" />
     <TypeScriptCompile Include="Dto\CurrencyPairDto.ts" />
     <TypeScriptCompile Include="Dto\CurrencyPairUpdateDto.ts" />
+    <TypeScriptCompile Include="Repositories\IExecutionRepository.ts" />
+    <TypeScriptCompile Include="Repositories\ReferenceDataRepository.ts" />
     <TypeScriptCompile Include="ServiceClients\ExecutionServiceClient.ts" />
     <TypeScriptCompile Include="ServiceClients\IExecutionServiceClient.ts" />
     <TypeScriptCompile Include="ServiceClients\PricingServiceClient.ts" />
@@ -95,10 +112,7 @@
       <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Domain\" />
-    <Folder Include="Repositories\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

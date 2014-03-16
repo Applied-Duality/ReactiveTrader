@@ -1,0 +1,4 @@
+﻿enum Direction {
+    Buy,
+    Sell
+} 

@@ -1,0 +1,5 @@
+﻿enum UpdateType
+{
+    Add,
+    Remove
+}
