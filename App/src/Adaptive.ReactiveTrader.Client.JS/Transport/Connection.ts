@@ -10,6 +10,8 @@ class Connection implements IConnection {
     private _pricingHubProxy: HubProxy;
     private _executionHubProxy: HubProxy;
     private _blotterHubProxy: HubProxy;
+    private _allPrices: Rx.Subject<IPriceDto>;
+    private _currencyPairUpdates: Rx.Subject<ICurrencyPairUpdateDto>;
 
     constructor(address: string, username: string) {
         //var initialConnectionInfo = new ConnectionInfo(ConnectionStatus.Uninitialized, address);
@@ -29,6 +31,8 @@ class Connection implements IConnection {
         this._blotterHubProxy = this._hubConnection.createHubProxy("BlotterHub");
         this._executionHubProxy = this._hubConnection.createHubProxy("ExecutionHub");
         this._pricingHubProxy = this._hubConnection.createHubProxy("PricingHub");
+
+        this.installListeners();
     }
 
     public initialize(): Rx.Observable<{}> {
@@ -55,7 +59,6 @@ class Connection implements IConnection {
                 this._hubConnection.stop();
                 console.log("Connection stopped.");
             });
-
         });
         //.publish()
         //.refCount();
@@ -87,5 +90,21 @@ class Connection implements IConnection {
 
     public get blotterHubProxy(): HubProxy {
         return this._blotterHubProxy;
+    }
+
+    public get allPrices(): Rx.Observable<IPriceDto> {
+        return this._allPrices;
+    }
+
+    public get currencyPairUpdates(): Rx.Observable<ICurrencyPairUpdateDto> {
+        return this._currencyPairUpdates;
+    }
+
+    private installListeners() {
+        this._allPrices = new Rx.Subject<IPriceDto>();
+        this._currencyPairUpdates = new Rx.Subject<ICurrencyPairUpdateDto>();
+
+        this._pricingHubProxy.on("OnNewPrice", price=> this._allPrices.onNext(price));
+        this._referenceDataHubProxy.on("OnCurrencyPairUpdate", currencyPairs=> this._currencyPairUpdates.onNext(currencyPairs));
     }
 }

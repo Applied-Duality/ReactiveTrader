@@ -15,15 +15,21 @@ window.onload = () => {
             ex => console.log(ex));
 
     connection
-       .initialize()
-       .subscribe(
-            _ => {
+        .initialize()
+        .subscribe(
+            _=> {
                 console.log("Connected");
                 var refData = new ReferenceDataServiceClient(connection);
                 refData.getCurrencyPairUpdates()
                     .subscribe(
-                        currencyPairs => console.log(currencyPairs),
-                        ex => console.log(ex));
+                        currencyPairs=> console.log(currencyPairs),
+                        ex=> console.error(ex));
+
+                var pricing = new PricingServiceClient(connection);
+                pricing.getSpotStream("EURUSD")
+                    .subscribe(
+                        (price: IPriceDto)=> console.log(price.Bid + "/" + price.Ask),
+                        ex=> console.error(ex));
             },
-            ex => console.log(ex));
+            ex=> console.log(ex));
 };

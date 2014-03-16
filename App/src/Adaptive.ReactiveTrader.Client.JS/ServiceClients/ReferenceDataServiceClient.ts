@@ -17,9 +17,9 @@ class ReferenceDataServiceClient implements IReferenceDataServiceClient
     }
 
     private getTradesForConnection(referenceDataHubProxy: HubProxy) : Rx.Observable<ICurrencyPairUpdateDto[]> {
-        return Rx.Observable.create<ICurrencyPairUpdateDto[]>(observer =>
-        { 
-            referenceDataHubProxy.on("OnCurrencyPairUpdate", dto => observer.onNext([dto]));
+        return Rx.Observable.create<ICurrencyPairUpdateDto[]>(observer => {
+            var currencyPairUpdateSubscription = this._connection.currencyPairUpdates.subscribe(
+                currencyPairUpdate=> observer.onNext([currencyPairUpdate]));
 
             console.log("Sending currency pair subscription...");
 
@@ -31,9 +31,7 @@ class ReferenceDataServiceClient implements IReferenceDataServiceClient
                 })
                 .fail(ex => observer.onError(ex));
 
-            return Rx.Disposable.create(() => {
-                //TODO unsubscribe referenceDataHubProxy.off("OnCurrencyPairUpdate");
-            });
+            return currencyPairUpdateSubscription;
         });
         //.publish()
         //.refCount();

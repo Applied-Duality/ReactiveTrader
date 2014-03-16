@@ -9,4 +9,6 @@ interface IConnection {
     pricingHubProxy: HubProxy;
     executionHubProxy: HubProxy;
     blotterHubProxy: HubProxy;
+    currencyPairUpdates: Rx.Observable<ICurrencyPairUpdateDto>;
+    allPrices: Rx.Observable<IPriceDto>;
 }

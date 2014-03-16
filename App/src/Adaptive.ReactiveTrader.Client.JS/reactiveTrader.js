@@ -25,6 +25,8 @@ var Connection = (function () {
         this._blotterHubProxy = this._hubConnection.createHubProxy("BlotterHub");
         this._executionHubProxy = this._hubConnection.createHubProxy("ExecutionHub");
         this._pricingHubProxy = this._hubConnection.createHubProxy("PricingHub");
+
+        this.installListeners();
     }
     Connection.prototype.initialize = function () {
         var _this = this;
@@ -104,6 +106,35 @@ var Connection = (function () {
         enumerable: true,
         configurable: true
     });
+
+    Object.defineProperty(Connection.prototype, "allPrices", {
+        get: function () {
+            return this._allPrices;
+        },
+        enumerable: true,
+        configurable: true
+    });
+
+    Object.defineProperty(Connection.prototype, "currencyPairUpdates", {
+        get: function () {
+            return this._currencyPairUpdates;
+        },
+        enumerable: true,
+        configurable: true
+    });
+
+    Connection.prototype.installListeners = function () {
+        var _this = this;
+        this._allPrices = new Rx.Subject();
+        this._currencyPairUpdates = new Rx.Subject();
+
+        this._pricingHubProxy.on("OnNewPrice", function (price) {
+            return _this._allPrices.onNext(price);
+        });
+        this._referenceDataHubProxy.on("OnCurrencyPairUpdate", function (currencyPairs) {
+            return _this._currencyPairUpdates.onNext(currencyPairs);
+        });
+    };
     return Connection;
 })();
 /// <reference path="../typings/signalr/signalr.d.ts"/>
@@ -131,9 +162,10 @@ var ReferenceDataServiceClient = (function () {
     };
 
     ReferenceDataServiceClient.prototype.getTradesForConnection = function (referenceDataHubProxy) {
+        var _this = this;
         return Rx.Observable.create(function (observer) {
-            referenceDataHubProxy.on("OnCurrencyPairUpdate", function (dto) {
-                return observer.onNext([dto]);
+            var currencyPairUpdateSubscription = _this._connection.currencyPairUpdates.subscribe(function (currencyPairUpdate) {
+                return observer.onNext([currencyPairUpdate]);
             });
 
             console.log("Sending currency pair subscription...");
@@ -145,9 +177,7 @@ var ReferenceDataServiceClient = (function () {
                 return observer.onError(ex);
             });
 
-            return Rx.Disposable.create(function () {
-                //TODO unsubscribe referenceDataHubProxy.off("OnCurrencyPairUpdate");
-            });
+            return currencyPairUpdateSubscription;
         });
         //.publish()
         //.refCount();
@@ -175,12 +205,69 @@ window.onload = function () {
         refData.getCurrencyPairUpdates().subscribe(function (currencyPairs) {
             return console.log(currencyPairs);
         }, function (ex) {
-            return console.log(ex);
+            return console.error(ex);
+        });
+
+        var pricing = new PricingServiceClient(connection);
+        pricing.getSpotStream("EURUSD").subscribe(function (price) {
+            return console.log(price.Bid + "/" + price.Ask);
+        }, function (ex) {
+            return console.error(ex);
         });
     }, function (ex) {
         return console.log(ex);
     });
 };
+var PriceSubscriptionRequestDto = (function () {
+    function PriceSubscriptionRequestDto() {
+    }
+    return PriceSubscriptionRequestDto;
+})();
+/// <reference path="../typings/rx.js/rx.d.ts"/>
+/// <reference path="../Dto/IPriceDto.ts"/>
+var PricingServiceClient = (function () {
+    function PricingServiceClient(connection) {
+        this._connection = connection;
+    }
+    PricingServiceClient.prototype.getSpotStream = function (currencyPair) {
+        return this.getSpotStreamForConnection(currencyPair, this._connection.pricingHubProxy);
+    };
+
+    PricingServiceClient.prototype.getSpotStreamForConnection = function (currencyPair, pricingHub) {
+        var _this = this;
+        return Rx.Observable.create(function (observer) {
+            var pricesSubscription = _this._connection.allPrices.subscribe(function (price) {
+                if (price.Symbol == currencyPair) {
+                    observer.onNext(price);
+                }
+            });
+
+            console.log("Sending price subscription for currency pair " + currencyPair);
+
+            var subscriptionRequest = new PriceSubscriptionRequestDto();
+            subscriptionRequest.CurrencyPair = "EURUSD";
+
+            pricingHub.invoke("SubscribePriceStream", subscriptionRequest).done(function (_) {
+                return console.log("Subscribed to " + currencyPair);
+            }).fail(function (ex) {
+                return observer.onError(ex);
+            });
+
+            var unsubsciptionDisposable = Rx.Disposable.create(function () {
+                pricingHub.invoke("UnsubscribePriceStream", subscriptionRequest).done(function (_) {
+                    return console.log("Unsubscribed from " + currencyPair);
+                }).fail(function (error) {
+                    return console.log("An error occured while sending unsubscription request for " + currencyPair + ":" + error);
+                });
+            });
+
+            return new Rx.CompositeDisposable([pricesSubscription, unsubsciptionDisposable]);
+        });
+    };
+    return PricingServiceClient;
+})();
+/// <reference path="../typings/rx.js/rx.d.ts"/>
+/// <reference path="../Dto/IPriceDto.ts"/>
 var ConnectionStatus;
 (function (ConnectionStatus) {
     ConnectionStatus[ConnectionStatus["Connecting"] = 0] = "Connecting";
