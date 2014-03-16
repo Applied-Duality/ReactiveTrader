@@ -1,8 +1,5 @@
 ﻿/// <reference path="../typings/rx.js/rx.d.ts"/>
 /// <reference path="../typings/signalr/signalr.d.ts"/>
-/// <reference path="../Dto/ICurrencyPairUpdateDto.ts"/>
-/// <reference path="../Transport/IConnection.ts"/>
-/// <reference path="IReferenceDataServiceClient.ts"/>
 
 class ReferenceDataServiceClient implements IReferenceDataServiceClient
 {
@@ -12,12 +9,12 @@ class ReferenceDataServiceClient implements IReferenceDataServiceClient
         this._connection = connection;
     }
 
-    getCurrencyPairUpdates() : Rx.Observable<ICurrencyPairUpdateDto[]> {
+    getCurrencyPairUpdates() : Rx.Observable<CurrencyPairUpdateDto[]> {
         return this.getTradesForConnection(this._connection.referenceDataHubProxy);
     }
 
-    private getTradesForConnection(referenceDataHubProxy: HubProxy) : Rx.Observable<ICurrencyPairUpdateDto[]> {
-        return Rx.Observable.create<ICurrencyPairUpdateDto[]>(observer => {
+    private getTradesForConnection(referenceDataHubProxy: HubProxy) : Rx.Observable<CurrencyPairUpdateDto[]> {
+        return Rx.Observable.create<CurrencyPairUpdateDto[]>(observer => {
             var currencyPairUpdateSubscription = this._connection.currencyPairUpdates.subscribe(
                 currencyPairUpdate=> observer.onNext([currencyPairUpdate]));
 

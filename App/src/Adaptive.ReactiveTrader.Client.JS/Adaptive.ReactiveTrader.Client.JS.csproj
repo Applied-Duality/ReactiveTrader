@@ -53,11 +53,16 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
+    <TypeScriptCompile Include="Dto\TradeStatus.ts" />
+    <TypeScriptCompile Include="Dto\TradeDto.ts" />
+    <TypeScriptCompile Include="Dto\DirectionDto.ts" />
+    <TypeScriptCompile Include="Dto\TradeRequestDto.ts" />
     <TypeScriptCompile Include="Dto\PriceSubscriptionRequestDto.ts" />
-    <TypeScriptCompile Include="Dto\IPriceDto.ts" />
+    <TypeScriptCompile Include="Dto\PriceDto.ts" />
     <TypeScriptCompile Include="Dto\UpdateTypeDto.ts" />
-    <TypeScriptCompile Include="Dto\ICurrencyPairDto.ts" />
-    <TypeScriptCompile Include="Dto\ICurrencyPairUpdateDto.ts" />
+    <TypeScriptCompile Include="Dto\CurrencyPairDto.ts" />
+    <TypeScriptCompile Include="Dto\CurrencyPairUpdateDto.ts" />
+    <TypeScriptCompile Include="ServiceClients\IExecutionServiceClient.ts" />
     <TypeScriptCompile Include="ServiceClients\PricingServiceClient.ts" />
     <TypeScriptCompile Include="ServiceClients\IPricingServiceClient.ts" />
     <TypeScriptCompile Include="ServiceClients\ReferenceDataServiceClient.ts" />

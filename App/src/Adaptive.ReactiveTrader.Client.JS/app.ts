@@ -28,7 +28,7 @@ window.onload = () => {
                 var pricing = new PricingServiceClient(connection);
                 pricing.getSpotStream("EURUSD")
                     .subscribe(
-                        (price: IPriceDto)=> console.log(price.Bid + "/" + price.Ask),
+                        (price: PriceDto)=> console.log(price.Bid + "/" + price.Ask),
                         ex=> console.error(ex));
             },
             ex=> console.log(ex));

@@ -1,4 +1,4 @@
-﻿interface IPriceDto {
+﻿class PriceDto {
     Symbol: string;
     Bid: number;
     Ask: number;

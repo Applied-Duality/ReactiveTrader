@@ -1,5 +1,4 @@
 ﻿/// <reference path="../typings/rx.js/rx.d.ts"/>
-/// <reference path="../Dto/IPriceDto.ts"/>
 
 class PricingServiceClient implements IPricingServiceClient {
     private _connection: IConnection;
@@ -8,12 +7,12 @@ class PricingServiceClient implements IPricingServiceClient {
         this._connection = connection;
     }
 
-    public getSpotStream(currencyPair: string): Rx.Observable<IPriceDto> {
+    public getSpotStream(currencyPair: string): Rx.Observable<PriceDto> {
         return this.getSpotStreamForConnection(currencyPair, this._connection.pricingHubProxy);
     }
 
-    private getSpotStreamForConnection(currencyPair: string, pricingHub: HubProxy) : Rx.Observable<IPriceDto> {
-        return Rx.Observable.create<IPriceDto>(observer=> {
+    private getSpotStreamForConnection(currencyPair: string, pricingHub: HubProxy) : Rx.Observable<PriceDto> {
+        return Rx.Observable.create<PriceDto>(observer=> {
             var pricesSubscription = this._connection
                 .allPrices
                 .subscribe(price=> {

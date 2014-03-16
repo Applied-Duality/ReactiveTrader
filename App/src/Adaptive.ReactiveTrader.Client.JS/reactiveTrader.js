@@ -137,22 +137,8 @@ var Connection = (function () {
     };
     return Connection;
 })();
-/// <reference path="../typings/signalr/signalr.d.ts"/>
-/// <reference path="../typings/rx.js/rx.d.ts"/>
-var UpdateTypeDto;
-(function (UpdateTypeDto) {
-    UpdateTypeDto[UpdateTypeDto["Added"] = 0] = "Added";
-    UpdateTypeDto[UpdateTypeDto["Removed"] = 1] = "Removed";
-})(UpdateTypeDto || (UpdateTypeDto = {}));
-/// <reference path="../typings/rx.js/rx.d.ts"/>
-/// <reference path="../Dto/ICurrencyPairUpdateDto.ts"/>
-/// <reference path="../Dto/ICurrencyPairDto.ts"/>
-/// <reference path="../Dto/UpdateTypeDto.ts"/>
 /// <reference path="../typings/rx.js/rx.d.ts"/>
 /// <reference path="../typings/signalr/signalr.d.ts"/>
-/// <reference path="../Dto/ICurrencyPairUpdateDto.ts"/>
-/// <reference path="../Transport/IConnection.ts"/>
-/// <reference path="IReferenceDataServiceClient.ts"/>
 var ReferenceDataServiceClient = (function () {
     function ReferenceDataServiceClient(connection) {
         this._connection = connection;
@@ -218,13 +204,52 @@ window.onload = function () {
         return console.log(ex);
     });
 };
+var TradeStatus;
+(function (TradeStatus) {
+    TradeStatus[TradeStatus["Done"] = 0] = "Done";
+    TradeStatus[TradeStatus["Rejected"] = 1] = "Rejected";
+})(TradeStatus || (TradeStatus = {}));
+var TradeDto = (function () {
+    function TradeDto() {
+    }
+    return TradeDto;
+})();
+var DirectionDto;
+(function (DirectionDto) {
+    DirectionDto[DirectionDto["Buy"] = 0] = "Buy";
+    DirectionDto[DirectionDto["Sell"] = 1] = "Sell";
+})(DirectionDto || (DirectionDto = {}));
+var TradeRequestDto = (function () {
+    function TradeRequestDto() {
+    }
+    return TradeRequestDto;
+})();
 var PriceSubscriptionRequestDto = (function () {
     function PriceSubscriptionRequestDto() {
     }
     return PriceSubscriptionRequestDto;
 })();
+var PriceDto = (function () {
+    function PriceDto() {
+    }
+    return PriceDto;
+})();
+var UpdateTypeDto;
+(function (UpdateTypeDto) {
+    UpdateTypeDto[UpdateTypeDto["Added"] = 0] = "Added";
+    UpdateTypeDto[UpdateTypeDto["Removed"] = 1] = "Removed";
+})(UpdateTypeDto || (UpdateTypeDto = {}));
+var CurrencyPairDto = (function () {
+    function CurrencyPairDto() {
+    }
+    return CurrencyPairDto;
+})();
+var CurrencyPairUpdateDto = (function () {
+    function CurrencyPairUpdateDto() {
+    }
+    return CurrencyPairUpdateDto;
+})();
 /// <reference path="../typings/rx.js/rx.d.ts"/>
-/// <reference path="../Dto/IPriceDto.ts"/>
 var PricingServiceClient = (function () {
     function PricingServiceClient(connection) {
         this._connection = connection;
@@ -267,7 +292,9 @@ var PricingServiceClient = (function () {
     return PricingServiceClient;
 })();
 /// <reference path="../typings/rx.js/rx.d.ts"/>
-/// <reference path="../Dto/IPriceDto.ts"/>
+/// <reference path="../typings/rx.js/rx.d.ts"/>
+/// <reference path="../typings/signalr/signalr.d.ts"/>
+/// <reference path="../typings/rx.js/rx.d.ts"/>
 var ConnectionStatus;
 (function (ConnectionStatus) {
     ConnectionStatus[ConnectionStatus["Connecting"] = 0] = "Connecting";

@@ -1,0 +1,4 @@
+﻿enum TradeStatus {
+    Done,
+    Rejected
+}

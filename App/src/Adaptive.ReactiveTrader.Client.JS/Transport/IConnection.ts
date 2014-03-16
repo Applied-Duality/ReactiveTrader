@@ -1,7 +1,4 @@
-﻿/// <reference path="../typings/signalr/signalr.d.ts"/> 
-/// <reference path="../typings/rx.js/rx.d.ts"/>
-
-interface IConnection {
+﻿interface IConnection {
     status: Rx.Observable<ConnectionInfo>;
     initialize(): Rx.Observable<{}>;
     address: string;
@@ -9,6 +6,6 @@ interface IConnection {
     pricingHubProxy: HubProxy;
     executionHubProxy: HubProxy;
     blotterHubProxy: HubProxy;
-    currencyPairUpdates: Rx.Observable<ICurrencyPairUpdateDto>;
-    allPrices: Rx.Observable<IPriceDto>;
+    currencyPairUpdates: Rx.Observable<CurrencyPairUpdateDto>;
+    allPrices: Rx.Observable<PriceDto>;
 }

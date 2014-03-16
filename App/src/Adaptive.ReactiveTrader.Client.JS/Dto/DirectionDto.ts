@@ -1,0 +1,4 @@
+﻿enum DirectionDto {
+    Buy,
+    Sell
+}
