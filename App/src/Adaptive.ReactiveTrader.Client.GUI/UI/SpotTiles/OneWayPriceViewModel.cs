@@ -15,7 +15,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
     public class OneWayPriceViewModel : ViewModelBase, IOneWayPriceViewModel
     {
         private readonly ISpotTilePricingViewModel _parent;
-        private readonly ISchedulerProvider _schedulerProvider;
+        private readonly IConcurrencyService _concurrencyService;
         private static readonly ILog Log = LogManager.GetLogger(typeof(OneWayPriceViewModel));
 
         private readonly DelegateCommand _executeCommand;
@@ -28,10 +28,10 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         public bool IsExecuting { get; private set; }
         public bool IsStale { get; private set; }
         
-        public OneWayPriceViewModel(Direction direction, ISpotTilePricingViewModel parent, ISchedulerProvider schedulerProvider)
+        public OneWayPriceViewModel(Direction direction, ISpotTilePricingViewModel parent, IConcurrencyService concurrencyService)
         {
             _parent = parent;
-            _schedulerProvider = schedulerProvider;
+            _concurrencyService = concurrencyService;
             Direction = direction;
 
             _executeCommand = new DelegateCommand(OnExecute, CanExecute);
@@ -55,8 +55,8 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             }
             IsExecuting = true;
             _executablePrice.Execute(notional, _parent.DealtCurrency)
-                .ObserveOn(_schedulerProvider.Dispatcher)
-                .SubscribeOn(_schedulerProvider.ThreadPool)
+                .ObserveOn(_concurrencyService.Dispatcher)
+                .SubscribeOn(_concurrencyService.ThreadPool)
                 .Subscribe(OnExecuted,
                     OnExecutionError);    
         }

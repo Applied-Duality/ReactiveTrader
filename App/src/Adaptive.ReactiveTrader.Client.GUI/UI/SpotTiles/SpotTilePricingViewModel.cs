@@ -32,7 +32,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         private readonly ICurrencyPair _currencyPair;
         private readonly ISpotTileViewModel _parent;
         private readonly IPriceLatencyRecorder _priceLatencyRecorder;
-        private readonly ISchedulerProvider _schedulerProvider;
+        private readonly IConcurrencyService _concurrencyService;
         private bool _disposed;
         private decimal? _previousRate;
         private SpotTileSubscriptionMode _subscriptionMode;
@@ -40,12 +40,12 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         public SpotTilePricingViewModel(ICurrencyPair currencyPair, ISpotTileViewModel parent,
             Func<Direction, ISpotTilePricingViewModel, IOneWayPriceViewModel> oneWayPriceFactory,
             IPriceLatencyRecorder priceLatencyRecorder,
-            ISchedulerProvider schedulerProvider)
+            IConcurrencyService concurrencyService)
         {
             _currencyPair = currencyPair;
             _parent = parent;
             _priceLatencyRecorder = priceLatencyRecorder;
-            _schedulerProvider = schedulerProvider;
+            _concurrencyService = concurrencyService;
 
             _priceSubscription = new SerialDisposable();
             Bid = oneWayPriceFactory(Direction.SELL, this);
@@ -99,18 +99,18 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             {
                 case SpotTileSubscriptionMode.OnDispatcher:
                     return _currencyPair.Prices
-                                        .SubscribeOn(_schedulerProvider.ThreadPool)
-                                        .ObserveOn(_schedulerProvider.Dispatcher);
+                                        .SubscribeOn(_concurrencyService.ThreadPool)
+                                        .ObserveOn(_concurrencyService.Dispatcher);
 
                 case SpotTileSubscriptionMode.ObserveLatestOnDispatcher:
                     return _currencyPair.Prices
-                                        .SubscribeOn(_schedulerProvider.ThreadPool)
-                                        .ObserveLatestOn(_schedulerProvider.Dispatcher);
+                                        .SubscribeOn(_concurrencyService.ThreadPool)
+                                        .ObserveLatestOn(_concurrencyService.Dispatcher);
 
                 case SpotTileSubscriptionMode.Conflate:
                     return _currencyPair.Prices
-                                        .SubscribeOn(_schedulerProvider.ThreadPool)
-                                        .Conflate(TimeSpan.FromMilliseconds(100), _schedulerProvider.Dispatcher);
+                                        .SubscribeOn(_concurrencyService.ThreadPool)
+                                        .Conflate(TimeSpan.FromMilliseconds(100), _concurrencyService.Dispatcher);
 
                 default:
                     throw new ArgumentOutOfRangeException();

@@ -18,7 +18,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.Blotter
     {
         private readonly ITradeRepository _tradeRepository;
         private readonly Func<ITrade, ITradeViewModel> _tradeViewModelFactory;
-        private readonly ISchedulerProvider _schedulerProvider;
+        private readonly IConcurrencyService _concurrencyService;
         public ObservableCollection<ITradeViewModel> Trades { get; private set; }
 
         private static readonly ILog Log = LogManager.GetLogger(typeof(BlotterViewModel));
@@ -26,11 +26,11 @@ namespace Adaptive.ReactiveTrader.Client.UI.Blotter
 
         public BlotterViewModel(IReactiveTrader reactiveTrader,
                                 Func<ITrade, ITradeViewModel> tradeViewModelFactory,
-                                ISchedulerProvider schedulerProvider)
+                                IConcurrencyService concurrencyService)
         {
             _tradeRepository = reactiveTrader.TradeRepository;
             _tradeViewModelFactory = tradeViewModelFactory;
-            _schedulerProvider = schedulerProvider;
+            _concurrencyService = concurrencyService;
             Trades = new ObservableCollection<ITradeViewModel>();
 
             LoadTrades();
@@ -39,8 +39,8 @@ namespace Adaptive.ReactiveTrader.Client.UI.Blotter
         private void LoadTrades()
         {
             _tradeRepository.GetTrades()
-                            .ObserveOn(_schedulerProvider.Dispatcher)
-                            .SubscribeOn(_schedulerProvider.ThreadPool)
+                            .ObserveOn(_concurrencyService.Dispatcher)
+                            .SubscribeOn(_concurrencyService.ThreadPool)
                             .Subscribe(
                                 AddTrades,
                                 ex => Log.Error("An error occured within the trade stream", ex));

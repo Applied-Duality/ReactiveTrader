@@ -20,7 +20,7 @@ namespace Adaptive.ReactiveTrader.Client
             builder.RegisterType<ConfigurationProvider>().As<IConfigurationProvider>();
             builder.RegisterType<UserProvider>().As<IUserProvider>();
             builder.RegisterType<PriceLatencyRecorder>().As<IPriceLatencyRecorder>().SingleInstance();
-            builder.RegisterType<SchedulerProvider>().As<ISchedulerProvider>();
+            builder.RegisterType<ConcurrencyService>().As<IConcurrencyService>();
 
             // views
             builder.RegisterType<ShellView>();

@@ -21,16 +21,16 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         public ObservableCollection<ISpotTileViewModel> SpotTiles { get; private set; }
         private readonly IReferenceDataRepository _referenceDataRepository;
         private readonly Func<ICurrencyPair, ISpotTileViewModel> _spotTileFactory;
-        private readonly ISchedulerProvider _schedulerProvider;
+        private readonly IConcurrencyService _concurrencyService;
         private readonly ISpotTileViewModel _config;
 
         public SpotTilesViewModel(IReactiveTrader reactiveTrader,
             Func<ICurrencyPair, ISpotTileViewModel> spotTileFactory,
-            ISchedulerProvider schedulerProvider)
+            IConcurrencyService concurrencyService)
         {
             _referenceDataRepository = reactiveTrader.ReferenceData;
             _spotTileFactory = spotTileFactory;
-            _schedulerProvider = schedulerProvider;
+            _concurrencyService = concurrencyService;
 
             SpotTiles = new ObservableCollection<ISpotTileViewModel>();
 
@@ -49,8 +49,8 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         private void LoadSpotTiles()
         {
             _referenceDataRepository.GetCurrencyPairs()
-                .ObserveOn(_schedulerProvider.Dispatcher)
-                .SubscribeOn(_schedulerProvider.ThreadPool)
+                .ObserveOn(_concurrencyService.Dispatcher)
+                .SubscribeOn(_concurrencyService.ThreadPool)
                 .Subscribe(
                     currencyPairs => currencyPairs.ForEach(HandleCurrencyPairUpdate),
                     error => Log.Error("Failed to get currencies", error));
