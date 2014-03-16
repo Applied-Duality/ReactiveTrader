@@ -6,7 +6,11 @@ using Adaptive.ReactiveTrader.Server.Pricing;
 using Adaptive.ReactiveTrader.Server.ReferenceData;
 using Adaptive.ReactiveTrader.Shared.UI;
 using log4net;
+using Microsoft.Owin;
+using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.Hosting;
+using Microsoft.Owin.StaticFiles;
+using Owin;
 
 namespace Adaptive.ReactiveTrader.Server
 {
@@ -97,6 +101,14 @@ namespace Adaptive.ReactiveTrader.Server
         private void StartServer()
         {
             ServerStatus = "Starting...";
+
+            //var options = new FileServerOptions
+            //{
+            //    EnableDirectoryBrowsing = true,
+            //    FileSystem = new PhysicalFileSystem(@".\StaticFiles"),
+            //    RequestPath = new PathString("/ReactiveTrader")
+            //};
+
             try
             {
                 _signalr = WebApp.Start(Address);
