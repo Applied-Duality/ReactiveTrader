@@ -43,8 +43,8 @@ namespace Adaptive.ReactiveTrader.Client.Domain.ServiceClients
                     Log.Info("Sending trades unsubscription...");
                     SendUnsubscription(blotterHubProxy)
                         .Subscribe(
-                            _ => Log.InfoFormat("Subscribed to blotter."),
-                            ex => Log.WarnFormat("An error occured while unsubscribing to blotter: {0}", ex.Message));
+                            _ => Log.InfoFormat("Unsubscribed from blotter."),
+                            ex => Log.WarnFormat("An error occured while unsubscribing from blotter: {0}", ex.Message));
                 });
                 return new CompositeDisposable { spotTradeSubscription, unsubscriptionDisposable, sendSubscriptionDisposable };
             })

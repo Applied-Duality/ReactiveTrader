@@ -16,6 +16,9 @@
                 .fail(error=> observer.onError(error));
 
             return Rx.Disposable.empty;
-        });
+        })
+        .take(1)
+        .timeout(2000);
+        // TODO cachefirstresult
     }
 }

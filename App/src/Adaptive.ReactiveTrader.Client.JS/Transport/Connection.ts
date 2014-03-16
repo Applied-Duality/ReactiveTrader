@@ -10,6 +10,7 @@ class Connection implements IConnection {
     private _blotterHubProxy: HubProxy;
     private _allPrices: Rx.Subject<PriceDto>;
     private _currencyPairUpdates: Rx.Subject<CurrencyPairUpdateDto>;
+    private _allTrades: Rx.Subject<TradeDto[]>;
 
     constructor(address: string, username: string) {
         this._status = new Rx.Subject<ConnectionInfo>();
@@ -97,11 +98,16 @@ class Connection implements IConnection {
         return this._currencyPairUpdates;
     }
 
+    public get allTrades(): Rx.Observable<TradeDto[]> {
+        return this._allTrades;
+    }
+
     private installListeners() {
         this._allPrices = new Rx.Subject<PriceDto>();
         this._currencyPairUpdates = new Rx.Subject<CurrencyPairUpdateDto>();
 
         this._pricingHubProxy.on("OnNewPrice", price=> this._allPrices.onNext(price));
         this._referenceDataHubProxy.on("OnCurrencyPairUpdate", currencyPairs=> this._currencyPairUpdates.onNext(currencyPairs));
+        this._blotterHubProxy.on("OnNewTrade", trades=> this._allTrades.onNext(trades));
     }
 }

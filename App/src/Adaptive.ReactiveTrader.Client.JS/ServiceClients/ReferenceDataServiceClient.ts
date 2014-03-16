@@ -26,9 +26,9 @@
                 .fail(ex => observer.onError(ex));
 
             return currencyPairUpdateSubscription;
-        });
-        //.publish()
-        //.refCount();
+        })
+        .publish()
+        .refCount();
     }
 }
 

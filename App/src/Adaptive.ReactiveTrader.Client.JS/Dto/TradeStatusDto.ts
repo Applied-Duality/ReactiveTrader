@@ -1,4 +1,4 @@
-﻿enum TradeStatus {
+﻿enum TradeStatusDto {
     Done,
     Rejected
 }

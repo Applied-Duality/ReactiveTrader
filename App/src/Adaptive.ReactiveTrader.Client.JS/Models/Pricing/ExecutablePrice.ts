@@ -9,7 +9,8 @@
 
     execute(notional: number, dealtCurrency: string) {
         return this._executionRepository.execute(this, notional, dealtCurrency)
-            .cacheFirstResult();
+            .take(1);
+        // TODO .cacheFirstResult();
     }
 
     // TODO encapsulate

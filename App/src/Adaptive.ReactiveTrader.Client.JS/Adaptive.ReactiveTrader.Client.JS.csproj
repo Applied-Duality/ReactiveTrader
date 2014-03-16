@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
+    <TypeScriptCompile Include="IReactiveTrader.ts" />
     <TypeScriptCompile Include="Models\Direction.ts" />
     <TypeScriptCompile Include="Models\Execution\ITrade.ts" />
     <TypeScriptCompile Include="Models\Execution\ITradeFactory.ts" />
@@ -73,7 +74,7 @@
     <TypeScriptCompile Include="Models\ReferenceData\ICurrencyPairUpdate.ts" />
     <TypeScriptCompile Include="Models\ReferenceData\ICurrencyPairUpdateFactory.ts" />
     <TypeScriptCompile Include="Models\UpdateType.ts" />
-    <TypeScriptCompile Include="Dto\TradeStatus.ts" />
+    <TypeScriptCompile Include="Dto\TradeStatusDto.ts" />
     <TypeScriptCompile Include="Dto\TradeDto.ts" />
     <TypeScriptCompile Include="Dto\DirectionDto.ts" />
     <TypeScriptCompile Include="Dto\TradeRequestDto.ts" />
@@ -82,8 +83,17 @@
     <TypeScriptCompile Include="Dto\UpdateTypeDto.ts" />
     <TypeScriptCompile Include="Dto\CurrencyPairDto.ts" />
     <TypeScriptCompile Include="Dto\CurrencyPairUpdateDto.ts" />
+    <TypeScriptCompile Include="ReactiveTrader.ts" />
+    <TypeScriptCompile Include="ServiceClients\BlotterServiceClient.ts" />
+    <TypeScriptCompile Include="Repositories\ExecutionRepository.ts" />
+    <TypeScriptCompile Include="ServiceClients\IBlotterServiceClient.ts" />
     <TypeScriptCompile Include="Repositories\IExecutionRepository.ts" />
+    <TypeScriptCompile Include="Repositories\IPriceRepository.ts" />
+    <TypeScriptCompile Include="Repositories\ITradeRepository.ts" />
+    <TypeScriptCompile Include="Repositories\PriceRepository.ts" />
     <TypeScriptCompile Include="Repositories\ReferenceDataRepository.ts" />
+    <TypeScriptCompile Include="Repositories\IReferenceDataRepository.ts" />
+    <TypeScriptCompile Include="Repositories\TradeRepository.ts" />
     <TypeScriptCompile Include="ServiceClients\ExecutionServiceClient.ts" />
     <TypeScriptCompile Include="ServiceClients\IExecutionServiceClient.ts" />
     <TypeScriptCompile Include="ServiceClients\PricingServiceClient.ts" />

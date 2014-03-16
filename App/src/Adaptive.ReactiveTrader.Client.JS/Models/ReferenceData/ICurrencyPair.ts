@@ -1,8 +1,8 @@
 ﻿interface ICurrencyPair {
-    Symbol: string;
-    Prices: Rx.Observable<IPrice>;
-    RatePrecision: number;
-    PipsPosition: number;
-    BaseCurrency: string;
-    CounterCurrency: string;
+    symbol: string;
+    prices: Rx.Observable<IPrice>;
+    ratePrecision: number;
+    pipsPosition: number;
+    baseCurrency: string;
+    counterCurrency: string;
 } 

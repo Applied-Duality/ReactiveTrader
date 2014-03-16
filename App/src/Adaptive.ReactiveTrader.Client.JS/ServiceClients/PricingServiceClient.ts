@@ -35,6 +35,8 @@
             });
 
             return new Rx.CompositeDisposable([pricesSubscription, unsubsciptionDisposable]);
-        });
+        })
+        .publish()
+        .refCount();
     }
 }

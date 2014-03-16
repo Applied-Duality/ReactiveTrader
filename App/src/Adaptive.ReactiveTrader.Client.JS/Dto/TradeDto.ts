@@ -8,5 +8,5 @@
     SpotRate: number;
     TradeDate: Date;
     ValueDate:Date;
-    Status:TradeStatus;
+    Status:TradeStatusDto;
 }

@@ -14,7 +14,7 @@
 
         var update = new CurrencyPairUpdate(
             currencyPairUpdate.UpdateType == UpdateTypeDto.Added ? UpdateType.Add : UpdateType.Remove,
-            cp);
+            <ICurrencyPair>cp);
 
         return update;
     }

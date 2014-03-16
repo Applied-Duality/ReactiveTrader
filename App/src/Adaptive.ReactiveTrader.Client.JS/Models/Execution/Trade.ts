@@ -26,7 +26,7 @@
         this.direction = direction;
         this.notional = notional;
         this.spotRate = spotRate;
-        this.tradeStatu = tradeStatus;
+        this.tradeStatus = tradeStatus;
         this.tradeDate = tradeDate;
         this.tradeId = tradeId;
         this.traderName = traderName;

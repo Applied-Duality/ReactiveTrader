@@ -18,7 +18,7 @@
         bid.parent = this;
         ask.parent = this;
 
-        this.spread = (ask.rate - bid.rate) * Math.pow(10, currencyPair.PipsPosition);
+        this.spread = (ask.rate - bid.rate) * Math.pow(10, currencyPair.pipsPosition);
     }
 
     // TODO encapsulate as fields
