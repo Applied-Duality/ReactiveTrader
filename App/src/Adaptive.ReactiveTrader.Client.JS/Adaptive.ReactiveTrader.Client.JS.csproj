@@ -54,6 +54,11 @@
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
     <TypeScriptCompile Include="Models\Direction.ts" />
+    <TypeScriptCompile Include="Models\Execution\ITrade.ts" />
+    <TypeScriptCompile Include="Models\Execution\ITradeFactory.ts" />
+    <TypeScriptCompile Include="Models\Execution\Trade.ts" />
+    <TypeScriptCompile Include="Models\Execution\TradeFactory.ts" />
+    <TypeScriptCompile Include="Models\Execution\TradeStatus.ts" />
     <TypeScriptCompile Include="Models\Pricing\ExecutablePrice.ts" />
     <TypeScriptCompile Include="Models\Pricing\IExecutablePrice.ts" />
     <TypeScriptCompile Include="Models\Pricing\IPrice.ts" />
