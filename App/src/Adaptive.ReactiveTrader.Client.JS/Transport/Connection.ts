@@ -1,6 +1,4 @@
-﻿/// <reference path="../typings/signalr/signalr.d.ts"/> 
-/// <reference path="../typings/rx.js/rx.d.ts"/>
-
+﻿
 class Connection implements IConnection {
     private _status: Rx.Subject<ConnectionInfo>;
     private _hubConnection: HubConnection;
@@ -14,7 +12,6 @@ class Connection implements IConnection {
     private _currencyPairUpdates: Rx.Subject<CurrencyPairUpdateDto>;
 
     constructor(address: string, username: string) {
-        //var initialConnectionInfo = new ConnectionInfo(ConnectionStatus.Uninitialized, address);
         this._status = new Rx.Subject<ConnectionInfo>();
         this._address = address;
         this._hubConnection = $.hubConnection("http://localhost:8080/signalr");

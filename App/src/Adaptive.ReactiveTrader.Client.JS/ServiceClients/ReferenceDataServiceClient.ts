@@ -1,7 +1,4 @@
-﻿/// <reference path="../typings/rx.js/rx.d.ts"/>
-/// <reference path="../typings/signalr/signalr.d.ts"/>
-
-class ReferenceDataServiceClient implements IReferenceDataServiceClient
+﻿class ReferenceDataServiceClient implements IReferenceDataServiceClient
 {
     private _connection: IConnection;
 

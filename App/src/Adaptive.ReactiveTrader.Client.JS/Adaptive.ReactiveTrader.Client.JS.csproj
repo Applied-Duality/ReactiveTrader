@@ -62,6 +62,7 @@
     <TypeScriptCompile Include="Dto\UpdateTypeDto.ts" />
     <TypeScriptCompile Include="Dto\CurrencyPairDto.ts" />
     <TypeScriptCompile Include="Dto\CurrencyPairUpdateDto.ts" />
+    <TypeScriptCompile Include="ServiceClients\ExecutionServiceClient.ts" />
     <TypeScriptCompile Include="ServiceClients\IExecutionServiceClient.ts" />
     <TypeScriptCompile Include="ServiceClients\PricingServiceClient.ts" />
     <TypeScriptCompile Include="ServiceClients\IPricingServiceClient.ts" />

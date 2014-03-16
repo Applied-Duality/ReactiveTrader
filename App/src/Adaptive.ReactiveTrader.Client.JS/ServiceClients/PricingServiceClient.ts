@@ -1,6 +1,4 @@
-﻿/// <reference path="../typings/rx.js/rx.d.ts"/>
-
-class PricingServiceClient implements IPricingServiceClient {
+﻿class PricingServiceClient implements IPricingServiceClient {
     private _connection: IConnection;
 
     constructor(connection: IConnection) {

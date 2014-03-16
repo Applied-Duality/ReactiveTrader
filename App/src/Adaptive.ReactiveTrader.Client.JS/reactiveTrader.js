@@ -1,9 +1,6 @@
-﻿/// <reference path="../typings/signalr/signalr.d.ts"/>
-/// <reference path="../typings/rx.js/rx.d.ts"/>
-var Connection = (function () {
+﻿var Connection = (function () {
     function Connection(address, username) {
         var _this = this;
-        //var initialConnectionInfo = new ConnectionInfo(ConnectionStatus.Uninitialized, address);
         this._status = new Rx.Subject();
         this._address = address;
         this._hubConnection = $.hubConnection("http://localhost:8080/signalr");
@@ -137,8 +134,6 @@ var Connection = (function () {
     };
     return Connection;
 })();
-/// <reference path="../typings/rx.js/rx.d.ts"/>
-/// <reference path="../typings/signalr/signalr.d.ts"/>
 var ReferenceDataServiceClient = (function () {
     function ReferenceDataServiceClient(connection) {
         this._connection = connection;
@@ -249,7 +244,27 @@ var CurrencyPairUpdateDto = (function () {
     }
     return CurrencyPairUpdateDto;
 })();
-/// <reference path="../typings/rx.js/rx.d.ts"/>
+var ExecutionServiceClient = (function () {
+    function ExecutionServiceClient(connection) {
+        this._connection = connection;
+    }
+    ExecutionServiceClient.prototype.execute = function (tradeRequest) {
+        return this.executeForConnection(tradeRequest, this._connection.executionHubProxy);
+    };
+
+    ExecutionServiceClient.prototype.executeForConnection = function (tradeRequest, executionHub) {
+        return Rx.Observable.create(function (observer) {
+            executionHub.invoke("Execute", tradeRequest).done(function (trade) {
+                return observer.onNext(trade);
+            }).fail(function (error) {
+                return observer.onError(error);
+            });
+
+            return Rx.Disposable.empty;
+        });
+    };
+    return ExecutionServiceClient;
+})();
 var PricingServiceClient = (function () {
     function PricingServiceClient(connection) {
         this._connection = connection;
@@ -291,10 +306,6 @@ var PricingServiceClient = (function () {
     };
     return PricingServiceClient;
 })();
-/// <reference path="../typings/rx.js/rx.d.ts"/>
-/// <reference path="../typings/rx.js/rx.d.ts"/>
-/// <reference path="../typings/signalr/signalr.d.ts"/>
-/// <reference path="../typings/rx.js/rx.d.ts"/>
 var ConnectionStatus;
 (function (ConnectionStatus) {
     ConnectionStatus[ConnectionStatus["Connecting"] = 0] = "Connecting";
@@ -305,8 +316,6 @@ var ConnectionStatus;
     ConnectionStatus[ConnectionStatus["Closed"] = 5] = "Closed";
     ConnectionStatus[ConnectionStatus["Uninitialized"] = 6] = "Uninitialized";
 })(ConnectionStatus || (ConnectionStatus = {}));
-/// <reference path="../typings/signalr/signalr.d.ts"/>
-/// <reference path="../typings/rx.js/rx.d.ts"/>
 var ConnectionInfo = (function () {
     function ConnectionInfo(connectionStatus, server) {
         this.connectionStatus = connectionStatus;
