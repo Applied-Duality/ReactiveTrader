@@ -105,6 +105,7 @@ class Connection implements IConnection {
     private installListeners() {
         this._allPrices = new Rx.Subject<PriceDto>();
         this._currencyPairUpdates = new Rx.Subject<CurrencyPairUpdateDto>();
+        this._allTrades = new Rx.Subject<TradeDto[]>();
 
         this._pricingHubProxy.on("OnNewPrice", price=> this._allPrices.onNext(price));
         this._referenceDataHubProxy.on("OnCurrencyPairUpdate", currencyPairs=> this._currencyPairUpdates.onNext(currencyPairs));

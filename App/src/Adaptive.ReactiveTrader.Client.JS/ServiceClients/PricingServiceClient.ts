@@ -22,7 +22,7 @@
             console.log("Sending price subscription for currency pair " + currencyPair);
 
             var subscriptionRequest = new PriceSubscriptionRequestDto();
-            subscriptionRequest.CurrencyPair = "EURUSD";
+            subscriptionRequest.CurrencyPair = currencyPair;
 
             pricingHub.invoke("SubscribePriceStream", subscriptionRequest)
                 .done(_ => console.log("Subscribed to " + currencyPair))

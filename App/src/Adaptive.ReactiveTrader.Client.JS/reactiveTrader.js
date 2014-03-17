@@ -8,41 +8,75 @@
             return console.log("Connection status: " + s);
         });
 
-        reactiveTrader.referenceDataRepository.getCurrencyPairs().select(function (currencyPairs) {
-            return currencyPairs[0];
-        }).selectMany(function (currencyPairUpdate) {
-            return currencyPairUpdate.currencyPair.prices;
-        }).select(function (price) {
-            return price.bid.rate + " / " + price.ask.rate;
-        }).subscribe(function (p) {
-            return console.log(p);
-        });
+        var appViewModel = new AppViewModel(reactiveTrader);
+
+        ko.applyBindings(appViewModel);
     }, function (ex) {
         return console.error(ex);
     });
-    //var connection = new Connection("http://localhost:8080", "Olivier");
-    //connection.status
-    //    .subscribe(
-    //        status => console.log("Connection status changed to " + status),
-    //        ex => console.log(ex));
-    //connection
-    //    .initialize()
-    //    .subscribe(
-    //        _=> {
-    //            console.log("Connected");
-    //            var refData = new ReferenceDataServiceClient(connection);
-    //            refData.getCurrencyPairUpdates()
-    //                .subscribe(
-    //                    currencyPairs=> console.log(currencyPairs),
-    //                    ex=> console.error(ex));
-    //            var pricing = new PricingServiceClient(connection);
-    //            pricing.getSpotStream("EURUSD")
-    //                .subscribe(
-    //                    (price: PriceDto)=> console.log(price.Bid + "/" + price.Ask),
-    //                    ex=> console.error(ex));
-    //        },
-    //        ex=> console.log(ex));
 };
+var AppViewModel = (function () {
+    function AppViewModel(reactiveTrader) {
+        var _this = this;
+        this.spotTiles = ko.observableArray([]);
+        this.trades = ko.observableArray([]);
+
+        reactiveTrader.referenceDataRepository.getCurrencyPairs().subscribe(function (currencyPairUpdates) {
+            for (var i = 0; i < currencyPairUpdates.length; i++) {
+                var update = currencyPairUpdates[i];
+                if (update.updateType == 0 /* Add */) {
+                    _this.spotTiles.push(new SpotTileViewModel(update.currencyPair));
+                }
+            }
+        });
+
+        reactiveTrader.tradeRepository.getTrades().subscribe(function (ts) {
+            for (var i = 0; i < ts.length; i++) {
+                _this.trades.push(ts[i]);
+            }
+        }, function (ex) {
+            return console.error(ex);
+        });
+    }
+    return AppViewModel;
+})();
+var SpotTileViewModel = (function () {
+    function SpotTileViewModel(currencyPair) {
+        var _this = this;
+        this.symbol = currencyPair.symbol;
+        this.bid = ko.observable(0);
+        this.ask = ko.observable(0);
+        this._currencyPair = currencyPair;
+
+        this._priceSubscription = currencyPair.prices.subscribe(function (price) {
+            _this._price = price;
+            _this.bid(price.bid.rate);
+            _this.ask(price.ask.rate);
+        });
+    }
+    SpotTileViewModel.prototype.executeBid = function () {
+        if (this._price == null)
+            return;
+
+        this._price.bid.execute(1000000, this._currencyPair.baseCurrency).subscribe(function (trade) {
+            return console.log("Trade " + (trade.tradeStatus == 0 /* Done */ ? "done!" : "rejected!"));
+        }, function (ex) {
+            return console.error(ex);
+        });
+    };
+
+    SpotTileViewModel.prototype.executeAsk = function () {
+        if (this._price == null)
+            return;
+
+        this._price.ask.execute(1000000, this._currencyPair.baseCurrency).subscribe(function (trade) {
+            return console.log("Trade " + (trade.tradeStatus == 0 /* Done */ ? "done!" : "rejected!"));
+        }, function (ex) {
+            return console.error(ex);
+        });
+    };
+    return SpotTileViewModel;
+})();
 var Direction;
 (function (Direction) {
     Direction[Direction["Buy"] = 0] = "Buy";
@@ -374,7 +408,7 @@ var TradeRepository = (function () {
             return _this.createTrades(trades);
         }).catch(function () {
             return Rx.Observable.return([]);
-        }).repeat().publish().refCount();
+        }).publish().refCount();
     };
 
     TradeRepository.prototype.createTrades = function (trades) {
@@ -430,7 +464,7 @@ var PricingServiceClient = (function () {
             console.log("Sending price subscription for currency pair " + currencyPair);
 
             var subscriptionRequest = new PriceSubscriptionRequestDto();
-            subscriptionRequest.CurrencyPair = "EURUSD";
+            subscriptionRequest.CurrencyPair = currencyPair;
 
             pricingHub.invoke("SubscribePriceStream", subscriptionRequest).done(function (_) {
                 return console.log("Subscribed to " + currencyPair);
@@ -634,6 +668,7 @@ var Connection = (function () {
         var _this = this;
         this._allPrices = new Rx.Subject();
         this._currencyPairUpdates = new Rx.Subject();
+        this._allTrades = new Rx.Subject();
 
         this._pricingHubProxy.on("OnNewPrice", function (price) {
             return _this._allPrices.onNext(price);

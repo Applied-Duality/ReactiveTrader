@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <title>ReactiveTraderJS</title>
     <link rel="stylesheet" href="app.css" type="text/css" />
-    
+
     <script src="Scripts/jquery-2.1.0.min.js"></script>
     <script src="Scripts/jquery.signalR-2.0.2.min.js"></script>
     <script src="Scripts/rx.js"></script>
@@ -15,11 +15,57 @@
     <script src="Scripts/rx.joinpatterns.js"></script>
     <script src="Scripts/rx.time.js"></script>
     <script src="Scripts/rx.virtualtime.js"></script>
+    <script src="Scripts/knockout-3.1.0.js"></script>
     <script src="reactiveTrader.js"></script>
 </head>
 <body>
-    <h1>ReactiveTraderJS</h1>
+    <h1>ReactiveTrader JS</h1>
 
-    <div id="content"></div>
+    <table>
+        <thead>
+            <tr>
+                <th>Currency pair</th>
+                <th>Bid</th>
+                <th>Ask</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: spotTiles">
+            <tr>
+                <td data-bind="text: symbol"></td>
+                <td><input data-bind="value: bid, click: executeBid" type="button" style="width: 100px" /></td>
+                <td><input data-bind="value: ask, click: executeAsk" type="button" style="width: 100px" /></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <br/>
+    <br/>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Dir.</th>
+                <th>CCY</th>
+                <th>Notional</th>
+                <th>Rate</th>
+                <th>Status</th>
+                <th>Value Date</th>
+                <th>Trader</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: trades">
+            <tr>
+                <td data-bind="text: tradeDate" style="width:200px"></td>
+                <td data-bind="text: direction" style="width:100px"></td>
+                <td data-bind="text: currencyPair" style="width:100px"></td>
+                <td data-bind="text: notional" style="width:100px"></td>
+                <td data-bind="text: spotRate" style="width:100px"></td>
+                <td data-bind="text: tradeStatus" style="width:100px"></td>
+                <td data-bind="text: valueDate" style="width:200px"></td>
+                <td data-bind="text: traderName" style="width:100px"></td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>
