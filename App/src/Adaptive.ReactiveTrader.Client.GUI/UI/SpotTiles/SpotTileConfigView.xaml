@@ -14,7 +14,7 @@
                 <ResourceDictionary Source="/Adaptive.ReactiveTrader.Client.GUI;component/Styles/Brushes.xaml" />
                 <ResourceDictionary Source="/Adaptive.ReactiveTrader.Client.GUI;component/Styles/Button.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            
+
             <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
                 <Setter Property="FontSize" Value="16" />
             </Style>
@@ -22,12 +22,12 @@
     </UserControl.Resources>
 
     <Border Padding="15,12" Background="{StaticResource TileBackgroundBrush}">
-            <StackPanel>
-                <TextBlock Text="Price Rendering Mode" Foreground="{StaticResource PrimaryForeground}" FontSize="18" />
-                <Button Content="Standard" Command="{Binding StandardCommand, Mode=OneWay}" Style="{StaticResource HyperlinkButtonStyle}" FontSize="16" />    
-                <Button Content="Drop Frame" Command="{Binding DropFrameCommand, Mode=OneWay}" Style="{StaticResource HyperlinkButtonStyle}" FontSize="16" />    
-                <Button Content="Conflate" Command="{Binding ConflateCommand, Mode=OneWay}" Style="{StaticResource HyperlinkButtonStyle}" FontSize="16" />    
-                <Button Content="ConstantRate" Command="{Binding ConstantRateCommand, Mode=OneWay}" Style="{StaticResource HyperlinkButtonStyle}" FontSize="16" />    
-            </StackPanel>
+        <StackPanel>
+            <TextBlock Text="Price Rendering Mode" Foreground="{StaticResource PrimaryForeground}" FontSize="18" />
+            <Button Content="Standard" Command="{Binding StandardCommand, Mode=OneWay}" Style="{StaticResource HyperlinkButtonSelectedStyle}" FontSize="16" />
+            <Button Content="Drop Frame" Command="{Binding DropFrameCommand, Mode=OneWay}" Style="{StaticResource HyperlinkButtonSelectedStyle}" FontSize="16" />
+            <Button Content="Conflate" Command="{Binding ConflateCommand, Mode=OneWay}" Style="{StaticResource HyperlinkButtonSelectedStyle}" FontSize="16" />
+            <Button Content="ConstantRate" Command="{Binding ConstantRateCommand, Mode=OneWay}" Style="{StaticResource HyperlinkButtonSelectedStyle}" FontSize="16" />
+        </StackPanel>
     </Border>
 </UserControl>
