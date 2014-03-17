@@ -408,7 +408,7 @@ var TradeRepository = (function () {
             return _this.createTrades(trades);
         }).catch(function () {
             return Rx.Observable.return([]);
-        }).publish().refCount();
+        }).repeat().publish().refCount();
     };
 
     TradeRepository.prototype.createTrades = function (trades) {
