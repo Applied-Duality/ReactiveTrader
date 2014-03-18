@@ -8,6 +8,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         ICommand StandardCommand { get; }
         ICommand DropFrameCommand { get; }
         ICommand ConflateCommand { get; }
+        ICommand ConstantRateCommand { get; }
         SpotTileSubscriptionMode SubscriptionMode { get; }
     }
 }

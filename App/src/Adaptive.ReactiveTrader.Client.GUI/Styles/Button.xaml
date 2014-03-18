@@ -22,4 +22,22 @@
         </Setter>
     </Style>
 
+    <Style x:Key="HyperlinkButtonSelectedStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource HyperlinkButtonStyle}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <TextBlock x:Name="Content" Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" />
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Content" Property="TextDecorations" Value="Underline" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{StaticResource PrimaryForeground}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>
