@@ -137,6 +137,7 @@
     </Compile>
     <Compile Include="UI\SpotTiles\Designer\DesignTimeSpotTileConfigViewModel.cs" />
     <Compile Include="UI\SpotTiles\ISpotTileConfigViewModel.cs" />
+    <Compile Include="UI\SpotTiles\PriceMovement.cs" />
     <Compile Include="UI\SpotTiles\SpotTileConfigViewModel.cs" />
     <Compile Include="UI\SpotTiles\SpotTileConfigView.xaml.cs">
       <DependentUpon>SpotTileConfigView.xaml</DependentUpon>

@@ -1,41 +1,87 @@
-﻿class SpotTileViewModel {
-    private _priceSubscription: Rx.Disposable;
-    private _price: IPrice;
+﻿class SpotTileViewModel implements ISpotTileViewModel {
+    private _priceSubscription: Rx.SerialDisposable;
     private _currencyPair: ICurrencyPair;
+    private _previousRate: number;
 
     constructor(currencyPair: ICurrencyPair) {
-        this.symbol = currencyPair.symbol;
-        this.bid = ko.observable(0);
-        this.ask = ko.observable(0);
+        this.symbol = currencyPair.baseCurrency + " / " + currencyPair.counterCurrency;
+        this._priceSubscription = new Rx.SerialDisposable();
         this._currencyPair = currencyPair;
+        this.bid = new OneWayPriceViewModel(this, Direction.Sell);
+        this.ask = new OneWayPriceViewModel(this, Direction.Buy);
+        this.notional = ko.observable(1000000);
+        this.dealtCurrency = currencyPair.baseCurrency;
+        this.spread = ko.observable("");
+        this.movement = ko.observable(PriceMovement.None);
+        this.spotDate = ko.observable("SP");
+        this.isSubscribing = ko.observable(true);
 
-        this._priceSubscription = currencyPair.prices.subscribe(
-            price=> {
-                this._price = price;
-                this.bid(price.bid.rate);
-                this.ask(price.ask.rate);
-            });
-    }
-
-    executeBid() {
-        if (this._price == null) return;
-
-        this._price.bid.execute(1000000, this._currencyPair.baseCurrency)
-            .subscribe(
-                trade=> console.log("Trade " + (trade.tradeStatus == TradeStatus.Done ? "done!" : "rejected!")),
-                ex=> console.error(ex));
-    }
-
-    executeAsk() {
-        if (this._price == null) return;
-        
-        this._price.ask.execute(1000000, this._currencyPair.baseCurrency)
-            .subscribe(
-                trade=> console.log("Trade " + (trade.tradeStatus == TradeStatus.Done ? "done!" : "rejected!")),
-                ex=> console.error(ex));
+        this.subscribeForPrices();
     }
 
     symbol: string;
-    bid: KnockoutObservable<number>;
-    ask: KnockoutObservable<number>;
+    bid: IOneWayPriceViewModel;
+    ask: IOneWayPriceViewModel;
+    notional: KnockoutObservable<number>;
+    spread: KnockoutObservable<string>;
+    dealtCurrency: string;
+    movement: KnockoutObservable<PriceMovement>;
+    spotDate: KnockoutObservable<string>;
+    isSubscribing: KnockoutObservable<boolean>;
+
+    executeBid() {
+        this.bid.onExecute();
+    }
+
+    executeAsk() {
+        this.ask.onExecute();
+    }
+
+    onTrade(trade: ITrade): void {
+        // TODO
+    }
+
+    private subscribeForPrices(): void {
+        var subscription = this._currencyPair.prices
+            .subscribe(
+                price=> this.onPrice(price),
+                ex=> console.error(ex));
+
+        this._priceSubscription.setDisposable(subscription);
+    }
+
+    private onPrice(price: IPrice): void {
+        this.isSubscribing(false);
+
+        if (price.isStale) {
+            this.bid.onStalePrice();
+            this.ask.onStalePrice();
+            this.spread("");
+            this._previousRate = null;
+            this.movement(PriceMovement.None);
+            this.spotDate("SP");
+        } else {
+            if (this._previousRate != null) {
+                if (price.mid > this._previousRate) {
+                    this.movement(PriceMovement.Up);
+                } 
+                else if (price.mid < this._previousRate) {
+                    this.movement(PriceMovement.Down);
+                } 
+                else {
+                    this.movement(PriceMovement.None);
+                }
+            }
+
+            this._previousRate = price.mid;
+            this.bid.onPrice(price.bid);
+            this.ask.onPrice(price.ask);
+
+            this.spread(PriceFormatter.getFormattedSpread(price.spread, this._currencyPair.ratePrecision, this._currencyPair.pipsPosition));
+            this.spotDate("SP."); //TODO
+        }
+    }
 } 
+
+
+

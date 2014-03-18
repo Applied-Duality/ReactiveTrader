@@ -112,11 +112,4 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             IsExecuting = false;
         }
     }
-
-    public enum PriceMovement
-    {
-        None,
-        Down,
-        Up
-    }
 }

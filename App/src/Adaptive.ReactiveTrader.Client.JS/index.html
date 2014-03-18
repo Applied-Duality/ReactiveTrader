@@ -3,7 +3,9 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>ReactiveTraderJS</title>
+    <title>Adaptive's Reactive Trader</title>
+    <link rel="icon" type="image/ico" href="favicon.ico">
+
     <link rel="stylesheet" href="app.css" type="text/css" />
 
     <script src="Scripts/jquery-2.1.0.min.js"></script>
@@ -18,54 +20,108 @@
     <script src="Scripts/knockout-3.1.0.js"></script>
     <script src="reactiveTrader.js"></script>
 </head>
-<body>
-    <h1>ReactiveTrader JS</h1>
+    <body style="height: 100%">
+        <div style="height: 100%">
+            <table style="height: 100%; width: 100%">
+                <tr style="height: 50%">
+                    <td class="tiles-background">
+                        <!-- TILES -->
+                        <ul class="tile" data-bind="foreach: spotTiles">
+                            <li style="padding: 12px 15px">
+                                <table style="height: 100%;">
+                                    <tr>
+                                        <!-- SYMBOL -->
+                                        <td data-bind="text: symbol" class="tile-symbol" />
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <table style="text-align: center">
+                                                <tr>
+                                                    <!-- BID -->
+                                                    <td class="one-way-price" data-bind="click: executeBid">
+                                                        <table>
+                                                            <tr>
+                                                                <td class="secondary-foreground" style="font-size: 16px">SELL</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="width: 100%">
+                                                                    <span data-bind="text: bid.bigFigures" class="secondary-foreground" style="font-size: 18px"></span>
+                                                                    <span data-bind="text: bid.pips" class="primary-foreground" style="font-size: 48px"></span>
+                                                                    <span data-bind="text: bid.tenthOfPips" class="secondary-foreground" style="font-size: 18px"></span>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                    <!-- SPREAD -->
+                                                    <td>
+                                                        <span data-bind="text: spread" class="primary-foreground" style="font-size: 16px; margin: 3px"></span>
+                                                    </td>
+                                                    <!-- ASK -->
+                                                    <td class="one-way-price" data-bind="click: executeAsk">
+                                                        <table>
+                                                            <tr>
+                                                                <td class="secondary-foreground" style="font-size: 16px">BUY</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="width: 100%">
+                                                                    <span data-bind="text: ask.bigFigures" class="secondary-foreground" style="font-size: 18px"></span>
+                                                                    <span data-bind="text: ask.pips" class="primary-foreground" style="font-size: 48px"></span>
+                                                                    <span data-bind="text: ask.tenthOfPips" class="secondary-foreground" style="font-size: 18px"></span>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Currency pair</th>
-                <th>Bid</th>
-                <th>Ask</th>
-            </tr>
-        </thead>
-        <tbody data-bind="foreach: spotTiles">
-            <tr>
-                <td data-bind="text: symbol"></td>
-                <td><input data-bind="value: bid, click: executeBid" type="button" style="width: 100px" /></td>
-                <td><input data-bind="value: ask, click: executeAsk" type="button" style="width: 100px" /></td>
-            </tr>
-        </tbody>
-    </table>
-    
-    <br/>
-    <br/>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Dir.</th>
-                <th>CCY</th>
-                <th>Notional</th>
-                <th>Rate</th>
-                <th>Status</th>
-                <th>Value Date</th>
-                <th>Trader</th>
-            </tr>
-        </thead>
-        <tbody data-bind="foreach: trades">
-            <tr>
-                <td data-bind="text: tradeDate" style="width:200px"></td>
-                <td data-bind="text: direction" style="width:100px"></td>
-                <td data-bind="text: currencyPair" style="width:100px"></td>
-                <td data-bind="text: notional" style="width:100px"></td>
-                <td data-bind="text: spotRate" style="width:100px"></td>
-                <td data-bind="text: tradeStatus" style="width:100px"></td>
-                <td data-bind="text: valueDate" style="width:200px"></td>
-                <td data-bind="text: traderName" style="width:100px"></td>
-            </tr>
-        </tbody>
-    </table>
-</body>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <!-- NOTIONAL -->
+                                        <td>
+                                            <span data-bind="text: dealtCurrency" class="secondary-foreground" style="font-size: 16px"></span>
+                                            <input data-bind="value: notional" class="notional" style="font-size: 16px" />
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!-- BLOTTER -->
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Dir.</th>
+                                    <th>CCY</th>
+                                    <th>Notional</th>
+                                    <th>Rate</th>
+                                    <th>Status</th>
+                                    <th>Value Date</th>
+                                    <th>Trader</th>
+                                </tr>
+                            </thead>
+                            <tbody data-bind="foreach: trades">
+                                <tr>
+                                    <td data-bind="text: tradeDate" style="width:200px"></td>
+                                    <td data-bind="text: direction" style="width:100px"></td>
+                                    <td data-bind="text: currencyPair" style="width:100px"></td>
+                                    <td data-bind="text: notional" style="width:100px"></td>
+                                    <td data-bind="text: spotRate" style="width:100px"></td>
+                                    <td data-bind="text: tradeStatus" style="width:100px"></td>
+                                    <td data-bind="text: valueDate" style="width:200px"></td>
+                                    <td data-bind="text: traderName" style="width:100px"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
 </html>

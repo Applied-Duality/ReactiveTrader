@@ -20,18 +20,18 @@ void Main()
 	var api = new ReactiveTrader();
 	api.Initialize("Olivier", new []{"http://localhost:8080"});
 	
-	api.ConnectionStatus.DumpLive();
+	api.ConnectionStatusStream.DumpLive();
 	
-	var eurusd = from currencyPairs in api.ReferenceData.GetCurrencyPairs()
+	var eurusd = from currencyPairs in api.ReferenceData.GetCurrencyPairsStream()
 	             from currencyPair in currencyPairs
 				 where currencyPair.CurrencyPair.Symbol == "EURUSD"
-	             from price in currencyPair.CurrencyPair.Prices
+	             from price in currencyPair.CurrencyPair.PriceStream
 				 select price;
 				 
 	eurusd.Select((p,i)=> "price" + i + ":" + p.ToString()).DumpLive();
 	
 	var execution = from price in eurusd.Skip(10).Take(1)
-					from trade in price.Ask.Execute(10000, "EUR")
+					from trade in price.Ask.ExecuteRequest(10000, "EUR")
 					select trade.ToString();
 	
 	execution.DumpLive();				 

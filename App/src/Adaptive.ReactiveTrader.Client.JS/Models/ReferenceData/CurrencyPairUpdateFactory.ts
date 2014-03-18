@@ -9,7 +9,7 @@
         var cp = new CurrencyPair(
             currencyPairUpdate.CurrencyPair.Symbol,
             currencyPairUpdate.CurrencyPair.RatePrecision,
-            currencyPairUpdate.CurrencyPair.PipsPrecision,
+            currencyPairUpdate.CurrencyPair.PipsPosition,
             this._priceRepository);
 
         var update = new CurrencyPairUpdate(

@@ -20,6 +20,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="app.css" />
+    <Content Include="favicon.ico" />
     <Content Include="index.html" />
     <Content Include="packages.config" />
     <Content Include="reactiveTrader.js.map" />
@@ -56,6 +57,12 @@
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
     <TypeScriptCompile Include="UI\AppViewModel.ts" />
+    <TypeScriptCompile Include="UI\OneWayPriceViewModel.ts" />
+    <TypeScriptCompile Include="UI\FormattedPrice.ts" />
+    <TypeScriptCompile Include="UI\IOneWayPriceViewModel.ts" />
+    <TypeScriptCompile Include="UI\ISpotTileViewModel.ts" />
+    <TypeScriptCompile Include="UI\PriceFormatter.ts" />
+    <TypeScriptCompile Include="UI\PriceMovement.ts" />
     <TypeScriptCompile Include="UI\SpotTileViewModel.ts" />
     <TypeScriptCompile Include="IReactiveTrader.ts" />
     <TypeScriptCompile Include="Models\Direction.ts" />

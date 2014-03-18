@@ -1,6 +1,4 @@
 ﻿window.onload = function () {
-    var el = document.getElementById('content');
-
     var reactiveTrader = new ReactiveTrader();
 
     reactiveTrader.initialize("olivier", "http://localhost:800").subscribe(function (_) {
@@ -40,40 +38,169 @@ var AppViewModel = (function () {
     }
     return AppViewModel;
 })();
-var SpotTileViewModel = (function () {
-    function SpotTileViewModel(currencyPair) {
-        var _this = this;
-        this.symbol = currencyPair.symbol;
-        this.bid = ko.observable(0);
-        this.ask = ko.observable(0);
-        this._currencyPair = currencyPair;
+var OneWayPriceViewModel = (function () {
+    function OneWayPriceViewModel(parent, direction) {
+        this._parent = parent;
+        this.direction = direction == 0 /* Buy */ ? "BUY" : "SELL";
 
-        this._priceSubscription = currencyPair.prices.subscribe(function (price) {
-            _this._price = price;
-            _this.bid(price.bid.rate);
-            _this.ask(price.ask.rate);
-        });
+        this.bigFigures = ko.observable("");
+        this.pips = ko.observable("");
+        this.tenthOfPips = ko.observable("");
+        this.isExecuting = ko.observable(false);
+        this.isStale = ko.observable(true);
     }
-    SpotTileViewModel.prototype.executeBid = function () {
-        if (this._price == null)
-            return;
+    OneWayPriceViewModel.prototype.onExecute = function () {
+        var _this = this;
+        this.isExecuting(true);
 
-        this._price.bid.execute(1000000, this._currencyPair.baseCurrency).subscribe(function (trade) {
-            return console.log("Trade " + (trade.tradeStatus == 0 /* Done */ ? "done!" : "rejected!"));
+        this._executablePrice.execute(this._parent.notional(), this._parent.dealtCurrency).subscribe(function (trade) {
+            return _this.onExecuted(trade);
         }, function (ex) {
-            return console.error(ex);
+            return _this.onExecutionError(ex);
         });
     };
 
-    SpotTileViewModel.prototype.executeAsk = function () {
-        if (this._price == null)
-            return;
+    OneWayPriceViewModel.prototype.onPrice = function (executablePrice) {
+        this._executablePrice = executablePrice;
 
-        this._price.ask.execute(1000000, this._currencyPair.baseCurrency).subscribe(function (trade) {
-            return console.log("Trade " + (trade.tradeStatus == 0 /* Done */ ? "done!" : "rejected!"));
+        var formattedPrice = PriceFormatter.getFormattedPrice(executablePrice.rate, executablePrice.parent.currencyPair.ratePrecision, executablePrice.parent.currencyPair.pipsPosition);
+
+        this.bigFigures(formattedPrice.bigFigures);
+        this.pips(formattedPrice.pips);
+        this.tenthOfPips(formattedPrice.tenthOfPips);
+        this.isStale(false);
+    };
+
+    OneWayPriceViewModel.prototype.onStalePrice = function () {
+        this._executablePrice = null;
+        this.bigFigures("");
+        this.pips("");
+        this.tenthOfPips("");
+        this.isStale(true);
+    };
+
+    OneWayPriceViewModel.prototype.onExecuted = function (trade) {
+        console.log("Trade executed.");
+        this._parent.onTrade(trade);
+        this.isExecuting(true);
+    };
+
+    OneWayPriceViewModel.prototype.onExecutionError = function (ex) {
+        // TODO
+        console.error(ex);
+    };
+    return OneWayPriceViewModel;
+})();
+var FormattedPrice = (function () {
+    function FormattedPrice(bigFigures, pips, tenthOfPips) {
+        this.bigFigures = bigFigures;
+        this.pips = pips;
+        this.tenthOfPips = tenthOfPips;
+    }
+    return FormattedPrice;
+})();
+var PriceFormatter = (function () {
+    function PriceFormatter() {
+    }
+    PriceFormatter.getFormattedPrice = function (rate, precision, pipsPosition) {
+        var rateAsString = rate.toFixed(precision);
+
+        var dotIndex = rateAsString.indexOf(".");
+
+        var bigFigures = rateAsString.substring(0, dotIndex + pipsPosition - 1);
+        var pips = rateAsString.substring(dotIndex + pipsPosition - 1, dotIndex + pipsPosition + 1);
+
+        var tenthOfPips = "";
+
+        if (precision > pipsPosition) {
+            tenthOfPips = rateAsString.substring(dotIndex + pipsPosition + 1, rateAsString.length);
+        }
+
+        return new FormattedPrice(bigFigures, pips, tenthOfPips);
+    };
+
+    PriceFormatter.getFormattedSpread = function (spread, precision, pipsPosition) {
+        var delta = precision - pipsPosition;
+        if (delta > 0) {
+            return spread.toFixed(delta);
+        }
+        return spread.toString();
+    };
+    return PriceFormatter;
+})();
+var PriceMovement;
+(function (PriceMovement) {
+    PriceMovement[PriceMovement["None"] = 0] = "None";
+    PriceMovement[PriceMovement["Down"] = 1] = "Down";
+    PriceMovement[PriceMovement["Up"] = 2] = "Up";
+})(PriceMovement || (PriceMovement = {}));
+var SpotTileViewModel = (function () {
+    function SpotTileViewModel(currencyPair) {
+        this.symbol = currencyPair.baseCurrency + " / " + currencyPair.counterCurrency;
+        this._priceSubscription = new Rx.SerialDisposable();
+        this._currencyPair = currencyPair;
+        this.bid = new OneWayPriceViewModel(this, 1 /* Sell */);
+        this.ask = new OneWayPriceViewModel(this, 0 /* Buy */);
+        this.notional = ko.observable(1000000);
+        this.dealtCurrency = currencyPair.baseCurrency;
+        this.spread = ko.observable("");
+        this.movement = ko.observable(0 /* None */);
+        this.spotDate = ko.observable("SP");
+        this.isSubscribing = ko.observable(true);
+
+        this.subscribeForPrices();
+    }
+    SpotTileViewModel.prototype.executeBid = function () {
+        this.bid.onExecute();
+    };
+
+    SpotTileViewModel.prototype.executeAsk = function () {
+        this.ask.onExecute();
+    };
+
+    SpotTileViewModel.prototype.onTrade = function (trade) {
+        // TODO
+    };
+
+    SpotTileViewModel.prototype.subscribeForPrices = function () {
+        var _this = this;
+        var subscription = this._currencyPair.prices.subscribe(function (price) {
+            return _this.onPrice(price);
         }, function (ex) {
             return console.error(ex);
         });
+
+        this._priceSubscription.setDisposable(subscription);
+    };
+
+    SpotTileViewModel.prototype.onPrice = function (price) {
+        this.isSubscribing(false);
+
+        if (price.isStale) {
+            this.bid.onStalePrice();
+            this.ask.onStalePrice();
+            this.spread("");
+            this._previousRate = null;
+            this.movement(0 /* None */);
+            this.spotDate("SP");
+        } else {
+            if (this._previousRate != null) {
+                if (price.mid > this._previousRate) {
+                    this.movement(2 /* Up */);
+                } else if (price.mid < this._previousRate) {
+                    this.movement(1 /* Down */);
+                } else {
+                    this.movement(0 /* None */);
+                }
+            }
+
+            this._previousRate = price.mid;
+            this.bid.onPrice(price.bid);
+            this.ask.onPrice(price.ask);
+
+            this.spread(PriceFormatter.getFormattedSpread(price.spread, this._currencyPair.ratePrecision, this._currencyPair.pipsPosition));
+            this.spotDate("SP."); //TODO
+        }
     };
     return SpotTileViewModel;
 })();
@@ -201,7 +328,7 @@ var CurrencyPairUpdateFactory = (function () {
         this._priceRepository = priceRepository;
     }
     CurrencyPairUpdateFactory.prototype.create = function (currencyPairUpdate) {
-        var cp = new CurrencyPair(currencyPairUpdate.CurrencyPair.Symbol, currencyPairUpdate.CurrencyPair.RatePrecision, currencyPairUpdate.CurrencyPair.PipsPrecision, this._priceRepository);
+        var cp = new CurrencyPair(currencyPairUpdate.CurrencyPair.Symbol, currencyPairUpdate.CurrencyPair.RatePrecision, currencyPairUpdate.CurrencyPair.PipsPosition, this._priceRepository);
 
         var update = new CurrencyPairUpdate(currencyPairUpdate.UpdateType == 0 /* Added */ ? 0 /* Add */ : 1 /* Remove */, cp);
 

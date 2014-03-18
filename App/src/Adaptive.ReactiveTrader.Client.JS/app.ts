@@ -1,6 +1,4 @@
 ﻿window.onload = () => {
-    var el = document.getElementById('content');
-
     var reactiveTrader: IReactiveTrader = new ReactiveTrader();
 
     reactiveTrader
