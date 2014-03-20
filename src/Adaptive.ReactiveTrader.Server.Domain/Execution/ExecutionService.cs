@@ -58,7 +58,7 @@ namespace Adaptive.ReactiveTrader.Server.Execution
             _tradeRepository.StoreTrade(trade);
 
             // publish trade asynchronously
-            _blotterPublisher.Publish(trade);
+            await _blotterPublisher.Publish(trade);
 
             return trade;
         }

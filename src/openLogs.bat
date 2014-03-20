@@ -1,1 +1,1 @@
-..\..\Tools\Baretail\baretail.exe Adaptive.ReactiveTrader.Client.GUI\bin\Debug\Client.log Adaptive.ReactiveTrader.Server.GUI\bin\Debug\Server.log 
+..\Tools\Baretail\baretail.exe Adaptive.ReactiveTrader.Client.GUI\bin\Debug\Client.log Adaptive.ReactiveTrader.Server.GUI\bin\Debug\Server.log 
