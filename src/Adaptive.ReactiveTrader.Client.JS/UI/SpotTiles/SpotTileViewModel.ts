@@ -2,8 +2,10 @@
     private _priceSubscription: Rx.SerialDisposable;
     private _currencyPair: ICurrencyPair;
     private _previousRate: number;
+    private _priceLatencyRecorder: IPriceLatencyRecorder;
 
-    constructor(currencyPair: ICurrencyPair) {
+    constructor(currencyPair: ICurrencyPair, priceLatencyRecorder: IPriceLatencyRecorder) {
+        this._priceLatencyRecorder = priceLatencyRecorder;
         this.symbol = currencyPair.baseCurrency + " / " + currencyPair.counterCurrency;
         this._priceSubscription = new Rx.SerialDisposable();
         this._currencyPair = currencyPair;
@@ -29,6 +31,15 @@
     spotDate: KnockoutObservable<string>;
     isSubscribing: KnockoutObservable<boolean>;
 
+    private _disposed: boolean;
+
+    dispose(): void {
+        if (!this._disposed) {
+            this._priceSubscription.dispose();
+            this._disposed = true;
+        }
+    }
+
     executeBid() {
         this.bid.onExecute();
     }
@@ -44,8 +55,8 @@
     private subscribeForPrices(): void {
         var subscription = this._currencyPair.prices
             .subscribe(
-                price=> this.onPrice(price),
-                ex=> console.error(ex));
+                price => this.onPrice(price),
+                ex => console.error(ex));
 
         this._priceSubscription.setDisposable(subscription);
     }
@@ -79,6 +90,8 @@
 
             this.spread(PriceFormatter.getFormattedSpread(price.spread, this._currencyPair.ratePrecision, this._currencyPair.pipsPosition));
             this.spotDate("SP."); //TODO
+
+            this._priceLatencyRecorder.record(price);
         }
     }
 } 

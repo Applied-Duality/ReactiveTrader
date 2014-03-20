@@ -6,37 +6,159 @@
             return console.log("Connection status: " + s);
         });
 
-        var appViewModel = new AppViewModel(reactiveTrader);
+        var priceLatencyRecorder = new PriceLatencyRecorder();
+        var spotTileViewModelFactory = new SpotTileViewModelFactory(priceLatencyRecorder);
+        var spotTilesViewModel = new SpotTilesViewModel(reactiveTrader.referenceDataRepository, spotTileViewModelFactory);
+        var blotterViewModel = new BlotterViewModel(reactiveTrader.tradeRepository);
+        var connectivityStatusViewModel = new ConnectivityStatusViewModel(reactiveTrader, priceLatencyRecorder);
+        var shellViewModel = new ShellViewModel(spotTilesViewModel, blotterViewModel, connectivityStatusViewModel);
 
-        ko.applyBindings(appViewModel);
-    }, function (ex) {
-        return console.error(ex);
-    });
+        ko.applyBindings(shellViewModel);
+    }, console.error);
 };
-var AppViewModel = (function () {
-    function AppViewModel(reactiveTrader) {
-        var _this = this;
-        this.spotTiles = ko.observableArray([]);
+var MaxLatency = (function () {
+    function MaxLatency(count, priceWithMaxLatency) {
+        this.count = count;
+        this.priceWithMaxLatency = priceWithMaxLatency;
+    }
+    return MaxLatency;
+})();
+var PriceLatencyRecorder = (function () {
+    function PriceLatencyRecorder() {
+    }
+    PriceLatencyRecorder.prototype.record = function (price) {
+        var priceLatency = price;
+        if (priceLatency != null) {
+            priceLatency.displayedOnUi();
+
+            this._count++;
+            if (this._maxLatency == null || priceLatency.uiProcessingTimeMs > this._maxLatency.uiProcessingTimeMs) {
+                this._maxLatency = priceLatency;
+            }
+        }
+    };
+
+    PriceLatencyRecorder.prototype.getMaxLatencyAndReset = function () {
+        var result = new MaxLatency(this._count, this._maxLatency);
+        this._count = 0;
+        this._maxLatency = null;
+        return result;
+    };
+    return PriceLatencyRecorder;
+})();
+var BlotterViewModel = (function () {
+    function BlotterViewModel(tradeRepository) {
+        this._tradeRepository = tradeRepository;
         this.trades = ko.observableArray([]);
 
-        reactiveTrader.referenceDataRepository.getCurrencyPairs().subscribe(function (currencyPairUpdates) {
-            for (var i = 0; i < currencyPairUpdates.length; i++) {
-                var update = currencyPairUpdates[i];
-                if (update.updateType == 0 /* Add */) {
-                    _this.spotTiles.push(new SpotTileViewModel(update.currencyPair));
-                }
+        this.loadTrades();
+    }
+    BlotterViewModel.prototype.loadTrades = function () {
+        var _this = this;
+        this._tradeRepository.getTrades().subscribe(function (trades) {
+            return _this.addTrades(trades);
+        }, function (ex) {
+            return console.error("an error occured within the trade stream", ex);
+        });
+    };
+
+    BlotterViewModel.prototype.addTrades = function (trades) {
+        var _this = this;
+        if (trades.length == 0) {
+            // empty list of trades means we are disconnected
+            this._stale = true;
+        } else {
+            if (this._stale) {
+                this.trades.removeAll();
+                this._stale = false;
             }
+        }
+
+        trades.forEach(function (t) {
+            var tradeViewModel = new TradeViewModel(t);
+            _this.trades.push(tradeViewModel);
+        });
+    };
+    return BlotterViewModel;
+})();
+var TradeViewModel = (function () {
+    function TradeViewModel(trade) {
+        this.spotRate = trade.spotRate;
+        this.notional = trade.notional + " " + trade.dealtCurrency;
+        this.direction = trade.direction == 0 /* Buy */ ? "Buy" : "Sell";
+        this.currencyPair = trade.currencyPair.substring(0, 3) + " / " + trade.currencyPair.substring(3, 6);
+        this.tradeId = trade.tradeId.toFixed(0);
+        this.tradeDate = trade.tradeDate.toString();
+        this.tradeStatus = trade.tradeStatus == 0 /* Done */ ? "Done" : "REJECTED";
+        this.traderName = trade.traderName;
+        this.valueDate = trade.valueDate.toString();
+        this.dealtCurrency = trade.dealtCurrency;
+    }
+    return TradeViewModel;
+})();
+var ConnectivityStatusViewModel = (function () {
+    function ConnectivityStatusViewModel(reactiveTrader, priceLatencyRecorder) {
+        var _this = this;
+        this._priceLatencyRecorder = priceLatencyRecorder;
+        reactiveTrader.connectionStatusStream.subscribe(function (status) {
+            return _this.onStatusChanged(status);
+        }, function (ex) {
+            return console.error("An error occured within the connection status stream", ex);
         });
 
-        reactiveTrader.tradeRepository.getTrades().subscribe(function (ts) {
-            for (var i = 0; i < ts.length; i++) {
-                _this.trades.push(ts[i]);
-            }
-        }, function (ex) {
-            return console.error(ex);
+        Rx.Observable.timer(1000, Rx.Scheduler.timeout).repeat().subscribe(function (_) {
+            return _this.onTimerTick();
         });
+
+        this.status = ko.observable("Disconnected.");
+        this.uiLatency = ko.observable(0);
+        this.throughput = ko.observable(0);
+        this.disconnected = ko.observable(false);
     }
-    return AppViewModel;
+    ConnectivityStatusViewModel.prototype.onTimerTick = function () {
+        var current = this._priceLatencyRecorder.getMaxLatencyAndReset();
+        if (current == null || current.priceWithMaxLatency == null)
+            return;
+
+        this.uiLatency(current.priceWithMaxLatency.uiProcessingTimeMs);
+        this.throughput(current.count);
+    };
+
+    ConnectivityStatusViewModel.prototype.onStatusChanged = function (connectionInfo) {
+        switch (connectionInfo.connectionStatus) {
+            case 6 /* Uninitialized */:
+            case 0 /* Connecting */:
+                this.status("Connecting to " + connectionInfo.server + "...");
+                this.disconnected(true);
+                break;
+            case 4 /* Reconnected */:
+            case 1 /* Connected */:
+                this.status("Connected to " + connectionInfo.server);
+                this.disconnected(false);
+                break;
+            case 2 /* ConnectionSlow */:
+                this.status("Slow connection detected with " + connectionInfo.server);
+                this.disconnected(false);
+                break;
+            case 3 /* Reconnecting */:
+                this.status("Reconnecting to " + connectionInfo.server + "...");
+                this.disconnected(true);
+                break;
+            case 5 /* Closed */:
+                this.status("Disconnected from " + connectionInfo.server);
+                this.disconnected(true);
+                break;
+        }
+    };
+    return ConnectivityStatusViewModel;
+})();
+var ShellViewModel = (function () {
+    function ShellViewModel(spotTiles, blotter, connectivityStatus) {
+        this.spotTiles = spotTiles;
+        this.blotter = blotter;
+        this.connectivityStatus = connectivityStatus;
+    }
+    return ShellViewModel;
 })();
 var OneWayPriceViewModel = (function () {
     function OneWayPriceViewModel(parent, direction) {
@@ -134,8 +256,49 @@ var PriceMovement;
     PriceMovement[PriceMovement["Down"] = 1] = "Down";
     PriceMovement[PriceMovement["Up"] = 2] = "Up";
 })(PriceMovement || (PriceMovement = {}));
+var SpotTilesViewModel = (function () {
+    function SpotTilesViewModel(referenceDataRepository, spotTileViewModelFactory) {
+        this._referenceDataRepository = referenceDataRepository;
+        this._spotTileViewModelFactory = spotTileViewModelFactory;
+        this.spotTiles = ko.observableArray([]);
+
+        this.loadSpotTiles();
+    }
+    SpotTilesViewModel.prototype.loadSpotTiles = function () {
+        var _this = this;
+        this._referenceDataRepository.getCurrencyPairs().subscribe(function (currencyPairs) {
+            return currencyPairs.forEach(function (cp) {
+                return _this.handleCurrencyPairUpdate(cp);
+            });
+        }, function (ex) {
+            return console.error("Failed to get currencies", ex);
+        });
+    };
+
+    SpotTilesViewModel.prototype.handleCurrencyPairUpdate = function (update) {
+        var spotTileViewModel = ko.utils.arrayFirst(this.spotTiles(), function (stvm) {
+            return stvm.symbol == update.currencyPair.symbol;
+        });
+        if (update.updateType == 0 /* Add */) {
+            if (spotTileViewModel != null) {
+                // we already have a tile for this ccy pair
+                return;
+            }
+
+            var spotTile = this._spotTileViewModelFactory.create(update.currencyPair);
+            this.spotTiles.push(spotTile);
+        } else {
+            if (spotTileViewModel != null) {
+                this.spotTiles.remove(spotTileViewModel);
+                spotTileViewModel.dispose();
+            }
+        }
+    };
+    return SpotTilesViewModel;
+})();
 var SpotTileViewModel = (function () {
-    function SpotTileViewModel(currencyPair) {
+    function SpotTileViewModel(currencyPair, priceLatencyRecorder) {
+        this._priceLatencyRecorder = priceLatencyRecorder;
         this.symbol = currencyPair.baseCurrency + " / " + currencyPair.counterCurrency;
         this._priceSubscription = new Rx.SerialDisposable();
         this._currencyPair = currencyPair;
@@ -150,6 +313,13 @@ var SpotTileViewModel = (function () {
 
         this.subscribeForPrices();
     }
+    SpotTileViewModel.prototype.dispose = function () {
+        if (!this._disposed) {
+            this._priceSubscription.dispose();
+            this._disposed = true;
+        }
+    };
+
     SpotTileViewModel.prototype.executeBid = function () {
         this.bid.onExecute();
     };
@@ -200,6 +370,8 @@ var SpotTileViewModel = (function () {
 
             this.spread(PriceFormatter.getFormattedSpread(price.spread, this._currencyPair.ratePrecision, this._currencyPair.pipsPosition));
             this.spotDate("SP."); //TODO
+
+            this._priceLatencyRecorder.record(price);
         }
     };
     return SpotTileViewModel;
@@ -263,7 +435,19 @@ var Price = (function () {
         ask.parent = this;
 
         this.spread = (ask.rate - bid.rate) * Math.pow(10, currencyPair.pipsPosition);
+        this._receivedTimestamp = performance.now();
     }
+    Object.defineProperty(Price.prototype, "uiProcessingTimeMs", {
+        get: function () {
+            return this._renderTimestamp - this._receivedTimestamp;
+        },
+        enumerable: true,
+        configurable: true
+    });
+
+    Price.prototype.displayedOnUi = function () {
+        this._renderTimestamp = performance.now();
+    };
     return Price;
 })();
 var PriceFactory = (function () {
@@ -808,5 +992,14 @@ var Connection = (function () {
         });
     };
     return Connection;
+})();
+var SpotTileViewModelFactory = (function () {
+    function SpotTileViewModelFactory(priceLatencyRecorder) {
+        this._priceLatencyRecorder = priceLatencyRecorder;
+    }
+    SpotTileViewModelFactory.prototype.create = function (currencyPair) {
+        return new SpotTileViewModel(currencyPair, this._priceLatencyRecorder);
+    };
+    return SpotTileViewModelFactory;
 })();
 //# sourceMappingURL=reactiveTrader.js.map

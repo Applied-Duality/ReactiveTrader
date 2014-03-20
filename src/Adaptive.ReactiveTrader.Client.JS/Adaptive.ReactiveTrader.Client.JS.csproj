@@ -56,14 +56,28 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
-    <TypeScriptCompile Include="UI\AppViewModel.ts" />
-    <TypeScriptCompile Include="UI\OneWayPriceViewModel.ts" />
-    <TypeScriptCompile Include="UI\FormattedPrice.ts" />
-    <TypeScriptCompile Include="UI\IOneWayPriceViewModel.ts" />
-    <TypeScriptCompile Include="UI\ISpotTileViewModel.ts" />
-    <TypeScriptCompile Include="UI\PriceFormatter.ts" />
-    <TypeScriptCompile Include="UI\PriceMovement.ts" />
-    <TypeScriptCompile Include="UI\SpotTileViewModel.ts" />
+    <TypeScriptCompile Include="Instrumentation\IPriceLatencyRecorder.ts" />
+    <TypeScriptCompile Include="Instrumentation\MaxLatency.ts" />
+    <TypeScriptCompile Include="Instrumentation\PriceLatencyRecorder.ts" />
+    <TypeScriptCompile Include="Models\Pricing\IPriceLatency.ts" />
+    <TypeScriptCompile Include="UI\Blotter\BlotterViewModel.ts" />
+    <TypeScriptCompile Include="UI\Blotter\IBlotterViewModel.ts" />
+    <TypeScriptCompile Include="UI\Blotter\ITradeViewModel.ts" />
+    <TypeScriptCompile Include="UI\Blotter\TradeViewModel.ts" />
+    <TypeScriptCompile Include="UI\Connectivity\ConnectivityStatusViewModel.ts" />
+    <TypeScriptCompile Include="UI\Connectivity\IConnectivityStatusViewModel.ts" />
+    <TypeScriptCompile Include="UI\Shell\IShellViewModel.ts" />
+    <TypeScriptCompile Include="UI\Shell\ShellViewModel.ts" />
+    <TypeScriptCompile Include="UI\SpotTiles\ISpotTilesViewModel.ts" />
+    <TypeScriptCompile Include="UI\SpotTiles\ISpotTileViewModelFactory.ts" />
+    <TypeScriptCompile Include="UI\SpotTiles\OneWayPriceViewModel.ts" />
+    <TypeScriptCompile Include="UI\SpotTiles\FormattedPrice.ts" />
+    <TypeScriptCompile Include="UI\SpotTiles\IOneWayPriceViewModel.ts" />
+    <TypeScriptCompile Include="UI\SpotTiles\ISpotTileViewModel.ts" />
+    <TypeScriptCompile Include="UI\SpotTiles\PriceFormatter.ts" />
+    <TypeScriptCompile Include="UI\SpotTiles\PriceMovement.ts" />
+    <TypeScriptCompile Include="UI\SpotTiles\SpotTilesViewModel.ts" />
+    <TypeScriptCompile Include="UI\SpotTiles\SpotTileViewModel.ts" />
     <TypeScriptCompile Include="IReactiveTrader.ts" />
     <TypeScriptCompile Include="Models\Direction.ts" />
     <TypeScriptCompile Include="Models\Execution\ITrade.ts" />
@@ -129,6 +143,7 @@
     <TypeScriptCompile Include="Transport\Connection.ts" />
     <TypeScriptCompile Include="typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="typings\signalr\signalr.d.ts" />
+    <TypeScriptCompile Include="UI\SpotTiles\SpotTileViewModelFactory.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-2.1.0.min.map" />

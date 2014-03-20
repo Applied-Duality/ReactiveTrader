@@ -18,8 +18,8 @@
 
         this._executablePrice.execute(this._parent.notional(), this._parent.dealtCurrency)
             .subscribe(
-                trade=> this.onExecuted(trade),
-                ex=> this.onExecutionError(ex));
+                trade => this.onExecuted(trade),
+                ex => this.onExecutionError(ex));
     }
 
     onPrice(executablePrice: IExecutablePrice): void {

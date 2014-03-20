@@ -1,4 +1,4 @@
-﻿class Price implements IPrice {
+﻿class Price implements IPrice, IPriceLatency {
     constructor(
         bid: ExecutablePrice,
         ask: ExecutablePrice,
@@ -19,6 +19,7 @@
         ask.parent = this;
 
         this.spread = (ask.rate - bid.rate) * Math.pow(10, currencyPair.pipsPosition);
+        this._receivedTimestamp = performance.now();
     }
 
     // TODO encapsulate as fields
@@ -30,4 +31,17 @@
     valueDate: Date;
     spread: number;
     isStale: boolean; 
+
+    // IPriceLatency implementation
+
+    private _receivedTimestamp: number;
+    private _renderTimestamp: number;
+
+    get uiProcessingTimeMs() {
+        return this._renderTimestamp - this._receivedTimestamp;
+    }
+
+    displayedOnUi(): void {
+        this._renderTimestamp = performance.now();
+    }
 } 

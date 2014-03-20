@@ -10,4 +10,5 @@
     isSubscribing: KnockoutObservable<boolean>;
 
     onTrade(trade: ITrade): void;
+    dispose(): void;
 } 
