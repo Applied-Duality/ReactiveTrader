@@ -4,7 +4,7 @@ Requirements:
  - Windows 
  - [Microsoft .NET Framework 4.5](http://www.microsoft.com/en-gb/download/details.aspx?id=30653)
 
-1. Download the [package](https://github.com/AdaptiveConsulting/ReactiveTrader/raw/master/App/src/ReactiveTrader.zip)
+1. Download the [package](https://github.com/AdaptiveConsulting/ReactiveTrader/raw/master/src/ReactiveTrader.zip)
 2. If you are on Windows 7+ unblock the zip (right click, properties, unblock)
 3. Extract the zip
 4. Launch the file __LaunchReactiveTrader__.bat to start both the client UI and the server admin UI, which allow you to control the server
