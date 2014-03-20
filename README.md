@@ -1,9 +1,12 @@
 ## For the impatient
 
+### To run the demo
+
 Requirements:
  - Windows 
  - [Microsoft .NET Framework 4.5](http://www.microsoft.com/en-gb/download/details.aspx?id=30653)
 
+Installation steps:
 1. Download the [package](https://github.com/AdaptiveConsulting/ReactiveTrader/raw/master/src/ReactiveTrader.zip)
 2. If you are on Windows 7+ unblock the zip (right click, properties, unblock)
 3. Extract the zip
@@ -12,7 +15,7 @@ Requirements:
 
 ![image](https://f.cloud.github.com/assets/1256913/2311956/3fd6d2ca-a2f6-11e3-8224-d83a4e107b5a.png)
 
-... talking via Web Sockets ...
+... talking via Web Socket with ...
 
 ![image](https://f.cloud.github.com/assets/1256913/2311970/5c2b2f0c-a2f6-11e3-92ba-380d2f383351.png)
 
