@@ -17,15 +17,16 @@ namespace Adaptive.ReactiveTrader.Client.UI.Blotter
     public class BlotterViewModel : ViewModelBase, IBlotterViewModel
     {
         private readonly ITradeRepository _tradeRepository;
-        private readonly Func<ITrade, ITradeViewModel> _tradeViewModelFactory;
+        private readonly Func<ITrade, bool, ITradeViewModel> _tradeViewModelFactory;
         private readonly IConcurrencyService _concurrencyService;
         public ObservableCollection<ITradeViewModel> Trades { get; private set; }
 
         private static readonly ILog Log = LogManager.GetLogger(typeof(BlotterViewModel));
         private bool _stale;
+        private bool _stowReceived;
 
         public BlotterViewModel(IReactiveTrader reactiveTrader,
-                                Func<ITrade, ITradeViewModel> tradeViewModelFactory,
+                                Func<ITrade, bool, ITradeViewModel> tradeViewModelFactory,
                                 IConcurrencyService concurrencyService)
         {
             _tradeRepository = reactiveTrader.TradeRepository;
@@ -65,9 +66,11 @@ namespace Adaptive.ReactiveTrader.Client.UI.Blotter
 
             allTrades.ForEach(trade =>
                 {
-                    var tradeViewMode = _tradeViewModelFactory(trade);
-                    Trades.Add(tradeViewMode);
+                    var tradeViewModel = _tradeViewModelFactory(trade, !_stowReceived);
+                    Trades.Add(tradeViewModel);
                 });
+
+            _stowReceived = true;
         }
     }
 }

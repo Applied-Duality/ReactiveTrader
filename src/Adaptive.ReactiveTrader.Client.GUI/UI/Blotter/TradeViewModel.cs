@@ -10,8 +10,12 @@ namespace Adaptive.ReactiveTrader.Client.UI.Blotter
     [ImplementPropertyChanged]
     public class TradeViewModel : ViewModelBase, ITradeViewModel
     {
-        public TradeViewModel(ITrade trade)
+        private readonly bool _isStowTrade;
+        private bool _isStowTradePropertyRead;
+
+        public TradeViewModel(ITrade trade, bool isStowTrade)
         {
+            _isStowTrade = isStowTrade;
             TradeId = trade.TradeId.ToString(CultureInfo.InvariantCulture);
             CurrencyPair = trade.CurrencyPair.Substring(0, 3) + " / " + trade.CurrencyPair.Substring(3, 3);
             Direction = trade.Direction;
@@ -34,5 +38,16 @@ namespace Adaptive.ReactiveTrader.Client.UI.Blotter
         public string TraderName { get; private set; }
         public DateTime ValueDate { get; private set; }
         public string DealtCurrency { get; private set; }
+
+
+        public bool IsNewTrade
+        {
+            get
+            {
+                var value = !_isStowTrade && !_isStowTradePropertyRead;
+                _isStowTradePropertyRead = true;
+                return value;
+            }
+        }
     }
 }

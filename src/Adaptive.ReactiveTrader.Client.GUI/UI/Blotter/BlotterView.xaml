@@ -58,8 +58,30 @@
                 <DataGridTextColumn CanUserSort="True" SortMemberPath="TradeStatus" Header="Status" Binding="{Binding TradeStatus}" Width="100" ElementStyle="{StaticResource RedRejectedStyle}" />
                 <DataGridTextColumn CanUserSort="True" SortMemberPath="ValueDate" Header="Value Date" Binding="{Binding ValueDate, StringFormat='dd MMM yy'}" Width="120" ElementStyle="{StaticResource StrikethroughRejectedStyle}" />
                 <DataGridTextColumn CanUserSort="True" SortMemberPath="TraderName" Header="Trader" Binding="{Binding TraderName}" Width="100" ElementStyle="{StaticResource StrikethroughRejectedStyle}" />
-                <DataGridTextColumn CanUserSort="True" SortMemberPath="TradeId" Header="Trade #" Binding="{Binding TradeId}" Width="100" ElementStyle="{StaticResource StrikethroughRejectedStyle}" />
+                <DataGridTextColumn CanUserSort="True" SortMemberPath="TradeId" Header="Trade #" Binding="{Binding TradeId}" Width="*" ElementStyle="{StaticResource StrikethroughRejectedStyle}" />
             </DataGrid.Columns>
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource DataGridRowStyle}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsNewTrade}" Value="True" d:DataContext="{d:DesignInstance designer:DesignerModeTradeViewModel}">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard FillBehavior="Stop">
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                            <EasingColorKeyFrame KeyTime="0:0:0.75" Value="#FF7A9EFF">
+                                                <EasingColorKeyFrame.EasingFunction>
+                                                    <PowerEase EasingMode="EaseInOut"/>
+                                                </EasingColorKeyFrame.EasingFunction>
+                                            </EasingColorKeyFrame>
+                                            <EasingColorKeyFrame KeyTime="0:0:1.2" Value="Transparent"/>
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
         </DataGrid>
     </Grid>
 </UserControl>

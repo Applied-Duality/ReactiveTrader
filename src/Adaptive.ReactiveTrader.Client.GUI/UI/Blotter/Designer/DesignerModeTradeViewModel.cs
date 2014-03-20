@@ -15,5 +15,6 @@ namespace Adaptive.ReactiveTrader.Client.UI.Blotter.Designer
         public string TradeStatus { get; set; }
         public string TraderName { get; set; }
         public DateTime ValueDate { get; set; }
+        public bool IsNewTrade { get; set; }
     }
 }
