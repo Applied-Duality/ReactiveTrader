@@ -113,8 +113,8 @@
                     </Grid>
 
                     <TextBlock x:Name="StaleTextBlock" Grid.Row="1" Visibility="Collapsed" VerticalAlignment="Top"
-                            Text="Stale" 
-                            Foreground="{StaticResource SecondaryForeground}" FontSize="16" />
+                            Text="Pricing currently unavailable" 
+                            Foreground="{StaticResource PrimaryForeground}" FontSize="16" />
 
                     <TextBlock x:Name="SubscribingTextBlock" Grid.Row="1" Visibility="Collapsed" VerticalAlignment="Top"
                             Text="Subscribing..." 
@@ -176,28 +176,17 @@
                     <Setter TargetName="BidContentControl" Property="IsEnabled" Value="False" />
                     <Setter TargetName="AskContentControl" Property="IsEnabled" Value="False" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding Bid.IsStale}" Value="True">
+                <DataTrigger Binding="{Binding IsStale}" Value="True">
                     <Setter TargetName="PriceButtonsPanel" Property="Visibility" Value="Hidden" />
                     <Setter TargetName="NotionalPanel" Property="Visibility" Value="Hidden" />
                     <Setter TargetName="StaleTextBlock" Property="Visibility" Value="Visible" />
-                </DataTrigger>
-                <DataTrigger Binding="{Binding Ask.IsStale}" Value="True">
-                    <Setter TargetName="PriceButtonsPanel" Property="Visibility" Value="Hidden" />
-                    <Setter TargetName="NotionalPanel" Property="Visibility" Value="Hidden" />
-                    <Setter TargetName="StaleTextBlock" Property="Visibility" Value="Visible" />
-                </DataTrigger>
-
-                <DataTrigger Binding="{Binding IsSubscribing}" Value="True">
-                    <Setter TargetName="PriceButtonsPanel" Property="Visibility" Value="Hidden" />
-                    <Setter TargetName="NotionalPanel" Property="Visibility" Value="Hidden" />
-                    <Setter TargetName="SubscribingTextBlock" Property="Visibility" Value="Visible" />
+                    <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource ErrorBackgroundBrush}" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding IsSubscribing}" Value="True">
                     <Setter TargetName="PriceButtonsPanel" Property="Visibility" Value="Hidden" />
                     <Setter TargetName="NotionalPanel" Property="Visibility" Value="Hidden" />
                     <Setter TargetName="SubscribingTextBlock" Property="Visibility" Value="Visible" />
                 </DataTrigger>
-
                 <DataTrigger Binding="{Binding Movement}" Value="{x:Static spotTiles:PriceMovement.Up}">
                     <Setter TargetName="UpMovementIcon" Property="Visibility" Value="Visible" />
                 </DataTrigger>

@@ -27,6 +27,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         public PriceMovement Movement { get; private set; }
         public string SpotDate { get; private set; }
         public bool IsSubscribing { get; private set; }
+        public bool IsStale { get; private set; }
 
         private readonly SerialDisposable _priceSubscription;
         private readonly ICurrencyPair _currencyPair;
@@ -155,6 +156,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         private void OnPrice(IPrice price)
         {
             IsSubscribing = false;
+            IsStale = price.IsStale;
 
             if (price.IsStale)
             {
@@ -188,6 +190,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             }
             _currentPrice = price;
         }
+
 
         private void OnError(Exception ex)
         {

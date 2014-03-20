@@ -31,6 +31,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles.Designer
         public PriceMovement Movement { get { return PriceMovement.Up; } }
         public string SpotDate { get { return "SP. 9 Apr"; } }
         public bool IsSubscribing { get; private set; }
+        public bool IsStale { get { return true; } }
 
         public void OnTrade(ITrade trade)
         {

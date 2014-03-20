@@ -25,7 +25,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Repositories
                 .Select(p => _priceFactory.Create(p, currencyPair))
                 .Catch(Observable.Return(new StalePrice(currencyPair))) // if the stream errors (server disconnected), we push a stale price 
                 .Repeat()                                               // and resubscribe
-                .DetectStale(TimeSpan.FromSeconds(2),  Scheduler.Default)
+                .DetectStale(TimeSpan.FromSeconds(4),  Scheduler.Default)
                 .Select(s => s.IsStale ? new StalePrice(currencyPair) : s.Update)
                 .Publish()
                 .RefCount();

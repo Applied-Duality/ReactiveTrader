@@ -26,7 +26,6 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         public string Pips { get; private set; }
         public string TenthOfPip { get; private set; }
         public bool IsExecuting { get; private set; }
-        public bool IsStale { get; private set; }
         
         public OneWayPriceViewModel(Direction direction, ISpotTilePricingViewModel parent, IConcurrencyService concurrencyService)
         {
@@ -88,7 +87,6 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             BigFigures = formattedPrice.BigFigures;
             Pips = formattedPrice.Pips;
             TenthOfPip = formattedPrice.TenthOfPip;
-            IsStale = false;
 
             _executeCommand.RaiseCanExecuteChanged();
         }
@@ -100,7 +98,6 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             BigFigures = string.Empty;
             Pips = string.Empty;
             TenthOfPip = string.Empty;
-            IsStale = true;
 
             _executeCommand.RaiseCanExecuteChanged();
         }
