@@ -13,7 +13,7 @@ class Connection implements IConnection {
     private _allTrades: Rx.Subject<TradeDto[]>;
 
     constructor(address: string, username: string) {
-        this._status = new Rx.Subject<ConnectionInfo>();
+        this._status = new Rx.BehaviorSubject(new ConnectionInfo(ConnectionStatus.Uninitialized, address));
         this._address = address;
         this._hubConnection = $.hubConnection("http://localhost:8080/signalr");
 
@@ -35,7 +35,7 @@ class Connection implements IConnection {
 
     public initialize(): Rx.Observable<{}> {
 
-        return Rx.Observable.create<{}>(observer => {
+        return Rx.Observable.create<{}>(observer=> {
             this.changeStatus(ConnectionStatus.Connecting);
 
             console.log("Connecting to " + this._address + "...");
@@ -51,8 +51,8 @@ class Connection implements IConnection {
                     console.log(error);
                     observer.onError(error);
                 });
-            
-            return Rx.Disposable.create(() => {
+
+            return Rx.Disposable.create(()=> {
                 console.log("Stoping connection...");
                 this._hubConnection.stop();
                 console.log("Connection stopped.");

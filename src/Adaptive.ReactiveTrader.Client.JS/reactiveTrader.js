@@ -100,6 +100,12 @@ var ConnectivityStatusViewModel = (function () {
     function ConnectivityStatusViewModel(reactiveTrader, priceLatencyRecorder) {
         var _this = this;
         this._priceLatencyRecorder = priceLatencyRecorder;
+
+        this.uiLatency = ko.observable(0);
+        this.throughput = ko.observable(0);
+        this.disconnected = ko.observable(false);
+        this.status = ko.observable("Disconnected");
+
         reactiveTrader.connectionStatusStream.subscribe(function (status) {
             return _this.onStatusChanged(status);
         }, function (ex) {
@@ -110,10 +116,9 @@ var ConnectivityStatusViewModel = (function () {
             return _this.onTimerTick();
         });
 
-        this.status = ko.observable("Disconnected.");
-        this.uiLatency = ko.observable(0);
-        this.throughput = ko.observable(0);
-        this.disconnected = ko.observable(false);
+        this.statusText = ko.computed(function () {
+            return _this.status() + " - UI Latency: " + _this.uiLatency().toFixed(2) + "ms - Throughput: " + _this.throughput() + "ticks/sec";
+        });
     }
     ConnectivityStatusViewModel.prototype.onTimerTick = function () {
         var current = this._priceLatencyRecorder.getMaxLatencyAndReset();
@@ -848,7 +853,7 @@ var ConnectionInfo = (function () {
 var Connection = (function () {
     function Connection(address, username) {
         var _this = this;
-        this._status = new Rx.Subject();
+        this._status = new Rx.BehaviorSubject(new ConnectionInfo(6 /* Uninitialized */, address));
         this._address = address;
         this._hubConnection = $.hubConnection("http://localhost:8080/signalr");
 

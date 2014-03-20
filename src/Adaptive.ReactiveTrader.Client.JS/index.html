@@ -22,6 +22,7 @@
 </head>
     <body style="height: 100%">
         <div style="height: 100%">
+            
             <table style="height: 100%; width: 100%">
                 <tr style="height: 50%">
                     <td class="tiles-background">
@@ -90,7 +91,7 @@
                         </ul>
                     </td>
                 </tr>
-                <tr>
+                <tr style="height: 100%">
                     <td>
                         <!-- BLOTTER -->
                         <table>
@@ -120,6 +121,10 @@
                             </tbody>
                         </table>
                     </td>
+                </tr>
+                <!-- STATUS BAR-->
+                <tr class="" style="width: 100%; background-color: #DEE3E8">
+                    <td data-bind="text: connectivityStatus.statusText" />
                 </tr>
             </table>
         </div>

@@ -5,9 +5,16 @@
     uiLatency: KnockoutObservable<number>;
     throughput: KnockoutObservable<number>;
     disconnected: KnockoutObservable<boolean>;
+    statusText: KnockoutObservable<string>;
 
     constructor(reactiveTrader: IReactiveTrader, priceLatencyRecorder: IPriceLatencyRecorder) {
         this._priceLatencyRecorder = priceLatencyRecorder;
+
+        this.uiLatency = ko.observable(0);
+        this.throughput = ko.observable(0);
+        this.disconnected = ko.observable(false);
+        this.status = ko.observable("Disconnected");
+
         reactiveTrader.connectionStatusStream
             .subscribe(
                 status=> this.onStatusChanged(status),
@@ -18,10 +25,9 @@
             .repeat()
             .subscribe(_=> this.onTimerTick());
 
-        this.status = ko.observable("Disconnected.");
-        this.uiLatency = ko.observable(0);
-        this.throughput = ko.observable(0);
-        this.disconnected = ko.observable(false);
+        this.statusText = ko.computed(()=> {
+            return this.status() + " - UI Latency: " + this.uiLatency().toFixed(2) + "ms - Throughput: " + this.throughput() + "ticks/sec";
+        });
     }
 
     private onTimerTick() {
