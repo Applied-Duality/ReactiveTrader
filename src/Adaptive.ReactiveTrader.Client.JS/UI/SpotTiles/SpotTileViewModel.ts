@@ -30,6 +30,10 @@
     movement: KnockoutObservable<PriceMovement>;
     spotDate: KnockoutObservable<string>;
     isSubscribing: KnockoutObservable<boolean>;
+    
+    get currencyPair(): ICurrencyPair {
+        return this._currencyPair;
+    }
 
     private _disposed: boolean;
 

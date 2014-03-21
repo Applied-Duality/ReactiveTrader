@@ -8,6 +8,7 @@
     movement: KnockoutObservable<PriceMovement>;
     spotDate: KnockoutObservable<string>;
     isSubscribing: KnockoutObservable<boolean>;
+    currencyPair: ICurrencyPair;
 
     onTrade(trade: ITrade): void;
     dispose(): void;

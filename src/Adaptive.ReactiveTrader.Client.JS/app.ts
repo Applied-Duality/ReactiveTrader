@@ -1,5 +1,5 @@
-﻿window.onload = () => {
-    var reactiveTrader: IReactiveTrader = new ReactiveTrader();
+﻿$(document).ready(()=> {
+ var reactiveTrader: IReactiveTrader = new ReactiveTrader();
 
     reactiveTrader
         .initialize("olivier", "http://localhost:800")
@@ -15,5 +15,5 @@
 
             ko.applyBindings(shellViewModel);
         },
-            console.error);
-};
+            ex => console.error(ex));
+});

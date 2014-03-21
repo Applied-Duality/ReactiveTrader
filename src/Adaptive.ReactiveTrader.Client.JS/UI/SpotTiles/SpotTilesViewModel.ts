@@ -19,7 +19,9 @@
     }
 
     private handleCurrencyPairUpdate(update: ICurrencyPairUpdate) {
-        var spotTileViewModel = ko.utils.arrayFirst(this.spotTiles(), stvm=> stvm.symbol == update.currencyPair.symbol);
+
+        var spotTileViewModel = ko.utils.arrayFirst(this.spotTiles(), stvm=> stvm.currencyPair.symbol == update.currencyPair.symbol);
+
         if (update.updateType == UpdateType.Add) {
             if (spotTileViewModel != null) {
                 // we already have a tile for this ccy pair

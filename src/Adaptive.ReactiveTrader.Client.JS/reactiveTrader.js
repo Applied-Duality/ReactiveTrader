@@ -1,4 +1,4 @@
-﻿window.onload = function () {
+﻿$(document).ready(function () {
     var reactiveTrader = new ReactiveTrader();
 
     reactiveTrader.initialize("olivier", "http://localhost:800").subscribe(function (_) {
@@ -14,8 +14,10 @@
         var shellViewModel = new ShellViewModel(spotTilesViewModel, blotterViewModel, connectivityStatusViewModel);
 
         ko.applyBindings(shellViewModel);
-    }, console.error);
-};
+    }, function (ex) {
+        return console.error(ex);
+    });
+});
 var MaxLatency = (function () {
     function MaxLatency(count, priceWithMaxLatency) {
         this.count = count;
@@ -282,8 +284,9 @@ var SpotTilesViewModel = (function () {
 
     SpotTilesViewModel.prototype.handleCurrencyPairUpdate = function (update) {
         var spotTileViewModel = ko.utils.arrayFirst(this.spotTiles(), function (stvm) {
-            return stvm.symbol == update.currencyPair.symbol;
+            return stvm.currencyPair.symbol == update.currencyPair.symbol;
         });
+
         if (update.updateType == 0 /* Add */) {
             if (spotTileViewModel != null) {
                 // we already have a tile for this ccy pair
@@ -318,6 +321,14 @@ var SpotTileViewModel = (function () {
 
         this.subscribeForPrices();
     }
+    Object.defineProperty(SpotTileViewModel.prototype, "currencyPair", {
+        get: function () {
+            return this._currencyPair;
+        },
+        enumerable: true,
+        configurable: true
+    });
+
     SpotTileViewModel.prototype.dispose = function () {
         if (!this._disposed) {
             this._priceSubscription.dispose();
