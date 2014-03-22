@@ -6,6 +6,6 @@ namespace Adaptive.ReactiveTrader.Client.Instrumentation
     public interface IPriceLatencyRecorder
     {
         void Record(IPrice price);
-        Tuple<IPriceLatency, long> GetMaxLatencyAndReset();
+        Statistics CalculateAndReset();
     }
 }

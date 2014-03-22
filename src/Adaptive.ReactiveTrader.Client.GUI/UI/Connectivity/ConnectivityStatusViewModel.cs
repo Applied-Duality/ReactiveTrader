@@ -11,6 +11,8 @@ namespace Adaptive.ReactiveTrader.Client.UI.Connectivity
 {
     class ConnectivityStatusViewModel : ViewModelBase, IConnectivityStatusViewModel
     {
+        private static readonly TimeSpan StatsFrequency = TimeSpan.FromSeconds(1);
+
         private readonly IPriceLatencyRecorder _priceLatencyRecorder;
         private static readonly ILog Log = LogManager.GetLogger(typeof(ConnectivityStatusViewModel));
 
@@ -25,20 +27,24 @@ namespace Adaptive.ReactiveTrader.Client.UI.Connectivity
                 ex => Log.Error("An error occured within the connection status stream.", ex));
 
             Observable
-                .Timer(TimeSpan.FromSeconds(1))
-                .Repeat()
-                .ObserveOn(concurrencyService.Dispatcher)
+                .Interval(StatsFrequency, concurrencyService.Dispatcher)
                 .Subscribe(OnTimerTick);
         }
 
         private void OnTimerTick(long _)
         {
-            var current = _priceLatencyRecorder.GetMaxLatencyAndReset();
-            if (current == null || current.Item1 == null) return;
+            var stats = _priceLatencyRecorder.CalculateAndReset();
 
-            UiLatency = (int)current.Item1.UiProcessingTimeMs;
-            ServerClientLatency = (int)current.Item1.ServerToClientMs;
-            Throughput = current.Item2;
+            if (stats == null)
+                return;
+
+            UiLatency = stats.UiLatencyMax;
+            UiLatencyStdDev = stats.UiLatencyStdDev;
+            ServerClientLatency = stats.ServerLatencyMax;
+            ServerClientLatencyStdDev = stats.ServerLatencyStdDev;
+            Throughput = stats.Count;
+            CpuTime = Math.Round(stats.ProcessTime.TotalMilliseconds, 0);
+            CpuPercent = Math.Round(CpuTime/(Environment.ProcessorCount*StatsFrequency.TotalMilliseconds)*100, 0);
         }
 
         private void OnStatusChange(ConnectionInfo connectionInfo)
@@ -73,9 +79,13 @@ namespace Adaptive.ReactiveTrader.Client.UI.Connectivity
         }
 
         public string Status { get; private set; }
-        public long UiLatency { get; private set; }
-        public long ServerClientLatency { get; private set; }
         public long Throughput { get; private set; }
         public bool Disconnected { get; private set; }
+        public long UiLatency { get; private set; }
+        public long UiLatencyStdDev { get; private set; }
+        public long ServerClientLatency { get; private set; }
+        public long ServerClientLatencyStdDev { get; private set; }
+        public double CpuTime { get; private set; }
+        public double CpuPercent { get; set; }
     }
 }
