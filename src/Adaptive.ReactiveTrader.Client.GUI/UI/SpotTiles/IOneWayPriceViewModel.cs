@@ -15,5 +15,6 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         bool IsExecuting { get; }
         void OnPrice(IExecutablePrice executablePrice);
         void OnStalePrice();
+        SpotTileExecutionMode ExecutionMode { get; set; }
     }
 }

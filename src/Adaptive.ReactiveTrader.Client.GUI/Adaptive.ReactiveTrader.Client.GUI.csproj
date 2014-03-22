@@ -165,6 +165,7 @@
     </Compile>
     <Compile Include="UI\SpotTiles\SpotTileAffirmationViewModel.cs" />
     <Compile Include="UI\SpotTiles\SpotTileErrorViewModel.cs" />
+    <Compile Include="UI\SpotTiles\SpotTileExecutionMode.cs" />
     <Compile Include="UI\SpotTiles\SpotTilePricingView.xaml.cs">
       <DependentUpon>SpotTilePricingView.xaml</DependentUpon>
     </Compile>

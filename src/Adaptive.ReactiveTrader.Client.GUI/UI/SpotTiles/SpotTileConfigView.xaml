@@ -22,12 +22,23 @@
     </UserControl.Resources>
 
     <Border Padding="15,12" Background="{StaticResource TileBackgroundBrush}">
-        <StackPanel>
-            <TextBlock Text="Price Rendering Mode" Foreground="{StaticResource PrimaryForeground}" FontSize="18" />
-            <Button Content="Standard" Command="{Binding StandardCommand, Mode=OneWay}" Style="{StaticResource HyperlinkButtonSelectedStyle}" FontSize="16" />
-            <Button Content="Drop Frame" Command="{Binding DropFrameCommand, Mode=OneWay}" Style="{StaticResource HyperlinkButtonSelectedStyle}" FontSize="16" />
-            <Button Content="Conflate" Command="{Binding ConflateCommand, Mode=OneWay}" Style="{StaticResource HyperlinkButtonSelectedStyle}" FontSize="16" />
-            <Button Content="ConstantRate" Command="{Binding ConstantRateCommand, Mode=OneWay}" Style="{StaticResource HyperlinkButtonSelectedStyle}" FontSize="16" />
-        </StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Price Rendering" Foreground="{StaticResource PrimaryForeground}" FontSize="18" />
+                <Button Content="Standard" Command="{Binding StandardCommand, Mode=OneWay}" Style="{StaticResource HyperlinkButtonSelectedStyle}" FontSize="16" />
+                <Button Content="Drop Frame" Command="{Binding DropFrameCommand, Mode=OneWay}" Style="{StaticResource HyperlinkButtonSelectedStyle}" FontSize="16" />
+                <Button Content="Conflate" Command="{Binding ConflateCommand, Mode=OneWay}" Style="{StaticResource HyperlinkButtonSelectedStyle}" FontSize="16" />
+                <Button Content="ConstantRate" Command="{Binding ConstantRateCommand, Mode=OneWay}" Style="{StaticResource HyperlinkButtonSelectedStyle}" FontSize="16" />
+            </StackPanel>
+            <StackPanel Grid.Column="1">
+                <TextBlock Text="Trade Execution" Foreground="{StaticResource PrimaryForeground}" FontSize="18" />
+                <Button Content="Asynchronous" Command="{Binding AsyncCommand, Mode=OneWay}" Style="{StaticResource HyperlinkButtonSelectedStyle}" FontSize="16"/>
+                <Button Content="Synchronous" Command="{Binding SyncCommand, Mode=OneWay}" Style="{StaticResource HyperlinkButtonSelectedStyle}" FontSize="16"/>
+            </StackPanel>
+        </Grid>
     </Border>
 </UserControl>

@@ -88,6 +88,15 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             }
         }
 
+        public SpotTileExecutionMode ExecutionMode
+        {
+            get { return Bid.ExecutionMode; }
+            set { 
+                Bid.ExecutionMode = value;
+                Ask.ExecutionMode = value;
+            }
+        }
+
         private void SubscribeForPrices()
         {
             switch (SubscriptionMode)

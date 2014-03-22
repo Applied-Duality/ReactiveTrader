@@ -38,10 +38,19 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             _config.ToConfig();
 
             SpotTiles.Add(_config);
+
             _config.Config.PropertyChanged += (_, e) => { if (e.PropertyName == "SubscriptionMode")
             {
                 SpotTiles.Where(vm => vm.Pricing != null).ForEach(vm => vm.Pricing.SubscriptionMode = _config.Config.SubscriptionMode);
             }};
+
+            _config.Config.PropertyChanged += (_, e) =>
+                {
+                    if (e.PropertyName == "ExecutionMode")
+                    {
+                        SpotTiles.Where(vm => vm.Pricing != null).ForEach(vm => vm.Pricing.ExecutionMode = _config.Config.ExecutionMode);
+                    }
+                };
 
             LoadSpotTiles();
         }

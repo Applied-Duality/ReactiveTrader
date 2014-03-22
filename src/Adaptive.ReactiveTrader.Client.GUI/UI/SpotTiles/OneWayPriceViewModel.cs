@@ -20,13 +20,15 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
 
         private readonly DelegateCommand _executeCommand;
         private IExecutablePrice _executablePrice;
+        private SpotTileExecutionMode _executionMode;
 
         public Direction Direction { get; private set; }
         public string BigFigures { get; private set; }
         public string Pips { get; private set; }
         public string TenthOfPip { get; private set; }
         public bool IsExecuting { get; private set; }
-        
+        public SpotTileExecutionMode ExecutionMode { get; set; }
+
         public OneWayPriceViewModel(Direction direction, ISpotTilePricingViewModel parent, IConcurrencyService concurrencyService)
         {
             _parent = parent;
@@ -53,11 +55,36 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
                 return;
             }
             IsExecuting = true;
+
+            if (ExecutionMode == SpotTileExecutionMode.Async)
+            {
+                ExecuteAsync(notional);
+            } else if (ExecutionMode == SpotTileExecutionMode.Sync)
+            {
+                ExecuteSync(notional);
+            }
+        }
+
+        private void ExecuteAsync(long notional)
+        {
             _executablePrice.ExecuteRequest(notional, _parent.DealtCurrency)
                 .ObserveOn(_concurrencyService.Dispatcher)
                 .SubscribeOn(_concurrencyService.ThreadPool)
                 .Subscribe(OnExecuted,
-                    OnExecutionError);    
+                    OnExecutionError);
+        }
+
+        private void ExecuteSync(long notional)
+        {
+            try
+            {
+                OnExecuted(_executablePrice.ExecuteRequest(notional, _parent.DealtCurrency).Wait());
+            }
+            catch (Exception ex)
+            {
+                OnExecutionError(ex);
+            }
+
         }
 
         private void OnExecutionError(Exception exception)
