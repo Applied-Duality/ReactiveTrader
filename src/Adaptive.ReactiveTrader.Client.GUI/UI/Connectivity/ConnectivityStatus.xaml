@@ -43,30 +43,25 @@
 
         <TextBlock ToolTipService.ShowDuration="40000">
             <Run Text="{Binding Status, Mode=OneWay}"  />
-            <Run Text="UI Latency:" />
+            <Run Text="Max Price Latency:" />
+            <Run Text="{Binding TotalLatency, Mode=OneWay}"  />
+            <Run Text="ms"/>
+            <Run Text=" | "/>
+            <Run Text="Max UI Latency:" />
             <Run Text="{Binding UiLatency, Mode=OneWay}"  />
             <Run Text="ms"/>
-            <Run Text="("/>
-            <Run Text="{Binding UiLatencyStdDev, Mode=OneWay}"/>
-            <Run Text="σ)"/>
             <Run Text=" | "/>
-            <Run Text="Server -> Client Latency:" />
+            <Run Text="Max Server -> Client Latency:" />
             <Run Text="{Binding ServerClientLatency, Mode=OneWay}"  />
             <Run Text="ms"/>
-            <Run Text="("/>
-            <Run Text="{Binding ServerClientLatencyStdDev, Mode=OneWay}"/>
-            <Run Text="σ)"/>
             <Run Text=" | "/>
             <Run Text="UI Updates:" />
             <Run Text="{Binding Throughput, Mode=OneWay}" />
             <Run Text="prices/sec" />
             <Run Text=" | "/>
             <Run Text="CPU Time:" />
-            <Run Text="{Binding CpuTime, Mode=OneWay}"/>
-            <Run Text="ms"/>
-            <Run Text="("/>
             <Run Text="{Binding CpuPercent, Mode=OneWay}"/>
-            <Run Text="%)"/>
+            <Run Text="%"/>
             <TextBlock.ToolTip>
                 <ToolTip Width="600">
                     <StackPanel Orientation="Vertical">

@@ -42,6 +42,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.Connectivity
             UiLatencyStdDev = stats.UiLatencyStdDev;
             ServerClientLatency = stats.ServerLatencyMax;
             ServerClientLatencyStdDev = stats.ServerLatencyStdDev;
+            TotalLatency = stats.ServerToUiLatencyMax;
             Throughput = stats.Count;
             CpuTime = Math.Round(stats.ProcessTime.TotalMilliseconds, 0);
             CpuPercent = Math.Round(CpuTime/(Environment.ProcessorCount*StatsFrequency.TotalMilliseconds)*100, 0);
@@ -85,6 +86,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.Connectivity
         public long UiLatencyStdDev { get; private set; }
         public long ServerClientLatency { get; private set; }
         public long ServerClientLatencyStdDev { get; private set; }
+        public long TotalLatency { get; private set; }
         public double CpuTime { get; private set; }
         public double CpuPercent { get; set; }
     }

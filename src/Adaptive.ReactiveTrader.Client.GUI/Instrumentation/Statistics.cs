@@ -8,6 +8,8 @@ namespace Adaptive.ReactiveTrader.Client.Instrumentation
         public long ServerLatencyMax { get; set; }
         public long UiLatencyStdDev { get; set; }
         public long ServerLatencyStdDev { get; set; }
+
+        public long ServerToUiLatencyMax { get { return UiLatencyMax + ServerLatencyMax; } }
         
         public long Count { get; set; }
 
