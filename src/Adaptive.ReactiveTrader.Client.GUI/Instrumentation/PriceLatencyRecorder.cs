@@ -40,7 +40,7 @@ namespace Adaptive.ReactiveTrader.Client.Instrumentation
             stats.ServerLatencyStdDev = (long) CalculateStdDev(_prices.Select(pl => pl.ServerToClientMs));
             
             stats.UiLatencyMax = (long) _prices.MaxBy(pl => pl.UiProcessingTimeMs).FirstOrDefault().UiProcessingTimeMs;
-            stats.UiLatencyStdDev = (long) CalculateStdDev(_prices.Select(pl => pl.ServerToClientMs));
+            stats.UiLatencyStdDev = (long) CalculateStdDev(_prices.Select(pl => pl.UiProcessingTimeMs));
 
             var currentProcessTime = _currentProcess.UserProcessorTime;
             

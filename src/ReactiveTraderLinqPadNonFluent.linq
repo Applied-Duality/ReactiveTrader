@@ -22,17 +22,17 @@ void Main()
 	
 	api.ConnectionStatusStream.DumpLive();
 	
-	var eurusd = from currencyPairs in api.ReferenceData.GetCurrencyPairsStream()
-	             from currencyPair in currencyPairs
-				 where currencyPair.CurrencyPair.Symbol == "EURUSD"
-	             from price in currencyPair.CurrencyPair.PriceStream
-				 select price;
-				 
+	var eurusd = api.ReferenceData
+					.GetCurrencyPairsStream()
+					.SelectMany(_ => _)
+					.Where(cp => cp.CurrencyPair.Symbol == "EURUSD")
+					.SelectMany(cp => cp.CurrencyPair.PriceStream);
+	
 	eurusd.Select((p,i)=> "price" + i + ":" + p.ToString()).DumpLive();
-	
-	var execution = from price in eurusd.Skip(10).Take(1)
-					from trade in price.Ask.ExecuteRequest(10000, "EUR")
-					select trade.ToString();
-	
+
+	var execution = eurusd.Skip(10)
+						  .Take(1)
+						  .SelectMany(price => price.Ask.ExecuteRequest(10000, "EUR"));
+		
 	execution.DumpLive();				 
 }
