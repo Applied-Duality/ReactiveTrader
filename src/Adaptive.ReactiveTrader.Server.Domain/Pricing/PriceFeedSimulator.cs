@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using Adaptive.ReactiveTrader.Server.ReferenceData;
@@ -54,38 +53,19 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
 
         private void PopulateLastValueCache()
         {
-            foreach (var currencyPair in _currencyPairRepository.GetAllCurrencyPairs())
+            foreach (var currencyPairInfo in _currencyPairRepository.GetAllCurrencyPairs())
             {
-                var mid = _currencyPairRepository.GetSampleRate(currencyPair.Symbol);
+                var mid = _currencyPairRepository.GetSampleRate(currencyPairInfo.CurrencyPair.Symbol);
                 
                 var initialQuote = new PriceDto
                 {
-                    Symbol = currencyPair.Symbol,
+                    Symbol = currencyPairInfo.CurrencyPair.Symbol,
                     QuoteId = 0,
                     Mid = mid
                 };
 
-                _priceLastValueCache.StoreLastValue(GenerateNextQuote(initialQuote));
+                _priceLastValueCache.StoreLastValue(currencyPairInfo.GenerateNextQuote(initialQuote));
             }
-        }
-
-        private PriceDto GenerateNextQuote(PriceDto previousPrice)
-        {
-            var currencyPair = _currencyPairRepository.GetCurrencyPair(previousPrice.Symbol);
-
-            var pow = (decimal)Math.Pow(10, currencyPair.RatePrecision);
-            var newMid = previousPrice.Mid + _random.Next(-5, 5) / pow;
-
-            return new PriceDto
-            {
-                Symbol = previousPrice.Symbol,
-                QuoteId = previousPrice.QuoteId + 1,
-                ValueDate = DateTime.UtcNow.AddDays(2).Date,
-                Mid = newMid,
-                Ask = newMid + 5/pow,
-                Bid = newMid - 5/pow,
-                CreationTimestamp = Stopwatch.GetTimestamp()
-            };
         }
 
         private void OnTimerTick(object state)
@@ -97,10 +77,10 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
 
             for (int i = 0; i < _updatesPerTick; i++)
             {
-                var randomCurrencyPair = activePairs[_random.Next(0, activePairs.Count)].CurrencyPair;
-                var lastPrice = _priceLastValueCache.GetLastValue(randomCurrencyPair.Symbol);
+                var randomCurrencyPairInfo = activePairs[_random.Next(0, activePairs.Count)];
+                var lastPrice = _priceLastValueCache.GetLastValue(randomCurrencyPairInfo.CurrencyPair.Symbol);
 
-                var newPrice = GenerateNextQuote(lastPrice);
+                var newPrice = randomCurrencyPairInfo.GenerateNextQuote(lastPrice);
                 _priceLastValueCache.StoreLastValue(newPrice);
                 _pricePublisher.Publish(newPrice);
             }

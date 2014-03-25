@@ -31,7 +31,10 @@
             <TextBlock Text="{Binding Throughput, Mode=OneWay}" />
             <TextBlock Text=" msg/sec"/>
         </StackPanel>
-        <Slider Grid.Row="1" Grid.Column="2" Minimum="1"  Maximum="5000" Margin="4" Value="{Binding UpdateFrequency, Mode=TwoWay}" />
+        <Slider Grid.Row="1" Grid.Column="2" 
+                Margin="4" 
+                Minimum="1"  Maximum="5000" SmallChange="1" LargeChange="10"
+                Value="{Binding UpdateFrequency, Mode=TwoWay}" />
 
         <DataGrid Grid.Row="2" Grid.ColumnSpan="3" ItemsSource="{Binding CurrencyPairs}" AutoGenerateColumns="False">
             <DataGrid.Columns>
