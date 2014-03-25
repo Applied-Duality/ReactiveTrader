@@ -32,7 +32,8 @@ void Main()
 
 	var execution = eurusd.Skip(10)
 						  .Take(1)
-						  .SelectMany(price => price.Ask.ExecuteRequest(10000, "EUR"));
+						  .SelectMany(
+						  	price => price.Ask.ExecuteRequest(10000, "EUR"));
 		
-	execution.DumpLive("execution");				 
+	execution.DumpLive("Execution");				 
 }

@@ -5,7 +5,7 @@ namespace Adaptive.ReactiveTrader.Server.ReferenceData
 {
     public interface ICurrencyPairRepository
     {
-        IEnumerable<CurrencyPairDto> GetAllCurrencyPairs();
+        IEnumerable<CurrencyPairInfo> GetAllCurrencyPairs();
         CurrencyPairDto GetCurrencyPair(string symbol);
         bool Exists(string symbol);
         decimal GetSampleRate(string symbol);

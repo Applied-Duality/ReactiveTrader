@@ -15,12 +15,12 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
             {
                 return price;
             }
-            throw new InvalidOperationException(string.Format("Currency pair {0} has not been initilialized in last value cache", currencyPair));
+            throw new InvalidOperationException(string.Format("Currency pair {0} has not been initialized in last value cache", currencyPair));
         }
 
         public void StoreLastValue(PriceDto price)
         {
-            _lastValueCache.AddOrUpdate(price.Symbol, _ => price, (s, p) => p);
+            _lastValueCache.AddOrUpdate(price.Symbol, _ => price, (s, p) => price);
         }
     }
 }

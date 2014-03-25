@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Adaptive.ReactiveTrader.Shared.DTO.ReferenceData;
 
 namespace Adaptive.ReactiveTrader.Server.ReferenceData
@@ -8,7 +7,7 @@ namespace Adaptive.ReactiveTrader.Server.ReferenceData
     {
         private readonly Dictionary<string, CurrencyPairInfo> _currencyPairs = new Dictionary<string, CurrencyPairInfo>
         {
-            {"EURUSD", CreateCurrencyPairInfo("EURUSD", 4, 5, 1.3629m, true)},
+            {"EURUSD", CreateCycleCurrencyPairInfo("EURUSD", 4, 5, 1.3629m, true, 1.36m, 1.365m,"Price cycles between 1.36-1.365")},
             {"USDJPY", CreateCurrencyPairInfo("USDJPY", 2, 3, 102.14m, true)},
             {"GBPUSD", CreateCurrencyPairInfo("GBPUSD", 4, 5, 1.6395m, true, "Server waits 1.5sec to execute then sends a trade done.")},       // ExecutionService
             {"GBPJPY", CreateCurrencyPairInfo("GBPJPY", 2, 3, 167.67m, true, "Always rejects upon execution.")},                                // ExecutionService
@@ -35,12 +34,16 @@ namespace Adaptive.ReactiveTrader.Server.ReferenceData
 
         private static CurrencyPairInfo CreateCurrencyPairInfo(string symbol, int pipsPosition, int ratePrecision, decimal sampleRate, bool enabled, string comment= "")
         {
-            return new CurrencyPairInfo(new CurrencyPairDto(symbol, ratePrecision, pipsPosition), sampleRate, enabled, comment);
+            return new RandomWalkCurrencyPairInfo(new CurrencyPairDto(symbol, ratePrecision, pipsPosition), sampleRate, enabled, comment);
+        }
+        private static CurrencyPairInfo CreateCycleCurrencyPairInfo(string symbol, int pipsPosition, int ratePrecision, decimal sampleRate, bool enabled, decimal min, decimal max, string comment )
+        {
+            return new CyclicalCurrencyPairInfo(new CurrencyPairDto(symbol, ratePrecision, pipsPosition), sampleRate, enabled, comment, min, max);
         }
 
-        public IEnumerable<CurrencyPairDto> GetAllCurrencyPairs()
+        public IEnumerable<CurrencyPairInfo> GetAllCurrencyPairs()
         {
-            return _currencyPairs.Values.Select(cpi => cpi.CurrencyPair);
+            return _currencyPairs.Values;
         }
 
         public IEnumerable<CurrencyPairInfo> GetAllCurrencyPairInfos()
