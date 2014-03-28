@@ -9,6 +9,9 @@
             <Setter Property="Icon" Value="adaptive-logo.png"/>
         </Style>
     </Window.Style>
+    <Control.Resources>
+        <ResourceDictionary Source="SliderStyles.xaml"/>
+    </Control.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
