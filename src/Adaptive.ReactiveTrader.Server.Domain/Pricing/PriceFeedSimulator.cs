@@ -8,6 +8,7 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
 {
     public class PriceFeedSimulator : IPriceFeed, IDisposable
     {
+        private const int MinPeriodMilliseconds = 15;   //Timer resolution is about 15ms
         private readonly ICurrencyPairRepository _currencyPairRepository;
         private readonly IPricePublisher _pricePublisher;
         private readonly IPriceLastValueCache _priceLastValueCache;
@@ -16,7 +17,7 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
         private int _updatesPerTick = 1;
 
         public PriceFeedSimulator(
-            ICurrencyPairRepository currencyPairRepository, 
+            ICurrencyPairRepository currencyPairRepository,
             IPricePublisher pricePublisher,
             IPriceLastValueCache priceLastValueCache)
         {
@@ -30,7 +31,7 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
         {
             PopulateLastValueCache();
 
-            SetUpdateFrequency(15);
+            SetUpdateFrequency(MinPeriodMilliseconds);
         }
 
         public void SetUpdateFrequency(double updatesPerSecond)
@@ -40,12 +41,17 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
                 _timer.Dispose();
             }
 
-            var periodMs = 1000.0/updatesPerSecond;
+            var periodMs = 1000.0 / updatesPerSecond;
 
-            if (periodMs < 15.5) // timer resolution is about 15ms, bellow that we start sending multiple update per tick
+
+            if (periodMs < (MinPeriodMilliseconds + 1)) // Instead of trying to fire more often than timer resolution allows, start pushing more updates per tick.
             {
-                _updatesPerTick = (int) (15.5/periodMs);
-                periodMs = 15;
+                _updatesPerTick = (int)(MinPeriodMilliseconds / periodMs);
+                periodMs = MinPeriodMilliseconds;
+            }
+            else
+            {
+                _updatesPerTick = 1;
             }
 
             _timer = new Timer(OnTimerTick, null, (int)periodMs, (int)periodMs);
@@ -56,7 +62,7 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
             foreach (var currencyPairInfo in _currencyPairRepository.GetAllCurrencyPairs())
             {
                 var mid = _currencyPairRepository.GetSampleRate(currencyPairInfo.CurrencyPair.Symbol);
-                
+
                 var initialQuote = new PriceDto
                 {
                     Symbol = currencyPairInfo.CurrencyPair.Symbol,
@@ -89,7 +95,7 @@ namespace Adaptive.ReactiveTrader.Server.Pricing
         public void Dispose()
         {
             using (_timer)
-            {}
+            { }
         }
     }
 }
