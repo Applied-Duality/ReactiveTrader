@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq.Expressions;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
@@ -288,5 +291,88 @@ namespace Adaptive.ReactiveTrader.Shared.Extensions
                 return new CompositeDisposable { sourceSubscription, timerSubscription };
             });
         }
+
+        public static IObservable<Unit> ObserveProperty(this INotifyPropertyChanged source)
+        {
+            return Observable.FromEvent<PropertyChangedEventHandler, PropertyChangedEventArgs>(
+                h => (s, e) => h(e),
+                h => source.PropertyChanged += h,
+                h => source.PropertyChanged -= h)
+            .Select(_ => Unit.Default);
+        }
+
+        public static IObservable<TProp> ObserveProperty<TSource, TProp>(this TSource source,
+                                                           Expression<Func<TSource, TProp>> propertyExpression,
+                                                           bool observeInitialValue)
+            where TSource : INotifyPropertyChanged
+        {
+            return Observable.Create<TProp>(o =>
+                {
+                    var propertyName = GetPropertyName(source, propertyExpression);
+                    var selector = CompiledExpressionHelper<TSource, TProp>.GetFunc(propertyExpression);
+
+                    var observable
+                        = from evt in Observable.FromEvent<PropertyChangedEventHandler, PropertyChangedEventArgs>(
+                            h => (s, e) => h(e),
+                            h => source.PropertyChanged += h,
+                            h => source.PropertyChanged -= h)
+                          where evt.PropertyName == propertyName
+                          select selector(source);
+                    observable = observeInitialValue ? observable.StartWith(selector(source)) : observable;
+
+                    return observable.Subscribe(o);
+                });
+        }
+
+        public static IObservable<TProp> ObserveProperty<TSource, TProp>(this TSource source,
+                                                                            Expression<Func<TSource, TProp>>
+                                                                                propertyExpression)
+            where TSource : INotifyPropertyChanged
+        {
+            return ObserveProperty(source, propertyExpression, false);
+        }
+
+        public static string GetPropertyName<TSource, TProp>(this TSource source,
+                                                             Expression<Func<TSource, TProp>> propertyExpression)
+        {
+            var memberExpression = CompiledExpressionHelper<TSource, TProp>.GetMemberExpression(propertyExpression);
+            return memberExpression.Member.Name;
+        }
+
+        private static class CompiledExpressionHelper<TSource, TProp>
+        {
+            private static readonly Dictionary<string, Func<TSource, TProp>> Funcs = new Dictionary<string,Func<TSource,TProp>>();
+
+            public static Func<TSource, TProp> GetFunc(Expression<Func<TSource, TProp>> propertyExpression)
+            {
+                var memberExpression = GetMemberExpression(propertyExpression);
+                var propertyName = memberExpression.Member.Name;
+                var key = typeof (TSource).FullName + "." + propertyName;
+                Func<TSource, TProp> func;
+
+                if (!Funcs.TryGetValue(key, out func))
+                {
+                    Funcs[key] = propertyExpression.Compile();
+                }
+                return Funcs[key];
+            }
+
+            public static MemberExpression GetMemberExpression(Expression<Func<TSource, TProp>> propertyExpression)
+            {
+                MemberExpression memberExpression;
+
+                var unaryExpr = propertyExpression.Body as UnaryExpression;
+                if (unaryExpr != null && unaryExpr.NodeType == ExpressionType.Convert)
+                {
+                    memberExpression = (MemberExpression) unaryExpr.Operand;
+                }
+                else
+                {
+                    memberExpression = (MemberExpression) propertyExpression.Body;
+                }
+                return memberExpression;
+            }
+        }
+
     }
 }

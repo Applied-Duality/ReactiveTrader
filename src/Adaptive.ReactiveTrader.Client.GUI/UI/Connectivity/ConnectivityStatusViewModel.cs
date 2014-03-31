@@ -2,8 +2,8 @@
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Concurrency;
 using Adaptive.ReactiveTrader.Client.Domain;
+using Adaptive.ReactiveTrader.Client.Domain.Instrumentation;
 using Adaptive.ReactiveTrader.Client.Domain.Transport;
-using Adaptive.ReactiveTrader.Client.Instrumentation;
 using Adaptive.ReactiveTrader.Shared.UI;
 using log4net;
 
@@ -16,9 +16,9 @@ namespace Adaptive.ReactiveTrader.Client.UI.Connectivity
         private readonly IPriceLatencyRecorder _priceLatencyRecorder;
         private static readonly ILog Log = LogManager.GetLogger(typeof(ConnectivityStatusViewModel));
 
-        public ConnectivityStatusViewModel(IReactiveTrader reactiveTrader, IPriceLatencyRecorder priceLatencyRecorder, IConcurrencyService concurrencyService)
+        public ConnectivityStatusViewModel(IReactiveTrader reactiveTrader, IConcurrencyService concurrencyService)
         {
-            _priceLatencyRecorder = priceLatencyRecorder;
+            _priceLatencyRecorder = reactiveTrader.PriceLatencyRecorder;
             reactiveTrader.ConnectionStatusStream
                 .ObserveOn(concurrencyService.Dispatcher)
                 .SubscribeOn(concurrencyService.ThreadPool)
@@ -39,13 +39,13 @@ namespace Adaptive.ReactiveTrader.Client.UI.Connectivity
                 return;
 
             UiLatency = stats.UiLatencyMax;
-            UiLatencyStdDev = stats.UiLatencyStdDev;
             ServerClientLatency = stats.ServerLatencyMax;
-            ServerClientLatencyStdDev = stats.ServerLatencyStdDev;
-            TotalLatency = stats.ServerToUiLatencyMax;
-            Throughput = stats.Count;
+            TotalLatency = stats.TotalLatencyMax;
+            UiUpdates = stats.RenderedCount;
+            TicksReceived = stats.ReceivedCount;
             CpuTime = Math.Round(stats.ProcessTime.TotalMilliseconds, 0);
             CpuPercent = Math.Round(CpuTime/(Environment.ProcessorCount*StatsFrequency.TotalMilliseconds)*100, 0);
+            Histogram = stats.Histogram;
         }
 
         private void OnStatusChange(ConnectionInfo connectionInfo)
@@ -80,14 +80,14 @@ namespace Adaptive.ReactiveTrader.Client.UI.Connectivity
         }
 
         public string Status { get; private set; }
-        public long Throughput { get; private set; }
         public bool Disconnected { get; private set; }
-        public long UiLatency { get; private set; }
-        public long UiLatencyStdDev { get; private set; }
+        public long UiUpdates { get; private set; }
+        public long TicksReceived { get; private set; }
+        public long TotalLatency { get; set; }
         public long ServerClientLatency { get; private set; }
-        public long ServerClientLatencyStdDev { get; private set; }
-        public long TotalLatency { get; private set; }
+        public long UiLatency { get; private set; }
+        public string Histogram { get; private set; }
         public double CpuTime { get; private set; }
-        public double CpuPercent { get; set; }
+        public double CpuPercent { get; private set; }
     }
 }

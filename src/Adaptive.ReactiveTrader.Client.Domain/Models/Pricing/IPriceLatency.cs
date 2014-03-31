@@ -4,7 +4,8 @@
     {
         double ServerToClientMs { get; }
         double UiProcessingTimeMs { get; }
-        void DisplayedOnUi();
         double TotalLatencyMs { get; }
+        void DisplayedOnUi();
+        void ReceivedInGuiProcess();
     }
 }

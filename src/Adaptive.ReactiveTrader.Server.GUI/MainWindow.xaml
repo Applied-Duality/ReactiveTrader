@@ -22,6 +22,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -29,17 +30,24 @@
         <TextBlock Grid.Row="0" Grid.Column="1" Margin="4" Text="{Binding ServerStatus, Mode=OneWay}" />
         <Button Grid.Row="0" Grid.Column="2" Margin="4" Command="{Binding StartStopCommand}" Content="{Binding StartStopCommandText}" />
 
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="Throughput" Margin="4"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Measured Throughput" Margin="4"/>
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="4" >
-            <TextBlock Text="{Binding Throughput, Mode=OneWay}" />
+            <TextBlock Text="{Binding Throughput, Mode=OneWay}" Width="40" />
             <TextBlock Text=" msg/sec"/>
         </StackPanel>
-        <Slider Grid.Row="2" Grid.ColumnSpan="3"
+        
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Desired Throughput" Margin="4"/>
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" Margin="4" >
+            <TextBox Text="{Binding DesiredThroughput, Mode=TwoWay}" Width="40" />
+            <TextBlock Text=" msg/sec"/>
+        </StackPanel>
+        
+        <Slider Grid.Row="3" Grid.ColumnSpan="3"
                 Margin="4" 
                 Minimum="1"  Maximum="5000" SmallChange="10" LargeChange="100"
                 Value="{Binding UpdateFrequency, Mode=TwoWay}" />
 
-        <DataGrid Grid.Row="3" Grid.ColumnSpan="3" ItemsSource="{Binding CurrencyPairs}" AutoGenerateColumns="False">
+        <DataGrid Grid.Row="4" Grid.ColumnSpan="3" ItemsSource="{Binding CurrencyPairs}" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="CCY" Binding="{Binding Symbol}" Width="60"/>
                 <DataGridTemplateColumn Header="Active">

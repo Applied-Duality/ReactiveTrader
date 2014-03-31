@@ -4,13 +4,10 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using Adaptive.ReactiveTrader.Server.Pricing;
 using Adaptive.ReactiveTrader.Server.ReferenceData;
+using Adaptive.ReactiveTrader.Shared.Extensions;
 using Adaptive.ReactiveTrader.Shared.UI;
 using log4net;
-using Microsoft.Owin;
-using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.Hosting;
-using Microsoft.Owin.StaticFiles;
-using Owin;
 
 namespace Adaptive.ReactiveTrader.Server
 {
@@ -33,6 +30,9 @@ namespace Adaptive.ReactiveTrader.Server
         public string ServerStatus { get; private set; }
         public string StartStopCommandText { get; private set; }
         public string Throughput { get; private set; }
+        public string DesiredThroughput { get; set; }
+        private bool _updatingThroughput;
+
         public ObservableCollection<ICurrencyPairViewModel> CurrencyPairs { get; private set; } 
 
         public MainViewModel(
@@ -48,6 +48,8 @@ namespace Adaptive.ReactiveTrader.Server
 
             StartStopCommand = new DelegateCommand(StartStopServer);
             CurrencyPairs = new ObservableCollection<ICurrencyPairViewModel>();
+
+            ObserveThroughputs();
         }
 
         public void Start()
@@ -136,5 +138,34 @@ namespace Adaptive.ReactiveTrader.Server
             }, Dispatcher.CurrentDispatcher);
             _timer.Start();
         }
+
+        private void ObserveThroughputs()
+        {
+            this.ObserveProperty(p => p.DesiredThroughput)
+                .Subscribe(desiredThroughput =>
+                {
+                    if (_updatingThroughput)
+                        return;
+                    _updatingThroughput = true;
+                    int value;
+                    if (int.TryParse(desiredThroughput, out value))
+                    {
+                        UpdateFrequency = value;
+                    }
+                    _updatingThroughput = false;
+                });
+
+            this.ObserveProperty(p => p.UpdateFrequency)
+                .Subscribe(updateFrequency =>
+                {
+                    if (_updatingThroughput)
+                        return;
+
+                    _updatingThroughput = true;
+                    DesiredThroughput = updateFrequency.ToString("N0");
+                    _updatingThroughput = false;
+                });
+        }
+
     }
 }

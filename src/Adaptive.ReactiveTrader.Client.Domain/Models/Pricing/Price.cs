@@ -20,7 +20,6 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Models.Pricing
             ask.Parent = this;
 
             Spread = (ask.Rate - bid.Rate)* (long)Math.Pow(10, currencyPair.PipsPosition);
-            _receivedTimestamp = Stopwatch.GetTimestamp();
         }
 
         public IExecutablePrice Bid { get; private set; }
@@ -40,7 +39,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Models.Pricing
         #region IPriceLatency
 
         private readonly long _serverTimestamp;
-        private readonly long _receivedTimestamp;
+        private long _receivedTimestamp;
         private long _renderedTimestamp;
 
         public double ServerToClientMs
@@ -56,6 +55,11 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Models.Pricing
         public void DisplayedOnUi()
         {
             _renderedTimestamp = Stopwatch.GetTimestamp();
+        }
+
+        public void ReceivedInGuiProcess()
+        {
+            _receivedTimestamp = Stopwatch.GetTimestamp();
         }
 
         public double TotalLatencyMs

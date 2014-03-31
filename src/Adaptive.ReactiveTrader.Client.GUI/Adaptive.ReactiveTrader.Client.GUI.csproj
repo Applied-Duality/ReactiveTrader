@@ -99,13 +99,9 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Concurrency\IConcurrencyService.cs" />
     <Compile Include="Concurrency\ConcurrencyService.cs" />
+    <Compile Include="Concurrency\IConcurrencyService.cs" />
     <Compile Include="Concurrency\PeriodicBatchScheduler.cs" />
-    <Compile Include="Instrumentation\Histogram.cs" />
-    <Compile Include="Instrumentation\IPriceLatencyRecorder.cs" />
-    <Compile Include="Instrumentation\PriceLatencyRecorder.cs" />
-    <Compile Include="Instrumentation\Statistics.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Configuration\ConfigurationProvider.cs" />
     <Compile Include="Configuration\IConfigurationProvider.cs" />

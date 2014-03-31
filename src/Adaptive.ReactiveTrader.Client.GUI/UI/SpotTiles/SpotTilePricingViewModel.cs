@@ -3,11 +3,12 @@ using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Concurrency;
+using Adaptive.ReactiveTrader.Client.Domain;
+using Adaptive.ReactiveTrader.Client.Domain.Instrumentation;
 using Adaptive.ReactiveTrader.Client.Domain.Models;
 using Adaptive.ReactiveTrader.Client.Domain.Models.Execution;
 using Adaptive.ReactiveTrader.Client.Domain.Models.Pricing;
 using Adaptive.ReactiveTrader.Client.Domain.Models.ReferenceData;
-using Adaptive.ReactiveTrader.Client.Instrumentation;
 using Adaptive.ReactiveTrader.Shared.Extensions;
 using Adaptive.ReactiveTrader.Shared.UI;
 using log4net;
@@ -43,13 +44,13 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
 
         public SpotTilePricingViewModel(ICurrencyPair currencyPair, SpotTileSubscriptionMode spotTileSubscriptionMode, ISpotTileViewModel parent,
             Func<Direction, ISpotTilePricingViewModel, IOneWayPriceViewModel> oneWayPriceFactory,
-            IPriceLatencyRecorder priceLatencyRecorder,
+            IReactiveTrader reactiveTrader,
             IConcurrencyService concurrencyService)
         {
             _currencyPair = currencyPair;
             _subscriptionMode = spotTileSubscriptionMode;
             _parent = parent;
-            _priceLatencyRecorder = priceLatencyRecorder;
+            _priceLatencyRecorder = reactiveTrader.PriceLatencyRecorder;
             _concurrencyService = concurrencyService;
 
             
@@ -194,7 +195,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
                 Spread = PriceFormatter.GetFormattedSpread(price.Spread, _currencyPair.RatePrecision, _currencyPair.PipsPosition);
                 SpotDate = "SP. " + price.ValueDate.ToString("dd MMM");
 
-                _priceLatencyRecorder.Record(price);
+                _priceLatencyRecorder.OnRendered(price);
 
             }
             _currentPrice = price;

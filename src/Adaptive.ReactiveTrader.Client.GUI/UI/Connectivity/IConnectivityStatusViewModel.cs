@@ -3,12 +3,14 @@
     public interface IConnectivityStatusViewModel
     {
         string Status { get; }
-        long Throughput { get; }
         bool Disconnected { get; }
+        
+        long UiUpdates { get; }
+        long TicksReceived { get; }
         long ServerClientLatency { get; }
         long UiLatency { get; }
-        long ServerClientLatencyStdDev { get; }
-        long UiLatencyStdDev { get; }
+        string Histogram { get; }
+        
         double CpuTime { get; }
         double CpuPercent { get; }
     }

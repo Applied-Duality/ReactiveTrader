@@ -10,6 +10,7 @@ namespace Adaptive.ReactiveTrader.Server
         string ServerStatus { get; }
         string StartStopCommandText { get; }
         string Throughput { get; }
+        string DesiredThroughput { get; }
         int UpdateFrequency { get; set; }
         ObservableCollection<ICurrencyPairViewModel> CurrencyPairs { get; }
         void Start();

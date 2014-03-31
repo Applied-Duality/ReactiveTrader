@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Text;
 using System.Threading;
 
-namespace Adaptive.ReactiveTrader.Client.Instrumentation
+namespace Adaptive.ReactiveTrader.Client.Domain.Instrumentation
 {
     /// <summary>
     /// Histogram for tracking the frequency of observations of values below interval upper bounds.
@@ -306,12 +306,12 @@ namespace Adaptive.ReactiveTrader.Client.Instrumentation
                 sb.Append("max=").Append(Max).Append(", ");
                 sb.Append("mean=").Append(Mean).Append(", ");
                 sb.Append("99%=").Append(TwoNinesUpperBound).Append(", ");
-                sb.Append("99.99%=").Append(FourNinesUpperBound).Append(", ");
+                sb.Append("99.99%=").Append(FourNinesUpperBound).AppendLine(", ");
 
                 sb.Append('[');
                 for (var i = 0; i < _counts.Length; i++)
                 {
-                    sb.Append(_upperBounds[i]).Append('=').Append(_counts[i]).Append(", ");
+                    sb.Append(_upperBounds[i]).Append('=').Append(_counts[i]).AppendLine();
                 }
 
                 if (_counts.Length > 0)

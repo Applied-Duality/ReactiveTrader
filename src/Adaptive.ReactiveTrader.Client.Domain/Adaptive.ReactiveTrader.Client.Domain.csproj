@@ -66,6 +66,10 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ConnectionInfo.cs" />
+    <Compile Include="Instrumentation\Histogram.cs" />
+    <Compile Include="Instrumentation\IPriceLatencyRecorder.cs" />
+    <Compile Include="Instrumentation\PriceLatencyRecorder.cs" />
+    <Compile Include="Instrumentation\Statistics.cs" />
     <Compile Include="IReactiveTrader.cs" />
     <Compile Include="Models\Pricing\IPriceLatency.cs" />
     <Compile Include="Models\ReferenceData\CurrencyPair.cs" />
