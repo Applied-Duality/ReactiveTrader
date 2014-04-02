@@ -6,6 +6,7 @@ using Adaptive.ReactiveTrader.Client.Concurrency;
 using Adaptive.ReactiveTrader.Client.Domain;
 using Adaptive.ReactiveTrader.Client.Domain.Models;
 using Adaptive.ReactiveTrader.Client.Domain.Models.ReferenceData;
+using Adaptive.ReactiveTrader.Shared.Extensions;
 using Adaptive.ReactiveTrader.Shared.UI;
 using Adaptive.ReactiveTrader.Client.Domain.Repositories;
 using log4net;
@@ -39,18 +40,11 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
 
             SpotTiles.Add(_config);
 
-            _config.Config.PropertyChanged += (_, e) => { if (e.PropertyName == "SubscriptionMode")
-            {
-                SpotTiles.Where(vm => vm.Pricing != null).ForEach(vm => vm.Pricing.SubscriptionMode = _config.Config.SubscriptionMode);
-            }};
+            _config.Config.ObserveProperty(p => p.SubscriptionMode)
+                .Subscribe(subscriptionMode => SpotTiles.Where(vm => vm.Pricing != null).ForEach(vm => vm.Pricing.SubscriptionMode = subscriptionMode));
 
-            _config.Config.PropertyChanged += (_, e) =>
-                {
-                    if (e.PropertyName == "ExecutionMode")
-                    {
-                        SpotTiles.Where(vm => vm.Pricing != null).ForEach(vm => vm.Pricing.ExecutionMode = _config.Config.ExecutionMode);
-                    }
-                };
+            _config.Config.ObserveProperty(p => p.ExecutionMode)
+                .Subscribe(executionMode => SpotTiles.Where(vm => vm.Pricing != null).ForEach(vm => vm.Pricing.ExecutionMode = executionMode));
 
             LoadSpotTiles();
         }
