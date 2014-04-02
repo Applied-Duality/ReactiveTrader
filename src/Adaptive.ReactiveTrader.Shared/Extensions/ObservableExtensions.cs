@@ -13,7 +13,7 @@ namespace Adaptive.ReactiveTrader.Shared.Extensions
 {
     public static class ObservableExtensions
     {
-        public static IObservable<T> AutoConnect<T>(this IConnectableObservable<T> connectable)
+        public static IObservable<T> LazilyConnect<T>(this IConnectableObservable<T> connectable, SingleAssignmentDisposable futureDisposable)
         {
             var connected = 0;
             return Observable.Create<T>(observer =>
@@ -21,7 +21,7 @@ namespace Adaptive.ReactiveTrader.Shared.Extensions
                 var subscription = connectable.Subscribe(observer);
                 if (Interlocked.CompareExchange(ref connected, 1, 0) == 0)
                 {
-                    connectable.Connect();
+                    futureDisposable.Disposable = connectable.Connect();
                 }
                 return subscription;
             }).AsObservable();
@@ -29,7 +29,8 @@ namespace Adaptive.ReactiveTrader.Shared.Extensions
 
         public static IObservable<T> CacheFirstResult<T>(this IObservable<T> observable)
         {
-            return observable.Take(1).PublishLast().AutoConnect();
+            // We are happy to lose the underlying subscription here because we have .Take(1) the source stream.
+            return observable.Take(1).PublishLast().LazilyConnect(new SingleAssignmentDisposable());
         }
 
         public static IObservable<TSource> TakeUntilInclusive<TSource>(this IObservable<TSource> source, Func<TSource, Boolean> predicate)
