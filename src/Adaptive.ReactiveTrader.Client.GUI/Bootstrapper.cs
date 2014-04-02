@@ -28,17 +28,17 @@ namespace Adaptive.ReactiveTrader.Client
             builder.RegisterType<BlotterView>();
             
             // view models
-            builder.RegisterType<ShellViewModel>().As<IShellViewModel>();
-            builder.RegisterType<SpotTilesViewModel>().As<ISpotTilesViewModel>();
-            builder.RegisterType<SpotTileViewModel>().As<ISpotTileViewModel>();
-            builder.RegisterType<SpotTileErrorViewModel>().As<ISpotTileErrorViewModel>();
-            builder.RegisterType<SpotTileConfigViewModel>().As<ISpotTileConfigViewModel>();
-            builder.RegisterType<SpotTilePricingViewModel>().As<ISpotTilePricingViewModel>();
-            builder.RegisterType<OneWayPriceViewModel>().As<IOneWayPriceViewModel>();
-            builder.RegisterType<SpotTileAffirmationViewModel>().As<ISpotTileAffirmationViewModel>();
-            builder.RegisterType<BlotterViewModel>().As<IBlotterViewModel>();
-            builder.RegisterType<TradeViewModel>().As<ITradeViewModel>();
-            builder.RegisterType<ConnectivityStatusViewModel>().As<IConnectivityStatusViewModel>();
+            builder.RegisterType<ShellViewModel>().As<IShellViewModel>().ExternallyOwned();
+            builder.RegisterType<SpotTilesViewModel>().As<ISpotTilesViewModel>().ExternallyOwned();
+            builder.RegisterType<SpotTileViewModel>().As<ISpotTileViewModel>().ExternallyOwned();
+            builder.RegisterType<SpotTileErrorViewModel>().As<ISpotTileErrorViewModel>().ExternallyOwned();
+            builder.RegisterType<SpotTileConfigViewModel>().As<ISpotTileConfigViewModel>().ExternallyOwned();
+            builder.RegisterType<SpotTilePricingViewModel>().As<ISpotTilePricingViewModel>().ExternallyOwned();
+            builder.RegisterType<OneWayPriceViewModel>().As<IOneWayPriceViewModel>().ExternallyOwned();
+            builder.RegisterType<SpotTileAffirmationViewModel>().As<ISpotTileAffirmationViewModel>().ExternallyOwned();
+            builder.RegisterType<BlotterViewModel>().As<IBlotterViewModel>().ExternallyOwned();
+            builder.RegisterType<TradeViewModel>().As<ITradeViewModel>().ExternallyOwned();
+            builder.RegisterType<ConnectivityStatusViewModel>().As<IConnectivityStatusViewModel>().ExternallyOwned();
 
             return builder.Build();
         } 

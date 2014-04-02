@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Adaptive.ReactiveTrader.Client.Concurrency;
 using Adaptive.ReactiveTrader.Client.Domain;
@@ -15,11 +16,12 @@ using PropertyChanged;
 namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
 {
     [ImplementPropertyChanged]
-    public class SpotTilesViewModel : ViewModelBase, ISpotTilesViewModel
+    public class SpotTilesViewModel : ViewModelBase, ISpotTilesViewModel, IDisposable
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof (SpotTilesViewModel));
-
+        
         public ObservableCollection<ISpotTileViewModel> SpotTiles { get; private set; }
+        private readonly CompositeDisposable _subscriptions = new CompositeDisposable();
         private readonly IReferenceDataRepository _referenceDataRepository;
         private readonly Func<ICurrencyPair, SpotTileSubscriptionMode, ISpotTileViewModel> _spotTileFactory;
         private readonly IConcurrencyService _concurrencyService;
@@ -40,13 +42,20 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
 
             SpotTiles.Add(_config);
 
-            _config.Config.ObserveProperty(p => p.SubscriptionMode)
-                .Subscribe(subscriptionMode => SpotTiles.Where(vm => vm.Pricing != null).ForEach(vm => vm.Pricing.SubscriptionMode = subscriptionMode));
+            _subscriptions.Add(
+                _config.Config.ObserveProperty(p => p.SubscriptionMode)
+                    .Subscribe(subscriptionMode => SpotTiles.Where(vm => vm.Pricing != null).ForEach(vm => vm.Pricing.SubscriptionMode = subscriptionMode)));
 
-            _config.Config.ObserveProperty(p => p.ExecutionMode)
-                .Subscribe(executionMode => SpotTiles.Where(vm => vm.Pricing != null).ForEach(vm => vm.Pricing.ExecutionMode = executionMode));
+            _subscriptions.Add(
+                _config.Config.ObserveProperty(p => p.ExecutionMode)
+                    .Subscribe(executionMode => SpotTiles.Where(vm => vm.Pricing != null).ForEach(vm => vm.Pricing.ExecutionMode = executionMode)));
 
             LoadSpotTiles();
+        }
+
+        public void Dispose()
+        {
+            _subscriptions.Dispose();
         }
 
         private void LoadSpotTiles()

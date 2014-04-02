@@ -20,7 +20,6 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
 
         private readonly DelegateCommand _executeCommand;
         private IExecutablePrice _executablePrice;
-        private SpotTileExecutionMode _executionMode;
 
         public Direction Direction { get; private set; }
         public string BigFigures { get; private set; }
