@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Linq;
+using Adaptive.ReactiveTrader.Client.Domain.Concurrency;
 using Adaptive.ReactiveTrader.Client.Domain.Models;
 using Adaptive.ReactiveTrader.Client.Domain.Models.Execution;
 using Adaptive.ReactiveTrader.Client.Domain.Models.Pricing;
@@ -13,14 +14,16 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Repositories
     {
         private readonly IExecutionServiceClient _executionServiceClient;
         private readonly ITradeFactory _tradeFactory;
+        private readonly IConcurrencyService _concurrencyService;
 
-        public ExecutionRepository(IExecutionServiceClient executionServiceClient, ITradeFactory tradeFactory)
+        public ExecutionRepository(IExecutionServiceClient executionServiceClient, ITradeFactory tradeFactory, IConcurrencyService concurrencyService)
         {
             _executionServiceClient = executionServiceClient;
             _tradeFactory = tradeFactory;
+            _concurrencyService = concurrencyService;
         }
 
-        public IObservable<ITrade> ExecuteRequest(IExecutablePrice executablePrice, long notional, string dealtCurrency)
+        public IObservable<IStale<ITrade>> ExecuteRequest(IExecutablePrice executablePrice, long notional, string dealtCurrency)
         {
             var price = executablePrice.Parent;
 
@@ -36,9 +39,8 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Repositories
             };
 
             return _executionServiceClient.ExecuteRequest(request)
-                .Timeout(TimeSpan.FromSeconds(2))
                 .Select(_tradeFactory.Create)
-                .CacheFirstResult();
+                .DetectStale(TimeSpan.FromSeconds(2), _concurrencyService.ThreadPool);
         }
     }
 }

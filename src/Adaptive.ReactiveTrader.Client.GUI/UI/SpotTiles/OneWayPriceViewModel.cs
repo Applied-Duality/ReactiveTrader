@@ -5,6 +5,7 @@ using Adaptive.ReactiveTrader.Client.Concurrency;
 using Adaptive.ReactiveTrader.Client.Domain.Models;
 using Adaptive.ReactiveTrader.Client.Domain.Models.Execution;
 using Adaptive.ReactiveTrader.Client.Domain.Models.Pricing;
+using Adaptive.ReactiveTrader.Shared.Extensions;
 using Adaptive.ReactiveTrader.Shared.UI;
 using log4net;
 using PropertyChanged;
@@ -50,7 +51,6 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             long notional;
             if (!long.TryParse(_parent.Notional, out notional))
             {
-                // TODO handle notional validation properly
                 return;
             }
             IsExecuting = true;
@@ -69,7 +69,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             _executablePrice.ExecuteRequest(notional, _parent.DealtCurrency)
                 .ObserveOn(_concurrencyService.Dispatcher)
                 .SubscribeOn(_concurrencyService.ThreadPool)
-                .Subscribe(OnExecuted,
+                .Subscribe(OnExecutedResult,
                     OnExecutionError);
         }
 
@@ -77,7 +77,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         {
             try
             {
-                OnExecuted(_executablePrice.ExecuteRequest(notional, _parent.DealtCurrency).Wait());
+                OnExecutedResult(_executablePrice.ExecuteRequest(notional, _parent.DealtCurrency).Wait());
             }
             catch (Exception ex)
             {
@@ -90,8 +90,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
         {
             if (exception is TimeoutException)
             {
-                Log.Error("Trade execution request timed out.");
-                _parent.OnExecutionError("No response was received from the server, the execution status is unknown. Please contact your sales representative.");
+                OnExecutionTimeout();
             }
             else
             {
@@ -128,11 +127,25 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             _executeCommand.RaiseCanExecuteChanged();
         }
 
-        private void OnExecuted(ITrade trade)
+        private void OnExecutedResult(IStale<ITrade> trade)
         {
-            Log.Info("Trade executed");
-            _parent.OnTrade(trade);
+            if (trade.IsStale)
+            {
+                OnExecutionTimeout();
+            }
+            else
+            {
+                Log.Info("Trade executed");
+                _parent.OnTrade(trade.Update);
+            }
             IsExecuting = false;
+        }
+
+        private void OnExecutionTimeout()
+        {
+            Log.Error("Trade execution request timed out.");
+            _parent.OnExecutionError(
+                "No response was received from the server, the execution status is unknown. Please contact your sales representative.");
         }
     }
 }

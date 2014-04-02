@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Linq;
+using Adaptive.ReactiveTrader.Client.Domain.Concurrency;
 using Adaptive.ReactiveTrader.Client.Domain.Instrumentation;
 using Adaptive.ReactiveTrader.Client.Domain.Models.Execution;
 using Adaptive.ReactiveTrader.Client.Domain.Models.Pricing;
@@ -26,9 +27,10 @@ namespace Adaptive.ReactiveTrader.Client.Domain
             var pricingServiceClient = new PricingServiceClient(_connectionProvider);
 
             PriceLatencyRecorder = new PriceLatencyRecorder();
+            var concurrencyService = new ConcurrencyService();
 
             var tradeFactory = new TradeFactory();
-            var executionRepository = new ExecutionRepository(executionServiceClient, tradeFactory);
+            var executionRepository = new ExecutionRepository(executionServiceClient, tradeFactory, concurrencyService);
             var priceFactory = new PriceFactory(executionRepository, PriceLatencyRecorder);
             var priceRepository = new PriceRepository(pricingServiceClient, priceFactory);
             var currencyPairUpdateFactory = new CurrencyPairUpdateFactory(priceRepository);
