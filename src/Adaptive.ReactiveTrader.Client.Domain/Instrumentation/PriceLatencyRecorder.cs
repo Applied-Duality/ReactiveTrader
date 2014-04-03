@@ -75,7 +75,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Instrumentation
 
         private Histogram GetHistogram()
         {
-            var intervals = new long[31];
+            var intervals = new long[13];
             var intervalUpperBound = 1L;
             for (var i = 0; i < intervals.Length - 1; i++)
             {

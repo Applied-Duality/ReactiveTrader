@@ -21,7 +21,10 @@ namespace Adaptive.ReactiveTrader.Shared.Extensions
                 var subscription = connectable.Subscribe(observer);
                 if (Interlocked.CompareExchange(ref connected, 1, 0) == 0)
                 {
-                    futureDisposable.Disposable = connectable.Connect();
+                    if (!futureDisposable.IsDisposed)
+                    {
+                        futureDisposable.Disposable = connectable.Connect();
+                    }
                 }
                 return subscription;
             }).AsObservable();
