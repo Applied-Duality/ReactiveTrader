@@ -2,6 +2,15 @@
 [Bb]in/
 [Oo]bj/
 src/Output/
+src/Adaptive.ReactiveTrader.Client.JS/Dto/*.js
+src/Adaptive.ReactiveTrader.Client.JS/Instrumentation/*.js
+src/Adaptive.ReactiveTrader.Client.JS/Models/**/*.js
+src/Adaptive.ReactiveTrader.Client.JS/Repositories/*.js
+src/Adaptive.ReactiveTrader.Client.JS/ServiceClients/*.js
+src/Adaptive.ReactiveTrader.Client.JS/Transport/*.js
+src/Adaptive.ReactiveTrader.Client.JS/UI/*/*.js
+src/Adaptive.ReactiveTrader.Client.JS/app.js
+src/Adaptive.ReactiveTrader.Client.JS/IReactiveTrader.js
 
 # mstest test results
 TestResults

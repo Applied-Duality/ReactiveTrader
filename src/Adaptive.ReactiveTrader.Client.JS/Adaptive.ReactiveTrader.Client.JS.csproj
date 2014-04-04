@@ -60,6 +60,10 @@
     <TypeScriptCompile Include="Instrumentation\MaxLatency.ts" />
     <TypeScriptCompile Include="Instrumentation\PriceLatencyRecorder.ts" />
     <TypeScriptCompile Include="Models\Pricing\IPriceLatency.ts" />
+    <TypeScriptCompile Include="ServiceClients\ServiceClientBase.ts" />
+    <TypeScriptCompile Include="ServiceClients\TransportDisconnectedException.ts" />
+    <TypeScriptCompile Include="Transport\ConnectionProvider.ts" />
+    <TypeScriptCompile Include="Transport\IConnectionProvider.ts" />
     <TypeScriptCompile Include="UI\Blotter\BlotterViewModel.ts" />
     <TypeScriptCompile Include="UI\Blotter\IBlotterViewModel.ts" />
     <TypeScriptCompile Include="UI\Blotter\ITradeViewModel.ts" />
