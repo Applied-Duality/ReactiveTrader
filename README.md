@@ -5,19 +5,25 @@
 5. Introduction to Reactive Trader
 6. Features
 7. Architecture
-8. Feedback / Questions
 
 ## 1. Overview
 
-Reactive Trader is a client-server application demonstrating some of the problems needing to be dealt with when building reactive user interfaces. It was initially built as a demonstration app for a presentation we gave at ReactConf 2014 and we have decided to open source it so the community can hopefully benefit.
+Reactive Trader is a client-server application demonstrating some of the problems needing to be dealt with when building reactive user interfaces. It was initially built as a demonstration app for a presentation we gave at [ReactConf 2014](http://reactconf.com/) and we have decided to open source it so the community can hopefully benefit.
 
-We have selected the requirements carefully for this app to highlight the 4 pillars of reactive applications as defined in the reactive manifesto: resilient, event-driven, scalable and responsive.
+We have selected the requirements carefully for this app to highlight the 4 pillars of reactive applications as defined in the [reactive manifesto](http://www.reactivemanifesto.org/): resilient, event-driven, scalable and responsive.
 
-Adaptive is a London based software consultancy. Even if we are relatively new, our consultants have been working on reactive backend systems and building reactive user interfaces in the finance industry for the last decade. We thought it would be great to share some of our ideas and designs and hopefully encourage discussion. If you have questions or ideas, please get in touch with us - info@weareadaptive.com, or on twitter @weareadaptive.
+[Adaptive](http://weareadaptive.com) is a London based software consultancy. Even if we are relatively new, our consultants have been working on reactive backend systems and building reactive user interfaces in the finance industry for the last decade. We thought it would be great to share some of our ideas and designs and hopefully encourage discussion. 
+
+If you have questions or ideas, please get in touch with us:
+ - by email: info at weareadaptive dot com
+ - on twitter [@AdaptiveLimited](https://twitter.com/adaptivelimited)
+ - or by creating an entry on the [issue tracker](https://github.com/AdaptiveConsulting/ReactiveTrader/issues)
+
+We will be blogging about specific aspects of Reactive Trader on [Adaptive's blog](http://weareadaptive.com/blog/) and new entries of the blog will be anounced on Twitter [@AdaptiveLimited](https://twitter.com/adaptivelimited) - Please subscribe!
 
 There are 2 falvors of ReactiveTrader:
  - a .NET client using WPF, RxNET and SignalR
- - a Web client using TypeScript, RxJS and SignalR
+ - a Web client using TypeScript, RxJS and SignalR (work in progress)
 
 ## 2. Play with the app
 
@@ -116,10 +122,3 @@ The server can also notify the client when a currency pair is added or removed (
 The following architecture diagram provides a view of the main components and layering within the client and server. Note that the focus of reactive trader is reactive UI design, so we kept the server as dumb and simple as possible here.
 
 ![image](https://f.cloud.github.com/assets/1256913/2321883/421d7f48-a3aa-11e3-8a4c-22bf0858a085.png)
-
-## 8. Feedback / Questions
-
-Questions and suggestions are very welcome. 
-Please use the [issue tracker](https://github.com/AdaptiveConsulting/ReactiveTrader/issues)
-
-
