@@ -69,8 +69,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.SpotTiles
             _executablePrice.ExecuteRequest(notional, _parent.DealtCurrency)
                 .ObserveOn(_concurrencyService.Dispatcher)
                 .SubscribeOn(_concurrencyService.ThreadPool)
-                .Subscribe(OnExecutedResult,
-                    OnExecutionError);
+                .Subscribe(OnExecutedResult, OnExecutionError);
         }
 
         private void ExecuteSync(long notional)

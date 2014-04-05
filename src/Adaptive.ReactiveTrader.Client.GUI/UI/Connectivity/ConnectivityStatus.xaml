@@ -43,36 +43,38 @@
 
         <TextBlock ToolTipService.ShowDuration="40000">
             <Run Text="{Binding Status, Mode=OneWay}"  />
-            <Run Text="Max Price Latency:" />
-            <Run Text="{Binding TotalLatency, Mode=OneWay}"  />
-            <Run Text="ms"/>
             <Run Text=" | "/>
-            <Run Text="Max UI Latency:" />
-            <Run Text="{Binding UiLatency, Mode=OneWay}"  />
-            <Run Text="ms"/>
-            <Run Text=" | "/>
-            <Run Text="Max Server -> Client Latency:" />
+            <Run Text="E2E Lat.:" />
             <Run Text="{Binding ServerClientLatency, Mode=OneWay}"  />
             <Run Text="ms"/>
             <Run Text=" | "/>
-            <Run Text="UI Updates:" />
+            <Run Text="UI Upd.:" />
             <Run Text="{Binding UiUpdates, Mode=OneWay}" />
-            <Run Text="prices/sec" />
+            <Run Text="/sec" />
             <Run Text=" | "/>
-            <Run Text="Server Updates:" />
+            <Run Text="Server Upd.:" />
             <Run Text="{Binding TicksReceived, Mode=OneWay}" />
-            <Run Text="prices/sec" />
+            <Run Text="/sec" />
             <Run Text=" | "/>
-            <Run Text="CPU Time:" />
+            <Run Text="CPU:" />
             <Run Text="{Binding CpuPercent, Mode=OneWay}"/>
             <Run Text="%"/>
+            <Run Text=" | "/>
+            <Run Text="UI Lat.:" />
+            <Run Text="{Binding UiLatency, Mode=OneWay}"  />
+            <Run Text="ms"/>
             <TextBlock.ToolTip>
                 <ToolTip Width="600">
                     <StackPanel Orientation="Vertical">
-                        <TextBlock TextWrapping="Wrap">Latencies: we collect latency information for all prices displayed by the UI. We keep track of the slowest price measured from the price creation in the server to the price being fetched on the view model. Every second display statistics for the slowest price:</TextBlock>
-                        <TextBlock TextWrapping="Wrap"> - UI Latency: this is the time elapsed between the price being received by the client and being fetched on the view model (ie. processed by the UI thread)</TextBlock>
-                        <TextBlock TextWrapping="Wrap"> - Server -> Client latency: this is the time elapsed between the price being created by the server and being received by the client.</TextBlock>
-                        <TextBlock TextWrapping="Wrap" Text="{Binding Histogram}"/>
+                        <TextBlock TextWrapping="Wrap">Metrics: We collect a number of different metrics and show them here every second. Each statistic is the value seen in the last second.</TextBlock>
+                        <TextBlock TextWrapping="Wrap">E2E Lat.: Shows the latency of the slowest tick to get from the server to being rendered on the UI.</TextBlock>
+                        <TextBlock TextWrapping="Wrap">UI Upd.: Shows the number of price updates we have rendered on the UI.</TextBlock>
+                        <TextBlock TextWrapping="Wrap">Server Upd.: Shows the number of price updates the UI has received from the server.</TextBlock>
+                        <TextBlock TextWrapping="Wrap">CPU: Shows the CPU usage of the UI (approximately).</TextBlock>
+                        <TextBlock TextWrapping="Wrap">UI Lat.: Shows the latency of the slowest price from when it was received by the UI to when it has been rendered.</TextBlock>
+                        <TextBlock TextWrapping="Wrap"><Run>Server:</Run> <Run Text="{Binding Server}"/> </TextBlock>
+                        <!--<TextBlock TextWrapping="Wrap">Histogram: Shows a more detailed breakdown of the latency distribution of rendered prices.</TextBlock>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding Histogram}"/>-->
                     </StackPanel>
                 </ToolTip>
             </TextBlock.ToolTip>

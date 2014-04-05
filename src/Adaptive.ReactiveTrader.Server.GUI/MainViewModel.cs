@@ -89,7 +89,7 @@ namespace Adaptive.ReactiveTrader.Server
         {
             _signalr.Dispose();
             _signalr = null;
-            ServerStatus = "Stoped";
+            ServerStatus = "Stopped";
             StartStopCommandText = "Start";
 
             if (_timer != null)

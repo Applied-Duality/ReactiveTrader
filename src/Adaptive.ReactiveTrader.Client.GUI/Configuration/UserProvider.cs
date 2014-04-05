@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics;
 
 namespace Adaptive.ReactiveTrader.Client.Configuration
 {
@@ -8,9 +8,7 @@ namespace Adaptive.ReactiveTrader.Client.Configuration
         {
             get
             {
-                var userName = System.Environment.UserName;
-
-                return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(userName);
+                return "Trader-" + Process.GetCurrentProcess().Id;
             }
         }
     }

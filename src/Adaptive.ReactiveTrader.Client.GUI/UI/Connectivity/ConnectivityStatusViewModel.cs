@@ -50,28 +50,30 @@ namespace Adaptive.ReactiveTrader.Client.UI.Connectivity
 
         private void OnStatusChange(ConnectionInfo connectionInfo)
         {
+            Server = connectionInfo.Server;
+
             switch (connectionInfo.ConnectionStatus)
             {
                 case ConnectionStatus.Uninitialized:
                 case ConnectionStatus.Connecting:
-                    Status = string.Format("Connecting to {0} ...", connectionInfo.Server);
+                    Status = "Connecting...";
                     Disconnected = true;
                     break;
                 case ConnectionStatus.Reconnected:
                 case ConnectionStatus.Connected:
-                    Status = string.Format("Connected to {0}", connectionInfo.Server);
+                    Status = "Connected";
                     Disconnected = false;
                     break;
                 case ConnectionStatus.ConnectionSlow:
-                    Status = string.Format("Slow connection detected with {0}", connectionInfo.Server);
+                    Status = "Slow connection detected";
                     Disconnected = false;
                     break;
                 case ConnectionStatus.Reconnecting:
-                    Status = string.Format("Reconnecting to {0} ...", connectionInfo.Server);
+                    Status = "Reconnecting...";
                     Disconnected = true;
                     break;
                 case ConnectionStatus.Closed:
-                    Status = string.Format("Disconnected from {0}", connectionInfo.Server);
+                    Status = "Disconnected";
                     Disconnected = true;
                     break;
                 default:
@@ -80,6 +82,7 @@ namespace Adaptive.ReactiveTrader.Client.UI.Connectivity
         }
 
         public string Status { get; private set; }
+        public string Server { get; private set; }
         public bool Disconnected { get; private set; }
         public long UiUpdates { get; private set; }
         public long TicksReceived { get; private set; }

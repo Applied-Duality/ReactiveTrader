@@ -1,0 +1,1 @@
+start Adaptive.ReactiveTrader.Client.GUI\bin\Debug\Adaptive.ReactiveTrader.Client.GUI.exe

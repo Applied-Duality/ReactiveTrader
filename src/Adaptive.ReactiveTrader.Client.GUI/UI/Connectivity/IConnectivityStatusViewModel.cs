@@ -3,6 +3,7 @@
     public interface IConnectivityStatusViewModel
     {
         string Status { get; }
+        string Server { get; }
         bool Disconnected { get; }
         
         long UiUpdates { get; }
