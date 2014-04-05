@@ -12,7 +12,7 @@ using log4net;
 
 namespace Adaptive.ReactiveTrader.Client.Domain
 {
-    public class ReactiveTrader : IReactiveTrader
+    public class ReactiveTrader : IReactiveTrader, IDisposable
     {
         private ConnectionProvider _connectionProvider;
         private static readonly ILog Log = LogManager.GetLogger(typeof(ReactiveTrader));
@@ -53,6 +53,11 @@ namespace Adaptive.ReactiveTrader.Client.Domain
                     .Publish()
                     .RefCount();
             }
+        }
+
+        public void Dispose()
+        {
+            _connectionProvider.Dispose();
         }
     }
 }

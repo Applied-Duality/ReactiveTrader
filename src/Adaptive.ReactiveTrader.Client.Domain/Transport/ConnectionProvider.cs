@@ -10,8 +10,9 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Transport
     /// Connection provider provides always the same connection until it fails then create a new one a yield it
     /// Connection provider randomizes the list of server specified in configuration and then round robin through the list
     /// </summary>
-    internal class ConnectionProvider : IConnectionProvider
+    internal class ConnectionProvider : IConnectionProvider, IDisposable
     {
+        private readonly SingleAssignmentDisposable _disposable = new SingleAssignmentDisposable();
         private readonly string _username;
         private readonly IObservable<IConnection> _connectionSequence;
         private readonly string[] _servers;
@@ -34,6 +35,11 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Transport
             return _connectionSequence;
         }
 
+        public void Dispose()
+        {
+            _disposable.Dispose();
+        }
+
         private IObservable<IConnection> CreateConnectionSequence()
         {
             return Observable.Create<IConnection>(o =>
@@ -50,7 +56,6 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Transport
                         o.OnCompleted();
                     });
 
-                // TODO if we fail to connect we should not retry straight away to connect to same server, we need some back off
                 var connectionSubscription =
                     connection.Initialize().Subscribe(
                         _ => o.OnNext(connection),
@@ -61,7 +66,7 @@ namespace Adaptive.ReactiveTrader.Client.Domain.Transport
             })
                 .Repeat()
                 .Replay(1)
-                .RefCount();
+                .LazilyConnect(_disposable);
         }
 
         private IConnection GetNextConnection()
